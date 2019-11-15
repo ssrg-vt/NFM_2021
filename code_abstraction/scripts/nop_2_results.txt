@@ -1,0 +1,572 @@
+close_stream 
+version_etc 
+rpl_fclose 
+false Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+hostid Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+true Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+logname Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+unlink Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+link Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+whoami Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+yes Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+tty Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+nproc Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+dirname Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+sleep Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+groups Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+users Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+printenv Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+basename Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+readlink Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+mkfifo Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+expand Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+nohup Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+nice Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+rmdir Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+sync Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+runcon Removed Count: 3
+
+close_stream 
+version_etc 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+uptime Removed Count: 5
+
+close_stream 
+human_readable 
+version_etc 
+rpl_fclose 
+sum Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+unexpand Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+tee Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+echo Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+mkdir Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+cksum Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+mknod Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+realpath Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+fold Removed Count: 3
+
+close_stream 
+version_etc 
+i_ring_push 
+rpl_fclose 
+chgrp Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+operand2sig 
+kill Removed Count: 4
+
+close_stream 
+version_etc 
+i_ring_push 
+rpl_fclose 
+chown Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+pwd Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+uname Removed Count: 3
+
+close_stream 
+version_etc 
+isaac_refill 
+rpl_fclose 
+mktemp Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+stdbuf Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+pathchk Removed Count: 3
+
+close_stream 
+version_etc 
+i_ring_push 
+rpl_fclose 
+rm Removed Count: 4
+
+close_stream 
+version_etc 
+parse_datetime 
+parse_datetime2 
+debug_strfdatetime 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+debug_print_current_time 
+touch Removed Count: 9
+
+close_stream 
+version_etc 
+rpl_fclose 
+truncate Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+chroot Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+id Removed Count: 3
+
+close_stream 
+memcoll0 
+memcoll 
+version_etc 
+memcmp2 
+rpl_fclose 
+comm Removed Count: 6
+
+close_stream 
+version_etc 
+rpl_fclose 
+paste Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+tsort Removed Count: 3
+
+close_stream 
+version_etc 
+i_ring_push 
+set_permissions 
+utimecmp 
+utimecmpat 
+isaac_refill 
+copy_internal 
+rpl_fclose 
+extent_scan_read 
+backup_file_rename 
+mv Removed Count: 11
+
+close_stream 
+version_etc 
+rpl_fclose 
+operand2sig 
+parse_duration 
+cleanup 
+timeout Removed Count: 6
+
+close_stream 
+version_etc 
+rpl_fclose 
+dircolors Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+freadseek 
+cut Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+pinky Removed Count: 3
+
+close_stream 
+version_etc 
+i_ring_push 
+rpl_fclose 
+chmod Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+nl Removed Count: 3
+
+close_stream 
+version_etc 
+isaac_refill 
+rpl_fclose 
+shuf Removed Count: 4
+
+close_stream 
+version_etc 
+i_ring_push 
+rpl_fclose 
+chcon Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+cat Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+tac Removed Count: 3
+
+close_stream 
+memcoll0 
+memcoll 
+version_etc 
+rpl_fclose 
+uniq Removed Count: 5
+
+close_stream 
+version_etc 
+parse_datetime 
+parse_datetime2 
+debug_strfdatetime 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+debug_print_current_time 
+date Removed Count: 9
+
+close_stream 
+version_etc 
+xstrtold 
+rpl_fclose 
+seq Removed Count: 4
+
+close_stream 
+version_etc 
+isaac_refill 
+rpl_fclose 
+ln Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+printf Removed Count: 3
+
+close_stream 
+version_etc 
+who 
+rpl_fclose 
+who Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+fmt Removed Count: 3
+
+close_stream 
+posixtest 
+strintcmp 
+rpl_fclose 
+test Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+operand2sig 
+env Removed Count: 4
+
+close_stream 
+version_etc 
+is_basic 
+rpl_fclose 
+wc Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+head Removed Count: 3
+
+close_stream 
+human_readable 
+version_etc 
+is_basic 
+i_ring_push 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+unescape_tab 
+du Removed Count: 9
+
+close_stream 
+version_etc 
+md5_finish_ctx 
+md5_process_block 
+md5_buffer 
+md5_stream 
+rpl_fclose 
+md5sum Removed Count: 7
+
+close_stream 
+version_etc 
+is_basic 
+strintcmp 
+rpl_fclose 
+expr Removed Count: 5
+
+close_stream 
+human_readable 
+version_etc 
+isaac_refill 
+rpl_fclose 
+shred Removed Count: 5
+
+close_stream 
+keycmp 
+memcoll0 
+memcoll 
+version_etc 
+rpl_fclose 
+join Removed Count: 6
+
+close_stream 
+version_etc 
+set_permissions 
+utimecmp 
+utimecmpat 
+isaac_refill 
+copy_internal 
+rpl_fclose 
+extent_scan_read 
+backup_file_rename 
+cp Removed Count: 10
+
+close_stream 
+version_etc 
+rpl_fclose 
+csplit Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+numfmt Removed Count: 3
+
+close_stream 
+version_etc 
+rpl_fclose 
+split Removed Count: 3
+
+close_stream 
+version_etc 
+is_basic 
+rpl_fclose 
+ptx Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+tr Removed Count: 3
+
+close_stream 
+human_readable 
+adjust_value 
+version_etc 
+rpl_fclose 
+unescape_tab 
+df Removed Count: 6
+
+close_stream 
+version_etc 
+rpl_fclose 
+print_double 
+print_float 
+print_long 
+print_int 
+print_s_short 
+print_s_char 
+print_char 
+od Removed Count: 10
+
+close_stream 
+version_etc 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+unescape_tab 
+out_epoch_sec 
+stat Removed Count: 7
+
+close_stream 
+version_etc 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+print_char 
+pr Removed Count: 6
+
+close_stream 
+version_etc 
+rpl_fclose 
+tail Removed Count: 3
+
+close_stream 
+human_readable 
+version_etc 
+iwrite 
+rpl_fclose 
+cleanup 
+dd Removed Count: 6
+
+close_stream 
+version_etc 
+is_basic 
+rpl_fclose 
+factor Removed Count: 4
+
+close_stream 
+version_etc 
+rpl_fclose 
+stty Removed Count: 3
+
+close_stream 
+memcoll0 
+memcoll 
+version_etc 
+isaac_refill 
+md5_finish_ctx 
+md5_process_block 
+md5_buffer 
+md5_stream 
+rpl_fclose 
+sort Removed Count: 10
+
+close_stream 
+isdst_differ 
+human_readable 
+adjust_value 
+version_etc 
+prep_non_filename_text 
+mpsort_with_tmp 
+mktime_z 
+rpl_fclose 
+localtime_rz 
+ls Removed Count: 10
+
+

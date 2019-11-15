@@ -1,0 +1,215 @@
+false Removed Count: 0
+
+hostid Removed Count: 0
+
+true Removed Count: 0
+
+logname Removed Count: 0
+
+unlink Removed Count: 0
+
+link Removed Count: 0
+
+whoami Removed Count: 0
+
+yes Removed Count: 0
+
+tty Removed Count: 0
+
+nproc Removed Count: 0
+
+dirname Removed Count: 0
+
+sleep Removed Count: 0
+
+groups Removed Count: 0
+
+users Removed Count: 0
+
+printenv Removed Count: 0
+
+basename Removed Count: 0
+
+readlink Removed Count: 0
+
+mkfifo Removed Count: 0
+
+expand Removed Count: 0
+
+nohup Removed Count: 0
+
+nice Removed Count: 0
+
+rmdir Removed Count: 0
+
+sync Removed Count: 0
+
+runcon Removed Count: 0
+
+uptime Removed Count: 0
+
+sum Removed Count: 0
+
+unexpand Removed Count: 0
+
+tee Removed Count: 0
+
+echo Removed Count: 0
+
+mkdir Removed Count: 0
+
+cksum 
+cksum Removed Count: 1
+
+mknod Removed Count: 0
+
+realpath Removed Count: 0
+
+fold Removed Count: 0
+
+chgrp Removed Count: 0
+
+kill Removed Count: 0
+
+chown Removed Count: 0
+
+pwd Removed Count: 0
+
+uname Removed Count: 0
+
+mktemp Removed Count: 0
+
+stdbuf Removed Count: 0
+
+pathchk Removed Count: 0
+
+rm Removed Count: 0
+
+parse_datetime 
+parse_datetime2 
+touch Removed Count: 2
+
+truncate Removed Count: 0
+
+chroot Removed Count: 0
+
+id Removed Count: 0
+
+comm Removed Count: 0
+
+paste Removed Count: 0
+
+tsort Removed Count: 0
+
+copy_internal 
+mv Removed Count: 1
+
+timeout Removed Count: 0
+
+dircolors Removed Count: 0
+
+cut Removed Count: 0
+
+pinky Removed Count: 0
+
+chmod Removed Count: 0
+
+register_state 
+sift_states_backward 
+nl Removed Count: 2
+
+shuf Removed Count: 0
+
+chcon Removed Count: 0
+
+cat Removed Count: 0
+
+register_state 
+sift_states_backward 
+tac Removed Count: 2
+
+uniq Removed Count: 0
+
+parse_datetime 
+parse_datetime2 
+date Removed Count: 2
+
+seq Removed Count: 0
+
+ln Removed Count: 0
+
+printf Removed Count: 0
+
+who Removed Count: 0
+
+fmt Removed Count: 0
+
+test Removed Count: 0
+
+env Removed Count: 0
+
+wc Removed Count: 0
+
+head Removed Count: 0
+
+register_state 
+sift_states_backward 
+du Removed Count: 2
+
+md5_process_block 
+md5sum Removed Count: 1
+
+register_state 
+sift_states_backward 
+expr Removed Count: 2
+
+shred Removed Count: 0
+
+join Removed Count: 0
+
+copy_internal 
+cp Removed Count: 1
+
+register_state 
+sift_states_backward 
+csplit Removed Count: 2
+
+numfmt Removed Count: 0
+
+split Removed Count: 0
+
+register_state 
+sift_states_backward 
+mmalloca 
+ptx Removed Count: 3
+
+tr Removed Count: 0
+
+stat 
+df Removed Count: 1
+
+ftoastr 
+od Removed Count: 1
+
+stat Removed Count: 0
+
+pr Removed Count: 0
+
+tail Removed Count: 0
+
+dd Removed Count: 0
+
+mmalloca 
+mp_prime_p 
+prime2_p 
+prime_p 
+factor Removed Count: 4
+
+stty Removed Count: 0
+
+md5_process_block 
+sort Removed Count: 1
+
+ls Removed Count: 0
+
+

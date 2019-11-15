@@ -1,0 +1,20 @@
+
+Build cfg of: "usage" (84 text sections remaining)
+Calling "set_program_name" but CFG not yet computed.
+Delayed building cfg of: main
+Calling "quotearg_style" but CFG not yet computed.
+Delayed building cfg of: make_ancestor
+Calling "make_dir_parents" but CFG not yet computed.
+Delayed building cfg of: process_dir
+Calling "quotearg_style" but CFG not yet computed.
+Delayed building cfg of: announce_mkdir
+Build cfg of: "close_stdout_set_ignore_EPIPE" (81 text sections remaining)
+Build cfg of: "close_stdout_set_file_name" (82 text sections remaining)
+Build cfg of: "prog_fprintf" (83 text sections remaining)
+Calling "quotearg_colon" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Calling "savewd_chdir" but CFG not yet computed.
+Delayed building cfg of: make_dir_parents
+main: Instruction at address .label_106 not found. This might be resolvable by adding the text section containing the address to the config file.
+CallStack (from HasCallStack):
+  error, called at ./X86_CFG.hs:127:16 in main:X86_CFG

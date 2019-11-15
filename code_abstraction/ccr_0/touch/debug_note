@@ -1,0 +1,64 @@
+  40fa5f:       cmp    QWORD PTR [rbp-0x38],0x0
+  40fa64:       jge    40fa83 <yylex+0x353>
+  40fa6a:       movabs rax,0xf333333333333334
+  40fa74:       cmp    QWORD PTR [rbp-0x38],rax
+  40fa78:       jl     40fabb <yylex+0x38b>
+  40fa7e:       jmp    40fa97 <yylex+0x367>
+  40fa83:       movabs rax,0xccccccccccccccc
+  40fa8d:       cmp    rax,QWORD PTR [rbp-0x38]
+  40fa91:       jl     40fabb <yylex+0x38b>
+  40fa97:       imul   rax,QWORD PTR [rbp-0x38],0xa
+  40fa9c:       cmp    rax,0xffffffffffffff80
+  40faa0:       jl     40fabb <yylex+0x38b>
+  40faa6:       mov    eax,0x7f
+  40faab:       mov    ecx,eax
+  40faad:       imul   rdx,QWORD PTR [rbp-0x38],0xa
+  40fab2:        cmp    rcx,rdx
+  40fab5:       jge    40fade <yylex+0x3ae>
+  40fabb:       mov    al,0x1
+
+
+
+.label_1746:
+        cmp     qword ptr [rbp - 0x38], 0
+        jge     .label_1698
+        movabs  rax, 0xf333333333333334
+        cmp     qword ptr [rbp - 0x38], rax
+        jl      .label_1231
+        jmp     .label_1377
+.label_1698:
+        movabs  rax, 0xccccccccccccccc
+        cmp     rax, qword ptr [rbp - 0x38]
+        jl      .label_1231
+.label_1377:
+.label_5267:
+        imul    rax, qword ptr [rbp - 0x38], 0xa
+        cmp     rax, -0x80000000
+        jl      .label_1231
+        mov     eax, 0x7fffffff
+        mov     ecx, eax
+        imul    rdx, qword ptr [rbp - 0x38], 0xa
+        cmp     rcx, rdx
+        jge     .label_1232
+.label_1231:
+        mov     al, 1
+        mov     rcx, qword ptr [rbp - 0x38]
+        mov     edx, ecx
+        imul    edx, edx, 0xa
+        movsxd  rcx, edx
+        mov     qword ptr [rbp - 0x38], rcx
+        test    al, 1
+        jne     .label_1239
+        jmp     .label_1247
+.label_1232:
+        xor     eax, eax
+        mov     cl, al
+        mov     rdx, qword ptr [rbp - 0x38]
+        mov     eax, edx
+        imul    eax, eax, 0xa
+        movsxd  rdx, eax
+        mov     qword ptr [rbp - 0x38], rdx
+        test    cl, 1
+        jne     .label_1239
+        jmp     .label_1247
+

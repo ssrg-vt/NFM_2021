@@ -1,0 +1,1347 @@
+Calling "emit_ancillary_info" but CFG not yet computed.
+Delayed building cfg of: usage
+Build cfg of: "emit_ancillary_info" (93 text sections remaining)
+Calling "set_program_name" but CFG not yet computed.
+Delayed building cfg of: main
+Build cfg of: "close_stdout_set_ignore_EPIPE" (91 text sections remaining)
+Build cfg of: "close_stdout_set_file_name" (92 text sections remaining)
+Calling "close_stream" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: parse_long_options
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: parse_gnu_standard_options_only
+Build cfg of: "set_program_name" (90 text sections remaining)
+Calling "xmemdup" but CFG not yet computed.
+Delayed building cfg of: clone_quoting_options
+Build cfg of: "set_quoting_flags" (86 text sections remaining)
+Build cfg of: "set_char_quoting" (87 text sections remaining)
+Build cfg of: "set_quoting_style" (88 text sections remaining)
+Build cfg of: "get_quoting_style" (89 text sections remaining)
+Build cfg of: "set_custom_quoting" (85 text sections remaining)
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_buffer
+Build cfg of: "quotearg_buffer_restyled" (84 text sections remaining)
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_alloc
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_alloc_mem
+Build cfg of: "quotearg_free" (83 text sections remaining)
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_n
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_options
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_mem
+Calling "quoting_options_from_style" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style
+Build cfg of: "quoting_options_from_style" (82 text sections remaining)
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_char_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_char
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_colon
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote_n_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote_n
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote
+Calling "locale_charset" but CFG not yet computed.
+Delayed building cfg of: gettext_quote
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq0
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq1
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq2
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq3
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq4
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq5
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq6
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq7
+Build cfg of: "version_etc_arn" (81 text sections remaining)
+Build cfg of: "version_etc_ar" (80 text sections remaining)
+Build cfg of: "version_etc_va" (79 text sections remaining)
+Build cfg of: "version_etc" (78 text sections remaining)
+Build cfg of: "emit_bug_reporting_address" (77 text sections remaining)
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xnmalloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xmalloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xnrealloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xrealloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: x2nrealloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xcharalloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: x2realloc
+Calling "xmalloc" but CFG not yet computed.
+Delayed building cfg of: xzalloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xcalloc
+Calling "xmalloc" but CFG not yet computed.
+Delayed building cfg of: xmemdup
+Calling "xmalloc" but CFG not yet computed.
+Delayed building cfg of: xstrdup
+Build cfg of: "xalloc_die" (76 text sections remaining)
+Build cfg of: "rpl_calloc" (75 text sections remaining)
+Calling "hard_locale" but CFG not yet computed.
+Delayed building cfg of: rpl_mbrtowc
+Build cfg of: "c_toupper" (60 text sections remaining)
+Build cfg of: "c_tolower" (61 text sections remaining)
+Build cfg of: "c_isxdigit" (62 text sections remaining)
+Build cfg of: "c_isupper" (63 text sections remaining)
+Build cfg of: "c_isspace" (64 text sections remaining)
+Build cfg of: "c_ispunct" (65 text sections remaining)
+Build cfg of: "c_isprint" (66 text sections remaining)
+Build cfg of: "c_islower" (67 text sections remaining)
+Build cfg of: "c_isgraph" (68 text sections remaining)
+Build cfg of: "c_isdigit" (69 text sections remaining)
+Build cfg of: "c_iscntrl" (70 text sections remaining)
+Build cfg of: "c_isblank" (71 text sections remaining)
+Build cfg of: "c_isascii" (72 text sections remaining)
+Build cfg of: "c_isalpha" (73 text sections remaining)
+Build cfg of: "c_isalnum" (74 text sections remaining)
+Calling "rpl_fclose" but CFG not yet computed.
+Delayed building cfg of: close_stream
+Build cfg of: "hard_locale" (59 text sections remaining)
+Calling "rpl_nl_langinfo" but CFG not yet computed.
+Delayed building cfg of: locale_charset
+Calling "rpl_fflush" but CFG not yet computed.
+Delayed building cfg of: rpl_fclose
+Calling "clear_ungetc_buffer_preserving_position" but CFG not yet computed.
+Delayed building cfg of: rpl_fflush
+Build cfg of: "clear_ungetc_buffer_preserving_position" (58 text sections remaining)
+Build cfg of: "rpl_fseeko" (57 text sections remaining)
+Build cfg of: "rpl_nl_langinfo" (56 text sections remaining)
+Build cfg of: "usage" (55 text sections remaining)
+Calling "parse_gnu_standard_options_only" but CFG not yet computed.
+Delayed building cfg of: main
+Calling "close_stream" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Build cfg of: "parse_long_options" (54 text sections remaining)
+Build cfg of: "parse_gnu_standard_options_only" (53 text sections remaining)
+Calling "xmemdup" but CFG not yet computed.
+Delayed building cfg of: clone_quoting_options
+Build cfg of: "quotearg_buffer" (52 text sections remaining)
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_alloc
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_alloc_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_n
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_options
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quotearg_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_char_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_char
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_colon
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote_n_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote_mem
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote_n
+Calling "xcharalloc" but CFG not yet computed.
+Delayed building cfg of: quote
+Calling "locale_charset" but CFG not yet computed.
+Delayed building cfg of: gettext_quote
+Calling "strcaseeq1" but CFG not yet computed.
+Delayed building cfg of: strcaseeq0
+Build cfg of: "strcaseeq1" (51 text sections remaining)
+Build cfg of: "strcaseeq2" (50 text sections remaining)
+Build cfg of: "strcaseeq3" (49 text sections remaining)
+Build cfg of: "strcaseeq4" (48 text sections remaining)
+Build cfg of: "strcaseeq5" (47 text sections remaining)
+Build cfg of: "strcaseeq6" (46 text sections remaining)
+Build cfg of: "strcaseeq7" (45 text sections remaining)
+Build cfg of: "xnmalloc" (44 text sections remaining)
+Build cfg of: "xmalloc" (43 text sections remaining)
+Build cfg of: "xnrealloc" (42 text sections remaining)
+Build cfg of: "xrealloc" (41 text sections remaining)
+Build cfg of: "x2nrealloc" (40 text sections remaining)
+Build cfg of: "xcharalloc" (39 text sections remaining)
+Build cfg of: "x2realloc" (38 text sections remaining)
+Build cfg of: "xzalloc" (37 text sections remaining)
+Build cfg of: "xcalloc" (36 text sections remaining)
+Build cfg of: "xmemdup" (35 text sections remaining)
+Build cfg of: "xstrdup" (34 text sections remaining)
+Build cfg of: "rpl_mbrtowc" (33 text sections remaining)
+Calling "rpl_fclose" but CFG not yet computed.
+Delayed building cfg of: close_stream
+Build cfg of: "locale_charset" (32 text sections remaining)
+Calling "rpl_fflush" but CFG not yet computed.
+Delayed building cfg of: rpl_fclose
+Build cfg of: "rpl_fflush" (31 text sections remaining)
+Calling "quote" but CFG not yet computed.
+Delayed building cfg of: main
+Calling "close_stream" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Build cfg of: "clone_quoting_options" (30 text sections remaining)
+Build cfg of: "quotearg_alloc" (29 text sections remaining)
+Build cfg of: "quotearg_alloc_mem" (28 text sections remaining)
+Build cfg of: "quotearg_n" (27 text sections remaining)
+Build cfg of: "quotearg_n_options" (26 text sections remaining)
+Build cfg of: "quotearg_n_mem" (25 text sections remaining)
+Build cfg of: "quotearg" (24 text sections remaining)
+Build cfg of: "quotearg_mem" (23 text sections remaining)
+Build cfg of: "quotearg_n_style" (22 text sections remaining)
+Build cfg of: "quotearg_n_style_mem" (21 text sections remaining)
+Build cfg of: "quotearg_style" (20 text sections remaining)
+Build cfg of: "quotearg_style_mem" (19 text sections remaining)
+Build cfg of: "quotearg_char_mem" (18 text sections remaining)
+Build cfg of: "quotearg_char" (17 text sections remaining)
+Build cfg of: "quotearg_colon" (16 text sections remaining)
+Build cfg of: "quotearg_colon_mem" (15 text sections remaining)
+Build cfg of: "quotearg_n_style_colon" (14 text sections remaining)
+Build cfg of: "quotearg_n_custom" (13 text sections remaining)
+Build cfg of: "quotearg_n_custom_mem" (12 text sections remaining)
+Build cfg of: "quotearg_custom" (11 text sections remaining)
+Build cfg of: "quotearg_custom_mem" (10 text sections remaining)
+Build cfg of: "quote_n_mem" (9 text sections remaining)
+Build cfg of: "quote_mem" (8 text sections remaining)
+Build cfg of: "quote_n" (7 text sections remaining)
+Build cfg of: "quote" (6 text sections remaining)
+Calling "strcaseeq0" but CFG not yet computed.
+Delayed building cfg of: gettext_quote
+Build cfg of: "strcaseeq0" (5 text sections remaining)
+Calling "rpl_fclose" but CFG not yet computed.
+Delayed building cfg of: close_stream
+Build cfg of: "rpl_fclose" (4 text sections remaining)
+Build cfg of: "main" (3 text sections remaining)
+Calling "close_stream" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Build cfg of: "gettext_quote" (2 text sections remaining)
+Build cfg of: "close_stream" (1 text sections remaining)
+Build cfg of: "close_stdout" (0 text sections remaining)
+Build cfg of: "c_islower" (92 text sections remaining)
+Build cfg of: "emit_ancillary_info" (93 text sections remaining)
+Build cfg of: "set_program_name" (91 text sections remaining)
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xnmalloc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xmalloc
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq1
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq2
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq3
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq4
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq5
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq6
+Calling "c_isupper" but CFG not yet computed.
+Delayed building cfg of: strcaseeq7
+Build cfg of: "close_stdout_set_file_name" (89 text sections remaining)
+Build cfg of: "c_isupper" (90 text sections remaining)
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: x2realloc
+Build cfg of: "c_iscntrl" (88 text sections remaining)
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xcalloc
+Build cfg of: "emit_bug_reporting_address" (87 text sections remaining)
+Calling "xmalloc" but CFG not yet computed.
+Delayed building cfg of: xmemdup
+Calling "xmalloc" but CFG not yet computed.
+Delayed building cfg of: xstrdup
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: parse_gnu_standard_options_only
+Build cfg of: "set_quoting_style" (85 text sections remaining)
+Build cfg of: "clear_ungetc_buffer_preserving_position" (86 text sections remaining)
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: version_etc
+Calling "xalloc_die" but CFG not yet computed.
+Delayed building cfg of: xcharalloc
+Build cfg of: "c_isspace" (83 text sections remaining)
+Build cfg of: "rpl_calloc" (84 text sections remaining)
+Build cfg of: "quoting_options_from_style" (82 text sections remaining)
+Calling "set_custom_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom
+Calling "set_custom_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom_mem
+Build cfg of: "c_tolower" (81 text sections remaining)
+Calling "rpl_fclose" but CFG not yet computed.
+Delayed building cfg of: close_stream
+Calling "version_etc_arn" but CFG not yet computed.
+Delayed building cfg of: version_etc_va
+Calling "set_custom_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom
+Build cfg of: "c_isblank" (80 text sections remaining)
+Calling "locale_charset" but CFG not yet computed.
+Delayed building cfg of: gettext_quote
+Build cfg of: "c_isprint" (79 text sections remaining)
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_mem
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_mem
+Calling "parse_gnu_standard_options_only" but CFG not yet computed.
+Delayed building cfg of: main
+Calling "set_char_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_char_mem
+Calling "set_char_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_char
+Calling "set_char_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon
+Calling "set_char_quoting" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon_mem
+Build cfg of: "c_isxdigit" (77 text sections remaining)
+Build cfg of: "c_toupper" (78 text sections remaining)
+Build cfg of: "hard_locale" (76 text sections remaining)
+Calling "xmalloc" but CFG not yet computed.
+Delayed building cfg of: xzalloc
+Build cfg of: "c_isalnum" (74 text sections remaining)
+Build cfg of: "version_etc_arn" (75 text sections remaining)
+Build cfg of: "quotearg_free" (73 text sections remaining)
+Build cfg of: "set_custom_quoting" (72 text sections remaining)
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style_mem
+Build cfg of: "c_isgraph" (71 text sections remaining)
+Build cfg of: "c_isascii" (68 text sections remaining)
+Build cfg of: "c_ispunct" (69 text sections remaining)
+Build cfg of: "usage" (70 text sections remaining)
+Build cfg of: "rpl_fflush" (67 text sections remaining)
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quote_n_mem
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quote_mem
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quote_n
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quote
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_alloc
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_alloc_mem
+Build cfg of: "xalloc_die" (66 text sections remaining)
+Build cfg of: "x2nrealloc" (65 text sections remaining)
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_n
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_options
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style
+Build cfg of: "c_isdigit" (64 text sections remaining)
+Build cfg of: "version_etc_ar" (63 text sections remaining)
+Build cfg of: "set_quoting_flags" (61 text sections remaining)
+Build cfg of: "rpl_nl_langinfo" (62 text sections remaining)
+Calling "xmemdup" but CFG not yet computed.
+Delayed building cfg of: clone_quoting_options
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: parse_long_options
+Calling "strcaseeq1" but CFG not yet computed.
+Delayed building cfg of: strcaseeq0
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom_mem
+Calling "close_stream" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Build cfg of: "get_quoting_style" (59 text sections remaining)
+Build cfg of: "locale_charset" (60 text sections remaining)
+Build cfg of: "xnrealloc" (58 text sections remaining)
+Build cfg of: "xrealloc" (57 text sections remaining)
+Build cfg of: "close_stdout_set_ignore_EPIPE" (55 text sections remaining)
+Build cfg of: "rpl_mbrtowc" (56 text sections remaining)
+Build cfg of: "rpl_fseeko" (54 text sections remaining)
+Calling "quotearg_buffer_restyled" but CFG not yet computed.
+Delayed building cfg of: quotearg_buffer
+Build cfg of: "c_isalpha" (52 text sections remaining)
+Build cfg of: "set_char_quoting" (53 text sections remaining)
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_colon
+Build cfg of: "quotearg_buffer_restyled" (51 text sections remaining)
+Build cfg of: "rpl_fclose" (50 text sections remaining)
+Build cfg of: "xnmalloc" (49 text sections remaining)
+Build cfg of: "xmalloc" (48 text sections remaining)
+Build cfg of: "strcaseeq1" (47 text sections remaining)
+Build cfg of: "strcaseeq2" (46 text sections remaining)
+Build cfg of: "strcaseeq3" (45 text sections remaining)
+Build cfg of: "strcaseeq4" (44 text sections remaining)
+Build cfg of: "strcaseeq5" (43 text sections remaining)
+Build cfg of: "strcaseeq6" (42 text sections remaining)
+Build cfg of: "strcaseeq7" (41 text sections remaining)
+Build cfg of: "x2realloc" (40 text sections remaining)
+Build cfg of: "xcalloc" (39 text sections remaining)
+Build cfg of: "xmemdup" (38 text sections remaining)
+Build cfg of: "xstrdup" (37 text sections remaining)
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: parse_gnu_standard_options_only
+Calling "version_etc_va" but CFG not yet computed.
+Delayed building cfg of: version_etc
+Build cfg of: "xcharalloc" (36 text sections remaining)
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_custom_mem
+Build cfg of: "close_stream" (35 text sections remaining)
+Build cfg of: "version_etc_va" (34 text sections remaining)
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_custom
+Calling "strcaseeq0" but CFG not yet computed.
+Delayed building cfg of: gettext_quote
+Build cfg of: "quotearg_n_mem" (33 text sections remaining)
+Build cfg of: "quotearg" (32 text sections remaining)
+Build cfg of: "quotearg_mem" (31 text sections remaining)
+Calling "parse_gnu_standard_options_only" but CFG not yet computed.
+Delayed building cfg of: main
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_char_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_char
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_colon_mem
+Build cfg of: "xzalloc" (30 text sections remaining)
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_n_style_mem
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style
+Calling "quotearg_n_options" but CFG not yet computed.
+Delayed building cfg of: quotearg_style_mem
+Build cfg of: "quote_n_mem" (29 text sections remaining)
+Build cfg of: "quote_mem" (28 text sections remaining)
+Build cfg of: "quote_n" (27 text sections remaining)
+Build cfg of: "quote" (26 text sections remaining)
+Build cfg of: "quotearg_alloc" (25 text sections remaining)
+Build cfg of: "quotearg_alloc_mem" (24 text sections remaining)
+Build cfg of: "quotearg_n" (23 text sections remaining)
+Build cfg of: "quotearg_n_options" (22 text sections remaining)
+Build cfg of: "quotearg_n_style" (21 text sections remaining)
+Build cfg of: "clone_quoting_options" (20 text sections remaining)
+Build cfg of: "parse_long_options" (19 text sections remaining)
+Build cfg of: "strcaseeq0" (18 text sections remaining)
+Build cfg of: "quotearg_custom_mem" (17 text sections remaining)
+Calling "quotearg_colon" but CFG not yet computed.
+Delayed building cfg of: close_stdout
+Build cfg of: "quotearg_buffer" (16 text sections remaining)
+Build cfg of: "quotearg_n_style_colon" (15 text sections remaining)
+Build cfg of: "parse_gnu_standard_options_only" (14 text sections remaining)
+Build cfg of: "version_etc" (13 text sections remaining)
+Build cfg of: "quotearg_n_custom" (12 text sections remaining)
+Build cfg of: "quotearg_n_custom_mem" (11 text sections remaining)
+Build cfg of: "quotearg_custom" (10 text sections remaining)
+Build cfg of: "gettext_quote" (9 text sections remaining)
+Build cfg of: "main" (8 text sections remaining)
+Build cfg of: "quotearg_char_mem" (7 text sections remaining)
+Build cfg of: "quotearg_char" (6 text sections remaining)
+Build cfg of: "quotearg_colon" (5 text sections remaining)
+Build cfg of: "quotearg_colon_mem" (4 text sections remaining)
+Build cfg of: "quotearg_n_style_mem" (3 text sections remaining)
+Build cfg of: "quotearg_style" (2 text sections remaining)
+Build cfg of: "quotearg_style_mem" (1 text sections remaining)
+Build cfg of: "close_stdout" (0 text sections remaining)
+(20,fromList [(0,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(1,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(2,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(3,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(4,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(5,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(6,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(7,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(8,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(9,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(10,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(11,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(12,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(13,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(14,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(15,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(16,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(17,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(18,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(19,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(20,RSP == Var: RSP0 && RBP == Var: RBP0),(21,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(22,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0)])
+Considering text section (0/90): "close_stdout"
+--------
+.dot code for CFG of text section close_stdout for Vanilla
+diGraph close_stdout_Vanilla{
+	close_stdout_0  [label="[close_stdout_263,close_stdout_263]"]
+	close_stdout_1  [label="[close_stdout_264,close_stdout_265]"]
+	close_stdout_2  [label="[close_stdout_286,close_stdout_290]"]
+	close_stdout_3  [label="[close_stdout_291,close_stdout_291]"]
+	close_stdout_4  [label="[.label_39,.label_39]"]
+	close_stdout_5  [label="[close_stdout_299,close_stdout_299]"]
+	close_stdout_6  [label="[close_stdout_300,close_stdout_305]"]
+	close_stdout_7  [label="[close_stdout_306,close_stdout_306]"]
+	close_stdout_8  [label="[.label_38,close_stdout_278]"]
+	close_stdout_9  [label="[close_stdout_279,close_stdout_279]"]
+	close_stdout_10  [label="[close_stdout_280,close_stdout_281]"]
+	close_stdout_11  [label="[close_stdout_282,close_stdout_282]"]
+	close_stdout_12  [label="[close_stdout_283,close_stdout_285]"]
+	close_stdout_13  [label="[close_stdout_261,close_stdout_262]"]
+	close_stdout_14  [label="[close_stdout_271,close_stdout_274]"]
+	close_stdout_15  [label="[.label_37,.label_37]"]
+	close_stdout_16  [label="[close_stdout_296,close_stdout_296]"]
+	close_stdout_17  [label="[.label_36,.label_36]"]
+	close_stdout_18  [label="[close_stdout_268,close_stdout_268]"]
+	close_stdout_19  [label="[close_stdout_269,close_stdout_270]"]
+	close_stdout_20  [label="[close_stdout,close_stdout_257]"]
+	close_stdout_21  [label="[close_stdout_258,close_stdout_258]"]
+	close_stdout_22  [label="[close_stdout_259,close_stdout_260]"]
+
+	close_stdout_0 -> close_stdout_1;
+	close_stdout_1 -> close_stdout_8 [label="!ZF"];
+	close_stdout_1 -> close_stdout_17 [label="ZF"];
+	close_stdout_2 -> close_stdout_3;
+
+	close_stdout_4 -> close_stdout_5;
+	close_stdout_5 -> close_stdout_6;
+	close_stdout_6 -> close_stdout_7;
+
+	close_stdout_8 -> close_stdout_9;
+	close_stdout_9 -> close_stdout_10;
+	close_stdout_10 -> close_stdout_11;
+	close_stdout_11 -> close_stdout_12;
+	close_stdout_12 -> close_stdout_4 [label="!ZF"];
+	close_stdout_12 -> close_stdout_2 [label="ZF"];
+	close_stdout_13 -> close_stdout_8 [label="ZF"];
+	close_stdout_13 -> close_stdout_0 [label="!ZF"];
+
+	close_stdout_15 -> close_stdout_16;
+
+	close_stdout_17 -> close_stdout_18;
+	close_stdout_18 -> close_stdout_19;
+	close_stdout_19 -> close_stdout_15 [label="!ZF"];
+	close_stdout_19 -> close_stdout_14 [label="ZF"];
+	close_stdout_20 -> close_stdout_21;
+	close_stdout_21 -> close_stdout_22;
+	close_stdout_22 -> close_stdout_17 [label="ZF"];
+	close_stdout_22 -> close_stdout_13 [label="!ZF"];
+}
+--------
+--------
+.dot code for CFG of text section close_stdout for Randomized
+diGraph close_stdout_Randomized{
+	close_stdout_0  [label="[close_stdout_2603,close_stdout_2603]"]
+	close_stdout_1  [label="[close_stdout_2604,close_stdout_2605]"]
+	close_stdout_2  [label="[quotearg_custom_mem_2576,quotearg_custom_mem_2580]"]
+	close_stdout_3  [label="[quotearg_custom_mem_2581,quotearg_custom_mem_2581]"]
+	close_stdout_4  [label="[.label_162,.label_162]"]
+	close_stdout_5  [label="[quotearg_custom_mem_2553,quotearg_custom_mem_2553]"]
+	close_stdout_6  [label="[quotearg_custom_mem_2554,quotearg_custom_mem_2559]"]
+	close_stdout_7  [label="[quotearg_custom_mem_2560,quotearg_custom_mem_2560]"]
+	close_stdout_8  [label="[.label_166,quotearg_custom_mem_2568]"]
+	close_stdout_9  [label="[quotearg_custom_mem_2569,quotearg_custom_mem_2569]"]
+	close_stdout_10  [label="[quotearg_custom_mem_2570,quotearg_custom_mem_2571]"]
+	close_stdout_11  [label="[quotearg_custom_mem_2572,quotearg_custom_mem_2572]"]
+	close_stdout_12  [label="[quotearg_custom_mem_2573,quotearg_custom_mem_2575]"]
+	close_stdout_13  [label="[close_stdout_2601,close_stdout_2602]"]
+	close_stdout_14  [label="[close_stdout_2611,close_stdout_2614]"]
+	close_stdout_15  [label="[.label_167,.label_167]"]
+	close_stdout_16  [label="[quotearg_custom_mem_2586,quotearg_custom_mem_2586]"]
+	close_stdout_17  [label="[.label_165,.label_165]"]
+	close_stdout_18  [label="[close_stdout_2608,close_stdout_2608]"]
+	close_stdout_19  [label="[close_stdout_2609,close_stdout_2610]"]
+	close_stdout_20  [label="[close_stdout,close_stdout_2597]"]
+	close_stdout_21  [label="[close_stdout_2598,close_stdout_2598]"]
+	close_stdout_22  [label="[close_stdout_2599,close_stdout_2600]"]
+
+	close_stdout_0 -> close_stdout_1;
+	close_stdout_1 -> close_stdout_8 [label="!ZF"];
+	close_stdout_1 -> close_stdout_17 [label="ZF"];
+	close_stdout_2 -> close_stdout_3;
+
+	close_stdout_4 -> close_stdout_5;
+	close_stdout_5 -> close_stdout_6;
+	close_stdout_6 -> close_stdout_7;
+
+	close_stdout_8 -> close_stdout_9;
+	close_stdout_9 -> close_stdout_10;
+	close_stdout_10 -> close_stdout_11;
+	close_stdout_11 -> close_stdout_12;
+	close_stdout_12 -> close_stdout_4 [label="!ZF"];
+	close_stdout_12 -> close_stdout_2 [label="ZF"];
+	close_stdout_13 -> close_stdout_8 [label="ZF"];
+	close_stdout_13 -> close_stdout_0 [label="!ZF"];
+
+	close_stdout_15 -> close_stdout_16;
+
+	close_stdout_17 -> close_stdout_18;
+	close_stdout_18 -> close_stdout_19;
+	close_stdout_19 -> close_stdout_15 [label="!ZF"];
+	close_stdout_19 -> close_stdout_14 [label="ZF"];
+	close_stdout_20 -> close_stdout_21;
+	close_stdout_21 -> close_stdout_22;
+	close_stdout_22 -> close_stdout_17 [label="ZF"];
+	close_stdout_22 -> close_stdout_13 [label="!ZF"];
+}
+--------
+Starting Node: 20
+
+Edges: 0 ----> 1, 1 --!ZF--> 8, 1 --ZF--> 17, 2 ----> 3, , 4 ----> 5, 5 ----> 6, 6 ----> 7, , 8 ----> 9, 9 ----> 10, 10 ----> 11, 11 ----> 12, 12 --!ZF--> 4, 12 --ZF--> 2, 13 --ZF--> 8, 13 --!ZF--> 0, , 15 ----> 16, , 17 ----> 18, 18 ----> 19, 19 --!ZF--> 15, 19 --ZF--> 14, 20 ----> 21, 21 ----> 22, 22 --ZF--> 17, 22 --!ZF--> 13
+
+Symbolic Execution for Binary "Vanilla":
+Current text section: "close_stdout"
+node 0:
+RAX := __errno_location@()
+node 1:
+ZF := CMP(Dereference: [Reg: RAX,4],Value: 32), CF := CMP(Dereference: [Reg: RAX,4],Value: 32), SF := CMP(Dereference: [Reg: RAX,4],Value: 32), OF := CMP(Dereference: [Reg: RAX,4],Value: 32), PF := CMP(Dereference: [Reg: RAX,4],Value: 32)
+node 2:
+RAX := Value: 0, RCX := Reg: R14, RDX := Dereference: [Var: label_41,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4]
+ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+node 3:
+RAX := error@()
+node 4:
+RDI := Reg: RBX
+node 5:
+RAX := quotearg_colon@()
+node 6:
+RAX := Value: 0, RCX := Reg: RAX, RDX := Dereference: [Var: label_42,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4], R8 := Reg: R14
+ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+node 7:
+RAX := error@()
+node 8:
+RDX := Value: 5, RDI := Value: 0, RSI := Dereference: [Var: label_40,4]
+ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+node 9:
+RAX := dcgettext@()
+node 10:
+RBX := Dereference: [(Var: returned + Var: file_name),8], R14 := Reg: RAX
+node 11:
+RAX := __errno_location@()
+node 12:
+ZF := TEST(Reg: RBX,Reg: RBX), CF := TEST(Reg: RBX,Reg: RBX), SF := TEST(Reg: RBX,Reg: RBX), OF := TEST(Reg: RBX,Reg: RBX), PF := TEST(Reg: RBX,Reg: RBX)
+node 13:
+ZF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), CF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), SF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), OF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), PF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0)
+node 14:
+RBX := Dereference: [(Var: RSP0 - Value: 24),8], R14 := Dereference: [(Var: RSP0 - Value: 16),8]
+node 15:
+RDI := Dereference: [(Var: returned + Var: exit_failure),4]
+node 16:
+RAX := _exit@()
+node 17:
+RDI := Dereference: [(Var: returned + Var: stderr),8]
+node 18:
+RAX := close_stream@()
+node 19:
+ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+node 20:
+RDI := Dereference: [(Var: returned + Var: stdout),8]
+[(Var: RSP0 - Value: 8),8] := Var: RBP0, [(Var: RSP0 -(20,fromList [(0,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(1,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(2,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(3,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(4,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(5,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(6,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(7,RSP == (Var: RSP0 - Value: 24) && RBP == Dereference: [Reg: RAX,4]),(8,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(9,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(10,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(11,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(12,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(13,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(14,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(15,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(16,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(17,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(18,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(19,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(20,RSP == Var: RSP0 && RBP == Var: RBP0),(21,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(22,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0)])
+ Value: 16),8] := Reg: R14, [(Var: RSP0 - Value: 24),8] := Reg: RBX
+node 21:
+RAX := close_stream@()
+node 22:
+ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+--------
+
+Starting Node: 20
+
+Edges: 0 ----> 1, 1 --!ZF--> 8, 1 --ZF--> 17, 2 ----> 3, , 4 ----> 5, 5 ----> 6, 6 ----> 7, , 8 ----> 9, 9 ----> 10, 10 ----> 11, 11 ----> 12, 12 --!ZF--> 4, 12 --ZF--> 2, 13 --ZF--> 8, 13 --!ZF--> 0, , 15 ----> 16, , 17 ----> 18, 18 ----> 19, 19 --!ZF--> 15, 19 --ZF--> 14, 20 ----> 21, 21 ----> 22, 22 --ZF--> 17, 22 --!ZF--> 13
+
+Symbolic Execution for Binary "Randomized":
+Current text section: "close_stdout"
+node 0:
+RAX := __errno_location@()
+node 1:
+ZF := CMP(Dereference: [Reg: RAX,4],Value: 32), CF := CMP(Dereference: [Reg: RAX,4],Value: 32), SF := CMP(Dereference: [Reg: RAX,4],Value: 32), OF := CMP(Dereference: [Reg: RAX,4],Value: 32), PF := CMP(Dereference: [Reg: RAX,4],Value: 32)
+node 2:
+RAX := Value: 0, RCX := Reg: R14, RDX := Dereference: [Var: label_142,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4]
+ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+node 3:
+RAX := error@()
+node 4:
+RDI := Reg: RBX
+node 5:
+RAX := quotearg_colon@()
+node 6:
+RAX := Value: 0, RCX := Reg: RAX, RDX := Dereference: [Var: label_164,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4], R8 := Reg: R14
+ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+node 7:
+RAX := error@()
+node 8:
+RDX := Value: 5, RDI := Value: 0, RSI := Dereference: [Var: label_163,4]
+ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+node 9:
+RAX := dcgettext@()
+node 10:
+RBX := Dereference: [(Var: returned + Var: file_name),8], R14 := Reg: RAX
+node 11:
+RAX := __errno_location@()
+node 12:
+ZF := TEST(Reg: RBX,Reg: RBX), CF := TEST(Reg: RBX,Reg: RBX), SF := TEST(Reg: RBX,Reg: RBX), OF := TEST(Reg: RBX,Reg: RBX), PF := TEST(Reg: RBX,Reg: RBX)
+node 13:
+ZF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), CF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), SF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), OF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), PF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0)
+node 14:
+RBX := Dereference: [(Var: RSP0 - Value: 24),8], R14 := Dereference: [(Var: RSP0 - Value: 16),8]
+node 15:
+RDI := Dereference: [(Var: returned + Var: exit_failure),4]
+node 16:
+RAX := _exit@()
+node 17:
+RDI := Dereference: [(Var: returned + Var: stderr),8]
+node 18:
+RAX := close_stream@()
+node 19:
+ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+node 20:
+RDI := Dereference: [(Var: returned + Var: stdout),8]
+[(Var: RSP0 - Value: 8),8] := Var: RBP0, [(Var: RSP0 - Value: 16),8] := Reg: R14, [(Var: RSP0 - Value: 24),8] := Reg: RBX
+node 21:
+RAX := close_stream@()
+node 22:
+ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+--------
+
+same_behavior for the nodes: close_stdout -> close_stdout_257 and close_stdout -> close_stdout_2597
+
+same_behavior checking these two SStates:
+
+SA || RDI := Dereference: [(Var: returned + Var: stdout),8]
+SA || [(Var: RSP0 - Value: 8),8] := Var: RBP0, [(Var: RSP0 - Value: 16),8] := Reg: R14, [(Var: RSP0 - Value: 24),8] := Reg: RBX
+
+SB || RDI := Dereference: [(Var: returned + Var: stdout),8]
+SB || [(Var: RSP0 - Value: 8),8] := Var: RBP0, [(Var: RSP0 - Value: 16),8] := Reg: R14, [(Var: RSP0 - Value: 24),8] := Reg: RBX
+
+Resulting values:
+Value A:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "stdout" 64]) 8
+Value B:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "stdout" 64]) 8
+Reg Chk: True
+local_var_cmp called
+
+If resulting values:
+(a1 := a2):
+E_app (Op SUB) [E_var "RSP0" 64,E_val 8 64]
+E_app (Op SUB) [E_var "RSP0" 64,E_val 8 64]
+(v1 := v2):
+E_var "RBP0" 64
+E_var "RBP0" 64
+b0: True b1: True
+local_var_cmp called
+
+local_var_cmp called
+
+local_var_cmp called
+
+local_var_cmp called
+
+If resulting values:
+(a1 := a2):
+E_app (Op SUB) [E_var "RSP0" 64,E_val 16 64]
+E_app (Op SUB) [E_var "RSP0" 64,E_val 16 64]
+(v1 := v2):
+E_reg R14
+E_reg R14
+b0: True b1: True
+local_var_cmp called
+
+local_var_cmp called
+
+local_var_cmp called
+
+local_var_cmp called
+
+If resulting values:
+(a1 := a2):
+E_app (Op SUB) [E_var "RSP0" 64,E_val 24 64]
+E_app (Op SUB) [E_var "RSP0" 64,E_val 24 64]
+(v1 := v2):
+E_reg RBX
+E_reg RBX
+b0: True b1: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout -> close_stdout_257 and close_stdout -> close_stdout_2597 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_258 -> close_stdout_258 and close_stdout_2598 -> close_stdout_2598
+
+same_behavior checking these two SStates:
+
+SA || RAX := close_stream@()
+
+SB || RAX := close_stream@()
+
+Resulting values:
+Value A:
+E_app (F2 "close_stream" "") []
+Value B:
+E_app (F2 "close_stream" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_258 -> close_stdout_258 and close_stdout_2598 -> close_stdout_2598 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_259 -> close_stdout_260 and close_stdout_2599 -> close_stdout_2600
+
+same_behavior checking these two SStates:
+
+SA || ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+
+SB || ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_259 -> close_stdout_260 and close_stdout_2599 -> close_stdout_2600 have been verified to do the same.
+
+same_behavior for the nodes: .label_36 -> .label_36 and .label_165 -> .label_165
+
+same_behavior checking these two SStates:
+
+SA || RDI := Dereference: [(Var: returned + Var: stderr),8]
+
+SB || RDI := Dereference: [(Var: returned + Var: stderr),8]
+
+Resulting values:
+Value A:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "stderr" 64]) 8
+Value B:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "stderr" 64]) 8
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes .label_36 -> .label_36 and .label_165 -> .label_165 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_268 -> close_stdout_268 and close_stdout_2608 -> close_stdout_2608
+
+same_behavior checking these two SStates:
+
+SA || RAX := close_stream@()
+
+SB || RAX := close_stream@()
+
+Resulting values:
+Value A:
+E_app (F2 "close_stream" "") []
+Value B:
+E_app (F2 "close_stream" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_268 -> close_stdout_268 and close_stdout_2608 -> close_stdout_2608 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_269 -> close_stdout_270 and close_stdout_2609 -> close_stdout_2610
+
+same_behavior checking these two SStates:
+
+SA || ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+
+SB || ZF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), CF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), SF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), OF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX)), PF := TEST(TakeBits: <31,0>(Reg: RAX),TakeBits: <31,0>(Reg: RAX))
+
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_269 -> close_stdout_270 and close_stdout_2609 -> close_stdout_2610 have been verified to do the same.
+
+same_behavior for the nodes: .label_37 -> .label_37 and .label_167 -> .label_167
+
+same_behavior checking these two SStates:
+
+SA || RDI := Dereference: [(Var: returned + Var: exit_failure),4]
+
+SB || RDI := Dereference: [(Var: returned + Var: exit_failure),4]
+
+Resulting values:
+Value A:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "exit_failure" 64]) 4
+Value B:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "exit_failure" 64]) 4
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes .label_37 -> .label_37 and .label_167 -> .label_167 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_296 -> close_stdout_296 and quotearg_custom_mem_2586 -> quotearg_custom_mem_2586
+
+same_behavior checking these two SStates:
+
+SA || RAX := _exit@()
+
+SB || RAX := _exit@()
+
+Resulting values:
+Value A:
+E_app (F2 "_exit" "") []
+Value B:
+E_app (F2 "_exit" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_296 -> close_stdout_296 and quotearg_custom_mem_2586 -> quotearg_custom_mem_2586 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_271 -> close_stdout_274 and close_stdout_2611 -> close_stdout_2614
+
+same_behavior checking these two SStates:
+
+SA || RBX := Dereference: [(Var: RSP0 - Value: 24),8], R14 := Dereference: [(Var: RSP0 - Value: 16),8]
+
+SB || RBX := Dereference: [(Var: RSP0 - Value: 24),8], R14 := Dereference: [(Var: RSP0 - Value: 16),8]
+
+Resulting values:
+Value A:
+E_deref (E_app (Op SUB) [E_var "RSP0" 64,E_val 24 64]) 8
+Value B:
+E_deref (E_app (Op SUB) [E_var "RSP0" 64,E_val 24 64]) 8
+local_var_cmp called
+
+Resulting values:
+Value A:
+E_deref (E_app (Op SUB) [E_var "RSP0" 64,E_val 16 64]) 8
+Value B:
+E_deref (E_app (Op SUB) [E_var "RSP0" 64,E_val 16 64]) 8
+local_var_cmp called
+
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_271 -> close_stdout_274 and close_stdout_2611 -> close_stdout_2614 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_261 -> close_stdout_262 and close_stdout_2601 -> close_stdout_2602
+
+same_behavior checking these two SStates:
+
+SA || ZF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), CF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), SF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), OF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0), PF := CMP(Dereference: [(Var: close_stdout_261 + Var: ignore_EPIPE),1],Value: 0)
+
+SB || ZF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), CF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), SF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), OF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0), PF := CMP(Dereference: [(Var: close_stdout_2601 + Var: ignore_EPIPE),1],Value: 0)
+
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_261 -> close_stdout_262 and close_stdout_2601 -> close_stdout_2602 have been verified to do the same.
+
+same_behavior for the nodes: .label_38 -> close_stdout_278 and .label_166 -> quotearg_custom_mem_2568
+
+same_behavior checking these two SStates:
+
+SA || RDX := Value: 5, RDI := Value: 0, RSI := Dereference: [Var: label_40,4]
+SA || ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+
+SB || RDX := Value: 5, RDI := Value: 0, RSI := Dereference: [Var: label_163,4]
+SB || ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+
+Resulting values:
+Value A:
+E_val 5 32
+Value B:
+E_val 5 32
+Resulting values:
+Value A:
+E_val 0 32
+Value B:
+E_val 0 32
+Resulting values:
+Value A:
+E_deref (E_var "label_40" 64) 4
+Value B:
+E_deref (E_var "label_163" 64) 4
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes .label_38 -> close_stdout_278 and .label_166 -> quotearg_custom_mem_2568 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_279 -> close_stdout_279 and quotearg_custom_mem_2569 -> quotearg_custom_mem_2569
+
+same_behavior checking these two SStates:
+
+SA || RAX := dcgettext@()
+
+SB || RAX := dcgettext@()
+
+Resulting values:
+Value A:
+E_app (F2 "dcgettext" "") []
+Value B:
+E_app (F2 "dcgettext" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_279 -> close_stdout_279 and quotearg_custom_mem_2569 -> quotearg_custom_mem_2569 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_280 -> close_stdout_281 and quotearg_custom_mem_2570 -> quotearg_custom_mem_2571
+
+same_behavior checking these two SStates:
+
+SA || RBX := Dereference: [(Var: returned + Var: file_name),8], R14 := Reg: RAX
+
+SB || RBX := Dereference: [(Var: returned + Var: file_name),8], R14 := Reg: RAX
+
+Resulting values:
+Value A:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "file_name" 64]) 8
+Value B:
+E_deref (E_app (Op ADD) [E_var "returned" 64,E_var "file_name" 64]) 8
+Resulting values:
+Value A:
+E_reg RAX
+Value B:
+E_reg RAX
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_280 -> close_stdout_281 and quotearg_custom_mem_2570 -> quotearg_custom_mem_2571 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_282 -> close_stdout_282 and quotearg_custom_mem_2572 -> quotearg_custom_mem_2572
+
+same_behavior checking these two SStates:
+
+SA || RAX := __errno_location@()
+
+SB || RAX := __errno_location@()
+
+Resulting values:
+Value A:
+E_app (F2 "__errno_location" "") []
+Value B:
+E_app (F2 "__errno_location" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_282 -> close_stdout_282 and quotearg_custom_mem_2572 -> quotearg_custom_mem_2572 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_283 -> close_stdout_285 and quotearg_custom_mem_2573 -> quotearg_custom_mem_2575
+
+same_behavior checking these two SStates:
+
+SA || ZF := TEST(Reg: RBX,Reg: RBX), CF := TEST(Reg: RBX,Reg: RBX), SF := TEST(Reg: RBX,Reg: RBX), OF := TEST(Reg: RBX,Reg: RBX), PF := TEST(Reg: RBX,Reg: RBX)
+
+SB || ZF := TEST(Reg: RBX,Reg: RBX), CF := TEST(Reg: RBX,Reg: RBX), SF := TEST(Reg: RBX,Reg: RBX), OF := TEST(Reg: RBX,Reg: RBX), PF := TEST(Reg: RBX,Reg: RBX)
+
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_283 -> close_stdout_285 and quotearg_custom_mem_2573 -> quotearg_custom_mem_2575 have been verified to do the same.
+
+same_behavior for the nodes: .label_39 -> .label_39 and .label_162 -> .label_162
+
+same_behavior checking these two SStates:
+
+SA || RDI := Reg: RBX
+
+SB || RDI := Reg: RBX
+
+Resulting values:
+Value A:
+E_reg RBX
+Value B:
+E_reg RBX
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes .label_39 -> .label_39 and .label_162 -> .label_162 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_299 -> close_stdout_299 and quotearg_custom_mem_2553 -> quotearg_custom_mem_2553
+
+same_behavior checking these two SStates:
+
+SA || RAX := quotearg_colon@()
+
+SB || RAX := quotearg_colon@()
+
+Resulting values:
+Value A:
+E_app (F2 "quotearg_colon" "") []
+Value B:
+E_app (F2 "quotearg_colon" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_299 -> close_stdout_299 and quotearg_custom_mem_2553 -> quotearg_custom_mem_2553 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_300 -> close_stdout_305 and quotearg_custom_mem_2554 -> quotearg_custom_mem_2559
+
+same_behavior checking these two SStates:
+
+SA || RAX := Value: 0, RCX := Reg: RAX, RDX := Dereference: [Var: label_42,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4], R8 := Reg: R14
+SA || ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+
+SB || RAX := Value: 0, RCX := Reg: RAX, RDX := Dereference: [Var: label_164,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4], R8 := Reg: R14
+SB || ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+
+Resulting values:
+Value A:
+E_val 0 32
+Value B:
+E_val 0 32
+Resulting values:
+Value A:
+E_reg RAX
+Value B:
+E_reg RAX
+Resulting values:
+Value A:
+E_deref (E_var "label_42" 64) 4
+Value B:
+E_deref (E_var "label_164" 64) 4
+Resulting values:
+Value A:
+E_val 0 32
+Value B:
+E_val 0 32
+Resulting values:
+Value A:
+E_deref (E_reg RAX) 4
+Value B:
+E_deref (E_reg RAX) 4
+Resulting values:
+Value A:
+E_reg R14
+Value B:
+E_reg R14
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_300 -> close_stdout_305 and quotearg_custom_mem_2554 -> quotearg_custom_mem_2559 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_306 -> close_stdout_306 and quotearg_custom_mem_2560 -> quotearg_custom_mem_2560
+
+same_behavior checking these two SStates:
+
+SA || RAX := error@()
+
+SB || RAX := error@()
+
+Resulting values:
+Value A:
+E_app (F2 "error" "") []
+Value B:
+E_app (F2 "error" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_306 -> close_stdout_306 and quotearg_custom_mem_2560 -> quotearg_custom_mem_2560 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_286 -> close_stdout_290 and quotearg_custom_mem_2576 -> quotearg_custom_mem_2580
+
+same_behavior checking these two SStates:
+
+SA || RAX := Value: 0, RCX := Reg: R14, RDX := Dereference: [Var: label_41,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4]
+SA || ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+
+SB || RAX := Value: 0, RCX := Reg: R14, RDX := Dereference: [Var: label_142,4], RDI := Value: 0, RSI := Dereference: [Reg: RAX,4]
+SB || ZF := Value: 0, CF := Value: 0, SF := Value: 0, OF := Value: 0, PF := Value: 0
+
+Resulting values:
+Value A:
+E_val 0 32
+Value B:
+E_val 0 32
+Resulting values:
+Value A:
+E_reg R14
+Value B:
+E_reg R14
+Resulting values:
+Value A:
+E_deref (E_var "label_41" 64) 4
+Value B:
+E_deref (E_var "label_142" 64) 4
+Resulting values:
+Value A:
+E_val 0 32
+Value B:
+E_val 0 32
+Resulting values:
+Value A:
+E_deref (E_reg RAX) 4
+Value B:
+E_deref (E_reg RAX) 4
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_286 -> close_stdout_290 and quotearg_custom_mem_2576 -> quotearg_custom_mem_2580 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_291 -> close_stdout_291 and quotearg_custom_mem_2581 -> quotearg_custom_mem_2581
+
+same_behavior checking these two SStates:
+
+SA || RAX := error@()
+
+SB || RAX := error@()
+
+Resulting values:
+Value A:
+E_app (F2 "error" "") []
+Value B:
+E_app (F2 "error" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_291 -> close_stdout_291 and quotearg_custom_mem_2581 -> quotearg_custom_mem_2581 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_263 -> close_stdout_263 and close_stdout_2603 -> close_stdout_2603
+
+same_behavior checking these two SStates:
+
+SA || RAX := __errno_location@()
+
+SB || RAX := __errno_location@()
+
+Resulting values:
+Value A:
+E_app (F2 "__errno_location" "") []
+Value B:
+E_app (F2 "__errno_location" "") []
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_263 -> close_stdout_263 and close_stdout_2603 -> close_stdout_2603 have been verified to do the same.
+
+same_behavior for the nodes: close_stdout_264 -> close_stdout_265 and close_stdout_2604 -> close_stdout_2605
+
+same_behavior checking these two SStates:
+
+SA || ZF := CMP(Dereference: [Reg: RAX,4],Value: 32), CF := CMP(Dereference: [Reg: RAX,4],Value: 32), SF := CMP(Dereference: [Reg: RAX,4],Value: 32), OF := CMP(Dereference: [Reg: RAX,4],Value: 32), PF := CMP(Dereference: [Reg: RAX,4],Value: 32)
+
+SB || ZF := CMP(Dereference: [Reg: RAX,4],Value: 32), CF := CMP(Dereference: [Reg: RAX,4],Value: 32), SF := CMP(Dereference: [Reg: RAX,4],Value: 32), OF := CMP(Dereference: [Reg: RAX,4],Value: 32), PF := CMP(Dereference: [Reg: RAX,4],Value: 32)
+
+Reg Chk: True
+Mem Chk: True
+Result: Success
+Nodes close_stdout_264 -> close_stdout_265 and close_stdout_2604 -> close_stdout_2605 have been verified to do the same.
+
+Label relationship:
+label_41 <--> label_142
+label_42 <--> label_164
+file_name <--> file_name
+label_40 <--> label_163
+exit_failure <--> exit_failure
+stderr <--> stderr
+ <--> 
+stdout <--> stdout
+returned <--> returned
+
+Local variable relationship:
+(Var: RSP0 - Value: 24) <--> (Var: RSP0 - Value: 24)
+(Var: RSP0 - Value: 16) <--> (Var: RSP0 - Value: 16)
+(Var: RSP0 - Value: 8) <--> (Var: RSP0 - Value: 8)
+
+Succesful check!
+Considering text section (1/90): "close_stream"
+--------
+.dot code for CFG of text section close_stream for Vanilla
+diGraph close_stream_Vanilla{
+	close_stream_0  [label="[close_stream_3772,close_stream_3772]"]
+	close_stream_1  [label="[close_stream_3773,close_stream_3774]"]
+	close_stream_2  [label="[close_stream_3769,close_stream_3771]"]
+	close_stream_3  [label="[close_stream_3784,close_stream_3784]"]
+	close_stream_4  [label="[close_stream_3785,close_stream_3788]"]
+	close_stream_5  [label="[close_stream_3782,close_stream_3783]"]
+	close_stream_6  [label="[.label_279,close_stream_3794]"]
+	close_stream_7  [label="[.label_280,close_stream_3781]"]
+	close_stream_8  [label="[close_stream,close_stream_3759]"]
+	close_stream_9  [label="[close_stream_3760,close_stream_3760]"]
+	close_stream_10  [label="[close_stream_3761,close_stream_3762]"]
+	close_stream_11  [label="[close_stream_3763,close_stream_3763]"]
+	close_stream_12  [label="[close_stream_3764,close_stream_3765]"]
+	close_stream_13  [label="[close_stream_3766,close_stream_3766]"]
+	close_stream_14  [label="[close_stream_3767,close_stream_3768]"]
+
+	close_stream_0 -> close_stream_1;
+	close_stream_1 -> close_stream_6;
+	close_stream_2 -> close_stream_6 [label="!ZF"];
+	close_stream_2 -> close_stream_0 [label="ZF"];
+	close_stream_3 -> close_stream_4;
+	close_stream_4 -> close_stream_6;
+	close_stream_5 -> close_stream_6 [label="!ZF"];
+	close_stream_5 -> close_stream_3 [label="ZF"];
+
+	close_stream_7 -> close_stream_6 [label="!ZF"];
+	close_stream_7 -> close_stream_5 [label="ZF"];
+	close_stream_8 -> close_stream_9;
+	close_stream_9 -> close_stream_10;
+	close_stream_10 -> close_stream_11;
+	close_stream_11 -> close_stream_12;
+	close_stream_12 -> close_stream_13;
+	close_stream_13 -> close_stream_14;
+	close_stream_14 -> close_stream_7 [label="ZF"];
+	close_stream_14 -> close_stream_2 [label="!ZF"];
+}
+--------
+--------
+.dot code for CFG of text section close_stream for Randomized
+diGraph close_stream_Randomized{
+	close_stream_0  [label="[close_stream_1009,close_stream_1009]"]
+	close_stream_1  [label="[close_stream_1010,close_stream_1011]"]
+	close_stream_2  [label="[close_stream_1006,close_stream_1008]"]
+	close_stream_3  [label="[c_tolower_974,c_tolower_974]"]
+	close_stream_4  [label="[c_tolower_975,c_tolower_978]"]
+	close_stream_5  [label="[c_tolower_972,c_tolower_973]"]
+	close_stream_6  [label="[.label_75,c_tolower_984]"]
+	close_stream_7  [label="[.label_76,c_tolower_971]"]
+	close_stream_8  [label="[close_stream,close_stream_996]"]
+	close_stream_9  [label="[close_stream_997,close_stream_997]"]
+	close_stream_10  [label="[close_stream_998,close_stream_999]"]
+	close_stream_11  [label="[close_stream_1000,close_stream_1000]"]
+	close_stream_12  [label="[close_stream_1001,close_stream_1002]"]
+	close_stream_13  [label="[close_stream_1003,close_stream_1003]"]
+	close_stream_14  [label="[close_stream_1004,close_stream_1005]"]
+
+	close_stream_0 -> close_stream_1;
+	close_stream_1 -> close_stream_6;
+	close_stream_2 -> close_stream_6 [label="!ZF"];
+	close_stream_2 -> close_stream_0 [label="ZF"];
+	close_stream_3 -> close_stream_4;
+	close_stream_4 -> close_stream_6;
+	close_stream_5 -> close_stream_6 [label="!ZF"];
+	close_stream_5 -> close_stream_3 [label="ZF"];
+
+	close_stream_7 -> close_stream_6 [label="!ZF"];
+	close_stream_7 -> close_stream_5 [label="ZF"];
+	close_stream_8 -> close_stream_9;
+	close_stream_9 -> close_stream_(8,fromList [(0,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(1,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(2,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(3,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(4,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(5,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(6,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(7,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(8,RSP == Var: RSP0 && RBP == Var: RBP0),(9,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(10,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(11,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(12,RSP == (Var: RSP0 - Value: 24) && RBP == Var: RBP0),(13,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX)),(14,RSP == (Var: RSP0 - Value: 24) && RBP == TakeBits: <31,0>(Reg: RAX))])
+10;
+	close_stream_10 -> close_stream_11;
+	close_stream_11 -> close_stream_12;
+	close_stream_12 -> close_stream_13;
+	close_stream_13 -> close_stream_14;
+	close_stream_14 -> close_stream_7 [label="ZF"];
+	close_stream_14 -> close_stream_2 [label="!ZF"];
+}
+--------
+main: Cannot translate CF in state:
+RAX := NEG(TakeBits: <31,0>(Reg: RAX)), RCX := (TakeBits: <63,8>(Reg: RCX) . (if (TakeBits: <31,0>(Reg: RAX) == Value: 0) then Value: 1 else Value: 0))
+ZF := NEG(TakeBits: <31,0>(Reg: RAX)), CF := NEG(TakeBits: <31,0>(Reg: RAX)), SF := NEG(TakeBits: <31,0>(Reg: RAX)), OF := NEG(TakeBits: <31,0>(Reg: RAX)), PF := NEG(TakeBits: <31,0>(Reg: RAX))
+CallStack (from HasCallStack):
+  error, called at ./X86_Symb.hs:1382:10 in main:X86_Symb

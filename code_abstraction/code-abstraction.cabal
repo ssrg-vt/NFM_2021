@@ -1,0 +1,56 @@
+name:                code-abstraction
+version:             0.5.0.0
+stability:           research
+-- synopsis:
+-- description:
+homepage:            https://github.com/ssrg-vt/reassembly_verification/tree/code_abstraction/code_abstraction
+license:             Apache-2.0
+license-file:        LICENSE
+author:              Freek Verbeek, Joshua A. Bockenek, Ian Roessle, Abhijith Bharadwaj, and Jae-Won Jang
+maintainer:          jabocken@vt.edu
+copyright:           2018-2019 Author Freek Verbeek, Joshua A. Bockenek, Ian Roessle, Abhijith Bharadwaj, and Jae-Won Jang
+category:            Formal Verification
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  README
+
+executable code-abstraction
+  main-is:             main.hs
+  default-language:    Haskell2010
+  default-extensions:  PartialTypeSignatures
+  other-extensions:    FlexibleInstances
+  ghc-options:         -Wno-partial-type-signatures
+  ghc-prof-options:    -fbreak-on-exception
+  build-depends:       base >= 4.7 && < 5,
+                       argparser,
+                       array,
+                       bits,
+                       containers,
+                       filepath,
+                       MissingH,
+                       mtl,
+                       parsec,
+                       parsec-numbers,
+                       process,
+                       random,
+                       bitwise >= 1,
+                       GraphSCC >= 1,
+                       Unique >= 0.4,
+                       z3 >= 408,
+		       monad-loops,
+		       cond,
+		       lens
+  other-modules:       C_Generation,
+                       Clippard,
+                       ConfigParser,
+                       Isa_EmbedBinary,
+                       ProgramTransformations,
+                       X86_ACode,
+                       X86_CFG,
+                       X86_Datastructures,
+                       X86_Expr,
+                       X86_ObjdumpDataParser,
+                       X86_ObjdumpParser,
+                       X86_Symb,
+                       Z3,
+                       Paths_code_abstraction

@@ -1,0 +1,72 @@
+-e git+https://github.com/angr/ailment@4e50d1ad6ec6184a3ac512c5f6bf1a298a9c6b8f#egg=ailment
+ana==0.6
+-e git+https://github.com/angr/angr@df14a534105df036d705e11b4388363c9894c8b3#egg=angr
+-e git+https://git:@github.com/salls/angrop@c33b76764a889c50b79c770997aaacf9c0fb2da5#egg=angrop
+-e git+https://github.com/angr/archinfo@925c4829f9bb8f6a347a3299e91a99e84da810b5#egg=archinfo
+astroid==2.2.5
+backcall==0.1.0
+bitstring==3.1.5
+cachetools==3.1.1
+capstone==4.0.1
+cffi==1.12.3
+-e git+https://github.com/angr/claripy@574fc988bae91854e52b9357f82f2797b4ad26ce#egg=claripy
+-e git+https://github.com/angr/cle@71eeb501ded37846d16be76d43ba0734cdc307f2#egg=cle
+-e git+https://github.com/mechaphish/compilerex.git@7f056afd63e2a1d9f96fa548510f3e06fb9827cb#egg=compilerex
+-e git+https://git:@github.com/zardus/cooldict@e85d9db0c0b05e95dd3bb7c1c61d24ff78167c57#egg=cooldict
+coverage==4.5.3
+decorator==4.4.0
+dpkt==1.9.2
+Fidget==1.0
+flaky==3.6.0
+future==0.17.1
+gitdb2==2.0.5
+GitPython==2.1.11
+-e git+https://git:@github.com/zardus/idalink@cf68144e7c72679a5429d8b8d9e9aa316d9b79ac#egg=idalink
+ipdb==0.12
+ipython==7.5.0
+ipython-genutils==0.2.0
+isort==4.3.21
+itanium-demangler==1.0
+jedi==0.14.0
+keystone-engine==0.9.1.post3
+lazy-object-proxy==1.4.1
+mccabe==0.6.1
+-e git+https://git:@github.com/rhelmot/monkeyhex@e586517e6b880e72ee883c0dcbb6bb9030240748#egg=monkeyhex
+-e git+https://git:@github.com/zardus/mulpyplexer@98515f1a587bc62693b6b33c730f0525ed9b85a8#egg=mulpyplexer
+networkx==2.3
+nose==1.3.7
+nose-timer==0.7.5
+parso==0.5.0
+-e git+https://github.com/angr/patcherex.git@ec612540dcc4585c8590cffd772e7c564fc0bab3#egg=patcherex
+pefile==2019.4.18
+pexpect==4.7.0
+pickleshare==0.7.5
+plumbum==1.6.7
+-e git+https://github.com/mechaphish/povsim.git@4d9330a6e26495c48d9fcaed0986969d439db223#egg=povsim
+progressbar==2.5
+prompt-toolkit==2.0.9
+protobuf==3.8.0
+psutil==5.6.3
+ptyprocess==0.6.0
+pycparser==2.19
+pyelftools==0.25
+Pygments==2.4.2
+pylint==2.3.1
+PySMT==0.8.0
+-e git+https://github.com/angr/pysoot@051ab8dc0f60d3f69c82dd7c2c5d1580f7d95e9b#egg=pysoot
+python-resources==0.3
+-e git+https://github.com/angr/pyvex@f2bcfc40256b7dad4dd12df9bba5a97e8617460f#egg=pyvex
+rpyc==4.1.0
+shellphish-qemu==0.9.10
+six==1.12.0
+smmap2==2.0.5
+sortedcontainers==2.1.0
+subprocess32==3.5.4
+timeout-decorator==0.4.1
+-e git+https://github.com/angr/tracer.git@7e9f18e796f6ac9975f361a97bafa61b817334f5#egg=tracer
+traitlets==4.3.2
+typed-ast==1.4.0
+unicorn==1.0.1
+wcwidth==0.1.7
+wrapt==1.11.2
+z3-solver==4.5.1.0.post2
