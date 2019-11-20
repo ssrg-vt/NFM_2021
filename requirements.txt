@@ -56,7 +56,7 @@ PySMT==0.8.0
 -e git+https://github.com/angr/pysoot@051ab8dc0f60d3f69c82dd7c2c5d1580f7d95e9b#egg=pysoot
 python-resources==0.3
 -e git+https://github.com/angr/pyvex@f2bcfc40256b7dad4dd12df9bba5a97e8617460f#egg=pyvex
-rpyc==4.1.0
+rpyc==4.1.2
 shellphish-qemu==0.9.10
 six==1.12.0
 smmap2==2.0.5
