@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,5,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "/home/jay/Documents/reassembly_verification/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/bin"
-libdir     = "/home/jay/Documents/reassembly_verification/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/lib/x86_64-linux-ghc-8.6.5/code-abstraction-0.5.0.0-ElXiw9tbMtv9JjDvWMHOh3-code-abstraction"
-dynlibdir  = "/home/jay/Documents/reassembly_verification/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/lib/x86_64-linux-ghc-8.6.5"
-datadir    = "/home/jay/Documents/reassembly_verification/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/share/x86_64-linux-ghc-8.6.5/code-abstraction-0.5.0.0"
-libexecdir = "/home/jay/Documents/reassembly_verification/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/libexec/x86_64-linux-ghc-8.6.5/code-abstraction-0.5.0.0"
-sysconfdir = "/home/jay/Documents/reassembly_verification/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/etc"
+bindir     = "/home/jay/usenix_2020_artifact/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/bin"
+libdir     = "/home/jay/usenix_2020_artifact/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/lib/x86_64-linux-ghc-8.6.5/code-abstraction-0.5.0.0-ElXiw9tbMtv9JjDvWMHOh3-code-abstraction"
+dynlibdir  = "/home/jay/usenix_2020_artifact/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/lib/x86_64-linux-ghc-8.6.5"
+datadir    = "/home/jay/usenix_2020_artifact/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/share/x86_64-linux-ghc-8.6.5/code-abstraction-0.5.0.0"
+libexecdir = "/home/jay/usenix_2020_artifact/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/libexec/x86_64-linux-ghc-8.6.5/code-abstraction-0.5.0.0"
+sysconfdir = "/home/jay/usenix_2020_artifact/code_abstraction/.stack-work/install/x86_64-linux/1a79cdb9fd78a598c198784efbd6ce62b29621f00004777f2c3e67503f52c2a8/8.6.5/etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "code_abstraction_bindir") (\_ -> return bindir)
