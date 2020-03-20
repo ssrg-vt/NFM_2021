@@ -95,10 +95,10 @@ error_print:
 	call	vfprintf
 	cmp	dword ptr [rbp - 4], 0
 	mov	dword ptr [rbp - 0x1c], eax
-	je	.label_13
+	je	.label_11
 	movabs	rdi, OFFSET FLAT:label_12
 	call	perror
-	jmp	.label_11
+	jmp	.label_13
 .label_16:
 	cmp	dword ptr [rbp - 8], 2
 	jle	.label_14
