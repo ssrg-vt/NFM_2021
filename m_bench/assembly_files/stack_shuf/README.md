@@ -1,5 +1,6 @@
-changed from in the function counter:
-        mov     qword ptr [rbp - 8], rdi
+changed from in the function 'report':
+
+	mov     qword ptr [rbp - 8], rdi
 	mov     qword ptr [rbp - 0x10], rsi
 	mov     qword ptr [rbp - 0x18], rdx
 			
