@@ -1,5 +1,0 @@
-Relevant vanilla text sections: 0
-Success: 0 text sections
-Failure during CFG generation (indirect branching): 0 text sections
-Failure during symbolic excution (indirect calls): 0 text sections
-Failure caused by alloca: 0 text sections
