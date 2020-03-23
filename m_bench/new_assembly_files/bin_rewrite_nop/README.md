@@ -1,0 +1,1 @@
+Statically rewrote the portion of rewrite function and replaced it with NOP insertion
