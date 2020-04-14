@@ -399,6 +399,7 @@ data Opcode = InvalidOpcode
   | ORPS
   | OUT
   | OUTS
+  | PACKUSWB
   | PADDB
   | PADDD
   | PADDQ
@@ -412,6 +413,9 @@ data Opcode = InvalidOpcode
   | PAUSE
   | PAVGB
   | PAVGW
+  | PCMPEQB
+  | PCMPGTD
+  | PCMPEQD
   | PMADDWD
   | PMAXSW
   | PMAXUB
@@ -455,6 +459,7 @@ data Opcode = InvalidOpcode
   | PSUBW
   | PUNPCKLDQ
   | PUNPCKLWD
+  | PUNPCKLBW
   | PUSH
   | PUSHA
   | PUSHAD
