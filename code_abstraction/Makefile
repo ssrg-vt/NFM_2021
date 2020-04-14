@@ -1,5 +1,4 @@
 all:
-	ghc -fno-warn-partial-type-signatures --make main.hs -odir dist -hidir dist
-
+	stack ghc -- -Wno-warn-partial-type-signatures main.hs
 clean:
 	rm main dist/*.hi dist/*.o
