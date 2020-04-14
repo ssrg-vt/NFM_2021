@@ -1,4 +1,0 @@
-        mov     qword ptr [rbp - 0x38], rdi
-	       mov     qword ptr [rbp - 0x28], rsi
-		        mov     qword ptr [rbp - 0x20], rdx
-			
