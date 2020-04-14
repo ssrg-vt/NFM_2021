@@ -349,18 +349,11 @@ eval:
 	mov	rbx,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	jne	.label_39
-	jmp	.label_24
-.label_23:
-	mov	rdi, r15
-	call	__gmpz_clear
-	jmp	.label_45
-	nop	dword ptr [rax + rax]
-.label_39:
+	je	.label_25
+	nop	word ptr [rax + rax]
+.label_44:
 	lea	r15, [r12 + 8]
-	test	r14b, r14b
-	je	.label_34
-.label_32:
+.label_35:
 	mov	esi, OFFSET FLAT:.str.39
 	call	strcmp
 	test	eax, eax
@@ -368,115 +361,33 @@ eval:
 	movzx	eax, al
 	lea	rax, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_24
+	jne	.label_25
+	test	r14b, r14b
+	je	.label_47
 	mov	eax, dword ptr [r12]
-	test	eax, eax
-	je	.label_28
 	cmp	eax, 1
-	jne	.label_30
-	mov	rcx, qword ptr [r15]
-	mov	dl, byte ptr [rcx]
-	mov	al, 1
-	test	dl, dl
-	je	.label_35
-	movzx	edx, dl
-	cmp	edx, 0x2d
-	sete	dl
-	movzx	esi, dl
-	mov	dl, byte ptr [rcx + rsi]
-	lea	rcx, [rcx + rsi + 1]
-	nop	word ptr cs:[rax + rax]
-.label_46:
-	movzx	edx, dl
-	cmp	edx, 0x30
-	jne	.label_44
-	mov	dl, byte ptr [rcx]
-	inc	rcx
-	test	dl, dl
-	jne	.label_46
-	jmp	.label_35
-	nop	word ptr cs:[rax + rax]
-.label_28:
+	je	.label_49
+	test	eax, eax
+	jne	.label_26
 	cmp	dword ptr [r12 + 0xc], 0
 	sete	al
-	jmp	.label_35
-.label_44:
-	xor	eax, eax
+	jmp	.label_30
 	nop	dword ptr [rax]
-.label_35:
+.label_47:
+	xor	eax, eax
+.label_30:
 	movzx	edi, al
 	call	eval1
 	mov	rbp, rax
 	mov	eax, dword ptr [r12]
 	test	eax, eax
-	je	.label_26
+	je	.label_33
 	cmp	eax, 1
-	jne	.label_29
-	mov	rax, qword ptr [r15]
-	mov	cl, byte ptr [rax]
-	test	cl, cl
-	je	.label_31
-	movzx	ecx, cl
-	cmp	ecx, 0x2d
-	sete	cl
-	movzx	edx, cl
-	mov	cl, byte ptr [rax + rdx]
-	lea	rax, [rax + rdx + 1]
-	nop	dword ptr [rax]
-.label_41:
-	movzx	ecx, cl
-	cmp	ecx, 0x30
-	jne	.label_40
-	mov	cl, byte ptr [rax]
-	inc	rax
-	test	cl, cl
-	jne	.label_41
-	jmp	.label_31
-	nop	word ptr cs:[rax + rax]
-.label_26:
-	cmp	dword ptr [r12 + 0xc], 0
-	je	.label_23
-.label_40:
-	mov	rdi, rbp
-	add	rdi, 8
-	cmp	dword ptr [rbp], 1
-	jne	.label_50
-	mov	rdi, qword ptr [rdi]
-	call	free
-	jmp	.label_25
-	nop	word ptr cs:[rax + rax]
-.label_50:
-	call	__gmpz_clear
-.label_25:
-	mov	rdi, rbp
-	call	free
-	mov	rbx,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbx]
-	test	rdi, rdi
-	jne	.label_32
-	jmp	.label_24
-	nop	word ptr cs:[rax + rax]
-.label_34:
-	mov	esi, OFFSET FLAT:.str.39
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rax, [rbx + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_24
-	xor	edi, edi
-	call	eval1
-	mov	rbp, rax
-	mov	ecx, dword ptr [r12]
-	test	ecx, ecx
-	je	.label_48
-	cmp	ecx, 1
-	jne	.label_29
+	jne	.label_39
 	mov	rcx, qword ptr [r15]
 	mov	dl, byte ptr [rcx]
 	test	dl, dl
-	je	.label_31
+	je	.label_36
 	movzx	edx, dl
 	cmp	edx, 0x2d
 	sete	dl
@@ -484,53 +395,88 @@ eval:
 	mov	dl, byte ptr [rcx + rsi]
 	lea	rcx, [rcx + rsi + 1]
 	nop	
-.label_37:
+.label_43:
 	movzx	edx, dl
 	cmp	edx, 0x30
-	jne	.label_33
+	jne	.label_41
 	mov	dl, byte ptr [rcx]
 	inc	rcx
 	test	dl, dl
-	jne	.label_37
-	jmp	.label_31
+	jne	.label_43
+	jmp	.label_46
 	nop	word ptr cs:[rax + rax]
-.label_48:
+.label_33:
 	cmp	dword ptr [r12 + 0xc], 0
 	je	.label_23
-.label_33:
-	add	rax, 8
+.label_41:
+	mov	rdi, rbp
+	add	rdi, 8
 	cmp	dword ptr [rbp], 1
-	jne	.label_43
-	mov	rdi, qword ptr [rax]
+	jne	.label_27
+	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_47
-.label_43:
-	mov	rdi, rax
+	jmp	.label_37
+	nop	word ptr cs:[rax + rax]
+.label_27:
 	call	__gmpz_clear
-.label_47:
+.label_37:
 	mov	rdi, rbp
 	call	free
 	mov	rbx,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	jne	.label_34
-	jmp	.label_24
-	nop	dword ptr [rax + rax]
+	jne	.label_35
+	jmp	.label_25
+	nop	word ptr cs:[rax + rax]
+.label_49:
+	mov	rcx, qword ptr [r15]
+	mov	dl, byte ptr [rcx]
+	mov	al, 1
+	test	dl, dl
+	je	.label_30
+	movzx	edx, dl
+	cmp	edx, 0x2d
+	sete	dl
+	movzx	esi, dl
+	mov	dl, byte ptr [rcx + rsi]
+	lea	rcx, [rcx + rsi + 1]
+	nop	word ptr cs:[rax + rax]
 .label_31:
+	movzx	edx, dl
+	cmp	edx, 0x30
+	jne	.label_28
+	mov	dl, byte ptr [rcx]
+	inc	rcx
+	test	dl, dl
+	jne	.label_31
+	jmp	.label_30
+.label_28:
+	xor	eax, eax
+	jmp	.label_30
+	nop	dword ptr [rax]
+.label_46:
+	cmp	eax, 1
+	jne	.label_23
+.label_36:
 	mov	rdi, qword ptr [r15]
 	call	free
+	jmp	.label_45
+	nop	
+.label_23:
+	mov	rdi, r15
+	call	__gmpz_clear
 .label_45:
 	mov	rdi, r12
 	call	free
 	mov	eax, dword ptr [rbp]
 	test	eax, eax
-	je	.label_49
+	je	.label_38
 	cmp	eax, 1
-	jne	.label_36
+	jne	.label_40
 	mov	rcx, qword ptr [rbp + 8]
 	mov	dl, byte ptr [rcx]
 	test	dl, dl
-	je	.label_38
+	je	.label_42
 	movzx	edx, dl
 	cmp	edx, 0x2d
 	sete	dl
@@ -538,28 +484,29 @@ eval:
 	mov	dl, byte ptr [rcx + rsi]
 	lea	rcx, [rcx + rsi + 1]
 	nop	
-.label_53:
+.label_24:
 	movzx	edx, dl
 	cmp	edx, 0x30
-	jne	.label_27
+	jne	.label_34
 	mov	dl, byte ptr [rcx]
 	inc	rcx
 	test	dl, dl
-	jne	.label_53
+	jne	.label_24
 	cmp	eax, 1
-	jne	.label_52
-.label_38:
+	jne	.label_29
+.label_42:
 	mov	rdi, qword ptr [rbp + 8]
 	call	free
-	jmp	.label_51
+	jmp	.label_32
 	nop	word ptr cs:[rax + rax]
-.label_49:
+.label_38:
 	cmp	dword ptr [rbp + 0xc], 0
-	jne	.label_27
-.label_52:
-	lea	rdi, [rbp + 8]
+	jne	.label_34
+.label_29:
+	mov	rdi, rbp
+	add	rdi, 8
 	call	__gmpz_clear
-.label_51:
+.label_32:
 	mov	rdi, rbp
 	call	free
 	mov	edi, 0x18
@@ -569,16 +516,16 @@ eval:
 	lea	rdi, [rbp + 8]
 	xor	esi, esi
 	call	__gmpz_init_set_ui
-.label_27:
+.label_34:
 	mov	rbx,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
 	mov	r12, rbp
-	jne	.label_39
-	jmp	.label_42
-.label_24:
+	jne	.label_44
+	jmp	.label_48
+.label_25:
 	mov	rbp, r12
-.label_42:
+.label_48:
 	mov	rax, rbp
 	pop	rbx
 	pop	r12
@@ -586,16 +533,16 @@ eval:
 	pop	r15
 	pop	rbp
 	ret	
-.label_29:
+.label_39:
 	call	abort
-.label_30:
+.label_26:
 	call	abort
-.label_36:
+.label_40:
 	call	abort
-	nop	dword ptr [rax]
+	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x402570
+	#Procedure 0x4024a0
 
 	.globl eval1
 	.type eval1, @function
@@ -609,9 +556,9 @@ eval1:
 	movzx	edi, r14b
 	call	eval2
 	mov	r12, rax
-	jmp	.label_56
+	jmp	.label_62
 	nop	dword ptr [rax]
-.label_78:
+.label_71:
 	mov	rdi, rbp
 	call	free
 	mov	edi, 0x18
@@ -621,15 +568,13 @@ eval1:
 	lea	rdi, [r12 + 8]
 	xor	esi, esi
 	call	__gmpz_init_set_ui
-.label_56:
+.label_62:
 	mov	rbp,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_62
+	je	.label_58
 	lea	r15, [r12 + 8]
-	test	r14b, r14b
-	je	.label_63
-.label_79:
+.label_54:
 	mov	esi, OFFSET FLAT:.str.40
 	call	strcmp
 	test	eax, eax
@@ -637,17 +582,62 @@ eval1:
 	movzx	eax, al
 	lea	rax, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_62
+	jne	.label_58
+	test	r14b, r14b
+	je	.label_57
 	mov	eax, dword ptr [r12]
-	test	eax, eax
-	je	.label_86
 	cmp	eax, 1
-	jne	.label_57
+	je	.label_59
+	test	eax, eax
+	jne	.label_65
+	cmp	dword ptr [r12 + 0xc], 0
+	sete	al
+	jmp	.label_53
+	nop	word ptr [rax + rax]
+.label_57:
+	xor	eax, eax
+	jmp	.label_69
+	nop	word ptr cs:[rax + rax]
+.label_59:
 	mov	rcx, qword ptr [r15]
 	mov	dl, byte ptr [rcx]
 	mov	al, 1
 	test	dl, dl
-	je	.label_60
+	je	.label_53
+	movzx	edx, dl
+	cmp	edx, 0x2d
+	sete	dl
+	movzx	esi, dl
+	mov	dl, byte ptr [rcx + rsi]
+	lea	rcx, [rcx + rsi + 1]
+	nop	
+.label_51:
+	movzx	edx, dl
+	cmp	edx, 0x30
+	jne	.label_50
+	mov	dl, byte ptr [rcx]
+	inc	rcx
+	test	dl, dl
+	jne	.label_51
+	jmp	.label_53
+.label_50:
+	xor	eax, eax
+	nop	word ptr cs:[rax + rax]
+.label_53:
+	xor	al, 1
+.label_69:
+	movzx	edi, al
+	call	eval2
+	mov	rbp, rax
+	mov	eax, dword ptr [r12]
+	test	eax, eax
+	je	.label_75
+	cmp	eax, 1
+	jne	.label_63
+	mov	rcx, qword ptr [r15]
+	mov	dl, byte ptr [rcx]
+	test	dl, dl
+	je	.label_67
 	movzx	edx, dl
 	cmp	edx, 0x2d
 	sete	dl
@@ -658,64 +648,26 @@ eval1:
 .label_72:
 	movzx	edx, dl
 	cmp	edx, 0x30
-	jne	.label_71
+	jne	.label_68
 	mov	dl, byte ptr [rcx]
 	inc	rcx
 	test	dl, dl
 	jne	.label_72
-	jmp	.label_60
+	jmp	.label_56
 	nop	word ptr cs:[rax + rax]
-.label_86:
+.label_75:
 	cmp	dword ptr [r12 + 0xc], 0
-	sete	al
-	jmp	.label_60
-.label_71:
-	xor	eax, eax
-	nop	dword ptr [rax]
-.label_60:
-	xor	al, 1
-	movzx	edi, al
-	call	eval2
-	mov	rbp, rax
-	mov	eax, dword ptr [r12]
-	test	eax, eax
-	je	.label_76
-	cmp	eax, 1
-	jne	.label_67
-	mov	rcx, qword ptr [r15]
-	mov	dl, byte ptr [rcx]
-	test	dl, dl
-	je	.label_70
-	movzx	edx, dl
-	cmp	edx, 0x2d
-	sete	dl
-	movzx	esi, dl
-	mov	dl, byte ptr [rcx + rsi]
-	lea	rcx, [rcx + rsi + 1]
-	nop	
+	je	.label_60
 .label_68:
-	movzx	edx, dl
-	cmp	edx, 0x30
-	jne	.label_84
-	mov	dl, byte ptr [rcx]
-	inc	rcx
-	test	dl, dl
-	jne	.label_68
-	jmp	.label_70
-	nop	word ptr cs:[rax + rax]
-.label_76:
-	cmp	dword ptr [r12 + 0xc], 0
-	je	.label_75
-.label_84:
 	mov	ecx, dword ptr [rbp]
 	test	ecx, ecx
-	je	.label_77
+	je	.label_52
 	cmp	ecx, 1
-	jne	.label_55
+	jne	.label_73
 	mov	rdx, qword ptr [rbp + 8]
 	mov	bl, byte ptr [rdx]
 	test	bl, bl
-	je	.label_59
+	je	.label_56
 	movzx	esi, bl
 	cmp	esi, 0x2d
 	sete	bl
@@ -723,156 +675,66 @@ eval1:
 	mov	bl, byte ptr [rdx + rsi]
 	lea	rdx, [rdx + rsi + 1]
 	nop	
-.label_58:
-	movzx	esi, bl
-	cmp	esi, 0x30
-	jne	.label_74
-	mov	bl, byte ptr [rdx]
-	inc	rdx
-	test	bl, bl
-	jne	.label_58
-	jmp	.label_59
-	nop	word ptr cs:[rax + rax]
-.label_77:
-	cmp	dword ptr [rbp + 0xc], 0
-	jne	.label_65
-	jmp	.label_59
-.label_74:
-	cmp	ecx, 1
-	jne	.label_65
-	mov	rdi, qword ptr [rbp + 8]
-	call	free
-	jmp	.label_83
-	nop	dword ptr [rax + rax]
-.label_65:
-	mov	rdi, rbp
-	add	rdi, 8
-	call	__gmpz_clear
-.label_83:
-	mov	rdi, rbp
-	call	free
-	mov	rbp,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbp]
-	test	rdi, rdi
-	jne	.label_79
-	jmp	.label_62
-	nop	dword ptr [rax]
-.label_63:
-	mov	esi, OFFSET FLAT:.str.40
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rax, [rbp + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_62
-	xor	edi, edi
-	call	eval2
-	mov	rbp, rax
-	mov	eax, dword ptr [r12]
-	test	eax, eax
-	je	.label_64
-	cmp	eax, 1
-	jne	.label_67
-	mov	rcx, qword ptr [r15]
-	mov	dl, byte ptr [rcx]
-	test	dl, dl
-	je	.label_70
-	movzx	edx, dl
-	cmp	edx, 0x2d
-	sete	dl
-	movzx	esi, dl
-	mov	dl, byte ptr [rcx + rsi]
-	lea	rcx, [rcx + rsi + 1]
-.label_81:
-	movzx	edx, dl
-	cmp	edx, 0x30
-	jne	.label_66
-	mov	dl, byte ptr [rcx]
-	inc	rcx
-	test	dl, dl
-	jne	.label_81
-	jmp	.label_70
-	nop	word ptr cs:[rax + rax]
-.label_64:
-	cmp	dword ptr [r12 + 0xc], 0
-	je	.label_75
-.label_66:
-	mov	ecx, dword ptr [rbp]
-	test	ecx, ecx
-	je	.label_85
-	cmp	ecx, 1
-	jne	.label_55
-	mov	rdx, qword ptr [rbp + 8]
-	mov	bl, byte ptr [rdx]
-	test	bl, bl
-	je	.label_59
-	movzx	esi, bl
-	cmp	esi, 0x2d
-	sete	bl
-	movzx	esi, bl
-	mov	bl, byte ptr [rdx + rsi]
-	lea	rdx, [rdx + rsi + 1]
-	nop	
-.label_80:
-	movzx	esi, bl
-	cmp	esi, 0x30
-	jne	.label_82
-	mov	bl, byte ptr [rdx]
-	inc	rdx
-	test	bl, bl
-	jne	.label_80
-	jmp	.label_59
-	nop	word ptr cs:[rax + rax]
-.label_85:
-	cmp	dword ptr [rbp + 0xc], 0
-	jne	.label_61
-	jmp	.label_59
-.label_82:
-	cmp	ecx, 1
-	jne	.label_61
-	mov	rdi, qword ptr [rbp + 8]
-	call	free
-	jmp	.label_73
-	nop	dword ptr [rax + rax]
 .label_61:
+	movzx	esi, bl
+	cmp	esi, 0x30
+	jne	.label_64
+	mov	bl, byte ptr [rdx]
+	inc	rdx
+	test	bl, bl
+	jne	.label_61
+	jmp	.label_56
+	nop	word ptr cs:[rax + rax]
+.label_52:
+	cmp	dword ptr [rbp + 0xc], 0
+	jne	.label_55
+	jmp	.label_56
+.label_64:
+	cmp	ecx, 1
+	jne	.label_55
+	mov	rdi, qword ptr [rbp + 8]
+	call	free
+	jmp	.label_74
+	nop	dword ptr [rax + rax]
+.label_55:
 	mov	rdi, rbp
 	add	rdi, 8
 	call	__gmpz_clear
-.label_73:
+.label_74:
 	mov	rdi, rbp
 	call	free
 	mov	rbp,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	jne	.label_63
-	jmp	.label_62
+	jne	.label_54
+	jmp	.label_58
 	nop	word ptr [rax + rax]
-.label_59:
+.label_56:
 	cmp	eax, 1
-	jne	.label_75
-.label_70:
+	jne	.label_60
+.label_67:
 	mov	rdi, qword ptr [r15]
 	call	free
-	jmp	.label_69
+	jmp	.label_66
 	nop	
-.label_75:
+.label_60:
 	mov	rdi, r15
 	call	__gmpz_clear
-.label_69:
+.label_66:
 	mov	rdi, r12
 	call	free
-	lea	rdi, [rbp + 8]
+	mov	rdi, rbp
+	add	rdi, 8
 	cmp	dword ptr [rbp], 1
-	jne	.label_54
+	jne	.label_70
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_78
+	jmp	.label_71
 	nop	word ptr [rax + rax]
-.label_54:
+.label_70:
 	call	__gmpz_clear
-	jmp	.label_78
-.label_62:
+	jmp	.label_71
+.label_58:
 	mov	rax, r12
 	pop	rbx
 	pop	r12
@@ -880,16 +742,16 @@ eval1:
 	pop	r15
 	pop	rbp
 	ret	
-.label_67:
+.label_63:
 	call	abort
-.label_55:
+.label_73:
 	call	abort
-.label_57:
+.label_65:
 	call	abort
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x402910
+	#Procedure 0x402720
 
 	.globl eval2
 	.type eval2, @function
@@ -905,9 +767,9 @@ eval2:
 	mov	edi, r14d
 	call	eval3
 	mov	rbx, rax
-	jmp	.label_95
+	jmp	.label_87
 	nop	dword ptr [rax]
-.label_100:
+.label_90:
 	mov	rdi, r15
 	call	free
 	mov	edi, 0x18
@@ -917,11 +779,11 @@ eval2:
 	lea	rdi, [rbx + 8]
 	mov	rsi, rbp
 	call	__gmpz_init_set_ui
-.label_95:
+.label_87:
 	mov	rbp,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.41
 	call	strcmp
 	test	eax, eax
@@ -930,10 +792,10 @@ eval2:
 	lea	rbp, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbp
 	mov	r13d, 0
-	je	.label_90
+	je	.label_78
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.42
 	call	strcmp
 	test	eax, eax
@@ -942,10 +804,10 @@ eval2:
 	lea	rbp, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbp
 	mov	r13d, 1
-	je	.label_90
+	je	.label_78
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.43
 	call	strcmp
 	test	eax, eax
@@ -954,10 +816,10 @@ eval2:
 	lea	rbp, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbp
 	mov	r13d, 2
-	je	.label_90
+	je	.label_78
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.44
 	call	strcmp
 	test	eax, eax
@@ -965,10 +827,10 @@ eval2:
 	movzx	eax, al
 	lea	rbp, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbp
-	je	.label_90
+	je	.label_78
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.45
 	call	strcmp
 	test	eax, eax
@@ -977,10 +839,10 @@ eval2:
 	lea	rbp, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbp
 	mov	r13d, 3
-	je	.label_90
+	je	.label_78
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.46
 	call	strcmp
 	test	eax, eax
@@ -989,10 +851,10 @@ eval2:
 	lea	rbp, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbp
 	mov	r13d, 4
-	je	.label_90
+	je	.label_78
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_88
+	je	.label_82
 	mov	esi, OFFSET FLAT:.str.47
 	call	strcmp
 	test	eax, eax
@@ -1001,19 +863,19 @@ eval2:
 	lea	rax, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rax
 	mov	r13d, 5
-	jne	.label_88
+	jne	.label_82
 	nop	word ptr cs:[rax + rax]
-.label_90:
+.label_78:
 	mov	edi, r14d
 	call	eval3
 	mov	r15, rax
 	test	r14b, r14b
-	je	.label_103
+	je	.label_94
 	mov	eax, dword ptr [rbx]
 	cmp	eax, 1
-	je	.label_106
+	je	.label_77
 	test	eax, eax
-	jne	.label_98
+	jne	.label_80
 	lea	rbp, [rbx + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -1024,12 +886,12 @@ eval2:
 	call	__gmpz_clear
 	mov	qword ptr [rbx + 8], r12
 	mov	dword ptr [rbx], 1
-.label_106:
+.label_77:
 	mov	eax, dword ptr [r15]
 	cmp	eax, 1
-	je	.label_96
+	je	.label_88
 	test	eax, eax
-	jne	.label_98
+	jne	.label_80
 	lea	rbp, [r15 + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -1040,7 +902,7 @@ eval2:
 	call	__gmpz_clear
 	mov	qword ptr [r15 + 8], r12
 	mov	dword ptr [r15], 1
-.label_96:
+.label_88:
 	lea	rax, [rbx + 8]
 	mov	qword ptr [rsp], rax
 	mov	rbp, qword ptr [rbx + 8]
@@ -1051,15 +913,15 @@ eval2:
 	mov	cl, byte ptr [rbp + rax]
 	lea	rax, [rbp + rax + 1]
 	nop	word ptr cs:[rax + rax]
-.label_92:
+.label_84:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_91
+	ja	.label_92
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_92
+	jne	.label_84
 	mov	r12d, r14d
 	lea	r14, [r15 + 8]
 	mov	rsi, qword ptr [r15 + 8]
@@ -1070,94 +932,94 @@ eval2:
 	mov	cl, byte ptr [rsi + rax]
 	lea	rax, [rsi + rax + 1]
 	nop	word ptr cs:[rax + rax]
-.label_102:
+.label_93:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_101
+	ja	.label_91
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_102
+	jne	.label_93
 	mov	rdi, rbp
 	call	strintcmp
-	jmp	.label_104
+	jmp	.label_95
 	nop	
-.label_103:
+.label_94:
 	lea	rax, [rbx + 8]
 	xor	ebp, ebp
-	jmp	.label_105
+	jmp	.label_76
 	nop	dword ptr [rax + rax]
-.label_91:
+.label_92:
 	mov	r12d, r14d
 	lea	r14, [r15 + 8]
-.label_101:
+.label_91:
 	call	__errno_location
 	mov	dword ptr [rax], 0
 	mov	rsi, qword ptr [r14]
 	mov	rdi, rbp
 	call	strcoll
-.label_104:
+.label_95:
 	mov	ebp, eax
 	mov	r14d, r12d
 	mov	eax, r13d
 	cmp	r13d, 5
-	ja	.label_93
-	jmp	qword ptr [word ptr [+ (rax * 8) + label_97]]
-.label_2710:
+	ja	.label_85
+	jmp	qword ptr [word ptr [+ (rax * 8) + label_89]]
+.label_2390:
 	shr	ebp, 0x1f
-	jmp	.label_89
-.label_2711:
+	jmp	.label_79
+.label_2391:
 	test	ebp, ebp
 	setle	al
 	movzx	ebp, al
-	jmp	.label_89
-.label_2712:
+	jmp	.label_79
+.label_2392:
 	test	ebp, ebp
 	sete	al
 	movzx	ebp, al
-	jmp	.label_89
-.label_2713:
+	jmp	.label_79
+.label_2393:
 	test	ebp, ebp
 	setne	al
 	movzx	ebp, al
-	jmp	.label_89
-.label_2714:
+	jmp	.label_79
+.label_2394:
 	shr	ebp, 0x1f
 	xor	rbp, 1
-	jmp	.label_89
-.label_2715:
+	jmp	.label_79
+.label_2395:
 	test	ebp, ebp
 	setg	al
 	movzx	ebp, al
 	nop	word ptr [rax + rax]
-.label_89:
+.label_79:
 	mov	rax, qword ptr [rsp]
-.label_105:
+.label_76:
 	cmp	dword ptr [rbx], 1
-	jne	.label_99
+	jne	.label_83
 	mov	rdi, qword ptr [rax]
 	call	free
-	jmp	.label_87
+	jmp	.label_81
 	nop	word ptr cs:[rax + rax]
-.label_99:
+.label_83:
 	lea	rdi, [rbx + 8]
 	call	__gmpz_clear
-.label_87:
+.label_81:
 	mov	rdi, rbx
 	call	free
 	mov	rdi, r15
 	add	rdi, 8
 	cmp	dword ptr [r15], 1
-	jne	.label_94
+	jne	.label_86
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_100
+	jmp	.label_90
 	nop	dword ptr [rax + rax]
-.label_94:
+.label_86:
 	call	__gmpz_clear
-	jmp	.label_100
-.label_88:
+	jmp	.label_90
+.label_82:
 	mov	rax, rbx
 	add	rsp, 8
 	pop	rbx
@@ -1167,14 +1029,14 @@ eval2:
 	pop	r15
 	pop	rbp
 	ret	
-.label_98:
+.label_80:
 	call	abort
-.label_93:
+.label_85:
 	call	abort
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x402cf0
+	#Procedure 0x402b00
 
 	.globl eval3
 	.type eval3, @function
@@ -1186,32 +1048,30 @@ eval3:
 	push	r12
 	push	rbx
 	push	rax
-	movzx	ebp, dil
-	mov	edi, ebp
+	movzx	r12d, dil
+	mov	edi, r12d
 	call	eval4
 	mov	r14, rax
 	mov	rbx,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbx]
-	test	bpl, bpl
-	je	.label_109
 	test	rdi, rdi
-	je	.label_113
+	je	.label_98
 	mov	r15, r14
 	add	r15, 8
-	nop	dword ptr [rax]
-.label_115:
+	nop	word ptr cs:[rax + rax]
+.label_99:
 	mov	esi, OFFSET FLAT:.str_1
 	call	strcmp
-	xor	ebp, ebp
+	xor	r13d, r13d
 	test	eax, eax
 	sete	al
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_117
+	je	.label_97
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_113
+	je	.label_98
 	mov	esi, OFFSET FLAT:.str.52
 	call	strcmp
 	test	eax, eax
@@ -1219,147 +1079,101 @@ eval3:
 	movzx	eax, al
 	lea	rax, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rax
-	mov	ebp, 1
-	jne	.label_113
-.label_117:
-	mov	edi, 1
+	mov	r13d, 1
+	jne	.label_98
+.label_97:
+	mov	edi, r12d
 	call	eval4
-	mov	r13, rax
+	mov	rbx, rax
+	test	r12b, r12b
+	je	.label_103
 	mov	eax, dword ptr [r14]
 	test	eax, eax
-	je	.label_112
+	je	.label_104
 	cmp	eax, 1
-	jne	.label_107
-	mov	rbx, qword ptr [r15]
-	movzx	eax, byte ptr [rbx]
+	jne	.label_106
+	mov	rbp, qword ptr [r15]
+	movzx	eax, byte ptr [rbp]
 	cmp	eax, 0x2d
 	sete	al
 	movzx	eax, al
-	mov	cl, byte ptr [rbx + rax]
-	lea	rax, [rbx + rax + 1]
-	nop	dword ptr [rax]
-.label_120:
+	mov	cl, byte ptr [rbp + rax]
+	lea	rax, [rbp + rax + 1]
+	nop	word ptr cs:[rax + rax]
+.label_102:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_108
+	ja	.label_100
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_120
+	jne	.label_102
 	mov	edx, 0xa
 	mov	rdi, r15
-	mov	rsi, rbx
+	mov	rsi, rbp
 	call	__gmpz_init_set_str
-	mov	rdi, rbx
+	mov	rdi, rbp
 	call	free
 	mov	dword ptr [r14], 0
-.label_112:
-	mov	eax, dword ptr [r13]
-	cmp	eax, 1
-	je	.label_122
+.label_104:
+	mov	eax, dword ptr [rbx]
 	test	eax, eax
-	jne	.label_107
-	lea	r12, [r13 + 8]
-	jmp	.label_110
-	nop	
-.label_122:
-	lea	r12, [r13 + 8]
-	mov	rbx, qword ptr [r13 + 8]
-	movzx	eax, byte ptr [rbx]
+	je	.label_101
+	cmp	eax, 1
+	jne	.label_105
+	lea	rdi, [rbx + 8]
+	mov	rbp, qword ptr [rbx + 8]
+	movzx	eax, byte ptr [rbp]
 	cmp	eax, 0x2d
 	sete	al
 	movzx	eax, al
-	mov	cl, byte ptr [rbx + rax]
-	lea	rax, [rbx + rax + 1]
-	nop	dword ptr [rax]
-.label_118:
+	mov	cl, byte ptr [rbp + rax]
+	lea	rax, [rbp + rax + 1]
+	nop	word ptr cs:[rax + rax]
+.label_108:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_108
+	ja	.label_100
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_118
+	jne	.label_108
 	mov	edx, 0xa
-	mov	rdi, r12
-	mov	rsi, rbx
+	mov	rsi, rbp
 	call	__gmpz_init_set_str
-	mov	rdi, rbx
+	mov	rdi, rbp
 	call	free
-	mov	dword ptr [r13], 0
-.label_110:
-	test	ebp, ebp
+	mov	dword ptr [rbx], 0
+.label_101:
+	test	r13d, r13d
 	mov	eax, OFFSET FLAT:__gmpz_sub
 	mov	ecx, OFFSET FLAT:__gmpz_add
 	cmove	rax, rcx
-	mov	rbx, r13
-	add	rbx, 8
+	lea	rdx, [rbx + 8]
 	mov	rdi, r15
 	mov	rsi, r15
-	mov	rdx, rbx
 	call	rax
-	cmp	dword ptr [r13], 1
-	jne	.label_111
-	mov	rdi, qword ptr [r12]
-	call	free
-	jmp	.label_114
-	nop	dword ptr [rax]
-.label_111:
+.label_103:
 	mov	rdi, rbx
-	call	__gmpz_clear
-.label_114:
-	mov	rdi, r13
-	call	free
-	mov	rbx,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbx]
-	test	rdi, rdi
-	jne	.label_115
-	jmp	.label_113
-	nop	dword ptr [rax + rax]
-.label_119:
-	mov	rdi, rbx
-	call	free
-	mov	rbx,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbx]
-.label_109:
-	test	rdi, rdi
-	je	.label_113
-	mov	esi, OFFSET FLAT:.str_1
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rbx, [rbx + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_121
-	mov	rdi, qword ptr [rbx]
-	test	rdi, rdi
-	je	.label_113
-	mov	esi, OFFSET FLAT:.str.52
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rax, [rbx + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_113
-.label_121:
-	xor	edi, edi
-	call	eval4
-	mov	rbx, rax
+	add	rdi, 8
 	cmp	dword ptr [rbx], 1
-	lea	rdi, [rbx + 8]
-	jne	.label_116
+	jne	.label_96
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_119
-	nop	word ptr [rax + rax]
-.label_116:
+	jmp	.label_107
+	nop	word ptr cs:[rax + rax]
+.label_96:
 	call	__gmpz_clear
-	jmp	.label_119
-.label_113:
+.label_107:
+	mov	rdi, rbx
+	call	free
+	mov	rbx,  qword ptr [word ptr [rip + args]]
+	mov	rdi, qword ptr [rbx]
+	test	rdi, rdi
+	jne	.label_99
+.label_98:
 	mov	rax, r14
 	add	rsp, 8
 	pop	rbx
@@ -1369,7 +1183,7 @@ eval3:
 	pop	r15
 	pop	rbp
 	ret	
-.label_108:
+.label_100:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.53
 	mov	edx, 5
@@ -1380,12 +1194,14 @@ eval3:
 	xor	eax, eax
 	mov	rdx, rcx
 	call	error
-.label_107:
+.label_106:
+	call	abort
+.label_105:
 	call	abort
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x402fa0
+	#Procedure 0x402d30
 
 	.globl eval4
 	.type eval4, @function
@@ -1397,126 +1213,86 @@ eval4:
 	push	r12
 	push	rbx
 	sub	rsp, 0x18
-	mov	r14d, edi
-	movzx	edi, r14b
-	mov	dword ptr [rsp + 0x10], edi
+	mov	dword ptr [rsp + 0x14], edi
+	movzx	r13d, dil
+	mov	edi, r13d
 	call	eval6
-	mov	rbx, rax
-	mov	rbp,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbp]
-	test	rdi, rdi
-	je	.label_148
-	test	r14b, r14b
-	je	.label_159
-	mov	r15d, r14d
-	nop	word ptr cs:[rax + rax]
-.label_143:
-	mov	esi, OFFSET FLAT:.str.58
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rbp, [rbp + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rbp
-	jne	.label_153
-	mov	edi, 1
-	call	eval6
-	mov	rbp, rax
-	mov	r14, rbp
-	mov	rdi, rbx
-	mov	rsi, rbp
-	call	docolon
-	mov	r12, rax
-	lea	rdi, [rbx + 8]
-	cmp	dword ptr [rbx], 1
-	jne	.label_127
-	mov	rdi, qword ptr [rdi]
-	call	free
+	mov	r15, rax
 	jmp	.label_130
 	nop	word ptr cs:[rax + rax]
-.label_127:
-	call	__gmpz_clear
-.label_130:
+.label_114:
 	mov	rdi, rbx
 	call	free
-	add	rbp, 8
-	cmp	dword ptr [r14], 1
-	jne	.label_138
-	mov	rdi, qword ptr [rbp]
-	call	free
-	jmp	.label_139
-	nop	word ptr cs:[rax + rax]
-.label_138:
-	mov	rdi, rbp
-	call	__gmpz_clear
-.label_139:
-	mov	rdi, r14
-	call	free
-	mov	rbp,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbp]
+.label_130:
+	mov	rbx,  qword ptr [word ptr [rip + args]]
+	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	mov	rbx, r12
-	jne	.label_143
-	jmp	.label_124
-	nop	dword ptr [rax]
-.label_159:
+	je	.label_113
 	mov	esi, OFFSET FLAT:.str.58
 	call	strcmp
 	test	eax, eax
 	sete	al
 	movzx	eax, al
-	lea	rbp, [rbp + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rbp
-	jne	.label_148
-	xor	edi, edi
+	lea	rbx, [rbx + rax*8]
+	mov	qword ptr [word ptr [rip + args]],  rbx
+	jne	.label_113
+	mov	edi, r13d
 	call	eval6
 	mov	rbp, rax
-	cmp	dword ptr [rbp], 1
-	lea	rdi, [rbp + 8]
-	jne	.label_152
+	mov	rbx, rbp
+	test	r13b, r13b
+	je	.label_119
+	mov	rdi, r15
+	mov	rsi, rbx
+	call	docolon
+	mov	r14, rax
+	lea	rdi, [r15 + 8]
+	cmp	dword ptr [r15], 1
+	jne	.label_131
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_155
+	jmp	.label_129
 	nop	
-.label_152:
+.label_131:
 	call	__gmpz_clear
-.label_155:
-	mov	rdi, rbp
+.label_129:
+	mov	rdi, r15
 	call	free
-	mov	rbp,  qword ptr [word ptr [rip + args]]
+	mov	r15, r14
+.label_119:
+	add	rbp, 8
+	cmp	dword ptr [rbx], 1
+	jne	.label_127
 	mov	rdi, qword ptr [rbp]
+	call	free
+	jmp	.label_114
+	nop	word ptr [rax + rax]
+.label_127:
+	mov	rdi, rbp
+	call	__gmpz_clear
+	jmp	.label_114
+.label_113:
+	mov	qword ptr [rsp], r15
+	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	jne	.label_159
-.label_148:
-	mov	r15d, r14d
-	mov	r12, rbx
-	jmp	.label_124
-.label_153:
-	mov	r12, rbx
-.label_124:
-	mov	qword ptr [rsp], r12
-	mov	dword ptr [rsp + 0x14], r15d
-	mov	rdi, qword ptr [rbp]
-	test	rdi, rdi
-	mov	r14d, r15d
-	je	.label_125
+	je	.label_111
 	mov	rax, qword ptr [rsp]
 	lea	rax, [rax + 8]
 	mov	qword ptr [rsp + 8], rax
-	nop	
-.label_137:
+	nop	word ptr [rax + rax]
+.label_123:
 	mov	esi, OFFSET FLAT:.str.54
 	call	strcmp
+	xor	r12d, r12d
 	test	eax, eax
 	sete	al
 	movzx	eax, al
-	lea	rbx, [rbp + rax*8]
+	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	mov	r12d, 0
-	je	.label_131
+	je	.label_122
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_125
+	je	.label_111
 	mov	esi, OFFSET FLAT:.str.55
 	call	strcmp
 	test	eax, eax
@@ -1525,10 +1301,10 @@ eval4:
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
 	mov	r12d, 1
-	je	.label_131
+	je	.label_122
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_125
+	je	.label_111
 	mov	esi, OFFSET FLAT:.str.56
 	call	strcmp
 	test	eax, eax
@@ -1537,108 +1313,74 @@ eval4:
 	lea	rax, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rax
 	mov	r12d, 2
-	jne	.label_125
-.label_131:
-	mov	edi, dword ptr [rsp + 0x10]
-	call	eval6
-	mov	rbp, rax
-	mov	rbx,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbx]
-	test	rdi, rdi
-	je	.label_123
-	test	r14b, r14b
-	je	.label_132
-	nop	word ptr cs:[rax + rax]
-.label_149:
-	mov	esi, OFFSET FLAT:.str.58
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rax, [rbx + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_123
-	mov	edi, 1
-	call	eval6
-	mov	r15, rax
-	mov	r14, r15
-	mov	rdi, rbp
-	mov	rsi, r15
-	call	docolon
-	mov	r13, rax
-	lea	rdi, [rbp + 8]
-	cmp	dword ptr [rbp], 1
-	jne	.label_129
-	mov	rdi, qword ptr [rdi]
-	call	free
-	jmp	.label_133
-	nop	word ptr cs:[rax + rax]
-.label_129:
-	call	__gmpz_clear
-.label_133:
-	mov	rdi, rbp
-	call	free
-	add	r15, 8
-	cmp	dword ptr [r14], 1
-	jne	.label_142
-	mov	rdi, qword ptr [r15]
-	call	free
-	jmp	.label_140
-	nop	word ptr cs:[rax + rax]
-.label_142:
-	mov	rdi, r15
-	call	__gmpz_clear
-.label_140:
-	mov	rdi, r14
-	call	free
-	mov	rbx,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbx]
-	test	rdi, rdi
-	mov	rbp, r13
-	jne	.label_149
-	jmp	.label_147
-	nop	dword ptr [rax + rax]
-.label_132:
-	mov	esi, OFFSET FLAT:.str.58
-	call	strcmp
-	test	eax, eax
-	sete	al
-	movzx	eax, al
-	lea	rax, [rbx + rax*8]
-	mov	qword ptr [word ptr [rip + args]],  rax
-	jne	.label_123
-	xor	edi, edi
+	jne	.label_111
+.label_122:
+	mov	edi, r13d
 	call	eval6
 	mov	rbx, rax
-	cmp	dword ptr [rbx], 1
+	jmp	.label_126
+	nop	word ptr cs:[rax + rax]
+.label_134:
+	mov	rdi, rbp
+	call	free
+.label_126:
+	mov	rbp,  qword ptr [word ptr [rip + args]]
+	mov	rdi, qword ptr [rbp]
+	test	rdi, rdi
+	je	.label_132
+	mov	esi, OFFSET FLAT:.str.58
+	call	strcmp
+	test	eax, eax
+	sete	al
+	movzx	eax, al
+	lea	rax, [rbp + rax*8]
+	mov	qword ptr [word ptr [rip + args]],  rax
+	jne	.label_132
+	mov	edi, r13d
+	call	eval6
+	mov	r14, rax
+	mov	rbp, r14
+	test	r13b, r13b
+	je	.label_116
+	mov	rdi, rbx
+	mov	rsi, rbp
+	call	docolon
+	mov	r15, rax
 	lea	rdi, [rbx + 8]
-	jne	.label_154
+	cmp	dword ptr [rbx], 1
+	jne	.label_121
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_157
-	nop	dword ptr [rax]
-.label_154:
+	jmp	.label_124
+.label_121:
 	call	__gmpz_clear
-.label_157:
+.label_124:
 	mov	rdi, rbx
 	call	free
-	mov	rbx,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbx]
-	test	rdi, rdi
-	jne	.label_132
+	mov	rbx, r15
+.label_116:
+	add	r14, 8
+	cmp	dword ptr [rbp], 1
+	jne	.label_137
+	mov	rdi, qword ptr [r14]
+	call	free
+	jmp	.label_134
+	nop	word ptr [rax + rax]
+.label_137:
+	mov	rdi, r14
+	call	__gmpz_clear
+	jmp	.label_134
 	nop	dword ptr [rax]
-.label_123:
-	mov	r13, rbp
-.label_147:
-	mov	r14d, dword ptr [rsp + 0x14]
-	test	r14b, r14b
-	je	.label_151
+.label_132:
+	mov	eax, dword ptr [rsp + 0x14]
+	test	al, al
+	je	.label_109
 	mov	rax, qword ptr [rsp]
 	mov	eax, dword ptr [rax]
 	test	eax, eax
 	je	.label_128
 	cmp	eax, 1
-	jne	.label_136
+	jne	.label_117
 	mov	rax, qword ptr [rsp + 8]
 	mov	rbp, qword ptr [rax]
 	movzx	eax, byte ptr [rbp]
@@ -1647,16 +1389,16 @@ eval4:
 	movzx	eax, al
 	mov	cl, byte ptr [rbp + rax]
 	lea	rax, [rbp + rax + 1]
-	nop	word ptr cs:[rax + rax]
-.label_158:
+	nop	dword ptr [rax]
+.label_133:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_144
+	ja	.label_112
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_158
+	jne	.label_133
 	mov	edx, 0xa
 	mov	rdi, qword ptr [rsp + 8]
 	mov	rsi, rbp
@@ -1666,68 +1408,68 @@ eval4:
 	mov	rax, qword ptr [rsp]
 	mov	dword ptr [rax], 0
 .label_128:
-	mov	eax, dword ptr [r13]
+	mov	eax, dword ptr [rbx]
 	test	eax, eax
-	je	.label_145
+	je	.label_138
 	cmp	eax, 1
-	jne	.label_146
-	lea	rdi, [r13 + 8]
-	mov	rbp, qword ptr [r13 + 8]
+	jne	.label_110
+	lea	rdi, [rbx + 8]
+	mov	rbp, qword ptr [rbx + 8]
 	movzx	eax, byte ptr [rbp]
 	cmp	eax, 0x2d
 	sete	al
 	movzx	eax, al
 	mov	cl, byte ptr [rbp + rax]
 	lea	rax, [rbp + rax + 1]
-	nop	dword ptr [rax + rax]
-.label_156:
+	nop	dword ptr [rax]
+.label_125:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_144
+	ja	.label_112
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_156
+	jne	.label_125
 	mov	edx, 0xa
 	mov	rsi, rbp
 	call	__gmpz_init_set_str
 	mov	rdi, rbp
 	call	free
-	mov	dword ptr [r13], 0
-.label_145:
+	mov	dword ptr [rbx], 0
+.label_138:
 	test	r12d, r12d
 	mov	eax, OFFSET FLAT:__gmpz_mul
-	je	.label_141
-	cmp	dword ptr [r13 + 0xc], 0
-	je	.label_126
+	je	.label_135
+	cmp	dword ptr [rbx + 0xc], 0
+	je	.label_136
 	cmp	r12d, 1
 	mov	eax, OFFSET FLAT:__gmpz_tdiv_r
 	mov	ecx, OFFSET FLAT:__gmpz_tdiv_q
 	cmove	rax, rcx
-.label_141:
-	lea	rdx, [r13 + 8]
+.label_135:
+	lea	rdx, [rbx + 8]
 	mov	rdi, qword ptr [rsp + 8]
 	mov	rsi, rdi
 	call	rax
-.label_151:
-	lea	rdi, [r13 + 8]
-	cmp	dword ptr [r13], 1
-	jne	.label_134
+.label_109:
+	lea	rdi, [rbx + 8]
+	cmp	dword ptr [rbx], 1
+	jne	.label_118
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_135
-	nop	
-.label_134:
+	jmp	.label_120
+	nop	word ptr [rax + rax]
+.label_118:
 	call	__gmpz_clear
-.label_135:
-	mov	rdi, r13
+.label_120:
+	mov	rdi, rbx
 	call	free
-	mov	rbp,  qword ptr [word ptr [rip + args]]
-	mov	rdi, qword ptr [rbp]
+	mov	rbx,  qword ptr [word ptr [rip + args]]
+	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	jne	.label_137
-.label_125:
+	jne	.label_123
+.label_111:
 	mov	rax, qword ptr [rsp]
 	add	rsp, 0x18
 	pop	rbx
@@ -1737,10 +1479,10 @@ eval4:
 	pop	r15
 	pop	rbp
 	ret	
-.label_144:
+.label_112:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.53
-.label_150:
+.label_115:
 	mov	edx, 5
 	call	dcgettext
 	mov	rcx, rax
@@ -1749,18 +1491,18 @@ eval4:
 	xor	eax, eax
 	mov	rdx, rcx
 	call	error
+.label_117:
+	call	abort
+.label_110:
+	call	abort
 .label_136:
-	call	abort
-.label_146:
-	call	abort
-.label_126:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.57
-	jmp	.label_150
-	nop	dword ptr [rax]
+	jmp	.label_115
+	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4034d0
+	#Procedure 0x403120
 
 	.globl eval6
 	.type eval6, @function
@@ -1776,7 +1518,7 @@ eval6:
 	mov	rbp,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbp]
 	test	rdi, rdi
-	je	.label_177
+	je	.label_145
 	mov	esi, OFFSET FLAT:.str_1
 	call	strcmp
 	test	eax, eax
@@ -1785,9 +1527,9 @@ eval6:
 	lea	rbx, [rbp + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
 	mov	rbp, qword ptr [rbp + rax*8]
-	je	.label_206
+	je	.label_193
 	test	rbp, rbp
-	je	.label_177
+	je	.label_145
 	mov	esi, OFFSET FLAT:.str.59
 	mov	rdi, rbp
 	call	strcmp
@@ -1796,10 +1538,10 @@ eval6:
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_213
+	je	.label_201
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_177
+	je	.label_145
 	mov	esi, OFFSET FLAT:.str.60
 	call	strcmp
 	test	eax, eax
@@ -1807,10 +1549,10 @@ eval6:
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_219
+	je	.label_207
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_177
+	je	.label_145
 	mov	esi, OFFSET FLAT:.str.61
 	call	strcmp
 	test	eax, eax
@@ -1818,10 +1560,10 @@ eval6:
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_223
+	je	.label_211
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_177
+	je	.label_145
 	mov	esi, OFFSET FLAT:.str.62
 	call	strcmp
 	test	eax, eax
@@ -1829,10 +1571,10 @@ eval6:
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_227
+	je	.label_141
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_177
+	je	.label_145
 	mov	esi, OFFSET FLAT:.str.68
 	call	strcmp
 	test	eax, eax
@@ -1840,10 +1582,10 @@ eval6:
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_169
+	je	.label_202
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_162
+	je	.label_154
 	mov	esi, OFFSET FLAT:.str.70
 	call	strcmp
 	test	eax, eax
@@ -1851,8 +1593,8 @@ eval6:
 	movzx	eax, al
 	lea	rbx, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rbx
-	je	.label_165
-.label_162:
+	je	.label_158
+.label_154:
 	lea	rax, [rbx + 8]
 	mov	qword ptr [word ptr [rip + args]],  rax
 	mov	rbx, qword ptr [rbx]
@@ -1861,10 +1603,10 @@ eval6:
 	mov	r13, rax
 	mov	dword ptr [r13], 1
 	mov	rdi, rbx
-	jmp	.label_204
-.label_206:
+	jmp	.label_165
+.label_193:
 	test	rbp, rbp
-	je	.label_177
+	je	.label_145
 	add	rbx, 8
 	mov	qword ptr [word ptr [rip + args]],  rbx
 	mov	edi, 0x18
@@ -1872,23 +1614,23 @@ eval6:
 	mov	r13, rax
 	mov	dword ptr [r13], 1
 	mov	rdi, rbp
-.label_204:
+.label_165:
 	call	xstrdup
 	mov	qword ptr [r13 + 8], rax
-	jmp	.label_161
-.label_213:
+	jmp	.label_153
+.label_201:
 	movzx	edi, r15b
 	call	eval6
 	mov	rbp, rax
 	mov	eax, dword ptr [rbp]
 	test	eax, eax
-	je	.label_186
+	je	.label_205
 	cmp	eax, 1
-	jne	.label_189
+	jne	.label_179
 	lea	r14, [rbp + 8]
 	mov	rbx, qword ptr [rbp + 8]
-	jmp	.label_193
-.label_219:
+	jmp	.label_182
+.label_207:
 	movzx	ebx, r15b
 	mov	edi, ebx
 	call	eval6
@@ -1898,7 +1640,7 @@ eval6:
 	mov	rbp, rax
 	mov	r14, rbp
 	test	r15b, r15b
-	je	.label_203
+	je	.label_187
 	mov	rdi, r13
 	mov	rsi, r14
 	call	docolon
@@ -1906,11 +1648,11 @@ eval6:
 	mov	rdi, r13
 	add	rdi, 8
 	cmp	dword ptr [r13], 1
-	jne	.label_202
+	jne	.label_191
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_208
-.label_186:
+	jmp	.label_195
+.label_205:
 	lea	r14, [rbp + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -1921,7 +1663,7 @@ eval6:
 	call	__gmpz_clear
 	mov	qword ptr [rbp + 8], rbx
 	mov	dword ptr [rbp], 1
-.label_193:
+.label_182:
 	mov	rdi, rbx
 	call	mbslen
 	mov	rbx, rax
@@ -1933,15 +1675,15 @@ eval6:
 	mov	rsi, rbx
 	call	__gmpz_init_set_ui
 	cmp	dword ptr [rbp], 1
-	jne	.label_218
+	jne	.label_206
 	mov	rdi, qword ptr [r14]
 	call	free
-	jmp	.label_160
-.label_218:
+	jmp	.label_163
+.label_206:
 	mov	rdi, rbp
 	add	rdi, 8
-	jmp	.label_201
-.label_223:
+	jmp	.label_190
+.label_211:
 	movzx	ebx, r15b
 	mov	edi, ebx
 	call	eval6
@@ -1953,9 +1695,9 @@ eval6:
 	mov	r15, rax
 	mov	eax, dword ptr [r12]
 	cmp	eax, 1
-	je	.label_224
+	je	.label_213
 	test	eax, eax
-	jne	.label_168
+	jne	.label_161
 	lea	rbx, [r12 + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -1966,16 +1708,16 @@ eval6:
 	call	__gmpz_clear
 	mov	qword ptr [r14 + 8], rbp
 	mov	dword ptr [r14], 1
-.label_224:
+.label_213:
 	mov	eax, dword ptr [r15]
 	test	eax, eax
-	je	.label_214
+	je	.label_147
 	cmp	eax, 1
-	jne	.label_232
+	jne	.label_148
 	lea	rbp, [r15 + 8]
 	mov	r13, qword ptr [r15 + 8]
-	jmp	.label_226
-.label_227:
+	jmp	.label_150
+.label_141:
 	movzx	ebx, r15b
 	mov	edi, ebx
 	call	eval6
@@ -1988,10 +1730,10 @@ eval6:
 	mov	rbp, rax
 	mov	eax, dword ptr [r12]
 	cmp	eax, 1
-	je	.label_166
+	je	.label_159
 	mov	r14, rbp
 	test	eax, eax
-	jne	.label_168
+	jne	.label_161
 	lea	rbx, [r12 + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -2003,12 +1745,12 @@ eval6:
 	mov	qword ptr [r12 + 8], rbp
 	mov	dword ptr [r12], 1
 	mov	rbp, r14
-.label_166:
+.label_159:
 	mov	eax, dword ptr [r15]
 	test	eax, eax
-	je	.label_178
+	je	.label_168
 	cmp	eax, 1
-	jne	.label_168
+	jne	.label_161
 	lea	rdi, [r15 + 8]
 	mov	rbx, qword ptr [r15 + 8]
 	movzx	eax, byte ptr [rbx]
@@ -2018,27 +1760,27 @@ eval6:
 	mov	cl, byte ptr [rbx + rax]
 	lea	rax, [rbx + rax + 1]
 	nop	word ptr cs:[rax + rax]
-.label_190:
+.label_180:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_185
+	ja	.label_176
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_190
+	jne	.label_180
 	mov	edx, 0xa
 	mov	rsi, rbx
 	call	__gmpz_init_set_str
 	mov	rdi, rbx
 	call	free
 	mov	dword ptr [r15], 0
-.label_178:
+.label_168:
 	mov	eax, dword ptr [rbp]
 	test	eax, eax
-	je	.label_197
+	je	.label_173
 	cmp	eax, 1
-	jne	.label_198
+	jne	.label_188
 	lea	rdi, [rbp + 8]
 	mov	rbx, qword ptr [rbp + 8]
 	movzx	eax, byte ptr [rbx]
@@ -2047,54 +1789,54 @@ eval6:
 	movzx	eax, al
 	mov	cl, byte ptr [rbx + rax]
 	lea	rax, [rbx + rax + 1]
-.label_231:
+.label_196:
 	movsx	ecx, cl
 	add	ecx, -0x30
 	cmp	ecx, 9
-	ja	.label_185
+	ja	.label_176
 	mov	cl, byte ptr [rax]
 	inc	rax
 	test	cl, cl
-	jne	.label_231
+	jne	.label_196
 	mov	edx, 0xa
 	mov	rsi, rbx
 	call	__gmpz_init_set_str
 	mov	rdi, rbx
 	call	free
 	mov	dword ptr [rbp], 0
-.label_197:
+.label_173:
 	mov	eax, dword ptr [r15 + 0xc]
 	mov	qword ptr [rsp + 0x20], r15
 	mov	r14, -1
 	test	eax, eax
 	mov	r15, -1
-	js	.label_211
+	js	.label_200
 	cmp	eax, 1
-	ja	.label_215
+	ja	.label_203
 	mov	rcx, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [rcx + 0x10]
 	xor	r15d, r15d
 	test	eax, eax
 	cmovne	r15, qword ptr [rcx]
 	cmp	r15, -1
-	jne	.label_211
-.label_215:
+	jne	.label_200
+.label_203:
 	mov	r15, -2
-.label_211:
+.label_200:
 	mov	eax, dword ptr [rbp + 0xc]
 	test	eax, eax
-	js	.label_192
+	js	.label_208
 	cmp	eax, 1
-	ja	.label_222
+	ja	.label_209
 	mov	rcx, qword ptr [rbp + 0x10]
 	xor	r14d, r14d
 	test	eax, eax
 	cmovne	r14, qword ptr [rcx]
 	cmp	r14, -1
-	jne	.label_192
-.label_222:
+	jne	.label_208
+.label_209:
 	mov	r14, -2
-.label_192:
+.label_208:
 	mov	qword ptr [rsp + 0x18], rbp
 	mov	r13, qword ptr [r12 + 8]
 	mov	rdi, r13
@@ -2103,25 +1845,25 @@ eval6:
 	call	__ctype_get_mb_cur_max
 	cmp	rax, 2
 	mov	rbx, rbp
-	jb	.label_170
+	jb	.label_139
 	mov	rdi, r13
 	call	mbslen
 	mov	rbx, rax
-.label_170:
+.label_139:
 	lea	rax, [r15 - 1]
 	cmp	rax, rbx
-	jae	.label_228
+	jae	.label_142
 	lea	rax, [r14 + 1]
 	cmp	rax, 1
-	ja	.label_230
-.label_228:
+	ja	.label_144
+.label_142:
 	mov	edi, OFFSET FLAT:.str_0
 	call	xstrdup
 	mov	r14, rax
 	mov	rbp, qword ptr [rsp + 0x18]
 	mov	r15, qword ptr [rsp + 0x20]
-	jmp	.label_220
-.label_214:
+	jmp	.label_151
+.label_147:
 	lea	rbp, [r15 + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -2132,15 +1874,15 @@ eval6:
 	call	__gmpz_clear
 	mov	qword ptr [r15 + 8], r13
 	mov	dword ptr [r15], 1
-.label_226:
+.label_150:
 	xor	ebx, ebx
 	cmp	byte ptr [r13], 0
-	je	.label_167
+	je	.label_160
 	mov	qword ptr [rsp + 0x10], rbp
 	mov	rbp, qword ptr [r14 + 8]
 	call	__ctype_get_mb_cur_max
 	cmp	rax, 2
-	jb	.label_171
+	jb	.label_162
 	mov	qword ptr [rsp + 0x78], rbp
 	mov	byte ptr [rsp + 0x68], 0
 	mov	qword ptr [rsp + 0x6c], 0
@@ -2152,36 +1894,36 @@ eval6:
 	mov	qword ptr [rsp + 8], rcx
 	mov	rcx, rax
 	shr	rcx, 0x20
-	jne	.label_179
+	jne	.label_169
 	test	al, al
-	jne	.label_182
-.label_179:
+	jne	.label_164
+.label_169:
 	xor	eax, eax
 	mov	qword ptr [rsp + 8], rax
 	lea	rbx, [rsp + 0x28]
 	xor	ecx, ecx
-.label_225:
+.label_140:
 	inc	rcx
 	mov	qword ptr [rsp + 0x20], rcx
 	cmp	qword ptr [rsp + 0x80], 1
-	jne	.label_184
+	jne	.label_175
 	mov	rbp, qword ptr [rsp + 0x78]
 	movsx	esi, byte ptr [rbp]
 	mov	rdi, r13
 	call	mbschr
 	test	rax, rax
 	mov	eax, 1
-	je	.label_194
-	jmp	.label_196
-.label_184:
+	je	.label_183
+	jmp	.label_185
+.label_175:
 	mov	qword ptr [rsp + 0x38], r13
 	mov	byte ptr [rsp + 0x28], 0
 	mov	qword ptr [rsp + 0x2c], 0
-	jmp	.label_183
+	jmp	.label_186
 	nop	word ptr cs:[rax + rax]
-.label_188:
+.label_156:
 	add	qword ptr [rsp + 0x38], r14
-.label_183:
+.label_186:
 	mov	byte ptr [rsp + 0x34], 0
 	mov	rdi, rbx
 	call	mbuiter_multi_next
@@ -2190,39 +1932,39 @@ eval6:
 	shr	rax, 0x20
 	test	cl, cl
 	setne	cl
-	je	.label_164
+	je	.label_212
 	test	eax, eax
-	je	.label_174
-.label_164:
+	je	.label_197
+.label_212:
 	mov	rdx, qword ptr [rsp + 0x88]
 	test	dl, dl
-	je	.label_200
+	je	.label_170
 	xor	cl, 1
 	test	cl, 1
-	jne	.label_200
+	jne	.label_170
 	shr	rdx, 0x20
 	cmp	eax, edx
-	je	.label_221
+	je	.label_157
 	mov	r14, qword ptr [rsp + 0x40]
 	add	qword ptr [rsp + 0x38], r14
-	jmp	.label_183
+	jmp	.label_186
 	nop	word ptr cs:[rax + rax]
-.label_200:
+.label_170:
 	mov	r14, qword ptr [rsp + 0x40]
 	cmp	r14, qword ptr [rsp + 0x80]
-	jne	.label_188
+	jne	.label_156
 	mov	rdi, qword ptr [rsp + 0x38]
 	mov	rsi, qword ptr [rsp + 0x78]
 	mov	rdx, r14
 	call	memcmp
 	test	eax, eax
-	jne	.label_188
-	jmp	.label_221
-.label_174:
+	jne	.label_156
+	jmp	.label_157
+.label_197:
 	mov	rbp, qword ptr [rsp + 0x78]
 	mov	rax, qword ptr [rsp + 0x80]
 	mov	r14, qword ptr [rsp + 0x18]
-.label_194:
+.label_183:
 	add	rbp, rax
 	mov	qword ptr [rsp + 0x78], rbp
 	mov	byte ptr [rsp + 0x74], 0
@@ -2232,38 +1974,38 @@ eval6:
 	mov	rcx, rax
 	shr	rcx, 0x20
 	mov	rcx, qword ptr [rsp + 0x20]
-	jne	.label_225
+	jne	.label_140
 	test	al, al
-	je	.label_225
-	jmp	.label_182
-.label_202:
+	je	.label_140
+	jmp	.label_164
+.label_191:
 	call	__gmpz_clear
-.label_208:
+.label_195:
 	mov	rdi, r13
 	call	free
 	mov	r13, r15
-.label_203:
+.label_187:
 	add	rbp, 8
 	cmp	dword ptr [r14], 1
-	jne	.label_212
+	jne	.label_146
 	mov	rdi, qword ptr [rbp]
 	call	free
-	jmp	.label_233
-.label_212:
+	jmp	.label_149
+.label_146:
 	mov	rdi, rbp
 	call	__gmpz_clear
-.label_233:
+.label_149:
 	mov	rdi, r14
 	call	free
-	jmp	.label_161
-.label_169:
+	jmp	.label_153
+.label_202:
 	movzx	edi, r15b
 	call	eval
 	mov	r13, rax
 	mov	rbx,  qword ptr [word ptr [rip + args]]
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_163
+	je	.label_155
 	mov	esi, OFFSET FLAT:.str.70
 	call	strcmp
 	test	eax, eax
@@ -2271,7 +2013,7 @@ eval6:
 	movzx	eax, al
 	lea	rax, [rbx + rax*8]
 	mov	qword ptr [word ptr [rip + args]],  rax
-	je	.label_161
+	je	.label_153
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.71
 	mov	edx, 5
@@ -2279,17 +2021,17 @@ eval6:
 	mov	rbx, rax
 	mov	rax,  qword ptr [word ptr [rip + args]]
 	mov	rdx, qword ptr [rax]
-	jmp	.label_176
-.label_171:
+	jmp	.label_167
+.label_162:
 	mov	rdi, rbp
 	mov	rsi, r13
 	call	strcspn
 	cmp	byte ptr [rbp + rax], 0
-	je	.label_180
+	je	.label_171
 	inc	rax
 	mov	rbx, rax
-	jmp	.label_181
-.label_185:
+	jmp	.label_172
+.label_176:
 	mov	edi, 0x18
 	call	xmalloc
 	mov	r13, rax
@@ -2298,20 +2040,20 @@ eval6:
 	call	xstrdup
 	mov	qword ptr [r13 + 8], rax
 	lea	rbx, [r12 + 8]
-	jmp	.label_187
-.label_180:
+	jmp	.label_178
+.label_171:
 	xor	ebx, ebx
-.label_181:
+.label_172:
 	mov	rbp, qword ptr [rsp + 0x10]
-	jmp	.label_167
-.label_221:
+	jmp	.label_160
+.label_157:
 	mov	rax, qword ptr [rsp + 0x20]
 	mov	qword ptr [rsp + 8], rax
 	mov	r14, qword ptr [rsp + 0x18]
-.label_182:
+.label_164:
 	mov	rbp, qword ptr [rsp + 0x10]
 	mov	rbx, qword ptr [rsp + 8]
-.label_167:
+.label_160:
 	add	r12, 8
 	mov	edi, 0x18
 	call	xmalloc
@@ -2321,37 +2063,37 @@ eval6:
 	mov	rsi, rbx
 	call	__gmpz_init_set_ui
 	cmp	dword ptr [r14], 1
-	jne	.label_205
+	jne	.label_192
 	mov	rdi, qword ptr [r12]
 	call	free
-	jmp	.label_207
-.label_205:
+	jmp	.label_194
+.label_192:
 	mov	rdi, r12
 	call	__gmpz_clear
-.label_207:
+.label_194:
 	mov	rdi, r14
 	call	free
 	cmp	dword ptr [r15], 1
-	jne	.label_209
+	jne	.label_198
 	mov	rdi, qword ptr [rbp]
 	call	free
-	jmp	.label_210
-.label_209:
+	jmp	.label_199
+.label_198:
 	mov	rdi, r15
 	add	rdi, 8
 	call	__gmpz_clear
-.label_210:
+.label_199:
 	mov	rdi, r15
 	call	free
-	jmp	.label_161
-.label_230:
+	jmp	.label_153
+.label_144:
 	sub	rbx, r15
 	inc	rbx
 	cmp	rbx, r14
 	cmova	rbx, r14
 	call	__ctype_get_mb_cur_max
 	cmp	rax, 1
-	jne	.label_216
+	jne	.label_204
 	lea	rdi, [rbx + 1]
 	call	xmalloc
 	mov	r14, rax
@@ -2363,8 +2105,8 @@ eval6:
 	mov	r13, rax
 	mov	rbp, qword ptr [rsp + 0x18]
 	mov	r15, qword ptr [rsp + 0x20]
-	jmp	.label_217
-.label_216:
+	jmp	.label_174
+.label_204:
 	mov	r14, r15
 	inc	rbp
 	mov	rdi, rbp
@@ -2384,16 +2126,16 @@ eval6:
 	setne	cl
 	test	rbx, rbx
 	mov	r13, rbp
-	je	.label_172
+	je	.label_143
 	or	cl, al
 	mov	r13, qword ptr [rsp + 0x10]
-	je	.label_172
+	je	.label_143
 	mov	ebp, 1
 	lea	r15, [rsp + 0x68]
 	mov	r13, qword ptr [rsp + 0x10]
-.label_175:
+.label_166:
 	cmp	rbp, r14
-	jb	.label_234
+	jb	.label_152
 	dec	rbx
 	mov	rsi, qword ptr [rsp + 0x78]
 	mov	rdx, qword ptr [rsp + 0x80]
@@ -2401,7 +2143,7 @@ eval6:
 	mov	rdi, r13
 	call	__mempcpy_chk
 	mov	r13, rax
-.label_234:
+.label_152:
 	mov	rax, qword ptr [rsp + 0x80]
 	add	qword ptr [rsp + 0x78], rax
 	mov	byte ptr [rsp + 0x74], 0
@@ -2413,17 +2155,17 @@ eval6:
 	shr	rcx, 0x20
 	setne	cl
 	test	rbx, rbx
-	je	.label_172
+	je	.label_143
 	inc	rbp
 	or	cl, al
-	jne	.label_175
-.label_172:
+	jne	.label_166
+.label_143:
 	mov	rbp, qword ptr [rsp + 0x18]
 	mov	r15, qword ptr [rsp + 0x20]
 	mov	r14, qword ptr [rsp + 0x10]
-.label_217:
+.label_174:
 	mov	byte ptr [r13], 0
-.label_220:
+.label_151:
 	lea	rbx, [r12 + 8]
 	mov	edi, 0x18
 	call	xmalloc
@@ -2434,44 +2176,44 @@ eval6:
 	mov	qword ptr [r13 + 8], rax
 	mov	rdi, r14
 	call	free
-.label_187:
+.label_178:
 	cmp	dword ptr [r12], 1
-	jne	.label_229
+	jne	.label_177
 	mov	rdi, qword ptr [rbx]
 	call	free
-	jmp	.label_191
-.label_229:
+	jmp	.label_181
+.label_177:
 	mov	rdi, r12
 	add	rdi, 8
 	call	__gmpz_clear
-.label_191:
+.label_181:
 	mov	rdi, r12
 	call	free
 	mov	rdi, r15
 	add	rdi, 8
 	cmp	dword ptr [r15], 1
-	jne	.label_195
+	jne	.label_184
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_199
-.label_195:
+	jmp	.label_189
+.label_184:
 	call	__gmpz_clear
-.label_199:
+.label_189:
 	mov	rdi, r15
 	call	free
 	mov	rdi, rbp
 	add	rdi, 8
 	cmp	dword ptr [rbp], 1
-	jne	.label_201
+	jne	.label_190
 	mov	rdi, qword ptr [rdi]
 	call	free
-	jmp	.label_160
-.label_201:
+	jmp	.label_163
+.label_190:
 	call	__gmpz_clear
-.label_160:
+.label_163:
 	mov	rdi, rbp
 	call	free
-.label_161:
+.label_153:
 	mov	rax, r13
 	add	rsp, 0xa8
 	pop	rbx
@@ -2481,20 +2223,20 @@ eval6:
 	pop	r15
 	pop	rbp
 	ret	
-.label_196:
+.label_185:
 	mov	rax, qword ptr [rsp + 0x20]
 	mov	qword ptr [rsp + 8], rax
-	jmp	.label_182
-.label_177:
+	jmp	.label_164
+.label_145:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.63
-.label_173:
+.label_210:
 	mov	edx, 5
 	call	dcgettext
 	mov	rbx, rax
 	mov	rax,  qword ptr [word ptr [rip + args]]
 	mov	rdx, qword ptr [rax - 8]
-.label_176:
+.label_167:
 	xor	edi, edi
 	mov	esi, 8
 	call	quotearg_n_style
@@ -2504,15 +2246,15 @@ eval6:
 	xor	eax, eax
 	mov	rdx, rbx
 	call	error
-.label_189:
+.label_179:
 	call	abort
-.label_168:
+.label_161:
 	call	abort
-.label_232:
+.label_148:
 	call	abort
-.label_198:
+.label_188:
 	call	abort
-.label_165:
+.label_158:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.72
 	mov	edx, 5
@@ -2523,14 +2265,14 @@ eval6:
 	xor	eax, eax
 	mov	rdx, rcx
 	call	error
-.label_163:
+.label_155:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.69
-	jmp	.label_173
+	jmp	.label_210
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x403fc0
+	#Procedure 0x403c10
 
 	.globl docolon
 	.type docolon, @function
@@ -2544,9 +2286,9 @@ docolon:
 	mov	r14, rdi
 	mov	eax, dword ptr [r14]
 	cmp	eax, 1
-	je	.label_245
+	je	.label_217
 	test	eax, eax
-	jne	.label_249
+	jne	.label_221
 	lea	rbx, [r14 + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -2557,15 +2299,15 @@ docolon:
 	call	__gmpz_clear
 	mov	qword ptr [r14 + 8], r12
 	mov	dword ptr [r14], 1
-.label_245:
+.label_217:
 	mov	eax, dword ptr [r15]
 	test	eax, eax
-	je	.label_235
+	je	.label_226
 	cmp	eax, 1
-	jne	.label_237
+	jne	.label_228
 	mov	rbx, qword ptr [r15 + 8]
-	jmp	.label_240
-.label_235:
+	jmp	.label_230
+.label_226:
 	lea	r12, [r15 + 8]
 	xor	edi, edi
 	mov	esi, 0xa
@@ -2576,7 +2318,7 @@ docolon:
 	call	__gmpz_clear
 	mov	qword ptr [r15 + 8], rbx
 	mov	dword ptr [r15], 1
-.label_240:
+.label_230:
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rsp], xmm0
 	mov	qword ptr [rsp + 0x10], 0
@@ -2593,7 +2335,7 @@ docolon:
 	call	rpl_re_compile_pattern
 	mov	rcx, rax
 	test	rcx, rcx
-	jne	.label_241
+	jne	.label_224
 	and	byte ptr [rsp + 0x158], 0x7f
 	mov	rbx, qword ptr [r14 + 8]
 	mov	rdi, rbx
@@ -2606,9 +2348,9 @@ docolon:
 	call	rpl_re_match
 	mov	r15, rax
 	test	r15, r15
-	js	.label_248
+	js	.label_220
 	cmp	qword ptr [rsp + 0x150], 0
-	je	.label_252
+	je	.label_214
 	mov	rax, qword ptr [rsp + 0x10]
 	mov	rax, qword ptr [rax + 8]
 	mov	rcx, qword ptr [r14 + 8]
@@ -2621,27 +2363,27 @@ docolon:
 	mov	r14, rax
 	mov	dword ptr [r14], 1
 	mov	rdi, rbx
-	jmp	.label_238
-.label_248:
+	jmp	.label_229
+.label_220:
 	cmp	r15, -1
-	jne	.label_242
+	jne	.label_225
 	mov	rbx, qword ptr [rsp + 0x150]
 	mov	edi, 0x18
 	call	xmalloc
 	mov	r14, rax
 	cmp	rbx, 0
-	je	.label_246
+	je	.label_218
 	mov	dword ptr [r14], 1
 	mov	edi, OFFSET FLAT:.str_0
-.label_238:
+.label_229:
 	call	xstrdup
 	mov	qword ptr [r14 + 8], rax
-	jmp	.label_250
-.label_252:
+	jmp	.label_222
+.label_214:
 	call	__ctype_get_mb_cur_max
 	cmp	rax, 1
 	mov	rbx, r15
-	je	.label_236
+	je	.label_216
 	mov	r12, qword ptr [r14 + 8]
 	mov	qword ptr [rsp + 0x178], r12
 	mov	byte ptr [rsp + 0x168], 0
@@ -2653,21 +2395,21 @@ docolon:
 	xor	ebx, ebx
 	mov	rcx, rax
 	shr	rcx, 0x20
-	jne	.label_243
+	jne	.label_231
 	test	al, al
-	jne	.label_236
-.label_243:
+	jne	.label_216
+.label_231:
 	xor	ebx, ebx
 	lea	r14, [rsp + 0x168]
 	nop	word ptr cs:[rax + rax]
-.label_239:
+.label_227:
 	mov	rax, qword ptr [rsp + 0x178]
 	mov	rcx, rax
 	sub	rcx, r12
 	cmp	rcx, r15
 	adc	rbx, 0
 	cmp	rcx, r15
-	jae	.label_236
+	jae	.label_216
 	add	rax, qword ptr [rsp + 0x180]
 	mov	qword ptr [rsp + 0x178], rax
 	mov	byte ptr [rsp + 0x174], 0
@@ -2676,32 +2418,32 @@ docolon:
 	mov	rax, qword ptr [rsp + 0x188]
 	mov	rcx, rax
 	shr	rcx, 0x20
-	jne	.label_239
+	jne	.label_227
 	test	al, al
-	je	.label_239
-.label_236:
+	je	.label_227
+.label_216:
 	mov	edi, 0x18
 	call	xmalloc
 	mov	r14, rax
 	mov	dword ptr [r14], 0
 	lea	rdi, [r14 + 8]
 	mov	rsi, rbx
-	jmp	.label_244
-.label_246:
+	jmp	.label_215
+.label_218:
 	mov	dword ptr [r14], 0
 	mov	rdi, r14
 	add	rdi, 8
 	xor	esi, esi
-.label_244:
+.label_215:
 	call	__gmpz_init_set_ui
-.label_250:
+.label_222:
 	cmp	qword ptr [rsp], 0
-	je	.label_251
+	je	.label_223
 	mov	rdi, qword ptr [rsp + 8]
 	call	free
 	mov	rdi, qword ptr [rsp + 0x10]
 	call	free
-.label_251:
+.label_223:
 	mov	qword ptr [rsp + 0x140], 0
 	lea	rdi, [rsp + 0x120]
 	call	rpl_regfree
@@ -2712,23 +2454,23 @@ docolon:
 	pop	r14
 	pop	r15
 	ret	
-.label_249:
+.label_221:
 	call	abort
-.label_237:
+.label_228:
 	call	abort
-.label_241:
+.label_224:
 	mov	edi, 2
 	xor	esi, esi
 	mov	edx, OFFSET FLAT:.str_2
 	xor	eax, eax
 	call	error
-.label_242:
+.label_225:
 	mov	ebx, 0x4b
 	cmp	r15, -2
-	jne	.label_247
+	jne	.label_219
 	call	__errno_location
 	mov	ebx, dword ptr [rax]
-.label_247:
+.label_219:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.74
 	mov	edx, 5
@@ -2742,7 +2484,7 @@ docolon:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404300
+	#Procedure 0x403f50
 	.globl close_stdout_set_file_name
 	.type close_stdout_set_file_name, @function
 close_stdout_set_file_name:
@@ -2752,7 +2494,7 @@ close_stdout_set_file_name:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404310
+	#Procedure 0x403f60
 	.globl close_stdout_set_ignore_EPIPE
 	.type close_stdout_set_ignore_EPIPE, @function
 close_stdout_set_ignore_EPIPE:
@@ -2762,7 +2504,7 @@ close_stdout_set_ignore_EPIPE:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404320
+	#Procedure 0x403f70
 
 	.globl close_stdout
 	.type close_stdout, @function
@@ -2773,24 +2515,24 @@ close_stdout:
 	mov	rdi,  qword ptr [word ptr [rip + stdout]]
 	call	close_stream
 	test	eax, eax
-	je	.label_254
+	je	.label_235
 	mov	bl,  byte ptr [byte ptr [rip + ignore_EPIPE]]
 	call	__errno_location
 	mov	rbp, rax
 	cmp	bl, 0
-	je	.label_253
+	je	.label_234
 	cmp	dword ptr [rbp], 0x20
-	jne	.label_253
-.label_254:
+	jne	.label_234
+.label_235:
 	mov	rdi,  qword ptr [word ptr [rip + stderr]]
 	call	close_stream
 	test	eax, eax
-	jne	.label_256
+	jne	.label_233
 	add	rsp, 8
 	pop	rbx
 	pop	rbp
 	ret	
-.label_253:
+.label_234:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str_3
 	mov	edx, 5
@@ -2799,7 +2541,7 @@ close_stdout:
 	mov	rdi,  qword ptr [word ptr [rip + file_name]]
 	test	rdi, rdi
 	mov	ebp, dword ptr [rbp]
-	jne	.label_255
+	jne	.label_232
 	xor	edi, edi
 	mov	edx, OFFSET FLAT:.str_2
 	xor	eax, eax
@@ -2808,10 +2550,10 @@ close_stdout:
 	call	error
 	mov	edi,  dword ptr [dword ptr [rip + exit_failure]]
 	call	_exit
-.label_256:
+.label_233:
 	mov	edi,  dword ptr [dword ptr [rip + exit_failure]]
 	call	_exit
-.label_255:
+.label_232:
 	call	quotearg_colon
 	mov	rcx, rax
 	xor	edi, edi
@@ -2826,7 +2568,7 @@ close_stdout:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4043e0
+	#Procedure 0x404030
 
 	.globl parse_long_options
 	.type parse_long_options, @function
@@ -2842,7 +2584,7 @@ parse_long_options:
 	mov	r15, rcx
 	mov	r12, rdx
 	test	al, al
-	je	.label_257
+	je	.label_236
 	movaps	xmmword ptr [rsp + 0x30], xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm1
 	movaps	xmmword ptr [rsp + 0x50], xmm2
@@ -2851,20 +2593,20 @@ parse_long_options:
 	movaps	xmmword ptr [rsp + 0x80], xmm5
 	movaps	xmmword ptr [rsp + 0x90], xmm6
 	movaps	xmmword ptr [rsp + 0xa0], xmm7
-.label_257:
+.label_236:
 	mov	ebp,  dword ptr [dword ptr [rip + opterr]]
 	mov	dword ptr [dword ptr [rip + opterr]],  0
 	cmp	edi, 2
-	jne	.label_258
+	jne	.label_237
 	mov	edi, 2
 	mov	edx, OFFSET FLAT:.str_1
 	mov	ecx, OFFSET FLAT:long_options
 	xor	r8d, r8d
 	call	getopt_long
 	cmp	eax, 0x68
-	je	.label_259
+	je	.label_238
 	cmp	eax, 0x76
-	jne	.label_258
+	jne	.label_237
 	lea	rax, [rsp]
 	mov	qword ptr [rsp + 0xc0], rax
 	lea	rax, [rsp + 0x100]
@@ -2879,10 +2621,10 @@ parse_long_options:
 	call	version_etc_va
 	xor	edi, edi
 	call	exit
-.label_259:
+.label_238:
 	xor	edi, edi
 	call	rbx
-.label_258:
+.label_237:
 	mov	dword ptr [dword ptr [rip + opterr]],  ebp
 	mov	dword ptr [dword ptr [rip + optind]],  0
 	add	rsp, 0xd0
@@ -2894,7 +2636,7 @@ parse_long_options:
 	ret	
 	.section	.text
 	.align	16
-	#Procedure 0x4044e0
+	#Procedure 0x404130
 	.globl parse_gnu_standard_options_only
 	.type parse_gnu_standard_options_only, @function
 parse_gnu_standard_options_only:
@@ -2908,7 +2650,7 @@ parse_gnu_standard_options_only:
 	mov	r15, rcx
 	mov	rbx, rdx
 	test	al, al
-	je	.label_260
+	je	.label_242
 	movaps	xmmword ptr [rsp + 0x30], xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm1
 	movaps	xmmword ptr [rsp + 0x50], xmm2
@@ -2917,7 +2659,7 @@ parse_gnu_standard_options_only:
 	movaps	xmmword ptr [rsp + 0x80], xmm5
 	movaps	xmmword ptr [rsp + 0x90], xmm6
 	movaps	xmmword ptr [rsp + 0xa0], xmm7
-.label_260:
+.label_242:
 	mov	ebp,  dword ptr [dword ptr [rip + opterr]]
 	mov	dword ptr [dword ptr [rip + opterr]],  1
 	mov	eax, OFFSET FLAT:.str_0
@@ -2928,19 +2670,19 @@ parse_gnu_standard_options_only:
 	xor	r8d, r8d
 	call	getopt_long
 	cmp	eax, -1
-	je	.label_263
+	je	.label_240
 	mov	rcx, qword ptr [rsp + 0xf0]
 	cmp	eax, 0x68
-	je	.label_264
+	je	.label_241
 	cmp	eax, 0x76
-	je	.label_262
+	je	.label_243
 	mov	edi,  dword ptr [dword ptr [rip + exit_failure]]
-	jmp	.label_261
-.label_264:
+	jmp	.label_239
+.label_241:
 	xor	edi, edi
-.label_261:
+.label_239:
 	call	rcx
-.label_263:
+.label_240:
 	mov	dword ptr [dword ptr [rip + opterr]],  ebp
 	add	rsp, 0xc8
 	pop	rbx
@@ -2948,7 +2690,7 @@ parse_gnu_standard_options_only:
 	pop	r15
 	pop	rbp
 	ret	
-.label_262:
+.label_243:
 	lea	rax, [rsp]
 	mov	qword ptr [rsp + 0xc0], rax
 	lea	rax, [rsp + 0xf8]
@@ -2966,7 +2708,7 @@ parse_gnu_standard_options_only:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4045f0
+	#Procedure 0x404240
 
 	.globl mbschr
 	.type mbschr, @function
@@ -2981,9 +2723,9 @@ mbschr:
 	mov	ecx, ebp
 	and	ecx, 0xf0
 	cmp	ecx, 0x30
-	jb	.label_267
+	jb	.label_245
 	cmp	rax, 2
-	jb	.label_267
+	jb	.label_245
 	mov	qword ptr [rsp + 0x10], rbx
 	mov	byte ptr [rsp], 0
 	mov	qword ptr [rsp + 4], 0
@@ -2993,23 +2735,23 @@ mbschr:
 	mov	rax, qword ptr [rsp + 0x20]
 	xor	r14d, r14d
 	test	al, al
-	je	.label_270
+	je	.label_248
 	shr	rax, 0x20
-	je	.label_268
-.label_270:
+	je	.label_247
+.label_248:
 	movzx	ebx, bpl
 	lea	rbp, [rsp]
 	xor	r14d, r14d
 	nop	word ptr [rax + rax]
-.label_269:
+.label_246:
 	mov	rax, qword ptr [rsp + 0x10]
 	mov	rcx, qword ptr [rsp + 0x18]
 	cmp	rcx, 1
-	jne	.label_265
+	jne	.label_249
 	movzx	edx, byte ptr [rax]
 	cmp	edx, ebx
-	je	.label_266
-.label_265:
+	je	.label_244
+.label_249:
 	add	rax, rcx
 	mov	qword ptr [rsp + 0x10], rax
 	mov	byte ptr [rsp + 0xc], 0
@@ -3017,11 +2759,11 @@ mbschr:
 	call	mbuiter_multi_next
 	mov	rax, qword ptr [rsp + 0x20]
 	test	al, al
-	je	.label_269
+	je	.label_246
 	shr	rax, 0x20
-	jne	.label_269
-	jmp	.label_268
-.label_267:
+	jne	.label_246
+	jmp	.label_247
+.label_245:
 	mov	rdi, rbx
 	mov	esi, ebp
 	add	rsp, 0x40
@@ -3029,9 +2771,9 @@ mbschr:
 	pop	r14
 	pop	rbp
 	jmp	strchr
-.label_266:
+.label_244:
 	mov	r14, rax
-.label_268:
+.label_247:
 	mov	rax, r14
 	add	rsp, 0x40
 	pop	rbx
@@ -3041,7 +2783,7 @@ mbschr:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x4046c0
+	#Procedure 0x404310
 
 	.globl mbslen
 	.type mbslen, @function
@@ -3052,7 +2794,7 @@ mbslen:
 	mov	rbx, rdi
 	call	__ctype_get_mb_cur_max
 	cmp	rax, 2
-	jb	.label_274
+	jb	.label_253
 	mov	qword ptr [rsp + 0x18], rbx
 	mov	byte ptr [rsp + 8], 0
 	mov	qword ptr [rsp + 0xc], 0
@@ -3062,14 +2804,14 @@ mbslen:
 	mov	rax, qword ptr [rsp + 0x28]
 	xor	ebx, ebx
 	test	al, al
-	je	.label_273
+	je	.label_252
 	shr	rax, 0x20
-	je	.label_271
-.label_273:
+	je	.label_250
+.label_252:
 	xor	ebx, ebx
 	lea	r14, [rsp + 8]
 	nop	
-.label_272:
+.label_251:
 	inc	rbx
 	mov	rax, qword ptr [rsp + 0x20]
 	add	qword ptr [rsp + 0x18], rax
@@ -3078,16 +2820,16 @@ mbslen:
 	call	mbuiter_multi_next
 	mov	rax, qword ptr [rsp + 0x28]
 	test	al, al
-	je	.label_272
+	je	.label_251
 	shr	rax, 0x20
-	jne	.label_272
-.label_271:
+	jne	.label_251
+.label_250:
 	mov	rax, rbx
 	add	rsp, 0x48
 	pop	rbx
 	pop	r14
 	ret	
-.label_274:
+.label_253:
 	mov	rdi, rbx
 	add	rsp, 0x48
 	pop	rbx
@@ -3097,7 +2839,7 @@ mbslen:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404760
+	#Procedure 0x4043b0
 
 	.globl mbuiter_multi_next
 	.type mbuiter_multi_next, @function
@@ -3109,32 +2851,32 @@ mbuiter_multi_next:
 	push	rax
 	mov	rbx, rdi
 	cmp	byte ptr [rbx + 0xc], 0
-	jne	.label_277
+	jne	.label_262
 	cmp	byte ptr [rbx], 0
 	mov	r15, qword ptr [rbx + 0x10]
-	je	.label_285
+	je	.label_255
 	lea	r14, [rbx + 4]
-	jmp	.label_284
-.label_285:
+	jmp	.label_261
+.label_255:
 	movzx	eax, byte ptr [r15]
 	mov	rcx, rax
 	shr	rcx, 5
 	mov	ecx,  dword ptr [dword ptr [+ (rcx * 4) + is_basic_table]]
 	bt	ecx, eax
-	jae	.label_275
+	jae	.label_260
 	mov	qword ptr [rbx + 0x18], 1
 	movsx	eax, byte ptr [r15]
 	mov	dword ptr [rbx + 0x24], eax
 	mov	byte ptr [rbx + 0x20], 1
-	jmp	.label_276
-.label_275:
+	jmp	.label_254
+.label_260:
 	lea	r14, [rbx + 4]
 	mov	rdi, r14
 	call	mbsinit
 	test	eax, eax
-	je	.label_283
+	je	.label_259
 	mov	byte ptr [rbx], 1
-.label_284:
+.label_261:
 	lea	r12, [rbx + 0x24]
 	call	__ctype_get_mb_cur_max
 	mov	rdi, r15
@@ -3147,56 +2889,56 @@ mbuiter_multi_next:
 	call	rpl_mbrtowc
 	mov	qword ptr [rbx + 0x18], rax
 	cmp	rax, -2
-	je	.label_279
+	je	.label_264
 	test	rax, rax
-	je	.label_282
+	je	.label_257
 	cmp	rax, -1
-	jne	.label_280
+	jne	.label_258
 	mov	qword ptr [rbx + 0x18], 1
 	mov	byte ptr [rbx + 0x20], 0
-	jmp	.label_276
-.label_279:
+	jmp	.label_254
+.label_264:
 	mov	rdi, qword ptr [rbx + 0x10]
 	call	strlen
 	mov	qword ptr [rbx + 0x18], rax
 	mov	byte ptr [rbx + 0x20], 0
-	jmp	.label_276
-.label_282:
+	jmp	.label_254
+.label_257:
 	mov	qword ptr [rbx + 0x18], 1
 	mov	rax, qword ptr [rbx + 0x10]
 	cmp	byte ptr [rax], 0
-	jne	.label_278
+	jne	.label_263
 	cmp	dword ptr [r12], 0
-	jne	.label_281
-.label_280:
+	jne	.label_256
+.label_258:
 	mov	byte ptr [rbx + 0x20], 1
 	mov	rdi, r14
 	call	mbsinit
 	test	eax, eax
-	je	.label_276
+	je	.label_254
 	mov	byte ptr [rbx], 0
-.label_276:
+.label_254:
 	mov	byte ptr [rbx + 0xc], 1
-.label_277:
+.label_262:
 	add	rsp, 8
 	pop	rbx
 	pop	r12
 	pop	r14
 	pop	r15
 	ret	
-.label_278:
+.label_263:
 	mov	edi, OFFSET FLAT:.str.2_0
 	mov	esi, OFFSET FLAT:.str.1_1
 	mov	edx, 0xb2
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.mbuiter_multi_next
 	call	__assert_fail
-.label_281:
+.label_256:
 	mov	edi, OFFSET FLAT:.str.3_0
 	mov	esi, OFFSET FLAT:.str.1_1
 	mov	edx, 0xb3
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.mbuiter_multi_next
 	call	__assert_fail
-.label_283:
+.label_259:
 	mov	edi, OFFSET FLAT:.str_4
 	mov	esi, OFFSET FLAT:.str.1_1
 	mov	edx, 0x96
@@ -3205,7 +2947,7 @@ mbuiter_multi_next:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4048b0
+	#Procedure 0x404500
 	.globl mbuiter_multi_reloc
 	.type mbuiter_multi_reloc, @function
 mbuiter_multi_reloc:
@@ -3215,7 +2957,7 @@ mbuiter_multi_reloc:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4048c0
+	#Procedure 0x404510
 	.globl mbuiter_multi_copy
 	.type mbuiter_multi_copy, @function
 mbuiter_multi_copy:
@@ -3228,35 +2970,35 @@ mbuiter_multi_copy:
 	mov	al, byte ptr [rbx]
 	test	al, al
 	mov	byte ptr [r14], al
-	je	.label_286
+	je	.label_265
 	mov	rax, qword ptr [rbx + 4]
 	mov	qword ptr [r14 + 4], rax
-	jmp	.label_287
-.label_286:
+	jmp	.label_266
+.label_265:
 	mov	qword ptr [r14 + 4], 0
-.label_287:
+.label_266:
 	mov	al, byte ptr [rbx + 0xc]
 	mov	byte ptr [r14 + 0xc], al
 	mov	rsi, qword ptr [rbx + 0x10]
 	lea	rax, [rbx + 0x28]
 	cmp	rsi, rax
-	jne	.label_288
+	jne	.label_267
 	lea	r15, [r14 + 0x28]
 	mov	rdx, qword ptr [rbx + 0x18]
 	mov	rdi, r15
 	call	memcpy
 	mov	rsi, r15
-.label_288:
+.label_267:
 	mov	qword ptr [r14 + 0x10], rsi
 	mov	rax, qword ptr [rbx + 0x18]
 	mov	qword ptr [r14 + 0x18], rax
 	mov	rax, qword ptr [rbx + 0x20]
 	test	al, al
 	mov	byte ptr [r14 + 0x20], al
-	je	.label_289
+	je	.label_268
 	shr	rax, 0x20
 	mov	dword ptr [r14 + 0x24], eax
-.label_289:
+.label_268:
 	pop	rbx
 	pop	r14
 	pop	r15
@@ -3265,7 +3007,7 @@ mbuiter_multi_copy:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404940
+	#Procedure 0x404590
 
 	.globl set_program_name
 	.type set_program_name, @function
@@ -3275,7 +3017,7 @@ set_program_name:
 	push	rax
 	mov	rbx, rdi
 	test	rbx, rbx
-	je	.label_290
+	je	.label_271
 	mov	esi, 0x2f
 	mov	rdi, rbx
 	call	strrchr
@@ -3285,31 +3027,31 @@ set_program_name:
 	mov	rax, r14
 	sub	rax, rbx
 	cmp	rax, 7
-	jl	.label_291
+	jl	.label_270
 	lea	rdi, [r14 - 7]
 	mov	esi, OFFSET FLAT:.str.1_2
 	mov	edx, 7
 	call	strncmp
 	test	eax, eax
-	jne	.label_291
+	jne	.label_270
 	mov	esi, OFFSET FLAT:.str.2_1
 	mov	edx, 3
 	mov	rdi, r14
 	call	strncmp
 	test	eax, eax
-	jne	.label_292
+	jne	.label_269
 	add	r14, 3
 	mov	qword ptr [word ptr [rip + program_invocation_short_name]],  r14
-.label_292:
+.label_269:
 	mov	rbx, r14
-.label_291:
+.label_270:
 	mov	qword ptr [word ptr [rip + program_name]],  rbx
 	mov	qword ptr [word ptr [rip + __progname_full]],  rbx
 	add	rsp, 8
 	pop	rbx
 	pop	r14
 	ret	
-.label_290:
+.label_271:
 	mov	rcx,  qword ptr [word ptr [rip + stderr]]
 	mov	edi, OFFSET FLAT:.str_5
 	mov	esi, 0x37
@@ -3320,7 +3062,7 @@ set_program_name:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4049f0
+	#Procedure 0x404640
 	.globl clone_quoting_options
 	.type clone_quoting_options, @function
 clone_quoting_options:
@@ -3346,7 +3088,7 @@ clone_quoting_options:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404a30
+	#Procedure 0x404680
 	.globl get_quoting_style
 	.type get_quoting_style, @function
 get_quoting_style:
@@ -3359,7 +3101,7 @@ get_quoting_style:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x404a40
+	#Procedure 0x404690
 	.globl set_quoting_style
 	.type set_quoting_style, @function
 set_quoting_style:
@@ -3372,7 +3114,7 @@ set_quoting_style:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x404a50
+	#Procedure 0x4046a0
 	.globl set_char_quoting
 	.type set_char_quoting, @function
 set_char_quoting:
@@ -3398,7 +3140,7 @@ set_char_quoting:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404a90
+	#Procedure 0x4046e0
 	.globl set_quoting_flags
 	.type set_quoting_flags, @function
 set_quoting_flags:
@@ -3412,7 +3154,7 @@ set_quoting_flags:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404ab0
+	#Procedure 0x404700
 	.globl set_custom_quoting
 	.type set_custom_quoting, @function
 set_custom_quoting:
@@ -3422,19 +3164,19 @@ set_custom_quoting:
 	cmovne	rax, rdi
 	mov	dword ptr [rax], 0xa
 	test	rsi, rsi
-	je	.label_293
+	je	.label_272
 	test	rdx, rdx
-	je	.label_293
+	je	.label_272
 	mov	qword ptr [rax + 0x28], rsi
 	mov	qword ptr [rax + 0x30], rdx
 	ret	
-.label_293:
+.label_272:
 	push	rax
 	call	abort
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404ae0
+	#Procedure 0x404730
 	.globl quotearg_buffer
 	.type quotearg_buffer, @function
 quotearg_buffer:
@@ -3482,7 +3224,7 @@ quotearg_buffer:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x404b60
+	#Procedure 0x4047b0
 
 	.globl quotearg_buffer_restyled
 	.type quotearg_buffer_restyled, @function
@@ -3493,1060 +3235,1069 @@ quotearg_buffer_restyled:
 	push	r13
 	push	r12
 	push	rbx
-	sub	rsp, 0xf8
+	sub	rsp, 0x108
 	mov	ebx, r9d
-	mov	dword ptr [rsp + 0x54], ebx
-	mov	r12d, r8d
-	mov	r15, rcx
-	mov	qword ptr [rsp + 0x98], rdx
-	mov	r13, rsi
+	mov	dword ptr [rsp + 0x6c], ebx
+	mov	r15d, r8d
+	mov	r13, rcx
+	mov	qword ptr [rsp + 0xa8], rdx
+	mov	rbp, rsi
 	mov	qword ptr [rsp + 0xe0], rdi
-	mov	rax, qword ptr [rsp + 0x140]
-	mov	qword ptr [rsp + 0x78], rax
-	mov	rax, qword ptr [rsp + 0x138]
-	mov	qword ptr [rsp + 0x80], rax
+	mov	rax, qword ptr [rsp + 0x150]
+	mov	qword ptr [rsp + 0x98], rax
+	mov	rax, qword ptr [rsp + 0x148]
+	mov	qword ptr [rsp + 0xa0], rax
 	call	__ctype_get_mb_cur_max
-	mov	qword ptr [rsp + 0x48], rax
-	mov	dl, bl
-	shr	dl, 1
-	and	dl, 1
+	mov	qword ptr [rsp + 0x60], rax
+	mov	r12b, bl
+	shr	r12b, 1
+	and	r12b, 1
 	mov	eax, ebx
 	and	eax, 1
-	mov	dword ptr [rsp + 0x44], eax
+	mov	dword ptr [rsp + 0x5c], eax
 	and	ebx, 4
-	mov	dword ptr [rsp + 0x40], ebx
+	mov	dword ptr [rsp + 0x58], ebx
 	mov	r8b, 1
 	mov	eax, 0
-	mov	qword ptr [rsp + 0x88], rax
+	mov	qword ptr [rsp + 0x90], rax
 	mov	eax, 0
-	mov	qword ptr [rsp + 0xa8], rax
+	mov	qword ptr [rsp + 0xb8], rax
 	mov	eax, 0
 	mov	qword ptr [rsp + 0xc8], rax
 	mov	eax, 0
-	xor	edi, edi
+	mov	dword ptr [rsp + 0xd8], 0
 	xor	ecx, ecx
-	mov	qword ptr [rsp + 0x58], rcx
-.label_419:
-	mov	rbp, r13
-	xor	r14d, r14d
-	mov	ecx, r12d
-	cmp	r12d, 0xa
-	ja	.label_298
+	mov	qword ptr [rsp + 0x70], rcx
+.label_364:
+	mov	r10, rbp
+	xor	ecx, ecx
+	mov	qword ptr [rsp + 0xf0], rcx
+	mov	ecx, r15d
+	cmp	r15d, 0xa
+	ja	.label_302
 	mov	r9d, 7
-	mov	r13b, 1
+	mov	dil, 1
 	xor	esi, esi
-	mov	r11, qword ptr [rsp + 0x98]
-	mov	r10, r15
-	jmp	qword ptr [word ptr [+ (rcx * 8) + label_302]]
-.label_2636:
-	mov	r15d, edi
+	mov	r11, qword ptr [rsp + 0xa8]
+	mov	rbp, r13
+	jmp	qword ptr [word ptr [+ (rcx * 8) + label_308]]
+.label_2467:
 	mov	edi, OFFSET FLAT:.str.11_0
-	mov	esi, r12d
+	mov	esi, r15d
 	mov	r14, r10
-	mov	r13b, r8b
-	mov	bl, dl
+	mov	bl, r8b
 	call	gettext_quote
-	mov	qword ptr [rsp + 0x80], rax
+	mov	qword ptr [rsp + 0xa0], rax
 	mov	edi, OFFSET FLAT:.str.12_0
-	mov	esi, r12d
+	mov	esi, r15d
 	call	gettext_quote
-	mov	dl, bl
-	mov	edi, r15d
-	mov	r8b, r13b
+	mov	r8b, bl
 	mov	r10, r14
-	mov	qword ptr [rsp + 0x78], rax
-.label_2637:
-	mov	qword ptr [rsp + 0x60], r10
-	mov	byte ptr [rsp + 0x50], r8b
-	mov	dword ptr [rsp + 0xb8], edi
-	test	dl, 1
-	mov	r15b, dl
-	mov	r14d, 0
-	mov	rdx, qword ptr [rsp + 0x80]
+	mov	qword ptr [rsp + 0x98], rax
+.label_2468:
+	mov	byte ptr [rsp + 0x69], r8b
+	mov	r13, rbp
+	test	r12b, 1
+	mov	eax, 0
+	mov	qword ptr [rsp + 0xf0], rax
+	mov	rdx, qword ptr [rsp + 0xa0]
 	jne	.label_328
 	mov	al, byte ptr [rdx]
 	test	al, al
-	mov	r14d, 0
+	mov	ecx, 0
+	mov	qword ptr [rsp + 0xf0], rcx
 	je	.label_328
-	xor	r14d, r14d
-	nop	word ptr [rax + rax]
-.label_348:
-	cmp	r14, rbp
-	jae	.label_345
+	xor	ecx, ecx
+	mov	qword ptr [rsp + 0xf0], rcx
+	nop	word ptr cs:[rax + rax]
+.label_349:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_342
 	mov	rcx, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rcx + r14], al
-.label_345:
-	mov	al, byte ptr [rdx + r14 + 1]
-	inc	r14
+	mov	rsi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rcx + rsi], al
+.label_342:
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	al, byte ptr [rdx + rcx + 1]
+	inc	rcx
+	mov	qword ptr [rsp + 0xf0], rcx
 	test	al, al
-	jne	.label_348
+	jne	.label_349
 .label_328:
-	mov	rbx, qword ptr [rsp + 0x78]
-	mov	rdi, rbx
+	mov	rbp, qword ptr [rsp + 0x98]
+	mov	rdi, rbp
+	mov	rbx, r10
 	call	strlen
+	mov	r10, rbx
 	mov	qword ptr [rsp + 0xc8], rax
-	mov	r9d, r12d
-	mov	qword ptr [rsp + 0xa8], rbx
-	mov	r13b, 1
-	mov	sil, r15b
-	mov	r10, qword ptr [rsp + 0x60]
-	mov	r8b, byte ptr [rsp + 0x50]
-	mov	edi, dword ptr [rsp + 0xb8]
-	mov	r11, qword ptr [rsp + 0x98]
-	jmp	.label_358
-.label_2629:
+	mov	r9d, r15d
+	mov	qword ptr [rsp + 0xb8], rbp
+	mov	dil, 1
+	mov	sil, r12b
+	mov	rbp, r13
+	mov	r8b, byte ptr [rsp + 0x69]
+	mov	r11, qword ptr [rsp + 0xa8]
+	jmp	.label_284
+.label_2460:
 	xor	r9d, r9d
-	xor	r14d, r14d
-	mov	r13b, al
+	xor	ecx, ecx
+	mov	qword ptr [rsp + 0xf0], rcx
+	mov	dil, al
 	xor	esi, esi
-	jmp	.label_358
-.label_2632:
+	jmp	.label_284
+.label_2463:
 	mov	al, 1
-.label_2630:
-	mov	dl, 1
-.label_2633:
-	test	dl, 1
+.label_2461:
+	mov	r12b, 1
+.label_2464:
+	test	r12b, 1
 	mov	cl, 1
-	je	.label_376
+	je	.label_375
 	mov	cl, al
-.label_376:
+.label_375:
 	mov	al, cl
-.label_2631:
+.label_2462:
 	mov	r9d, 2
-	test	dl, 1
-	jne	.label_380
-	test	rbp, rbp
-	je	.label_384
+	test	r12b, 1
+	jne	.label_379
+	test	r10, r10
+	je	.label_382
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx], 0x27
-	mov	r14d, 1
-	jmp	.label_385
-.label_380:
-	xor	r14d, r14d
-	jmp	.label_385
-.label_2634:
+	mov	ecx, 1
+	jmp	.label_360
+.label_379:
+	xor	ecx, ecx
+	jmp	.label_360
+.label_2465:
 	mov	r9d, 5
-	test	dl, 1
-	jne	.label_389
-	test	rbp, rbp
-	je	.label_319
+	test	r12b, 1
+	jne	.label_366
+	test	r10, r10
+	je	.label_396
 	mov	rax, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rax], 0x22
-	mov	r14d, 1
-	jmp	.label_393
-.label_2635:
-	mov	r13b, 1
+	mov	eax, 1
+	jmp	.label_274
+.label_2466:
+	mov	dil, 1
 	mov	r9d, 5
-	xor	r14d, r14d
+	mov	eax, 0
+	mov	qword ptr [rsp + 0xf0], rax
 	mov	eax, OFFSET FLAT:.str.10_0
-	mov	qword ptr [rsp + 0xa8], rax
+	mov	qword ptr [rsp + 0xb8], rax
 	mov	eax, 1
 	mov	qword ptr [rsp + 0xc8], rax
 	mov	sil, 1
-	jmp	.label_358
-.label_384:
-	mov	r14d, 1
-	nop	dword ptr [rax]
-.label_385:
+	jmp	.label_284
+.label_382:
+	mov	ecx, 1
+.label_360:
+	mov	qword ptr [rsp + 0xf0], rcx
 	mov	ecx, OFFSET FLAT:.str.12_0
-	mov	qword ptr [rsp + 0xa8], rcx
+	mov	qword ptr [rsp + 0xb8], rcx
 	mov	ecx, 1
 	mov	qword ptr [rsp + 0xc8], rcx
-	mov	r13b, al
-	mov	sil, dl
-	jmp	.label_358
-.label_389:
-	xor	r14d, r14d
-	jmp	.label_393
-.label_319:
-	mov	r14d, 1
-.label_393:
+	mov	dil, al
+	mov	sil, r12b
+	jmp	.label_284
+.label_366:
+	xor	eax, eax
+	jmp	.label_274
+.label_396:
+	mov	eax, 1
+.label_274:
+	mov	qword ptr [rsp + 0xf0], rax
 	mov	eax, OFFSET FLAT:.str.10_0
-	mov	qword ptr [rsp + 0xa8], rax
+	mov	qword ptr [rsp + 0xb8], rax
 	mov	eax, 1
 	mov	qword ptr [rsp + 0xc8], rax
-	mov	r13b, 1
-	mov	sil, dl
-	nop	dword ptr [rax]
-.label_358:
-	mov	qword ptr [rsp + 0x68], rsi
-	mov	byte ptr [rsp + 0x77], r13b
-	cmp	qword ptr [rsp + 0x130], 0
-	setne	r12b
+	mov	dil, 1
+	mov	sil, r12b
+	nop	dword ptr [rax + rax]
+.label_284:
+	mov	qword ptr [rsp + 0x80], rsi
+	mov	byte ptr [rsp + 0x8f], dil
+	cmp	qword ptr [rsp + 0x140], 0
+	setne	dl
 	cmp	r9d, 2
 	setne	r15b
 	sete	al
-	mov	cl, r13b
+	mov	cl, dil
 	and	cl, 1
-	mov	byte ptr [rsp + 0x97], cl
-	sete	byte ptr [rsp + 0x53]
+	mov	byte ptr [rsp + 0xb6], cl
+	sete	byte ptr [rsp + 0x6b]
 	mov	bl, r15b
 	and	bl, cl
-	mov	byte ptr [rsp + 0xd6], bl
+	mov	byte ptr [rsp + 0xd7], bl
 	cmp	qword ptr [rsp + 0xc8], 0
-	setne	cl
-	mov	dl, cl
-	and	dl, bl
-	mov	byte ptr [rsp + 0xd7], dl
+	setne	r13b
+	mov	r12b, r13b
+	and	r12b, bl
+	mov	byte ptr [rsp + 0xc6], r12b
 	mov	bl, sil
 	and	bl, 1
 	mov	byte ptr [rsp + 0xc7], bl
-	sete	dl
+	sete	cl
 	and	al, bl
-	mov	byte ptr [rsp + 0x51], al
-	and	r12b, bl
-	mov	byte ptr [rsp + 0xb7], r12b
-	or	dl, r15b
-	mov	byte ptr [rsp + 0xa7], dl
-	and	r13b, sil
-	and	r13b, cl
-	mov	byte ptr [rsp + 0x52], r13b
-	xor	r15d, r15d
-	jmp	.label_294
-	nop	word ptr cs:[rax + rax]
-.label_346:
-	inc	r15
-.label_294:
-	cmp	r10, -1
-	je	.label_342
-	cmp	r15, r10
-	jne	.label_343
-	jmp	.label_344
-	nop	word ptr cs:[rax + rax]
-.label_342:
-	mov	rcx, -1
-	cmp	byte ptr [r11 + r15], 0
-	je	.label_333
-.label_343:
-	cmp	byte ptr [rsp + 0xd7], 0
+	mov	byte ptr [rsp + 0x7f], al
+	and	dl, bl
+	mov	byte ptr [rsp + 0xc5], dl
+	or	cl, r15b
+	mov	byte ptr [rsp + 0xb7], cl
+	and	dil, sil
+	and	dil, r13b
+	mov	byte ptr [rsp + 0x6a], dil
+	xor	edi, edi
+	mov	r14d, dword ptr [rsp + 0xd8]
+	jmp	.label_334
+.label_314:
+	inc	rdi
+.label_334:
+	cmp	rbp, -1
 	je	.label_354
-	mov	rax, qword ptr [rsp + 0xc8]
-	lea	rbx, [r15 + rax]
-	mov	qword ptr [rsp + 0xd8], r15
-	cmp	rax, 2
-	jb	.label_359
-	cmp	r10, -1
-	jne	.label_359
-	mov	dword ptr [rsp + 0xb8], edi
-	mov	rdi, r11
-	mov	r12b, r8b
-	mov	r13, r9
-	mov	r15, r14
-	mov	r14, r11
-	call	strlen
-	mov	r11, r14
-	mov	r14, r15
-	mov	edi, dword ptr [rsp + 0xb8]
-	mov	r9, r13
-	mov	r8b, r12b
-	mov	r10, rax
-.label_359:
-	cmp	rbx, r10
-	jbe	.label_378
-	mov	dword ptr [rsp + 0xe8], 0
-	mov	r15, qword ptr [rsp + 0xd8]
-	jmp	.label_381
-	nop	word ptr [rax + rax]
+	cmp	rdi, rbp
+	jne	.label_356
+	jmp	.label_358
+	nop	word ptr cs:[rax + rax]
 .label_354:
-	mov	dword ptr [rsp + 0xe8], 0
-	jmp	.label_381
-.label_378:
-	mov	qword ptr [rsp + 0xb8], r14
-	mov	r15d, edi
+	mov	r13, -1
+	cmp	byte ptr [r11 + rdi], 0
+	je	.label_362
+.label_356:
+	test	r12b, r12b
+	je	.label_365
+	mov	rax, qword ptr [rsp + 0xc8]
+	lea	rbx, [rdi + rax]
+	cmp	rax, 2
+	jb	.label_367
+	cmp	rbp, -1
+	jne	.label_367
+	mov	eax, r14d
+	mov	r14, rdi
+	mov	rdi, r11
+	mov	rbp, r10
+	mov	r15b, r8b
 	mov	r13, r9
-	mov	r12b, r8b
+	mov	dword ptr [rsp + 0xd8], eax
+	mov	r12, r11
+	call	strlen
+	mov	rdi, r14
+	mov	r11, r12
+	mov	r12b, byte ptr [rsp + 0xc6]
+	mov	r14d, dword ptr [rsp + 0xd8]
+	mov	r9, r13
+	mov	r8b, r15b
+	mov	r10, rbp
+	mov	rbp, rax
+.label_367:
+	cmp	rbx, rbp
+	jbe	.label_388
+	mov	dword ptr [rsp + 0xec], 0
+	jmp	.label_273
+	nop	word ptr [rax + rax]
+.label_365:
+	mov	dword ptr [rsp + 0xec], 0
+	jmp	.label_273
+.label_388:
+	mov	dword ptr [rsp + 0xd8], r14d
+	mov	r12, rbp
+	mov	r13, r9
+	mov	r15b, r8b
 	mov	rbx, r10
-	mov	rax, qword ptr [rsp + 0xd8]
-	lea	rdi, [r11 + rax]
-	mov	r14, r11
-	mov	rsi, qword ptr [rsp + 0xa8]
+	mov	r14, rdi
+	lea	rdi, [r11 + r14]
+	mov	rbp, r11
+	mov	rsi, qword ptr [rsp + 0xb8]
 	mov	rdx, qword ptr [rsp + 0xc8]
 	call	memcmp
 	test	eax, eax
 	sete	al
-	mov	dword ptr [rsp + 0xe8], eax
-	jne	.label_403
+	mov	dword ptr [rsp + 0xec], eax
+	jne	.label_297
 	cmp	byte ptr [rsp + 0xc7], 0
 	mov	r10, rbx
-	mov	r8b, r12b
+	mov	r8b, r15b
 	mov	r9, r13
-	mov	edi, r15d
-	mov	r11, r14
-	mov	r14, qword ptr [rsp + 0xb8]
-	mov	r15, qword ptr [rsp + 0xd8]
-	je	.label_381
-	jmp	.label_306
-.label_403:
+	mov	r11, rbp
+	mov	rbp, r12
+	mov	r12b, byte ptr [rsp + 0xc6]
+	mov	rdi, r14
+	mov	r14d, dword ptr [rsp + 0xd8]
+	je	.label_273
+	jmp	.label_283
+.label_297:
 	mov	r10, rbx
-	mov	r8b, r12b
+	mov	r8b, r15b
 	mov	r9, r13
-	mov	edi, r15d
-	mov	r11, r14
-	mov	r14, qword ptr [rsp + 0xb8]
-	mov	r15, qword ptr [rsp + 0xd8]
+	mov	r11, rbp
+	mov	rbp, r12
+	mov	r12b, byte ptr [rsp + 0xc6]
+	mov	rdi, r14
+	mov	r14d, dword ptr [rsp + 0xd8]
 	nop	word ptr cs:[rax + rax]
-.label_381:
-	movzx	r12d, byte ptr [r11 + r15]
-	cmp	r12, 0x7e
-	ja	.label_295
+.label_273:
+	movzx	r15d, byte ptr [r11 + rdi]
+	cmp	r15, 0x7e
+	ja	.label_286
 	xor	edx, edx
 	mov	r13b, 1
 	mov	cl, 0x6e
 	mov	bl, 0x61
 	xor	eax, eax
-	jmp	qword ptr [word ptr [+ (r12 * 8) + label_299]]
-.label_2666:
-	test	r15, r15
-	jne	.label_296
-	jmp	.label_309
-.label_2670:
+	jmp	qword ptr [word ptr [+ (r15 * 8) + label_324]]
+.label_2415:
+	test	rdi, rdi
+	jne	.label_305
+	jmp	.label_330
+.label_2419:
 	xor	eax, eax
-	cmp	r10, -1
-	je	.label_310
-	test	r15, r15
-	jne	.label_394
-	cmp	r10, 1
-	je	.label_309
+	cmp	rbp, -1
+	je	.label_331
+	test	rdi, rdi
+	jne	.label_333
+	cmp	rbp, 1
+	je	.label_330
 	xor	r13d, r13d
-	jmp	.label_341
-.label_2659:
-	cmp	byte ptr [rsp + 0x97], 0
-	je	.label_321
+	jmp	.label_296
+.label_2408:
+	cmp	byte ptr [rsp + 0xb6], 0
+	je	.label_337
 	cmp	byte ptr [rsp + 0xc7], 0
-	jne	.label_306
+	jne	.label_283
 	cmp	r9d, 2
-	jne	.label_327
-	mov	al, dil
+	jne	.label_343
+	mov	al, r14b
 	and	al, 1
-	jne	.label_327
-	cmp	r14, rbp
-	jae	.label_332
+	jne	.label_345
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_348
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x27
-.label_332:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_336
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], 0x27
+.label_348:
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
+	cmp	rax, r10
+	jae	.label_310
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x24
-.label_336:
-	lea	rax, [r14 + 2]
-	cmp	rax, rbp
-	jae	.label_303
+.label_310:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 2]
+	cmp	rax, r10
+	jae	.label_319
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x27
-.label_303:
-	add	r14, 3
-	mov	dil, 1
-.label_327:
-	mov	rcx, r14
-	cmp	rcx, rbp
-	jae	.label_349
-	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + rcx], 0x5c
-.label_349:
-	lea	r14, [rcx + 1]
-	mov	al, 1
-	mov	r12b, 0x30
-	cmp	r9d, 2
-	je	.label_356
-	lea	rdx, [r15 + 1]
-	cmp	rdx, r10
-	jae	.label_361
-	mov	dl, byte ptr [r11 + rdx]
-	add	dl, 0xd0
-	movzx	edx, dl
-	cmp	edx, 9
-	ja	.label_362
-	cmp	r14, rbp
-	jae	.label_313
-	mov	rdx, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rdx + r14], 0x30
-.label_313:
-	lea	rdx, [rcx + 2]
-	cmp	rdx, rbp
-	jae	.label_416
-	mov	rsi, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rsi + rdx], 0x30
-.label_416:
-	add	rcx, 3
-	xor	r13d, r13d
-	mov	r14, rcx
-	jmp	.label_341
-.label_2660:
+.label_319:
+	mov	rax, qword ptr [rsp + 0xf0]
+	add	rax, 3
+	mov	r14b, 1
+	mov	rcx, rax
+	jmp	.label_368
+.label_2409:
 	mov	bl, 0x62
-	jmp	.label_388
-.label_2661:
+	jmp	.label_293
+.label_2410:
 	mov	cl, 0x74
-	jmp	.label_350
-.label_2662:
+	jmp	.label_280
+.label_2411:
 	mov	bl, 0x76
-	jmp	.label_388
-.label_2663:
+	jmp	.label_293
+.label_2412:
 	mov	bl, 0x66
-	jmp	.label_388
-.label_2664:
+	jmp	.label_293
+.label_2413:
 	mov	cl, 0x72
-	jmp	.label_350
-.label_2667:
+	jmp	.label_280
+.label_2416:
 	mov	al, 1
-	mov	qword ptr [rsp + 0x58], rax
+	mov	qword ptr [rsp + 0x70], rax
 	cmp	r9d, 2
-	jne	.label_391
+	jne	.label_380
 	cmp	byte ptr [rsp + 0xc7], 0
-	jne	.label_395
-	test	rbp, rbp
+	jne	.label_384
+	test	r10, r10
 	sete	al
-	mov	rcx, qword ptr [rsp + 0x88]
+	mov	rcx, qword ptr [rsp + 0x90]
 	mov	rdx, rcx
 	test	rdx, rdx
 	setne	cl
 	or	cl, al
-	cmove	rdx, rbp
-	mov	qword ptr [rsp + 0x88], rdx
+	cmove	rdx, r10
+	mov	qword ptr [rsp + 0x90], rdx
 	mov	eax, 0
-	cmove	rbp, rax
-	cmp	r14, rbp
-	jae	.label_397
+	cmove	r10, rax
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_390
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x27
-.label_397:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_412
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], 0x27
+.label_390:
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
+	cmp	rax, r10
+	jae	.label_291
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x5c
-.label_412:
-	lea	rax, [r14 + 2]
-	cmp	rax, rbp
-	jae	.label_414
+.label_291:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 2]
+	cmp	rax, r10
+	jae	.label_387
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x27
-.label_414:
-	add	r14, 3
-	xor	edi, edi
-.label_391:
+.label_387:
+	add	qword ptr [rsp + 0xf0], 3
+	xor	r14d, r14d
+.label_380:
 	xor	eax, eax
 	mov	r13b, 1
-	jmp	.label_341
-.label_2668:
+	jmp	.label_296
+.label_2417:
 	cmp	r9d, 5
-	je	.label_413
+	je	.label_309
 	cmp	r9d, 2
-	jne	.label_296
+	jne	.label_305
 	cmp	byte ptr [rsp + 0xc7], 0
-	je	.label_296
-	jmp	.label_411
-.label_2669:
+	je	.label_305
+	jmp	.label_316
+.label_2418:
 	cmp	r9d, 2
-	jne	.label_304
+	jne	.label_318
 	cmp	byte ptr [rsp + 0xc7], 0
-	je	.label_307
-	jmp	.label_386
-.label_295:
-	mov	dword ptr [rsp + 0xb8], edi
+	je	.label_320
+	jmp	.label_325
+.label_286:
 	mov	qword ptr [rsp + 0x30], r9
-	mov	byte ptr [rsp + 0x50], r8b
-	mov	qword ptr [rsp + 0x38], rbp
-	cmp	qword ptr [rsp + 0x48], 1
-	jne	.label_312
-	mov	rbx, r10
-	mov	rbp, r11
+	mov	byte ptr [rsp + 0x69], r8b
+	mov	qword ptr [rsp + 0x48], r10
+	cmp	qword ptr [rsp + 0x60], 1
+	jne	.label_326
+	mov	r13d, r14d
+	mov	r14, r11
+	mov	rbx, rdi
 	call	__ctype_b_loc
-	mov	r11, rbp
+	mov	rdi, rbx
+	mov	r11, r14
+	mov	r14d, r13d
 	mov	rax, qword ptr [rax]
-	movzx	r13d, word ptr [rax + r12*2]
+	movzx	r13d, word ptr [rax + r15*2]
 	shr	r13d, 0xe
 	and	r13b, 1
-	mov	edx, 1
-	jmp	.label_360
-.label_310:
-	test	r15, r15
-	jne	.label_334
+	mov	eax, 1
+.label_304:
+	and	r13b, 1
+	mov	cl, r13b
+	or	cl, byte ptr [rsp + 0x6b]
+	cmp	rax, 1
+	mov	r10, qword ptr [rsp + 0x48]
+	mov	r8b, byte ptr [rsp + 0x69]
+	mov	r9, qword ptr [rsp + 0x30]
+	ja	.label_339
+	test	cl, cl
+	je	.label_339
+	xor	eax, eax
+	jmp	.label_296
+.label_331:
+	test	rdi, rdi
+	jne	.label_352
 	mov	cl, byte ptr [r11 + 1]
 	test	cl, cl
-	jne	.label_334
-.label_309:
+	jne	.label_352
+.label_330:
 	mov	dl, 1
-.label_2665:
-	cmp	byte ptr [rsp + 0xa7], 0
-	je	.label_340
+.label_2414:
+	cmp	byte ptr [rsp + 0xb7], 0
+	je	.label_281
 	xor	eax, eax
 	mov	r13b, dl
-	jmp	.label_341
-.label_321:
-	cmp	dword ptr [rsp + 0x44], 0
-	jne	.label_346
 	jmp	.label_296
-.label_304:
-	cmp	byte ptr [rsp + 0x52], 0
-	mov	cl, r12b
-	je	.label_350
-.label_307:
+.label_337:
+	cmp	dword ptr [rsp + 0x5c], 0
+	jne	.label_314
+	jmp	.label_305
+.label_318:
+	cmp	byte ptr [rsp + 0x6a], 0
+	mov	cl, r15b
+	je	.label_280
+.label_320:
 	xor	eax, eax
 	xor	r13d, r13d
-	jmp	.label_301
-.label_350:
-	cmp	byte ptr [rsp + 0xa7], 0
+	jmp	.label_299
+.label_280:
+	cmp	byte ptr [rsp + 0xb7], 0
 	mov	bl, cl
-	je	.label_357
-.label_388:
+	je	.label_369
+.label_293:
 	xor	eax, eax
-	cmp	byte ptr [rsp + 0x97], 0
+	cmp	byte ptr [rsp + 0xb6], 0
 	mov	r13d, 0
-	je	.label_341
-	jmp	.label_352
-.label_312:
-	mov	qword ptr [rsp + 0xf0], 0
-	cmp	r10, -1
-	lea	rbp, [rsp + 0xf0]
-	jne	.label_365
+	je	.label_296
+	jmp	.label_301
+.label_326:
+	mov	qword ptr [rsp + 0x100], 0
+	cmp	rbp, -1
+	jne	.label_376
+	mov	rbp, rdi
 	mov	rdi, r11
 	mov	rbx, r11
 	call	strlen
+	mov	rdi, rbp
 	mov	r11, rbx
-	mov	r10, rax
-.label_365:
-	mov	qword ptr [rsp + 0x60], r10
-	mov	r13b, 1
-	cmp	byte ptr [rsp + 0x51], 0
-	mov	edx, 0
-	je	.label_379
-	lea	rax, [r11 + r15]
+	mov	rbp, rax
+.label_376:
+	mov	qword ptr [rsp + 0x40], rbp
+	lea	rax, [r11 + rdi]
 	mov	qword ptr [rsp + 0x28], rax
 	mov	r13b, 1
-	xor	edx, edx
-.label_316:
-	mov	qword ptr [rsp + 0xd8], rdx
-	lea	rax, [rdx + r15]
+	xor	eax, eax
+	lea	rbx, [rsp + 0x100]
+.label_329:
+	mov	qword ptr [rsp + 0xd8], rax
+	mov	qword ptr [rsp + 0x50], rdi
+	lea	rax, [rax + rdi]
+	mov	qword ptr [rsp + 0x38], rax
 	lea	rsi, [r11 + rax]
-	mov	rdx, r10
+	mov	rdx, rbp
 	sub	rdx, rax
-	lea	rdi, [rsp + 0xec]
-	mov	rcx, rbp
+	lea	rdi, [rsp + 0xfc]
+	mov	rcx, rbx
 	call	rpl_mbrtowc
-	mov	rbx, rax
-	cmp	rbx, -2
-	je	.label_331
-	cmp	rbx, -1
+	mov	rbp, rax
+	test	rbp, rbp
+	je	.label_290
+	cmp	rbp, -1
+	mov	r10, qword ptr [rsp + 0x48]
 	movabs	rsi, 0x20000002b
-	je	.label_329
-	test	rbx, rbx
-	mov	r10, qword ptr [rsp + 0x60]
-	je	.label_407
-	cmp	rbx, 2
-	mov	rbp, qword ptr [rsp + 0x38]
-	jb	.label_408
+	je	.label_295
+	cmp	rbp, -2
+	mov	rdi, qword ptr [rsp + 0x50]
+	je	.label_298
+	cmp	rbp, 1
+	seta	al
+	and	al, byte ptr [rsp + 0x7f]
+	movzx	eax, al
+	cmp	eax, 1
+	jne	.label_303
 	mov	rax, qword ptr [rsp + 0xd8]
 	mov	rcx, qword ptr [rsp + 0x28]
 	lea	rax, [rcx + rax]
 	mov	ecx, 1
-	nop	dword ptr [rax + rax]
-.label_418:
+.label_317:
 	movsx	edx, byte ptr [rax + rcx]
 	add	edx, -0x5b
 	cmp	edx, 0x21
-	ja	.label_318
+	ja	.label_312
 	bt	rsi, rdx
-	jb	.label_326
-.label_318:
+	jb	.label_313
+.label_312:
 	inc	rcx
-	cmp	rcx, rbx
-	jb	.label_418
-.label_408:
-	mov	edi, dword ptr [rsp + 0xec]
+	cmp	rcx, rbp
+	jb	.label_317
+.label_303:
+	mov	edi, dword ptr [rsp + 0xfc]
 	call	iswprint
 	test	eax, eax
-	jne	.label_422
+	jne	.label_300
 	xor	r13d, r13d
-.label_422:
-	lea	rbp, [rsp + 0xf0]
-	mov	rax, qword ptr [rsp + 0xd8]
-	add	rax, rbx
-	mov	rdi, rbp
-	mov	rbx, rax
-	call	mbsinit
-	mov	rdx, rbx
-	test	eax, eax
-	mov	r11, qword ptr [rsp + 0x98]
-	mov	r10, qword ptr [rsp + 0x60]
-	je	.label_316
-	jmp	.label_335
-	nop	dword ptr [rax]
-.label_379:
-	mov	qword ptr [rsp + 0xd8], rdx
-	lea	rax, [rdx + r15]
-	lea	rsi, [r11 + rax]
-	mov	rdx, r10
-	sub	rdx, rax
-	lea	rdi, [rsp + 0xec]
-	mov	rcx, rbp
-	mov	rbx, rbp
-	call	rpl_mbrtowc
-	mov	rbp, rax
-	test	rbp, rbp
-	je	.label_325
-	cmp	rbp, -1
-	je	.label_329
-	cmp	rbp, -2
-	je	.label_331
-	mov	edi, dword ptr [rsp + 0xec]
-	call	iswprint
-	test	eax, eax
-	jne	.label_337
-	xor	r13d, r13d
-.label_337:
+.label_300:
 	mov	rax, qword ptr [rsp + 0xd8]
 	add	rax, rbp
-	mov	rbp, rbx
-	mov	rdi, rbp
-	mov	rbx, rax
+	mov	rdi, rbx
+	mov	rbp, rax
 	call	mbsinit
-	mov	rdx, rbx
 	test	eax, eax
-	mov	r11, qword ptr [rsp + 0x98]
-	mov	r10, qword ptr [rsp + 0x60]
-	je	.label_379
-	jmp	.label_335
-.label_334:
-	mov	r10, -1
+	mov	rax, rbp
+	mov	r11, qword ptr [rsp + 0xa8]
+	mov	rbp, qword ptr [rsp + 0x40]
+	mov	rdi, qword ptr [rsp + 0x50]
+	je	.label_329
+	jmp	.label_304
+.label_352:
+	mov	rbp, -1
 	xor	r13d, r13d
-	jmp	.label_341
-.label_413:
-	cmp	dword ptr [rsp + 0x40], 0
-	je	.label_296
-	lea	rcx, [r15 + 2]
-	cmp	rcx, r10
-	jae	.label_296
-	movzx	eax, byte ptr [r15 + r11 + 1]
+	jmp	.label_296
+.label_309:
+	cmp	dword ptr [rsp + 0x58], 0
+	je	.label_305
+	lea	rcx, [rdi + 2]
+	cmp	rcx, rbp
+	jae	.label_305
+	movzx	eax, byte ptr [rdi + r11 + 1]
 	cmp	eax, 0x3f
-	jne	.label_296
+	jne	.label_305
 	movsx	edx, byte ptr [r11 + rcx]
 	xor	eax, eax
 	cmp	edx, 0x3e
-	ja	.label_367
+	ja	.label_346
 	movabs	rsi, 0x7000a38200000000
 	bt	rsi, rdx
-	jae	.label_371
+	jae	.label_350
 	cmp	byte ptr [rsp + 0xc7], 0
-	jne	.label_368
-	cmp	r14, rbp
-	jae	.label_390
+	jne	.label_393
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_359
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x3f
-.label_390:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_387
+	mov	rsi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rsi], 0x3f
+.label_359:
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
+	cmp	rax, r10
+	jae	.label_363
 	mov	rsi, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rsi + rax], 0x22
-.label_387:
-	lea	rax, [r14 + 2]
-	cmp	rax, rbp
-	jae	.label_323
+.label_363:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 2]
+	cmp	rax, r10
+	jae	.label_371
 	mov	rsi, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rsi + rax], 0x22
-.label_323:
-	lea	rax, [r14 + 3]
-	cmp	rax, rbp
-	jae	.label_396
+.label_371:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 3]
+	cmp	rax, r10
+	jae	.label_287
 	mov	rsi, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rsi + rax], 0x3f
-.label_396:
-	add	r14, 4
+.label_287:
+	add	qword ptr [rsp + 0xf0], 4
 	xor	eax, eax
-	mov	r15, rcx
-	mov	r12b, dl
+	mov	rdi, rcx
+	mov	r15b, dl
 	xor	r13d, r13d
-	jmp	.label_341
-.label_296:
-	xor	eax, eax
-	xor	r13d, r13d
-	nop	word ptr cs:[rax + rax]
-.label_341:
-	cmp	byte ptr [rsp + 0xd6], 0
-	je	.label_305
-	cmp	qword ptr [rsp + 0x130], 0
-	jne	.label_409
-	jmp	.label_370
-	nop	word ptr [rax + rax]
+	jmp	.label_296
 .label_305:
-	cmp	byte ptr [rsp + 0xb7], 0
-	je	.label_370
-.label_409:
-	mov	cl, r12b
+	xor	eax, eax
+	xor	r13d, r13d
+.label_296:
+	cmp	byte ptr [rsp + 0xd7], 0
+	je	.label_392
+	cmp	qword ptr [rsp + 0x140], 0
+	jne	.label_395
+	jmp	.label_275
+	nop	word ptr [rax + rax]
+.label_392:
+	cmp	byte ptr [rsp + 0xc5], 0
+	je	.label_275
+.label_395:
+	mov	cl, r15b
 	shr	cl, 5
 	movzx	edx, cl
 	mov	esi, 1
-	mov	cl, r12b
+	mov	cl, r15b
 	shl	esi, cl
-	mov	ecx, dword ptr [rsp + 0xe8]
+	mov	ecx, dword ptr [rsp + 0xec]
 	test	cl, cl
-	jne	.label_417
-	mov	rcx, qword ptr [rsp + 0x130]
+	jne	.label_285
+	mov	rcx, qword ptr [rsp + 0x140]
 	and	esi, dword ptr [rcx + rdx*4]
-	jmp	.label_421
+	jmp	.label_292
 	nop	word ptr cs:[rax + rax]
-.label_370:
-	mov	ecx, dword ptr [rsp + 0xe8]
+.label_275:
+	mov	ecx, dword ptr [rsp + 0xec]
 	test	cl, cl
-.label_421:
-	mov	bl, r12b
-	je	.label_301
-	jmp	.label_352
-.label_417:
-	mov	bl, r12b
-.label_352:
+.label_292:
+	mov	bl, r15b
+	je	.label_299
+	jmp	.label_301
+.label_285:
+	mov	bl, r15b
+.label_301:
 	cmp	byte ptr [rsp + 0xc7], 0
-	jne	.label_306
+	jne	.label_283
 	cmp	r9d, 2
-	jne	.label_311
-	mov	al, dil
+	jne	.label_306
+	mov	al, r14b
 	and	al, 1
-	jne	.label_311
-	cmp	r14, rbp
-	jae	.label_314
+	jne	.label_306
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_338
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x27
-.label_314:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_320
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], 0x27
+.label_338:
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
+	cmp	rax, r10
+	jae	.label_378
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x24
-.label_320:
-	lea	rax, [r14 + 2]
-	cmp	rax, rbp
-	jae	.label_366
+.label_378:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 2]
+	cmp	rax, r10
+	jae	.label_323
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x27
-.label_366:
-	add	r14, 3
-	mov	dil, 1
-.label_311:
-	cmp	r14, rbp
+.label_323:
+	add	qword ptr [rsp + 0xf0], 3
+	mov	r14b, 1
+.label_306:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_332
+	mov	rax, qword ptr [rsp + 0xe0]
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], 0x5c
+.label_332:
+	inc	qword ptr [rsp + 0xf0]
+	jmp	.label_282
+.label_333:
+	xor	r13d, r13d
+	jmp	.label_296
+.label_339:
+	add	rax, rdi
+	mov	qword ptr [rsp + 0xd8], rax
+	xor	eax, eax
+	jmp	.label_341
+	nop	word ptr [rax + rax]
+.label_335:
+	inc	qword ptr [rsp + 0xf0]
+	mov	r15b, byte ptr [r11 + rdi + 1]
+	mov	rdi, rdx
+.label_341:
+	test	cl, cl
+	je	.label_351
+	mov	edx, dword ptr [rsp + 0xec]
+	test	dl, 1
+	je	.label_353
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_355
+	mov	rdx, qword ptr [rsp + 0xe0]
+	mov	rsi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rdx + rsi], 0x5c
+.label_355:
+	inc	qword ptr [rsp + 0xf0]
+	mov	dword ptr [rsp + 0xec], 0
+	jmp	.label_353
+	nop	word ptr [rax + rax]
+.label_351:
+	cmp	byte ptr [rsp + 0xc7], 0
+	jne	.label_283
+	cmp	r9d, 2
+	jne	.label_372
+	mov	al, r14b
+	and	al, 1
+	jne	.label_372
+	cmp	qword ptr [rsp + 0xf0], r10
 	jae	.label_373
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x5c
+	mov	rdx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rdx], 0x27
 .label_373:
-	inc	r14
-	jmp	.label_338
-.label_394:
-	xor	r13d, r13d
-	jmp	.label_341
-.label_356:
-	xor	r13d, r13d
-	jmp	.label_341
-.label_361:
-	xor	r13d, r13d
-	jmp	.label_341
-.label_362:
-	xor	r13d, r13d
-	jmp	.label_341
-.label_329:
-	xor	r13d, r13d
-.label_325:
-	mov	r11, qword ptr [rsp + 0x98]
-	mov	r10, qword ptr [rsp + 0x60]
-	mov	rdx, qword ptr [rsp + 0xd8]
-	jmp	.label_335
-.label_331:
-	mov	rdx, qword ptr [rsp + 0xd8]
-	lea	rax, [rdx + r15]
-	mov	r10, qword ptr [rsp + 0x60]
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
 	cmp	rax, r10
-	mov	r11, qword ptr [rsp + 0x98]
-	jae	.label_308
-	lea	rax, [r11 + r15]
-.label_324:
-	cmp	byte ptr [rax + rdx], 0
-	je	.label_363
-	lea	rcx, [r15 + rdx + 1]
-	inc	rdx
-	cmp	rcx, r10
-	jb	.label_324
-	xor	r13d, r13d
-	jmp	.label_335
-.label_308:
-	xor	r13d, r13d
-	jmp	.label_335
-.label_363:
-	xor	r13d, r13d
-	jmp	.label_335
-.label_407:
-	mov	r11, qword ptr [rsp + 0x98]
-	mov	rdx, qword ptr [rsp + 0xd8]
-.label_335:
-	mov	rbx, r10
-.label_360:
-	and	r13b, 1
-	mov	cl, r13b
-	or	cl, byte ptr [rsp + 0x53]
-	cmp	rdx, 1
-	mov	rbp, qword ptr [rsp + 0x38]
-	mov	r8b, byte ptr [rsp + 0x50]
-	mov	r9, qword ptr [rsp + 0x30]
-	mov	edi, dword ptr [rsp + 0xb8]
-	ja	.label_374
-	test	cl, cl
-	je	.label_374
-	xor	eax, eax
-	mov	r10, rbx
-	jmp	.label_341
-.label_374:
-	add	rdx, r15
-	mov	qword ptr [rsp + 0xd8], rdx
-	xor	eax, eax
-	jmp	.label_392
-	nop	word ptr cs:[rax + rax]
-.label_355:
-	inc	r14
-	mov	r12b, byte ptr [r11 + r15 + 1]
-	mov	r15, rdx
-.label_392:
-	test	cl, cl
-	je	.label_400
-	mov	edx, dword ptr [rsp + 0xe8]
-	test	dl, 1
-	je	.label_401
-	cmp	r14, rbp
-	jae	.label_405
-	mov	rdx, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rdx + r14], 0x5c
-.label_405:
-	inc	r14
-	mov	dword ptr [rsp + 0xe8], 0
-.label_401:
-	mov	r10, rbx
-	jmp	.label_410
-	nop	word ptr cs:[rax + rax]
-.label_400:
-	cmp	byte ptr [rsp + 0xc7], 0
-	jne	.label_375
-	cmp	r9d, 2
-	mov	r10, rbx
-	jne	.label_382
-	mov	al, dil
-	and	al, 1
-	jne	.label_382
-	cmp	r14, rbp
-	jae	.label_402
-	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x27
-.label_402:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_351
+	jae	.label_321
 	mov	rdx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rdx + rax], 0x24
-.label_351:
-	lea	rax, [r14 + 2]
-	cmp	rax, rbp
-	jae	.label_300
+.label_321:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 2]
+	cmp	rax, r10
+	jae	.label_389
 	mov	rdx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rdx + rax], 0x27
-.label_300:
-	add	r14, 3
-	mov	dil, 1
-.label_382:
-	cmp	r14, rbp
-	jae	.label_377
+.label_389:
+	add	qword ptr [rsp + 0xf0], 3
+	mov	r14b, 1
+.label_372:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_279
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x5c
-.label_377:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_315
-	mov	dl, r12b
+	mov	rdx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rdx], 0x5c
+.label_279:
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
+	cmp	rax, r10
+	jae	.label_289
+	mov	dl, r15b
 	shr	dl, 6
 	or	dl, 0x30
 	mov	rsi, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rsi + rax], dl
-.label_315:
-	lea	rax, [r14 + 2]
-	cmp	rax, rbp
-	jae	.label_322
-	mov	dl, r12b
+.label_289:
+	mov	rax, qword ptr [rsp + 0xf0]
+	lea	rax, [rax + 2]
+	cmp	rax, r10
+	jae	.label_294
+	mov	dl, r15b
 	shr	dl, 3
 	and	dl, 7
 	or	dl, 0x30
 	mov	rsi, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rsi + rax], dl
-.label_322:
-	add	r14, 3
-	and	r12b, 7
-	or	r12b, 0x30
+.label_294:
+	add	qword ptr [rsp + 0xf0], 3
+	and	r15b, 7
+	or	r15b, 0x30
 	mov	al, 1
-.label_410:
-	lea	rdx, [r15 + 1]
+.label_353:
+	lea	rdx, [rdi + 1]
 	cmp	qword ptr [rsp + 0xd8], rdx
-	jbe	.label_301
-	test	dil, 1
-	je	.label_339
+	jbe	.label_299
+	test	r14b, 1
+	je	.label_315
 	mov	bl, al
 	and	bl, 1
-	jne	.label_339
-	cmp	r14, rbp
-	jae	.label_420
+	jne	.label_315
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_374
 	mov	rsi, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rsi + r14], 0x27
-.label_420:
-	lea	rsi, [r14 + 1]
-	cmp	rsi, rbp
-	jae	.label_347
+	mov	rbx, rdi
+	mov	rdi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rsi + rdi], 0x27
+	mov	rdi, rbx
+.label_374:
+	mov	rsi, qword ptr [rsp + 0xf0]
+	inc	rsi
+	cmp	rsi, r10
+	jae	.label_327
+	mov	rbx, rdi
 	mov	rdi, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rdi + rsi], 0x27
-.label_347:
-	add	r14, 2
-	xor	edi, edi
-.label_339:
-	mov	rbx, r10
-	cmp	r14, rbp
-	jae	.label_355
+	mov	rdi, rbx
+.label_327:
+	add	qword ptr [rsp + 0xf0], 2
+	xor	r14d, r14d
+.label_315:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_335
 	mov	rsi, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rsi + r14], r12b
-	jmp	.label_355
-	nop	word ptr cs:[rax + rax]
-.label_301:
-	test	dil, 1
-	je	.label_353
+	mov	rbx, rdi
+	mov	rdi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rsi + rdi], r15b
+	mov	rdi, rbx
+	jmp	.label_335
+	nop	dword ptr [rax]
+.label_299:
+	test	r14b, 1
+	je	.label_347
 	and	al, 1
-	jne	.label_353
-	cmp	r14, rbp
-	jae	.label_369
+	jne	.label_347
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_357
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0x27
-.label_369:
-	lea	rax, [r14 + 1]
-	cmp	rax, rbp
-	jae	.label_372
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], 0x27
+.label_357:
+	mov	rax, qword ptr [rsp + 0xf0]
+	inc	rax
+	cmp	rax, r10
+	jae	.label_340
 	mov	rcx, qword ptr [rsp + 0xe0]
 	mov	byte ptr [rcx + rax], 0x27
-.label_372:
-	add	r14, 2
-	xor	edi, edi
-.label_353:
-	mov	bl, r12b
-.label_338:
-	cmp	r14, rbp
-	jae	.label_383
+.label_340:
+	add	qword ptr [rsp + 0xf0], 2
+	xor	r14d, r14d
+.label_347:
+	mov	bl, r15b
+.label_282:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_277
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], bl
-.label_383:
-	inc	r14
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], bl
+.label_277:
+	inc	qword ptr [rsp + 0xf0]
 	shl	r13b, 7
 	sar	r13b, 7
 	and	r13b, r8b
 	mov	r8b, r13b
-	jmp	.label_346
-.label_367:
-	xor	r13d, r13d
-	jmp	.label_341
-.label_371:
-	xor	r13d, r13d
-	jmp	.label_341
-	nop	word ptr cs:[rax + rax]
-.label_344:
-	mov	rcx, r15
-.label_333:
-	cmp	r9d, 2
-	setne	al
-	test	r14, r14
-	setne	dl
-	cmp	byte ptr [rsp + 0xc7], 0
-	je	.label_398
-	or	al, dl
-	je	.label_404
-.label_398:
-	mov	qword ptr [rsp + 0x98], r11
-	cmp	r9d, 2
-	setne	al
-	cmp	byte ptr [rsp + 0xc7], 0
-	setne	dl
-	mov	rsi, qword ptr [rsp + 0x58]
-	test	sil, 1
-	mov	bl, byte ptr [rsp + 0x77]
-	mov	rsi, qword ptr [rsp + 0x68]
-	je	.label_406
-	or	al, dl
-	jne	.label_406
-	test	r8b, 1
-	jne	.label_415
-	cmp	qword ptr [rsp + 0x88], 0
-	je	.label_406
-	test	rbp, rbp
-	mov	r12d, r9d
-	mov	al, bl
-	mov	r15, rcx
-	mov	dl, sil
-	mov	r13, qword ptr [rsp + 0x88]
-	je	.label_419
-.label_406:
-	mov	rdx, qword ptr [rsp + 0xa8]
-	test	rdx, rdx
-	je	.label_297
-	cmp	byte ptr [rsp + 0xc7], 0
-	jne	.label_297
-	mov	al, byte ptr [rdx]
-	test	al, al
-	je	.label_297
-	inc	rdx
-	nop	word ptr cs:[rax + rax]
-.label_399:
-	cmp	r14, rbp
-	jae	.label_330
-	mov	rcx, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rcx + r14], al
-.label_330:
-	inc	r14
-	mov	al, byte ptr [rdx]
-	inc	rdx
-	test	al, al
-	jne	.label_399
-.label_297:
-	cmp	r14, rbp
-	jae	.label_317
+	jmp	.label_314
+.label_343:
+	mov	rcx, qword ptr [rsp + 0xf0]
+	jmp	.label_368
+.label_345:
+	mov	rcx, qword ptr [rsp + 0xf0]
+.label_368:
+	cmp	rcx, r10
+	jae	.label_381
 	mov	rax, qword ptr [rsp + 0xe0]
-	mov	byte ptr [rax + r14], 0
-	jmp	.label_317
-.label_340:
+	mov	byte ptr [rax + rcx], 0x5c
+.label_381:
+	lea	rax, [rcx + 1]
+	mov	qword ptr [rsp + 0xf0], rax
+	mov	al, 1
+	mov	r15b, 0x30
+	cmp	r9d, 2
+	je	.label_386
+	lea	rdx, [rdi + 1]
+	cmp	rdx, rbp
+	jae	.label_394
+	mov	dl, byte ptr [r11 + rdx]
+	add	dl, 0xd0
+	movzx	edx, dl
+	cmp	edx, 9
+	ja	.label_397
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_278
+	mov	rdx, qword ptr [rsp + 0xe0]
+	mov	rsi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rdx + rsi], 0x30
+.label_278:
+	lea	rdx, [rcx + 2]
+	cmp	rdx, r10
+	jae	.label_288
+	mov	rsi, qword ptr [rsp + 0xe0]
+	mov	byte ptr [rsi + rdx], 0x30
+.label_288:
+	add	rcx, 3
+	xor	r13d, r13d
+	mov	qword ptr [rsp + 0xf0], rcx
+	jmp	.label_296
+.label_386:
+	xor	r13d, r13d
+	jmp	.label_296
+.label_394:
+	xor	r13d, r13d
+	jmp	.label_296
+.label_397:
+	xor	r13d, r13d
+	jmp	.label_296
+.label_295:
+	xor	r13d, r13d
+.label_290:
+	mov	r11, qword ptr [rsp + 0xa8]
+	mov	rbp, qword ptr [rsp + 0x40]
+	mov	rdi, qword ptr [rsp + 0x50]
+	mov	rax, qword ptr [rsp + 0xd8]
+	jmp	.label_304
+.label_298:
+	mov	rbp, qword ptr [rsp + 0x40]
+	mov	rcx, qword ptr [rsp + 0x38]
+	cmp	rbp, rcx
+	jbe	.label_311
+	mov	r11, qword ptr [rsp + 0xa8]
+	mov	rax, qword ptr [rsp + 0xd8]
+.label_383:
+	cmp	byte ptr [r11 + rcx], 0
+	je	.label_276
+	lea	rcx, [rax + rdi + 1]
+	inc	rax
+	cmp	rcx, rbp
+	jb	.label_383
+	xor	r13d, r13d
+	jmp	.label_304
+.label_311:
+	xor	r13d, r13d
+	mov	r11, qword ptr [rsp + 0xa8]
+	mov	rax, qword ptr [rsp + 0xd8]
+	jmp	.label_304
+.label_276:
+	xor	r13d, r13d
+	jmp	.label_304
+.label_346:
+	xor	r13d, r13d
+	jmp	.label_296
+.label_350:
+	xor	r13d, r13d
+	jmp	.label_296
+	nop	dword ptr [rax]
+.label_358:
+	mov	r13, rdi
+.label_362:
+	cmp	r9d, 2
+	setne	al
+	cmp	qword ptr [rsp + 0xf0], 0
+	setne	dl
+	cmp	byte ptr [rsp + 0xc7], 0
+	je	.label_336
+	or	al, dl
+	je	.label_307
+.label_336:
+	mov	dword ptr [rsp + 0xd8], r14d
+	mov	qword ptr [rsp + 0xa8], r11
+	cmp	r9d, 2
+	setne	al
+	cmp	byte ptr [rsp + 0xc7], 0
+	setne	dl
+	mov	rsi, qword ptr [rsp + 0x70]
+	test	sil, 1
+	mov	bl, byte ptr [rsp + 0x8f]
+	mov	rsi, qword ptr [rsp + 0x80]
+	je	.label_344
+	or	al, dl
+	jne	.label_344
+	test	r8b, 1
+	jne	.label_361
+	cmp	qword ptr [rsp + 0x90], 0
+	je	.label_344
+	test	r10, r10
+	mov	r15d, r9d
+	mov	al, bl
+	mov	r12b, sil
+	mov	rbp, qword ptr [rsp + 0x90]
+	je	.label_364
+.label_344:
+	mov	rdx, qword ptr [rsp + 0xb8]
+	test	rdx, rdx
+	je	.label_370
+	cmp	byte ptr [rsp + 0xc7], 0
+	jne	.label_370
+	mov	al, byte ptr [rdx]
+	test	al, al
+	je	.label_370
+	inc	rdx
+	nop	word ptr cs:[rax + rax]
+.label_385:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_377
+	mov	rcx, qword ptr [rsp + 0xe0]
+	mov	rsi, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rcx + rsi], al
+.label_377:
+	inc	qword ptr [rsp + 0xf0]
+	mov	al, byte ptr [rdx]
+	inc	rdx
+	test	al, al
+	jne	.label_385
+.label_370:
+	cmp	qword ptr [rsp + 0xf0], r10
+	jae	.label_391
+	mov	rax, qword ptr [rsp + 0xe0]
+	mov	rcx, qword ptr [rsp + 0xf0]
+	mov	byte ptr [rax + rcx], 0
+	jmp	.label_391
+.label_281:
 	mov	r9d, 2
-	jmp	.label_306
-.label_326:
+	jmp	.label_283
+.label_313:
 	mov	r9d, 2
-	mov	r11, qword ptr [rsp + 0x98]
-	jmp	.label_306
-.label_375:
-	mov	r10, rbx
-	jmp	.label_306
-.label_404:
-	mov	r10, rcx
-	jmp	.label_306
-.label_357:
+	mov	r11, qword ptr [rsp + 0xa8]
+	mov	rbp, qword ptr [rsp + 0x40]
+	jmp	.label_283
+.label_307:
+	mov	rbp, r13
+	jmp	.label_283
+.label_369:
 	mov	r9d, 2
-.label_306:
-	cmp	byte ptr [rsp + 0x97], 0
+.label_283:
+	cmp	byte ptr [rsp + 0xb6], 0
 	mov	r8d, 4
 	cmove	r8d, r9d
 	cmp	r9d, 2
 	cmovne	r8d, r9d
-	mov	r9d, dword ptr [rsp + 0x54]
+	mov	r9d, dword ptr [rsp + 0x6c]
 	and	r9d, 0xfffffffd
-	mov	rax, qword ptr [rsp + 0x78]
+	mov	rax, qword ptr [rsp + 0x98]
 	mov	qword ptr [rsp + 0x10], rax
-	mov	rax, qword ptr [rsp + 0x80]
+	mov	rax, qword ptr [rsp + 0xa0]
 	mov	qword ptr [rsp + 8], rax
 	mov	qword ptr [rsp], 0
 	mov	rdi, qword ptr [rsp + 0xe0]
-	mov	rsi, rbp
+	mov	rsi, r10
 	mov	rdx, r11
-	mov	rcx, r10
-.label_364:
+	mov	rcx, rbp
+.label_322:
 	call	quotearg_buffer_restyled
-	mov	r14, rax
-.label_317:
-	mov	rax, r14
-	add	rsp, 0xf8
+	mov	qword ptr [rsp + 0xf0], rax
+.label_391:
+	mov	rax, qword ptr [rsp + 0xf0]
+	add	rsp, 0x108
 	pop	rbx
 	pop	r12
 	pop	r13
@@ -4554,37 +4305,38 @@ quotearg_buffer_restyled:
 	pop	r15
 	pop	rbp
 	ret	
-.label_415:
-	mov	rax, qword ptr [rsp + 0x78]
+.label_361:
+	mov	rax, qword ptr [rsp + 0x98]
 	mov	qword ptr [rsp + 0x10], rax
-	mov	rax, qword ptr [rsp + 0x80]
+	mov	rax, qword ptr [rsp + 0xa0]
 	mov	qword ptr [rsp + 8], rax
-	mov	rax, qword ptr [rsp + 0x130]
+	mov	rax, qword ptr [rsp + 0x140]
 	mov	qword ptr [rsp], rax
 	mov	r8d, 5
 	mov	rdi, qword ptr [rsp + 0xe0]
-	mov	rsi, qword ptr [rsp + 0x88]
-	mov	rdx, qword ptr [rsp + 0x98]
-	mov	r9d, dword ptr [rsp + 0x54]
-	jmp	.label_364
-.label_395:
+	mov	rsi, qword ptr [rsp + 0x90]
+	mov	rdx, qword ptr [rsp + 0xa8]
+	mov	rcx, r13
+	mov	r9d, dword ptr [rsp + 0x6c]
+	jmp	.label_322
+.label_384:
 	mov	r9d, 2
-	jmp	.label_306
-.label_386:
+	jmp	.label_283
+.label_325:
 	mov	r9d, 2
-	jmp	.label_306
-.label_411:
+	jmp	.label_283
+.label_316:
 	mov	r9d, 2
-	jmp	.label_306
-.label_368:
+	jmp	.label_283
+.label_393:
 	mov	r9d, 5
-	jmp	.label_306
-.label_298:
+	jmp	.label_283
+.label_302:
 	call	abort
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x405b80
+	#Procedure 0x405940
 	.globl quotearg_alloc
 	.type quotearg_alloc, @function
 quotearg_alloc:
@@ -4653,7 +4405,7 @@ quotearg_alloc:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x405c50
+	#Procedure 0x405a10
 	.globl quotearg_alloc_mem
 	.type quotearg_alloc_mem, @function
 quotearg_alloc_mem:
@@ -4717,9 +4469,9 @@ quotearg_alloc_mem:
 	mov	ecx, dword ptr [rsp + 0x44]
 	mov	rdx, qword ptr [rsp + 0x38]
 	mov	dword ptr [rdx], ecx
-	je	.label_423
+	je	.label_398
 	mov	qword ptr [rax], rbx
-.label_423:
+.label_398:
 	mov	rax, r14
 	add	rsp, 0x48
 	pop	rbx
@@ -4732,7 +4484,7 @@ quotearg_alloc_mem:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x405d50
+	#Procedure 0x405b10
 	.globl quotearg_free
 	.type quotearg_free, @function
 quotearg_free:
@@ -4742,34 +4494,34 @@ quotearg_free:
 	push	rbx
 	mov	r14,  qword ptr [word ptr [rip + slotvec]]
 	cmp	dword ptr [dword ptr [rip + nslots]],  2
-	jl	.label_424
+	jl	.label_399
 	lea	r15, [r14 + 0x18]
 	mov	ebx, 1
 	nop	
-.label_427:
+.label_401:
 	mov	rdi, qword ptr [r15]
 	call	free
 	inc	rbx
 	movsxd	rax,  dword ptr [dword ptr [rip + nslots]]
 	add	r15, 0x10
 	cmp	rbx, rax
-	jl	.label_427
-.label_424:
+	jl	.label_401
+.label_399:
 	mov	rdi, qword ptr [r14 + 8]
 	mov	eax, OFFSET FLAT:slot0
 	cmp	rdi, rax
-	je	.label_426
+	je	.label_402
 	call	free
 	mov	qword ptr [word ptr [rip + slotvec0]],  0x100
-	mov	qword ptr [word ptr [rip + label_428]], OFFSET FLAT:slot0
-.label_426:
+	mov	qword ptr [word ptr [rip + label_403]], OFFSET FLAT:slot0
+.label_402:
 	mov	eax, OFFSET FLAT:slotvec0
 	cmp	r14, rax
-	je	.label_425
+	je	.label_400
 	mov	rdi, r14
 	call	free
 	mov	qword ptr [word ptr [rip + slotvec]], OFFSET FLAT:slotvec0
-.label_425:
+.label_400:
 	mov	dword ptr [dword ptr [rip + nslots]],  1
 	pop	rbx
 	pop	r14
@@ -4778,7 +4530,7 @@ quotearg_free:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x405df0
+	#Procedure 0x405bb0
 	.globl quotearg_n
 	.type quotearg_n, @function
 quotearg_n:
@@ -4789,7 +4541,7 @@ quotearg_n:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x405e00
+	#Procedure 0x405bc0
 
 	.globl quotearg_n_options
 	.type quotearg_n_options, @function
@@ -4807,18 +4559,18 @@ quotearg_n_options:
 	mov	ebx, edi
 	call	__errno_location
 	test	ebx, ebx
-	js	.label_429
+	js	.label_404
 	mov	ecx, dword ptr [rax]
 	mov	rbp,  qword ptr [word ptr [rip + slotvec]]
 	cmp	dword ptr [dword ptr [rip + nslots]],  ebx
-	jle	.label_432
+	jle	.label_407
 	mov	dword ptr [rsp + 0x2c], ecx
 	mov	qword ptr [rsp + 0x30], rax
-	jmp	.label_435
-.label_432:
+	jmp	.label_410
+.label_407:
 	mov	qword ptr [rsp + 0x38], r14
 	cmp	ebx, 0x7fffffff
-	je	.label_431
+	je	.label_406
 	mov	dword ptr [rsp + 0x2c], ecx
 	mov	qword ptr [rsp + 0x30], rax
 	mov	r13d, OFFSET FLAT:slotvec0
@@ -4833,10 +4585,10 @@ quotearg_n_options:
 	mov	r14, rax
 	cmp	rbp, r13
 	mov	qword ptr [word ptr [rip + slotvec]],  r14
-	jne	.label_430
+	jne	.label_405
 	movups	xmm0,  xmmword ptr [word ptr [rip + slotvec0]]
 	movups	xmmword ptr [r14], xmm0
-.label_430:
+.label_405:
 	movsxd	rax,  dword ptr [dword ptr [rip + nslots]]
 	movsxd	rbp, r15d
 	mov	rdx, rbp
@@ -4850,7 +4602,7 @@ quotearg_n_options:
 	mov	dword ptr [dword ptr [rip + nslots]],  ebp
 	mov	rbp, r14
 	mov	r14, qword ptr [rsp + 0x38]
-.label_435:
+.label_410:
 	mov	qword ptr [rsp + 0x38], r14
 	movsxd	r13, ebx
 	shl	r13, 4
@@ -4876,17 +4628,17 @@ quotearg_n_options:
 	call	quotearg_buffer_restyled
 	mov	r14, rax
 	cmp	r15, r14
-	ja	.label_433
+	ja	.label_408
 	lea	rax, [rbp + r13]
 	lea	rbp, [rbp + r13 + 8]
 	inc	r14
 	mov	qword ptr [rax], r14
 	mov	eax, OFFSET FLAT:slot0
 	cmp	rbx, rax
-	je	.label_434
+	je	.label_409
 	mov	rdi, rbx
 	call	free
-.label_434:
+.label_409:
 	mov	rdi, r14
 	call	xmalloc
 	mov	rbx, rax
@@ -4905,7 +4657,7 @@ quotearg_n_options:
 	mov	rcx, qword ptr [rsp + 0x38]
 	mov	r9d, r12d
 	call	quotearg_buffer_restyled
-.label_433:
+.label_408:
 	mov	rax, qword ptr [rsp + 0x30]
 	mov	ecx, dword ptr [rsp + 0x2c]
 	mov	dword ptr [rax], ecx
@@ -4918,14 +4670,14 @@ quotearg_n_options:
 	pop	r15
 	pop	rbp
 	ret	
-.label_429:
+.label_404:
 	call	abort
-.label_431:
+.label_406:
 	call	xalloc_die
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x405fd0
+	#Procedure 0x405d90
 	.globl quotearg_n_mem
 	.type quotearg_n_mem, @function
 quotearg_n_mem:
@@ -4935,7 +4687,7 @@ quotearg_n_mem:
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x405fe0
+	#Procedure 0x405da0
 	.globl quotearg
 	.type quotearg, @function
 quotearg:
@@ -4949,7 +4701,7 @@ quotearg:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406000
+	#Procedure 0x405dc0
 	.globl quotearg_mem
 	.type quotearg_mem, @function
 quotearg_mem:
@@ -4964,7 +4716,7 @@ quotearg_mem:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406020
+	#Procedure 0x405de0
 
 	.globl quotearg_n_style
 	.type quotearg_n_style, @function
@@ -4977,7 +4729,7 @@ quotearg_n_style:
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	dword ptr [rsp + 0x70], 0
 	cmp	esi, 0xa
-	je	.label_436
+	je	.label_411
 	mov	dword ptr [rsp + 8], esi
 	mov	ecx, dword ptr [rsp + 0x70]
 	mov	dword ptr [rsp + 0x3c], ecx
@@ -4993,12 +4745,12 @@ quotearg_n_style:
 	call	quotearg_n_options
 	add	rsp, 0x78
 	ret	
-.label_436:
+.label_411:
 	call	abort
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x406090
+	#Procedure 0x405e50
 	.globl quotearg_n_style_mem
 	.type quotearg_n_style_mem, @function
 quotearg_n_style_mem:
@@ -5010,7 +4762,7 @@ quotearg_n_style_mem:
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	dword ptr [rsp + 0x70], 0
 	cmp	esi, 0xa
-	je	.label_437
+	je	.label_412
 	mov	dword ptr [rsp + 8], esi
 	mov	eax, dword ptr [rsp + 0x70]
 	mov	dword ptr [rsp + 0x3c], eax
@@ -5027,12 +4779,12 @@ quotearg_n_style_mem:
 	call	quotearg_n_options
 	add	rsp, 0x78
 	ret	
-.label_437:
+.label_412:
 	call	abort
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406100
+	#Procedure 0x405ec0
 	.globl quotearg_style
 	.type quotearg_style, @function
 quotearg_style:
@@ -5044,7 +4796,7 @@ quotearg_style:
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	dword ptr [rsp + 0x70], 0
 	cmp	edi, 0xa
-	je	.label_438
+	je	.label_413
 	mov	dword ptr [rsp + 8], edi
 	mov	eax, dword ptr [rsp + 0x70]
 	mov	dword ptr [rsp + 0x3c], eax
@@ -5060,12 +4812,12 @@ quotearg_style:
 	call	quotearg_n_options
 	add	rsp, 0x78
 	ret	
-.label_438:
+.label_413:
 	call	abort
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406170
+	#Procedure 0x405f30
 	.globl quotearg_style_mem
 	.type quotearg_style_mem, @function
 quotearg_style_mem:
@@ -5077,7 +4829,7 @@ quotearg_style_mem:
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	dword ptr [rsp + 0x70], 0
 	cmp	edi, 0xa
-	je	.label_439
+	je	.label_414
 	mov	dword ptr [rsp + 8], edi
 	mov	eax, dword ptr [rsp + 0x70]
 	mov	dword ptr [rsp + 0x3c], eax
@@ -5092,12 +4844,12 @@ quotearg_style_mem:
 	call	quotearg_n_options
 	add	rsp, 0x78
 	ret	
-.label_439:
+.label_414:
 	call	abort
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4061e0
+	#Procedure 0x405fa0
 	.globl quotearg_char_mem
 	.type quotearg_char_mem, @function
 quotearg_char_mem:
@@ -5106,11 +4858,11 @@ quotearg_char_mem:
 	mov	ecx, edx
 	mov	r8, rsi
 	mov	rdx, rdi
-	mov	rsi,  qword ptr [word ptr [rip + label_440]]
+	mov	rsi,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rsi
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
@@ -5135,7 +4887,7 @@ quotearg_char_mem:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x406250
+	#Procedure 0x406010
 	.globl quotearg_char
 	.type quotearg_char, @function
 quotearg_char:
@@ -5143,11 +4895,11 @@ quotearg_char:
 	sub	rsp, 0x38
 	mov	ecx, esi
 	mov	rax, rdi
-	mov	rdx,  qword ptr [word ptr [rip + label_440]]
+	mov	rdx,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rdx
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
@@ -5172,18 +4924,18 @@ quotearg_char:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x4062c0
+	#Procedure 0x406080
 
 	.globl quotearg_colon
 	.type quotearg_colon, @function
 quotearg_colon:
 	sub	rsp, 0x38
 	mov	rax, rdi
-	mov	rcx,  qword ptr [word ptr [rip + label_440]]
+	mov	rcx,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rcx
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
@@ -5198,7 +4950,7 @@ quotearg_colon:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406320
+	#Procedure 0x4060e0
 	.globl quotearg_colon_mem
 	.type quotearg_colon_mem, @function
 quotearg_colon_mem:
@@ -5206,11 +4958,11 @@ quotearg_colon_mem:
 	sub	rsp, 0x38
 	mov	rax, rsi
 	mov	rdx, rdi
-	mov	rcx,  qword ptr [word ptr [rip + label_440]]
+	mov	rcx,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rcx
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
@@ -5225,7 +4977,7 @@ quotearg_colon_mem:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406380
+	#Procedure 0x406140
 	.globl quotearg_n_style_colon
 	.type quotearg_n_style_colon, @function
 quotearg_n_style_colon:
@@ -5238,7 +4990,7 @@ quotearg_n_style_colon:
 	movaps	xmmword ptr [rsp + 0x70], xmm0
 	mov	dword ptr [rsp + 0xa0], 0
 	cmp	esi, 0xa
-	je	.label_443
+	je	.label_418
 	mov	ecx, dword ptr [rsp + 0xa0]
 	mov	dword ptr [rsp + 0x30], ecx
 	movaps	xmm0, xmmword ptr [rsp + 0x70]
@@ -5263,30 +5015,30 @@ quotearg_n_style_colon:
 	call	quotearg_n_options
 	add	rsp, 0xa8
 	ret	
-.label_443:
+.label_418:
 	call	abort
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x406430
+	#Procedure 0x4061f0
 	.globl quotearg_n_custom
 	.type quotearg_n_custom, @function
 quotearg_n_custom:
 
 	sub	rsp, 0x38
-	mov	rax,  qword ptr [word ptr [rip + label_440]]
+	mov	rax,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rax
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
 	mov	dword ptr [rsp], 0xa
 	test	rsi, rsi
-	je	.label_444
+	je	.label_419
 	test	rdx, rdx
-	je	.label_444
+	je	.label_419
 	mov	qword ptr [rsp + 0x28], rsi
 	mov	qword ptr [rsp + 0x30], rdx
 	lea	rax, [rsp]
@@ -5296,30 +5048,30 @@ quotearg_n_custom:
 	call	quotearg_n_options
 	add	rsp, 0x38
 	ret	
-.label_444:
+.label_419:
 	call	abort
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x4064a0
+	#Procedure 0x406260
 	.globl quotearg_n_custom_mem
 	.type quotearg_n_custom_mem, @function
 quotearg_n_custom_mem:
 
 	sub	rsp, 0x38
-	mov	rax,  qword ptr [word ptr [rip + label_440]]
+	mov	rax,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rax
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
 	mov	dword ptr [rsp], 0xa
 	test	rsi, rsi
-	je	.label_445
+	je	.label_420
 	test	rdx, rdx
-	je	.label_445
+	je	.label_420
 	mov	qword ptr [rsp + 0x28], rsi
 	mov	qword ptr [rsp + 0x30], rdx
 	lea	rax, [rsp]
@@ -5329,31 +5081,31 @@ quotearg_n_custom_mem:
 	call	quotearg_n_options
 	add	rsp, 0x38
 	ret	
-.label_445:
+.label_420:
 	call	abort
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406510
+	#Procedure 0x4062d0
 	.globl quotearg_custom
 	.type quotearg_custom, @function
 quotearg_custom:
 
 	sub	rsp, 0x38
 	mov	rax, rdx
-	mov	rcx,  qword ptr [word ptr [rip + label_440]]
+	mov	rcx,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rcx
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
 	mov	dword ptr [rsp], 0xa
 	test	rdi, rdi
-	je	.label_446
+	je	.label_421
 	test	rsi, rsi
-	je	.label_446
+	je	.label_421
 	mov	qword ptr [rsp + 0x28], rdi
 	mov	qword ptr [rsp + 0x30], rsi
 	lea	rcx, [rsp]
@@ -5363,29 +5115,29 @@ quotearg_custom:
 	call	quotearg_n_options
 	add	rsp, 0x38
 	ret	
-.label_446:
+.label_421:
 	call	abort
 	.section	.text
 	.align	16
-	#Procedure 0x406580
+	#Procedure 0x406340
 	.globl quotearg_custom_mem
 	.type quotearg_custom_mem, @function
 quotearg_custom_mem:
 
 	sub	rsp, 0x38
-	mov	rax,  qword ptr [word ptr [rip + label_440]]
+	mov	rax,  qword ptr [word ptr [rip + label_415]]
 	mov	qword ptr [rsp + 0x30], rax
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_441]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_416]]
 	movaps	xmmword ptr [rsp + 0x20], xmm0
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_442]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_417]]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
 	movups	xmm0,  xmmword ptr [word ptr [rip + default_quoting_options]]
 	movaps	xmmword ptr [rsp], xmm0
 	mov	dword ptr [rsp], 0xa
 	test	rdi, rdi
-	je	.label_447
+	je	.label_422
 	test	rsi, rsi
-	je	.label_447
+	je	.label_422
 	mov	qword ptr [rsp + 0x28], rdi
 	mov	qword ptr [rsp + 0x30], rsi
 	lea	rax, [rsp]
@@ -5396,12 +5148,12 @@ quotearg_custom_mem:
 	call	quotearg_n_options
 	add	rsp, 0x38
 	ret	
-.label_447:
+.label_422:
 	call	abort
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4065f0
+	#Procedure 0x4063b0
 	.globl quote_n_mem
 	.type quote_n_mem, @function
 quote_n_mem:
@@ -5411,7 +5163,7 @@ quote_n_mem:
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406600
+	#Procedure 0x4063c0
 	.globl quote_mem
 	.type quote_mem, @function
 quote_mem:
@@ -5426,7 +5178,7 @@ quote_mem:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406620
+	#Procedure 0x4063e0
 	.globl quote_n
 	.type quote_n, @function
 quote_n:
@@ -5437,7 +5189,7 @@ quote_n:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406640
+	#Procedure 0x406400
 	.globl quote
 	.type quote, @function
 quote:
@@ -5451,7 +5203,7 @@ quote:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406660
+	#Procedure 0x406420
 
 	.globl gettext_quote
 	.type gettext_quote, @function
@@ -5466,79 +5218,79 @@ gettext_quote:
 	mov	rsi, rbx
 	call	dcgettext
 	cmp	rax, rbx
-	jne	.label_448
+	jne	.label_423
 	call	locale_charset
 	movsx	ecx, byte ptr [rax]
 	and	ecx, 0xffffffdf
 	cmp	ecx, 0x47
-	je	.label_450
+	je	.label_425
 	cmp	ecx, 0x55
-	jne	.label_449
+	jne	.label_424
 	movsx	ecx, byte ptr [rax + 1]
 	and	ecx, 0xffffffdf
 	cmp	ecx, 0x54
-	jne	.label_449
+	jne	.label_424
 	movsx	ecx, byte ptr [rax + 2]
 	and	ecx, 0xffffffdf
 	cmp	ecx, 0x46
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 3]
 	cmp	ecx, 0x2d
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 4]
 	cmp	ecx, 0x38
-	jne	.label_449
+	jne	.label_424
 	cmp	byte ptr [rax + 5], 0
-	jne	.label_449
+	jne	.label_424
 	mov	eax, OFFSET FLAT:.str.14_0
 	movzx	ecx, byte ptr [rbx]
 	cmp	ecx, 0x60
-	je	.label_448
+	je	.label_423
 	mov	eax, OFFSET FLAT:.str.15_0
-	jmp	.label_448
-.label_450:
+	jmp	.label_423
+.label_425:
 	movsx	ecx, byte ptr [rax + 1]
 	and	ecx, 0xffffffdf
 	cmp	ecx, 0x42
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 2]
 	cmp	ecx, 0x31
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 3]
 	cmp	ecx, 0x38
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 4]
 	cmp	ecx, 0x30
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 5]
 	cmp	ecx, 0x33
-	jne	.label_449
+	jne	.label_424
 	movzx	ecx, byte ptr [rax + 6]
 	cmp	ecx, 0x30
-	jne	.label_449
+	jne	.label_424
 	cmp	byte ptr [rax + 7], 0
-	je	.label_451
-.label_449:
+	je	.label_426
+.label_424:
 	cmp	ebp, 9
 	mov	ecx, OFFSET FLAT:.str.10_0
 	mov	eax, OFFSET FLAT:.str.12_0
 	cmove	rax, rcx
-.label_448:
+.label_423:
 	add	rsp, 8
 	pop	rbx
 	pop	rbp
 	ret	
-.label_451:
+.label_426:
 	mov	eax, OFFSET FLAT:.str.17_1
 	movzx	ecx, byte ptr [rbx]
 	cmp	ecx, 0x60
-	je	.label_448
+	je	.label_423
 	mov	eax, OFFSET FLAT:.str.18_1
-	jmp	.label_448
+	jmp	.label_423
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406750
+	#Procedure 0x406510
 
 	.globl strnlen1
 	.type strnlen1, @function
@@ -5565,322 +5317,233 @@ strnlen1:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406790
+	#Procedure 0x406550
 
 	.globl strintcmp
 	.type strintcmp, @function
 strintcmp:
-	mov	rbp, rbp
 	movzx	ecx, byte ptr [rdi]
 	mov	dl, byte ptr [rsi]
 	cmp	ecx, 0x2d
-	nop	
-	jne	.label_455
-	nop	word ptr cs:[rax + rax]
-.label_458:
-	nop	
+	jne	.label_447
+	nop	word ptr [rax + rax]
+.label_450:
 	movzx	ecx, byte ptr [rdi + 1]
-	mov	rbp, rbp
 	inc	rdi
 	cmp	ecx, 0x30
-	je	.label_458
+	je	.label_450
 	movzx	r8d, dl
 	cmp	r8d, 0x2d
 	jne	.label_452
-	nop	
-.label_477:
+	nop	word ptr [rax + rax]
+.label_428:
 	movzx	eax, byte ptr [rsi + 1]
-	lea	rsi, [rsi]
 	inc	rsi
 	cmp	eax, 0x30
-	lea	rdi, [rdi]
-	je	.label_477
-	nop	
+	je	.label_428
 	lea	edx, [rcx - 0x30]
-	lea	rsi, [rsi]
 	cmp	edx, 9
-	ja	.label_478
+	ja	.label_444
 	movzx	r8d, cl
 	movzx	edx, al
-	mov	rbp, rbp
 	cmp	edx, r8d
-	lea	rsi, [rsi]
-	jne	.label_463
+	jne	.label_433
 	nop	dword ptr [rax + rax]
-.label_480:
+.label_445:
 	mov	r9b, byte ptr [rdi + 1]
 	inc	rdi
-	mov	rbp, rbp
 	movzx	eax, byte ptr [rsi + 1]
 	inc	rsi
-	mov	rsp, rsp
 	movzx	ecx, r9b
 	cmp	eax, ecx
-	jne	.label_459
+	jne	.label_437
 	lea	edx, [rcx - 0x30]
-	mov	rbp, rbp
 	cmp	edx, 0xa
-	jb	.label_480
-	jmp	.label_459
-.label_455:
+	jb	.label_445
+	jmp	.label_437
+.label_447:
 	movzx	r8d, dl
 	cmp	r8d, 0x2d
-	lea	rsi, [rsi]
-	jne	.label_470
-	nop	
+	jne	.label_448
 	inc	rsi
-	nop	word ptr cs:[rax + rax]
-.label_476:
+	nop	dword ptr [rax + rax]
+.label_454:
 	movzx	edx, byte ptr [rsi]
-	mov	rsp, rsp
 	inc	rsi
 	cmp	edx, 0x30
-	mov	rsp, rsp
-	je	.label_476
+	je	.label_454
 	add	edx, -0x30
-	nop	
 	mov	eax, 1
 	cmp	edx, 0xa
-	lea	rdi, [rdi]
-	jb	.label_460
+	jb	.label_441
 	movzx	eax, cl
-	nop	
 	cmp	eax, 0x30
-	mov	rsp, rsp
-	jne	.label_453
-	nop	
+	jne	.label_434
 	inc	rdi
-	nop	word ptr cs:[rax + rax]
-.label_457:
-	mov	rbp, rbp
+	nop	word ptr [rax + rax]
+.label_456:
 	movzx	ecx, byte ptr [rdi]
 	inc	rdi
 	cmp	ecx, 0x30
-	nop	
-	je	.label_457
-.label_453:
+	je	.label_456
+.label_434:
 	movzx	eax, cl
 	add	eax, -0x30
 	cmp	eax, 0xa
-	nop	
 	sbb	eax, eax
 	and	eax, 1
 	ret	
 .label_452:
-	nop	
 	add	ecx, -0x30
-	mov	rbp, rbp
 	mov	eax, 0xffffffff
-	nop	
 	cmp	ecx, 0xa
-	mov	rsp, rsp
-	jb	.label_460
+	jb	.label_441
 	cmp	r8d, 0x30
-	jne	.label_474
-	lea	rsi, [rsi]
+	jne	.label_446
 	inc	rsi
 	nop	word ptr cs:[rax + rax]
-.label_482:
+.label_457:
 	movzx	edx, byte ptr [rsi]
-	lea	rdi, [rdi]
 	inc	rsi
-	lea	rdi, [rdi]
 	cmp	edx, 0x30
-	mov	rbp, rbp
-	je	.label_482
-.label_474:
-	mov	rsp, rsp
+	je	.label_457
+.label_446:
 	movzx	eax, dl
-	lea	rdi, [rdi]
 	add	eax, -0x30
-	mov	rsp, rsp
 	cmp	eax, 0xa
 	sbb	eax, eax
-	lea	rsi, [rsi]
 	ret	
-.label_470:
+.label_448:
 	movzx	eax, cl
-	mov	rbp, rbp
 	cmp	eax, 0x30
-	mov	rbp, rbp
-	jne	.label_456
-	nop	word ptr [rax + rax]
-.label_464:
+	jne	.label_455
+	nop	
+.label_427:
 	movzx	ecx, byte ptr [rdi + 1]
-	mov	rsp, rsp
 	inc	rdi
 	cmp	ecx, 0x30
-	nop	
-	je	.label_464
-.label_456:
+	je	.label_427
+.label_455:
 	cmp	r8d, 0x30
-	jne	.label_461
+	jne	.label_431
 	nop	word ptr cs:[rax + rax]
-.label_472:
-	mov	rsp, rsp
+.label_436:
 	movzx	edx, byte ptr [rsi + 1]
 	inc	rsi
 	cmp	edx, 0x30
-	je	.label_472
-.label_461:
-	lea	rsi, [rsi]
+	je	.label_436
+.label_431:
 	movzx	r8d, cl
 	lea	eax, [r8 - 0x30]
-	lea	rsi, [rsi]
 	cmp	eax, 9
-	ja	.label_466
-	lea	rsi, [rsi]
+	ja	.label_439
 	movzx	r9d, dl
 	movzx	eax, cl
 	cmp	eax, r9d
-	jne	.label_466
+	jne	.label_439
 	nop	word ptr cs:[rax + rax]
-.label_462:
+.label_451:
 	mov	cl, byte ptr [rdi + 1]
 	inc	rdi
 	movzx	edx, byte ptr [rsi + 1]
-	mov	rsp, rsp
 	inc	rsi
 	movzx	r8d, cl
 	cmp	r8d, edx
-	mov	rbp, rbp
-	jne	.label_466
+	jne	.label_439
 	lea	eax, [r8 - 0x30]
 	cmp	eax, 0xa
-	lea	rdi, [rdi]
-	jb	.label_462
-.label_466:
-	nop	
+	jb	.label_451
+.label_439:
 	movzx	eax, dl
-	lea	rsi, [rsi]
 	movzx	edx, cl
-	lea	rsi, [rsi]
 	add	edx, -0x30
 	xor	ecx, ecx
 	cmp	edx, 9
-	ja	.label_468
+	ja	.label_453
 	xor	ecx, ecx
 	nop	word ptr cs:[rax + rax]
-.label_471:
+.label_432:
 	movzx	edx, byte ptr [rdi + rcx + 1]
-	lea	rdi, [rdi]
 	inc	rcx
-	lea	rdi, [rdi]
 	add	edx, -0x30
-	lea	rsi, [rsi]
 	cmp	edx, 0xa
-	mov	rbp, rbp
-	jb	.label_471
-.label_468:
-	mov	rsp, rsp
+	jb	.label_432
+.label_453:
 	lea	edi, [rax - 0x30]
 	xor	edx, edx
-	mov	rbp, rbp
 	cmp	edi, 9
-	ja	.label_483
+	ja	.label_458
 	xor	edx, edx
-	nop	
-.label_467:
-	mov	rsp, rsp
+	nop	dword ptr [rax]
+.label_440:
 	movzx	edi, byte ptr [rsi + rdx + 1]
-	lea	rdi, [rdi]
 	inc	rdx
 	add	edi, -0x30
-	mov	rsp, rsp
 	cmp	edi, 0xa
-	mov	rsp, rsp
-	jb	.label_467
-.label_483:
+	jb	.label_440
+.label_458:
 	cmp	rcx, rdx
-	jne	.label_454
-	mov	rsp, rsp
+	jne	.label_442
 	sub	r8d, eax
-	nop	
 	xor	eax, eax
 	test	rcx, rcx
-	nop	
-	jmp	.label_465
-.label_454:
+	jmp	.label_435
+.label_442:
 	mov	ecx, 0xffffffff
-	lea	rsi, [rsi]
 	mov	eax, 1
-	mov	rsp, rsp
 	cmovb	eax, ecx
-	lea	rdi, [rdi]
 	ret	
-.label_478:
-	lea	rsi, [rsi]
+.label_444:
 	mov	r9b, cl
-	nop	
-	jmp	.label_459
-.label_463:
-	lea	rdi, [rdi]
+	jmp	.label_437
+.label_433:
 	mov	r9b, cl
-.label_459:
+.label_437:
 	movzx	r8d, al
 	movzx	eax, r9b
-	lea	rsi, [rsi]
 	add	eax, -0x30
-	nop	
 	xor	edx, edx
-	mov	rsp, rsp
 	cmp	eax, 9
-	mov	rbp, rbp
-	ja	.label_481
+	ja	.label_449
 	xor	edx, edx
-	nop	word ptr [rax + rax]
-.label_469:
-	lea	rsi, [rsi]
+	nop	dword ptr [rax]
+.label_443:
 	movzx	eax, byte ptr [rdi + rdx + 1]
 	inc	rdx
 	add	eax, -0x30
 	cmp	eax, 0xa
-	lea	rsi, [rsi]
-	jb	.label_469
-.label_481:
-	lea	rsi, [rsi]
+	jb	.label_443
+.label_449:
 	lea	edi, [r8 - 0x30]
-	lea	rdi, [rdi]
 	xor	eax, eax
 	cmp	edi, 9
-	lea	rdi, [rdi]
-	ja	.label_479
+	ja	.label_438
 	xor	eax, eax
 	nop	dword ptr [rax]
-.label_475:
-	lea	rdi, [rdi]
+.label_429:
 	movzx	edi, byte ptr [rsi + rax + 1]
 	inc	rax
-	mov	rsp, rsp
 	add	edi, -0x30
 	cmp	edi, 0xa
-	jb	.label_475
-.label_479:
-	mov	rbp, rbp
+	jb	.label_429
+.label_438:
 	cmp	rdx, rax
-	lea	rsi, [rsi]
-	jne	.label_473
+	jne	.label_430
 	sub	r8d, ecx
-	nop	
 	xor	eax, eax
-	mov	rbp, rbp
 	test	rdx, rdx
-.label_465:
+.label_435:
 	cmovne	eax, r8d
-.label_460:
+.label_441:
 	ret	
-.label_473:
-	lea	rdi, [rdi]
+.label_430:
 	mov	ecx, 1
-	mov	rsp, rsp
 	mov	eax, 0xffffffff
 	cmovb	eax, ecx
-	lea	rsi, [rsi]
 	ret	
-	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406b10
+	#Procedure 0x4067d0
 
 	.globl version_etc_arn
 	.type version_etc_arn, @function
@@ -5898,21 +5561,21 @@ version_etc_arn:
 	mov	r14, rdi
 	mov	esi, 1
 	test	rcx, rcx
-	je	.label_487
+	je	.label_461
 	mov	edx, OFFSET FLAT:.str_6
 	xor	eax, eax
 	mov	rdi, r14
 	mov	r8, rbx
 	call	__fprintf_chk
-	jmp	.label_486
-.label_487:
+	jmp	.label_460
+.label_461:
 	mov	edx, OFFSET FLAT:.str.1_3
 	xor	eax, eax
 	mov	rdi, r14
 	mov	rcx, rbx
 	mov	r8, r9
 	call	__fprintf_chk
-.label_486:
+.label_460:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.2_2
 	mov	edx, 5
@@ -5932,9 +5595,9 @@ version_etc_arn:
 	mov	rsi, r14
 	call	fputs_unlocked
 	cmp	r12, 9
-	ja	.label_491
-	jmp	qword ptr [word ptr [+ (r12 * 8) + label_493]]
-.label_2569:
+	ja	.label_466
+	jmp	qword ptr [word ptr [+ (r12 * 8) + label_467]]
+.label_2346:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.4_0
 	mov	edx, 5
@@ -5950,11 +5613,11 @@ version_etc_arn:
 	pop	r14
 	pop	r15
 	jmp	__fprintf_chk
-.label_491:
+.label_466:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.13
-	jmp	.label_490
-.label_2570:
+	jmp	.label_465
+.label_2347:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.5_0
 	mov	edx, 5
@@ -5971,7 +5634,7 @@ version_etc_arn:
 	pop	r14
 	pop	r15
 	jmp	__fprintf_chk
-.label_2571:
+.label_2348:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.6_0
 	mov	edx, 5
@@ -5989,7 +5652,7 @@ version_etc_arn:
 	pop	r14
 	pop	r15
 	jmp	__fprintf_chk
-.label_2572:
+.label_2349:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.7_0
 	mov	edx, 5
@@ -5999,8 +5662,8 @@ version_etc_arn:
 	mov	r8, qword ptr [r15 + 8]
 	mov	r9, qword ptr [r15 + 0x10]
 	mov	rax, qword ptr [r15 + 0x18]
-	jmp	.label_484
-.label_2573:
+	jmp	.label_464
+.label_2350:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.8_0
 	mov	edx, 5
@@ -6011,8 +5674,8 @@ version_etc_arn:
 	mov	r9, qword ptr [r15 + 0x10]
 	mov	rax, qword ptr [r15 + 0x18]
 	mov	rsi, qword ptr [r15 + 0x20]
-	jmp	.label_489
-.label_2574:
+	jmp	.label_463
+.label_2351:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.9_0
 	mov	edx, 5
@@ -6024,8 +5687,8 @@ version_etc_arn:
 	mov	rax, qword ptr [r15 + 0x18]
 	mov	rsi, qword ptr [r15 + 0x20]
 	mov	rdi, qword ptr [r15 + 0x28]
-	jmp	.label_485
-.label_2575:
+	jmp	.label_459
+.label_2352:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.10_1
 	mov	edx, 5
@@ -6039,20 +5702,20 @@ version_etc_arn:
 	mov	rdi, qword ptr [r15 + 0x28]
 	mov	rbx, qword ptr [r15 + 0x30]
 	mov	qword ptr [rsp + 0x18], rbx
-.label_485:
+.label_459:
 	mov	qword ptr [rsp + 0x10], rdi
-.label_489:
+.label_463:
 	mov	qword ptr [rsp + 8], rsi
-.label_484:
+.label_464:
 	mov	qword ptr [rsp], rax
 	mov	esi, 1
 	xor	eax, eax
 	mov	rdi, r14
-	jmp	.label_492
-.label_2577:
+	jmp	.label_468
+.label_2354:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.12_1
-.label_490:
+.label_465:
 	mov	edx, 5
 	call	dcgettext
 	mov	r10, rax
@@ -6071,8 +5734,8 @@ version_etc_arn:
 	mov	qword ptr [rsp + 0x10], rdi
 	mov	qword ptr [rsp + 8], rsi
 	mov	qword ptr [rsp], r11
-	jmp	.label_488
-.label_2576:
+	jmp	.label_462
+.label_2353:
 	xor	edi, edi
 	mov	esi, OFFSET FLAT:.str.11_1
 	mov	edx, 5
@@ -6091,14 +5754,14 @@ version_etc_arn:
 	mov	qword ptr [rsp + 0x10], rdi
 	mov	qword ptr [rsp + 8], rsi
 	mov	qword ptr [rsp], rax
-.label_488:
+.label_462:
 	mov	esi, 1
 	xor	eax, eax
 	mov	rdi, r14
 	mov	rdx, r10
-.label_492:
+.label_468:
 	call	__fprintf_chk
-.label_2568:
+.label_2345:
 	add	rsp, 0x38
 	pop	rbx
 	pop	r12
@@ -6108,22 +5771,22 @@ version_etc_arn:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406e00
+	#Procedure 0x406ac0
 	.globl version_etc_ar
 	.type version_etc_ar, @function
 version_etc_ar:
 
 	mov	r9, -1
 	nop	word ptr [rax + rax]
-.label_494:
+.label_469:
 	cmp	qword ptr [r8 + r9*8 + 8], 0
 	lea	r9, [r9 + 1]
-	jne	.label_494
+	jne	.label_469
 	jmp	version_etc_arn
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406e30
+	#Procedure 0x406af0
 
 	.globl version_etc_va
 	.type version_etc_va, @function
@@ -6132,28 +5795,28 @@ version_etc_va:
 	mov	r10d, dword ptr [r8]
 	xor	r9d, r9d
 	nop	word ptr [rax + rax]
-.label_497:
+.label_472:
 	cmp	r10d, 0x28
-	ja	.label_495
+	ja	.label_470
 	movsxd	r11, r10d
 	add	r11, qword ptr [r8 + 0x10]
 	add	r10d, 8
 	mov	dword ptr [r8], r10d
-	jmp	.label_496
+	jmp	.label_471
 	nop	word ptr cs:[rax + rax]
-.label_495:
+.label_470:
 	mov	r11, qword ptr [r8 + 8]
 	lea	rax, [r11 + 8]
 	mov	qword ptr [r8 + 8], rax
-.label_496:
+.label_471:
 	mov	rax, qword ptr [r11]
 	mov	qword ptr [rsp + r9*8], rax
 	test	rax, rax
-	je	.label_498
+	je	.label_473
 	inc	r9
 	cmp	r9, 0xa
-	jb	.label_497
-.label_498:
+	jb	.label_472
+.label_473:
 	lea	r8, [rsp]
 	call	version_etc_arn
 	add	rsp, 0x58
@@ -6161,14 +5824,14 @@ version_etc_va:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x406e90
+	#Procedure 0x406b50
 	.globl version_etc
 	.type version_etc, @function
 version_etc:
 
 	sub	rsp, 0x128
 	test	al, al
-	je	.label_499
+	je	.label_474
 	movaps	xmmword ptr [rsp + 0x30], xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm1
 	movaps	xmmword ptr [rsp + 0x50], xmm2
@@ -6177,7 +5840,7 @@ version_etc:
 	movaps	xmmword ptr [rsp + 0x80], xmm5
 	movaps	xmmword ptr [rsp + 0x90], xmm6
 	movaps	xmmword ptr [rsp + 0xa0], xmm7
-.label_499:
+.label_474:
 	mov	qword ptr [rsp + 0x28], r9
 	mov	qword ptr [rsp + 0x20], r8
 	lea	rax, [rsp]
@@ -6189,28 +5852,28 @@ version_etc:
 	xor	r9d, r9d
 	mov	r8d, dword ptr [rsp + 0xb0]
 	nop	word ptr cs:[rax + rax]
-.label_503:
+.label_478:
 	cmp	r8d, 0x28
-	ja	.label_500
+	ja	.label_475
 	movsxd	r10, r8d
 	add	r10, qword ptr [rsp + 0xc0]
 	add	r8d, 8
 	mov	dword ptr [rsp + 0xb0], r8d
-	jmp	.label_502
+	jmp	.label_477
 	nop	
-.label_500:
+.label_475:
 	mov	r10, qword ptr [rsp + 0xb8]
 	lea	rax, [r10 + 8]
 	mov	qword ptr [rsp + 0xb8], rax
-.label_502:
+.label_477:
 	mov	rax, qword ptr [r10]
 	mov	qword ptr [rsp + r9*8 + 0xd0], rax
 	test	rax, rax
-	je	.label_501
+	je	.label_476
 	inc	r9
 	cmp	r9, 0xa
-	jb	.label_503
-.label_501:
+	jb	.label_478
+.label_476:
 	lea	r8, [rsp + 0xd0]
 	call	version_etc_arn
 	add	rsp, 0x128
@@ -6218,7 +5881,7 @@ version_etc:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x406f90
+	#Procedure 0x406c50
 	.globl emit_bug_reporting_address
 	.type emit_bug_reporting_address, @function
 emit_bug_reporting_address:
@@ -6256,7 +5919,7 @@ emit_bug_reporting_address:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x407010
+	#Procedure 0x406cd0
 	.globl xnmalloc
 	.type xnmalloc, @function
 xnmalloc:
@@ -6267,23 +5930,23 @@ xnmalloc:
 	xor	edx, edx
 	div	rbx
 	cmp	rax, rdi
-	jb	.label_504
+	jb	.label_479
 	imul	rbx, rdi
 	mov	rdi, rbx
 	call	malloc
 	test	rbx, rbx
-	je	.label_505
+	je	.label_480
 	test	rax, rax
-	je	.label_504
-.label_505:
+	je	.label_479
+.label_480:
 	pop	rbx
 	ret	
-.label_504:
+.label_479:
 	call	xalloc_die
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407050
+	#Procedure 0x406d10
 
 	.globl xmalloc
 	.type xmalloc, @function
@@ -6292,18 +5955,18 @@ xmalloc:
 	mov	rbx, rdi
 	call	malloc
 	test	rbx, rbx
-	je	.label_506
+	je	.label_481
 	test	rax, rax
-	je	.label_507
-.label_506:
+	je	.label_482
+.label_481:
 	pop	rbx
 	ret	
-.label_507:
+.label_482:
 	call	xalloc_die
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407070
+	#Procedure 0x406d30
 	.globl xnrealloc
 	.type xnrealloc, @function
 xnrealloc:
@@ -6314,32 +5977,32 @@ xnrealloc:
 	xor	edx, edx
 	div	rbx
 	cmp	rax, rsi
-	jb	.label_508
+	jb	.label_483
 	imul	rbx, rsi
 	test	rdi, rdi
-	je	.label_509
+	je	.label_484
 	test	rbx, rbx
-	jne	.label_509
+	jne	.label_484
 	call	free
 	xor	eax, eax
 	pop	rbx
 	ret	
-.label_509:
+.label_484:
 	mov	rsi, rbx
 	call	realloc
 	test	rbx, rbx
-	je	.label_510
+	je	.label_485
 	test	rax, rax
-	je	.label_508
-.label_510:
+	je	.label_483
+.label_485:
 	pop	rbx
 	ret	
-.label_508:
+.label_483:
 	call	xalloc_die
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4070c0
+	#Procedure 0x406d80
 
 	.globl xrealloc
 	.type xrealloc, @function
@@ -6347,28 +6010,28 @@ xrealloc:
 	push	rbx
 	mov	rbx, rsi
 	test	rdi, rdi
-	je	.label_511
+	je	.label_486
 	test	rbx, rbx
-	jne	.label_511
+	jne	.label_486
 	call	free
 	xor	eax, eax
 	pop	rbx
 	ret	
-.label_511:
+.label_486:
 	mov	rsi, rbx
 	call	realloc
 	test	rbx, rbx
-	je	.label_513
+	je	.label_488
 	test	rax, rax
-	je	.label_512
-.label_513:
+	je	.label_487
+.label_488:
 	pop	rbx
 	ret	
-.label_512:
+.label_487:
 	call	xalloc_die
 	.section	.text
 	.align	16
-	#Procedure 0x4070f0
+	#Procedure 0x406db0
 	.globl x2nrealloc
 	.type x2nrealloc, @function
 x2nrealloc:
@@ -6377,60 +6040,60 @@ x2nrealloc:
 	mov	rbx, rdx
 	mov	rcx, qword ptr [rsi]
 	test	rdi, rdi
-	je	.label_518
+	je	.label_492
 	movabs	rax, 0x5555555555555554
 	xor	edx, edx
 	div	rbx
 	cmp	rax, rcx
-	jbe	.label_519
+	jbe	.label_493
 	mov	rax, rcx
 	shr	rax, 1
 	lea	rcx, [rcx + rax + 1]
-	jmp	.label_514
-.label_518:
+	jmp	.label_489
+.label_492:
 	test	rcx, rcx
-	jne	.label_520
+	jne	.label_495
 	mov	eax, 0x80
 	xor	edx, edx
 	div	rbx
 	mov	rcx, rax
 	cmp	rcx, 1
 	adc	rcx, 0
-.label_520:
+.label_495:
 	movabs	rax, 0x7fffffffffffffff
 	xor	edx, edx
 	div	rbx
 	cmp	rax, rcx
-	jb	.label_516
-.label_514:
+	jb	.label_494
+.label_489:
 	mov	qword ptr [rsi], rcx
 	imul	rbx, rcx
 	test	rdi, rdi
-	je	.label_515
+	je	.label_490
 	test	rbx, rbx
-	jne	.label_515
+	jne	.label_490
 	call	free
 	xor	eax, eax
 	pop	rbx
 	ret	
-.label_515:
+.label_490:
 	mov	rsi, rbx
 	call	realloc
 	test	rbx, rbx
-	je	.label_517
+	je	.label_491
 	test	rax, rax
-	je	.label_519
-.label_517:
+	je	.label_493
+.label_491:
 	pop	rbx
 	ret	
-.label_519:
+.label_493:
 	call	xalloc_die
-.label_516:
+.label_494:
 	call	xalloc_die
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407190
+	#Procedure 0x406e50
 	.globl xcharalloc
 	.type xcharalloc, @function
 xcharalloc:
@@ -6439,18 +6102,18 @@ xcharalloc:
 	mov	rbx, rdi
 	call	malloc
 	test	rbx, rbx
-	je	.label_521
+	je	.label_496
 	test	rax, rax
-	je	.label_522
-.label_521:
+	je	.label_497
+.label_496:
 	pop	rbx
 	ret	
-.label_522:
+.label_497:
 	call	xalloc_die
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4071b0
+	#Procedure 0x406e70
 	.globl x2realloc
 	.type x2realloc, @function
 x2realloc:
@@ -6458,44 +6121,44 @@ x2realloc:
 	push	rbx
 	mov	rax, qword ptr [rsi]
 	test	rdi, rdi
-	je	.label_525
+	je	.label_500
 	movabs	rcx, 0x5555555555555554
 	cmp	rax, rcx
-	jae	.label_527
+	jae	.label_502
 	mov	rbx, rax
 	shr	rbx, 1
 	add	rbx, rax
 	inc	rbx
 	mov	qword ptr [rsi], rbx
-	jne	.label_524
+	jne	.label_499
 	call	free
 	xor	eax, eax
-	jmp	.label_526
-.label_525:
+	jmp	.label_501
+.label_500:
 	test	rax, rax
 	mov	ebx, 0x80
 	cmovne	rbx, rax
 	test	rbx, rbx
-	js	.label_523
+	js	.label_498
 	mov	qword ptr [rsi], rbx
-.label_524:
+.label_499:
 	mov	rsi, rbx
 	call	realloc
 	test	rbx, rbx
-	je	.label_526
+	je	.label_501
 	test	rax, rax
-	je	.label_523
-.label_526:
+	je	.label_498
+.label_501:
 	pop	rbx
 	ret	
-.label_523:
+.label_498:
 	call	xalloc_die
-.label_527:
+.label_502:
 	call	xalloc_die
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407220
+	#Procedure 0x406ee0
 	.globl xzalloc
 	.type xzalloc, @function
 xzalloc:
@@ -6507,10 +6170,10 @@ xzalloc:
 	call	malloc
 	mov	r14, rax
 	test	rbx, rbx
-	je	.label_529
+	je	.label_504
 	test	r14, r14
-	je	.label_528
-.label_529:
+	je	.label_503
+.label_504:
 	xor	esi, esi
 	mov	rdi, r14
 	mov	rdx, rbx
@@ -6520,12 +6183,12 @@ xzalloc:
 	pop	rbx
 	pop	r14
 	ret	
-.label_528:
+.label_503:
 	call	xalloc_die
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407260
+	#Procedure 0x406f20
 	.globl xcalloc
 	.type xcalloc, @function
 xcalloc:
@@ -6535,18 +6198,18 @@ xcalloc:
 	xor	edx, edx
 	div	rsi
 	cmp	rax, rdi
-	jb	.label_530
+	jb	.label_505
 	call	rpl_calloc
 	test	rax, rax
-	je	.label_530
+	je	.label_505
 	pop	rcx
 	ret	
-.label_530:
+.label_505:
 	call	xalloc_die
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407290
+	#Procedure 0x406f50
 
 	.globl xmemdup
 	.type xmemdup, @function
@@ -6560,10 +6223,10 @@ xmemdup:
 	call	malloc
 	mov	r15, rax
 	test	rbx, rbx
-	je	.label_531
+	je	.label_506
 	test	r15, r15
-	je	.label_532
-.label_531:
+	je	.label_507
+.label_506:
 	mov	rdi, r15
 	mov	rsi, r14
 	mov	rdx, rbx
@@ -6573,12 +6236,12 @@ xmemdup:
 	pop	r14
 	pop	r15
 	ret	
-.label_532:
+.label_507:
 	call	xalloc_die
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4072d0
+	#Procedure 0x406f90
 
 	.globl xstrdup
 	.type xstrdup, @function
@@ -6593,10 +6256,10 @@ xstrdup:
 	call	malloc
 	mov	r15, rax
 	inc	rbx
-	je	.label_534
+	je	.label_509
 	test	r15, r15
-	je	.label_533
-.label_534:
+	je	.label_508
+.label_509:
 	mov	rdi, r15
 	mov	rsi, r14
 	mov	rdx, rbx
@@ -6606,13 +6269,13 @@ xstrdup:
 	pop	r14
 	pop	r15
 	ret	
-.label_533:
+.label_508:
 	call	xalloc_die
 	nop	word ptr cs:[rax + rax]
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407320
+	#Procedure 0x406fe0
 
 	.globl xalloc_die
 	.type xalloc_die, @function
@@ -6632,17 +6295,17 @@ xalloc_die:
 	call	abort
 	.section	.text
 	.align	16
-	#Procedure 0x407350
+	#Procedure 0x407010
 
 	.globl rpl_calloc
 	.type rpl_calloc, @function
 rpl_calloc:
 	test	rdi, rdi
 	mov	eax, 1
-	je	.label_535
+	je	.label_510
 	test	rsi, rsi
 	mov	ecx, 1
-	je	.label_536
+	je	.label_511
 	mov	rax, rsi
 	imul	rax, rdi
 	xor	edx, edx
@@ -6650,23 +6313,23 @@ rpl_calloc:
 	cmp	rax, rdi
 	mov	rax, rsi
 	mov	rcx, rdi
-	je	.label_536
+	je	.label_511
 	push	rax
 	call	__errno_location
 	mov	dword ptr [rax], 0xc
 	xor	eax, eax
 	pop	rcx
 	ret	
-.label_535:
+.label_510:
 	mov	ecx, 1
-.label_536:
+.label_511:
 	mov	rdi, rcx
 	mov	rsi, rax
 	jmp	calloc
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4073a0
+	#Procedure 0x407060
 
 	.globl rpl_mbrtowc
 	.type rpl_mbrtowc, @function
@@ -6685,17 +6348,17 @@ rpl_mbrtowc:
 	call	mbrtowc
 	mov	r15, rax
 	test	r12, r12
-	je	.label_537
+	je	.label_512
 	cmp	r15, -2
-	jb	.label_537
+	jb	.label_512
 	xor	edi, edi
 	call	hard_locale
 	test	al, al
-	jne	.label_537
+	jne	.label_512
 	movzx	eax, byte ptr [r14]
 	mov	dword ptr [rbx], eax
 	mov	r15d, 1
-.label_537:
+.label_512:
 	mov	rax, r15
 	add	rsp, 8
 	pop	rbx
@@ -6706,7 +6369,7 @@ rpl_mbrtowc:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407400
+	#Procedure 0x4070c0
 
 	.globl rpl_re_compile_pattern
 	.type rpl_re_compile_pattern, @function
@@ -6727,7 +6390,7 @@ rpl_re_compile_pattern:
 	mov	rdx, r8
 	call	re_compile_internal
 	test	eax, eax
-	je	.label_538
+	je	.label_513
 	cdqe	
 	mov	esi, OFFSET FLAT:__re_error_msgid
 	add	rsi,  qword ptr [word ptr [+ (rax * 8) + __re_error_msgid_idx]]
@@ -6735,14 +6398,14 @@ rpl_re_compile_pattern:
 	mov	edx, 5
 	pop	rax
 	jmp	dcgettext
-.label_538:
+.label_513:
 	xor	eax, eax
 	pop	rcx
 	ret	
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x407460
+	#Procedure 0x407120
 
 	.globl re_compile_internal
 	.type re_compile_internal, @function
@@ -6755,8 +6418,8 @@ re_compile_internal:
 	push	rbx
 	sub	rsp, 0xf8
 	mov	qword ptr [rsp + 0x18], rcx
-	mov	r14, rdx
-	mov	r13, rsi
+	mov	r13, rdx
+	mov	r14, rsi
 	mov	r15, rdi
 	mov	dword ptr [rsp + 0xcc], 0
 	mov	al, byte ptr [r15 + 0x38]
@@ -6767,8 +6430,8 @@ re_compile_internal:
 	mov	byte ptr [r15 + 0x38], al
 	mov	r12, qword ptr [r15]
 	cmp	qword ptr [r15 + 8], 0xe7
-	jbe	.label_558
-.label_698:
+	jbe	.label_561
+.label_527:
 	mov	qword ptr [r15 + 0x10], 0xe8
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [r12 + 0xd0], xmm0
@@ -6788,9 +6451,9 @@ re_compile_internal:
 	mov	qword ptr [r12 + 0xe0], 0
 	mov	dword ptr [r12 + 0x80], 0xf
 	movabs	rax, 0x555555555555554
-	cmp	r14, rax
-	ja	.label_563
-	lea	rdi, [r14 + 1]
+	cmp	r13, rax
+	ja	.label_522
+	lea	rdi, [r13 + 1]
 	mov	qword ptr [rsp + 0x20], rdi
 	mov	qword ptr [r12 + 8], rdi
 	shl	rdi, 4
@@ -6798,11 +6461,11 @@ re_compile_internal:
 	mov	qword ptr [r12], rax
 	mov	eax, 1
 	nop	word ptr cs:[rax + rax]
-.label_606:
+.label_603:
 	mov	rbx, rax
 	lea	rax, [rbx + rbx]
-	cmp	rbx, r14
-	jbe	.label_606
+	cmp	rbx, r13
+	jbe	.label_603
 	mov	edi, 0x18
 	mov	rsi, rbx
 	call	rpl_calloc
@@ -6817,28 +6480,28 @@ re_compile_internal:
 	or	cl, 0x20
 	movzx	ecx, cl
 	cmp	ecx, 0x75
-	jne	.label_618
+	jne	.label_590
 	mov	cl, byte ptr [rax + 1]
 	or	cl, 0x20
 	movzx	ecx, cl
 	cmp	ecx, 0x74
-	jne	.label_618
+	jne	.label_590
 	mov	cl, byte ptr [rax + 2]
 	or	cl, 0x20
 	movzx	ecx, cl
 	cmp	ecx, 0x66
-	jne	.label_618
+	jne	.label_590
 	movzx	ecx, byte ptr [rax + 3]
 	cmp	ecx, 0x2d
 	sete	cl
 	movzx	ecx, cl
 	movzx	edx, byte ptr [rax + rcx + 3]
 	cmp	edx, 0x38
-	jne	.label_618
+	jne	.label_590
 	cmp	byte ptr [rax + rcx + 4], 0
-	jne	.label_618
+	jne	.label_590
 	or	byte ptr [r12 + 0xb0], 4
-.label_618:
+.label_590:
 	mov	rax, qword ptr [r12 + 0xb0]
 	mov	cl, al
 	and	cl, 0xf7
@@ -6846,99 +6509,99 @@ re_compile_internal:
 	mov	rcx, rax
 	shr	rcx, 0x20
 	cmp	ecx, 2
-	jl	.label_628
+	jl	.label_518
 	test	al, 4
-	jne	.label_634
+	jne	.label_629
 	mov	edi, 0x20
 	mov	esi, 1
 	call	rpl_calloc
 	mov	qword ptr [r12 + 0x78], rax
 	xor	ebx, ebx
 	test	rax, rax
-	je	.label_563
+	je	.label_522
 	xor	ebp, ebp
 	nop	
-.label_567:
+.label_534:
 	mov	edi, ebx
 	call	btowc
 	cmp	eax, -1
-	je	.label_643
+	je	.label_636
 	mov	edx, 1
 	mov	cl, bl
 	shl	rdx, cl
 	mov	rcx, qword ptr [r12 + 0x78]
 	or	qword ptr [rcx], rdx
-.label_643:
+.label_636:
 	cmp	ebx, 0x7f
-	ja	.label_647
+	ja	.label_642
 	cmp	ebx, eax
-	je	.label_647
+	je	.label_642
 	or	byte ptr [r12 + 0xb0], 8
-.label_647:
+.label_642:
 	inc	rbx
 	cmp	rbx, 0x40
-	jne	.label_567
+	jne	.label_534
 	mov	qword ptr [rsp + 0x28], r15
 	xor	ebx, ebx
-.label_663:
+.label_653:
 	lea	r15, [rbp + 0x40]
 	mov	edi, r15d
 	call	btowc
 	cmp	eax, -1
-	je	.label_616
+	je	.label_549
 	mov	edx, 1
 	mov	cl, bpl
 	shl	rdx, cl
 	mov	rcx, qword ptr [r12 + 0x78]
 	or	qword ptr [rcx + 8], rdx
-.label_616:
+.label_549:
 	cmp	r15d, eax
-	je	.label_659
+	je	.label_608
 	or	byte ptr [r12 + 0xb0], 8
-.label_659:
+.label_608:
 	inc	rbp
 	cmp	rbp, 0x40
-	jne	.label_663
+	jne	.label_653
 	xor	ebp, ebp
 	mov	r15, qword ptr [rsp + 0x28]
 	nop	word ptr cs:[rax + rax]
-.label_658:
+.label_572:
 	lea	edi, [rbx + 0x80]
 	call	btowc
 	cmp	eax, -1
-	je	.label_672
+	je	.label_665
 	mov	eax, 1
 	mov	cl, bl
 	shl	rax, cl
 	mov	rcx, qword ptr [r12 + 0x78]
 	or	qword ptr [rcx + 0x10], rax
-.label_672:
+.label_665:
 	inc	rbx
 	cmp	rbx, 0x40
-	jne	.label_658
+	jne	.label_572
 	nop	dword ptr [rax]
-.label_683:
+.label_515:
 	lea	edi, [rbp + 0xc0]
 	call	btowc
 	cmp	eax, -1
-	je	.label_679
+	je	.label_669
 	mov	eax, 1
 	mov	cl, bpl
 	shl	rax, cl
 	mov	rcx, qword ptr [r12 + 0x78]
 	or	qword ptr [rcx + 0x18], rax
-.label_679:
+.label_669:
 	inc	rbp
 	cmp	rbp, 0x40
-	jne	.label_683
-	jmp	.label_628
-.label_634:
+	jne	.label_515
+	jmp	.label_518
+.label_629:
 	mov	qword ptr [word ptr [r12 + 120]], OFFSET FLAT:utf8_sb_map
-.label_628:
+.label_518:
 	cmp	qword ptr [r12], 0
-	je	.label_563
+	je	.label_522
 	cmp	qword ptr [r12 + 0x40], 0
-	je	.label_563
+	je	.label_522
 	mov	dword ptr [rsp + 0xcc], 0
 	mov	rbx, qword ptr [r15 + 0x28]
 	mov	rcx, qword ptr [rsp + 0x18]
@@ -6955,9 +6618,9 @@ re_compile_internal:
 	movdqa	xmmword ptr [rsp + 0x40], xmm0
 	movdqa	xmmword ptr [rsp + 0x30], xmm0
 	mov	qword ptr [rsp + 0xc0], 0
-	mov	qword ptr [rsp + 0x30], r13
-	mov	qword ptr [rsp + 0x88], r14
-	mov	qword ptr [rsp + 0x80], r14
+	mov	qword ptr [rsp + 0x30], r14
+	mov	qword ptr [rsp + 0x88], r13
+	mov	qword ptr [rsp + 0x80], r13
 	mov	qword ptr [rsp + 0xa8], rbx
 	mov	rax, rcx
 	shr	rax, 0x16
@@ -6977,188 +6640,186 @@ re_compile_internal:
 	shr	al, 3
 	and	al, 1
 	mov	byte ptr [rsp + 0xba], al
-	mov	qword ptr [rsp + 0x98], r14
-	mov	qword ptr [rsp + 0x90], r14
+	mov	qword ptr [rsp + 0x98], r13
+	mov	qword ptr [rsp + 0x90], r13
 	xor	eax, eax
-	test	r14, r14
-	jle	.label_695
+	test	r13, r13
+	jle	.label_525
 	cmp	edx, 2
-	jl	.label_566
+	jl	.label_568
 	mov	qword ptr [rsp + 0x28], r15
 	mov	r15d, 0xc
 	mov	rax, qword ptr [rsp + 0x20]
 	movabs	rcx, 0x1fffffffffffffff
 	cmp	rax, rcx
-	ja	.label_568
+	ja	.label_569
 	lea	rsi, [rax*4]
 	xor	edi, edi
 	call	realloc
 	test	rax, rax
-	je	.label_568
+	je	.label_569
 	mov	qword ptr [rsp + 0x40], rax
 	mov	r15, qword ptr [rsp + 0x28]
-.label_566:
+.label_568:
 	xor	eax, eax
 	test	bpl, bpl
-	mov	edx, 0
-	je	.label_578
+	je	.label_580
 	mov	qword ptr [rsp + 0x28], r15
 	xor	edi, edi
 	mov	rsi, qword ptr [rsp + 0x20]
 	call	realloc
 	mov	r15d, 0xc
 	test	rax, rax
-	je	.label_568
+	je	.label_569
 	mov	qword ptr [rsp + 0x38], rax
-	mov	dl, bpl
 	mov	r15, qword ptr [rsp + 0x28]
-.label_578:
+.label_580:
 	mov	rcx, qword ptr [rsp + 0x20]
 	mov	qword ptr [rsp + 0x70], rcx
 	mov	ecx, dword ptr [r12 + 0xb4]
-	mov	bpl, dl
-	jmp	.label_693
-.label_563:
+	jmp	.label_659
+.label_522:
 	mov	dword ptr [rsp + 0xcc], 0xc
 	mov	rdi, r12
 	call	free_dfa_content
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [r15], xmm0
 	mov	eax, 0xc
-	jmp	.label_549
-.label_695:
+	jmp	.label_524
+.label_525:
 	shr	rcx, 0x20
 	xor	edx, edx
 	mov	qword ptr [rsp + 0x20], rdx
-.label_693:
+.label_659:
 	test	bpl, bpl
-	cmove	rax, r13
+	cmove	rax, r14
 	mov	qword ptr [rsp + 0x38], rax
 	cmp	qword ptr [rsp + 0x10], 0
-	je	.label_593
+	je	.label_591
 	cmp	ecx, 2
-	jl	.label_596
+	jl	.label_594
 	mov	qword ptr [rsp + 0x28], r15
 	lea	rdi, [rsp + 0x30]
 	call	build_wcs_upper_buffer
 	mov	r15d, eax
 	test	r15d, r15d
-	jne	.label_568
-	lea	r13, [rsp + 0x30]
-.label_636:
-	cmp	qword ptr [rsp + 0x68], r14
-	jge	.label_605
+	jne	.label_569
+	lea	r14, [rsp + 0x30]
+.label_628:
+	cmp	qword ptr [rsp + 0x68], r13
+	jge	.label_517
 	mov	rbp, qword ptr [rsp + 0x70]
 	movsxd	rax, dword ptr [r12 + 0xb4]
 	add	rax, qword ptr [rsp + 0x60]
 	cmp	rbp, rax
-	jg	.label_605
+	jg	.label_517
 	lea	rbx, [rbp + rbp]
 	cmp	dword ptr [rsp + 0xc0], 2
-	jl	.label_613
+	jl	.label_607
 	mov	r15d, 0xc
 	movabs	rax, 0x1fffffffffffffff
 	cmp	rbx, rax
-	ja	.label_568
+	ja	.label_569
 	mov	rdi, qword ptr [rsp + 0x40]
 	lea	rsi, [rbp*8]
 	call	realloc
 	test	rax, rax
-	je	.label_568
+	je	.label_569
 	mov	qword ptr [rsp + 0x40], rax
 	mov	rdi, qword ptr [rsp + 0x48]
 	test	rdi, rdi
-	je	.label_613
+	je	.label_607
 	shl	rbp, 4
 	mov	rsi, rbp
 	call	realloc
 	test	rax, rax
-	je	.label_568
+	je	.label_569
 	mov	qword ptr [rsp + 0x48], rax
-.label_613:
+.label_607:
 	cmp	byte ptr [rsp + 0xbb], 0
-	je	.label_626
+	je	.label_617
 	mov	rdi, qword ptr [rsp + 0x38]
 	mov	rsi, rbx
 	call	realloc
 	mov	r15d, 0xc
 	test	rax, rax
-	je	.label_568
+	je	.label_569
 	mov	qword ptr [rsp + 0x38], rax
-.label_626:
+.label_617:
 	mov	qword ptr [rsp + 0x70], rbx
-	mov	rdi, r13
+	mov	rdi, r14
 	call	build_wcs_upper_buffer
 	mov	r15d, eax
 	test	r15d, r15d
-	je	.label_636
-.label_568:
+	je	.label_628
+.label_569:
 	mov	dword ptr [rsp + 0xcc], r15d
-	jmp	.label_552
-.label_593:
+	jmp	.label_519
+.label_591:
 	cmp	ecx, 2
-	jl	.label_641
+	jl	.label_633
 	mov	qword ptr [rsp + 0x28], r15
 	lea	rdi, [rsp + 0x30]
 	call	build_wcs_buffer
-	jmp	.label_605
-.label_596:
+	jmp	.label_517
+.label_594:
 	mov	rax, qword ptr [rsp + 0x20]
-	cmp	rax, r14
-	cmovg	rax, r14
-	mov	r14, rax
+	cmp	rax, r13
+	cmovg	rax, r13
+	mov	r13, rax
 	xor	eax, eax
-	test	r14, r14
-	jle	.label_646
+	test	r13, r13
+	jle	.label_635
 	xor	eax, eax
 	mov	ebp, 1
-	jmp	.label_604
-.label_661:
-	mov	r13, qword ptr [rsp + 0x30]
+	jmp	.label_641
+	nop	word ptr cs:[rax + rax]
+.label_584:
+	mov	r14, qword ptr [rsp + 0x30]
 	mov	rax, qword ptr [rsp + 0x58]
 	mov	rbx, qword ptr [rsp + 0xa8]
 	inc	rbp
-.label_604:
-	add	r13, rax
-	mov	al, byte ptr [rbp + r13 - 1]
+.label_641:
+	add	r14, rax
+	mov	al, byte ptr [rbp + r14 - 1]
 	movzx	ecx, al
 	test	rbx, rbx
-	jne	.label_653
-.label_666:
+	jne	.label_645
+.label_655:
 	movzx	ebx, al
 	lea	eax, [rbx + 0x80]
 	cmp	eax, 0x17f
-	ja	.label_657
+	ja	.label_560
 	call	__ctype_toupper_loc
 	mov	rax, qword ptr [rax]
 	mov	ebx, dword ptr [rax + rbx*4]
-.label_657:
+.label_560:
 	mov	rax, qword ptr [rsp + 0x38]
 	mov	byte ptr [rax + rbp - 1], bl
-	cmp	rbp, r14
-	jl	.label_661
-	jmp	.label_665
-.label_653:
+	cmp	rbp, r13
+	jl	.label_584
+	jmp	.label_654
+.label_645:
 	mov	al, byte ptr [rbx + rcx]
-	jmp	.label_666
-.label_641:
+	jmp	.label_655
+.label_633:
 	test	rbx, rbx
-	je	.label_668
+	je	.label_658
 	mov	rcx, qword ptr [rsp + 0x20]
-	cmp	rcx, r14
-	cmovg	rcx, r14
+	cmp	rcx, r13
+	cmovg	rcx, r13
 	mov	rdi, rcx
 	xor	ecx, ecx
 	test	rdi, rdi
-	jle	.label_671
-	movzx	ecx, byte ptr [r13]
+	jle	.label_661
+	movzx	ecx, byte ptr [r14]
 	mov	cl, byte ptr [rbx + rcx]
 	mov	byte ptr [rax], cl
 	mov	ecx, 1
 	cmp	rdi, 2
-	jl	.label_671
-	nop	dword ptr [rax]
-.label_674:
+	jl	.label_661
+	nop	dword ptr [rax + rax]
+.label_652:
 	mov	rax, qword ptr [rsp + 0x30]
 	mov	rdx, qword ptr [rsp + 0x38]
 	add	rax, qword ptr [rsp + 0x58]
@@ -7168,36 +6829,36 @@ re_compile_internal:
 	mov	byte ptr [rdx + rcx], al
 	inc	rcx
 	cmp	rcx, rdi
-	jl	.label_674
+	jl	.label_652
 	mov	rcx, rdi
-.label_671:
+.label_661:
 	mov	qword ptr [rsp + 0x28], r15
 	mov	qword ptr [rsp + 0x60], rcx
 	mov	qword ptr [rsp + 0x68], rcx
-	jmp	.label_605
-.label_558:
+	jmp	.label_517
+.label_561:
 	mov	esi, 0xe8
 	mov	rdi, r12
 	call	realloc
 	mov	r12, rax
 	mov	eax, 0xc
 	test	r12, r12
-	je	.label_549
+	je	.label_524
 	mov	qword ptr [r15 + 8], 0xe8
 	mov	qword ptr [r15], r12
-	jmp	.label_698
-.label_665:
-	mov	rax, r14
-.label_646:
+	jmp	.label_527
+.label_654:
+	mov	rax, r13
+.label_635:
 	mov	qword ptr [rsp + 0x28], r15
-	jmp	.label_700
-.label_668:
+	jmp	.label_598
+.label_658:
 	mov	qword ptr [rsp + 0x28], r15
 	mov	rax, qword ptr [rsp + 0x20]
-.label_700:
+.label_598:
 	mov	qword ptr [rsp + 0x60], rax
 	mov	qword ptr [rsp + 0x68], rax
-.label_605:
+.label_517:
 	mov	dword ptr [rsp + 0xcc], 0
 	mov	r15, qword ptr [rsp + 0x28]
 	mov	qword ptr [r15 + 0x30], 0
@@ -7222,16 +6883,16 @@ re_compile_internal:
 	call	parse_reg_exp
 	mov	r14, rax
 	test	r14, r14
-	jne	.label_546
+	jne	.label_548
 	mov	eax, dword ptr [rsp + 0xcc]
 	test	eax, eax
-	jne	.label_551
-.label_546:
+	jne	.label_550
+.label_548:
 	mov	ebp, dword ptr [rbx + 0x80]
 	cmp	ebp, 0xf
-	je	.label_554
+	je	.label_553
 	mov	rax, qword ptr [rbx + 0x70]
-.label_678:
+.label_586:
 	lea	ecx, [rbp + 1]
 	mov	dword ptr [rbx + 0x80], ecx
 	movsxd	rcx, ebp
@@ -7243,15 +6904,15 @@ re_compile_internal:
 	mov	dword ptr [rax + rcx + 0x38], 2
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
-.label_677:
+.label_585:
 	test	r14, r14
 	mov	rcx, rbp
-	je	.label_684
+	je	.label_570
 	mov	ecx, dword ptr [rbx + 0x80]
 	cmp	ecx, 0xf
-	je	.label_570
+	je	.label_571
 	mov	rax, qword ptr [rbx + 0x70]
-.label_702:
+.label_600:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [rbx + 0x80], edx
 	movsxd	rdx, ecx
@@ -7266,13 +6927,13 @@ re_compile_internal:
 	mov	qword ptr [rax + rdx + 0x40], -1
 	mov	qword ptr [r14], rcx
 	test	rbp, rbp
-	je	.label_584
+	je	.label_575
 	mov	qword ptr [rbp], rcx
-.label_684:
+.label_570:
 	test	rbp, rbp
-	je	.label_584
+	je	.label_575
 	test	rcx, rcx
-	je	.label_584
+	je	.label_575
 	mov	qword ptr [r12 + 0x68], rcx
 	mov	r15, qword ptr [r15]
 	mov	rdi, qword ptr [r15 + 8]
@@ -7294,23 +6955,23 @@ re_compile_internal:
 	call	malloc
 	mov	qword ptr [r15 + 0x30], rax
 	cmp	qword ptr [r15 + 0x18], 0
-	je	.label_594
+	je	.label_596
 	cmp	qword ptr [r15 + 0x20], 0
-	je	.label_599
+	je	.label_556
 	test	rax, rax
-	je	.label_602
+	je	.label_599
 	mov	rax, qword ptr [r15 + 0x28]
 	test	rax, rax
-	je	.label_586
+	je	.label_601
 	mov	rax, qword ptr [rsp + 0x28]
 	mov	rbx, qword ptr [rax + 0x30]
 	lea	rdi, [rbx*8]
 	call	malloc
 	mov	qword ptr [r15 + 0xe0], rax
 	test	rax, rax
-	je	.label_611
+	je	.label_606
 	test	rbx, rbx
-	je	.label_686
+	je	.label_562
 	mov	rcx, qword ptr [rsp + 0x28]
 	mov	rcx, qword ptr [rcx + 0x30]
 	cmp	rcx, 1
@@ -7318,11 +6979,11 @@ re_compile_internal:
 	cmova	rdx, rcx
 	xor	edi, edi
 	cmp	rdx, 4
-	jb	.label_542
+	jb	.label_537
 	xor	edi, edi
 	mov	rsi, rdx
 	and	rsi, 0xfffffffffffffffc
-	je	.label_542
+	je	.label_537
 	cmp	rcx, 1
 	mov	ebp, 1
 	cmova	rbp, rcx
@@ -7331,22 +6992,22 @@ re_compile_internal:
 	shr	rbx, 2
 	xor	edi, edi
 	bt	rbp, 2
-	jb	.label_621
+	jb	.label_516
 	mov	edi, 1
 	movq	xmm0, rdi
 	pslldq	xmm0, 8
 	movdqu	xmmword ptr [rax], xmm0
-	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_625]]
+	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_619]]
 	movdqu	xmmword ptr [rax + 0x10], xmm0
 	mov	edi, 4
-.label_621:
+.label_516:
 	test	rbx, rbx
-	je	.label_633
+	je	.label_625
 	mov	ebp, 1
 	movq	xmm0, rbp
 	pslldq	xmm0, 8
-	movdqa	xmm1,  xmmword ptr [word ptr [rip + label_625]]
-.label_639:
+	movdqa	xmm1,  xmmword ptr [word ptr [rip + label_619]]
+.label_632:
 	movq	xmm2, rdi
 	pshufd	xmm2, xmm2, 0x44
 	movdqa	xmm3, xmm2
@@ -7364,317 +7025,166 @@ re_compile_internal:
 	movdqu	xmmword ptr [rax + rdi*8 + 0x30], xmm2
 	add	rdi, 8
 	cmp	rdi, rsi
-	jne	.label_639
-.label_633:
+	jne	.label_632
+.label_625:
 	cmp	rdx, rsi
 	mov	rdi, rsi
-	je	.label_686
+	je	.label_562
 	nop	dword ptr [rax + rax]
-.label_542:
+.label_537:
 	mov	qword ptr [rax + rdi*8], rdi
 	inc	rdi
 	cmp	rdi, rcx
-	jb	.label_542
-.label_686:
-	mov	rdx, qword ptr [r15 + 0x68]
-	movzx	ecx, byte ptr [rdx + 0x30]
-	cmp	ecx, 0x11
-	je	.label_655
-	cmp	ecx, 4
-	jne	.label_579
-	movsxd	rcx, dword ptr [rdx + 0x28]
-	mov	rcx, qword ptr [rax + rcx*8]
-	mov	qword ptr [rdx + 0x28], rcx
-	mov	esi, 1
-	shl	esi, cl
-	movsxd	rcx, esi
-	or	qword ptr [r15 + 0xa0], rcx
-	jmp	.label_579
-.label_594:
-	mov	eax, 0xc
-	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_599:
-	mov	eax, 0xc
-	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_611:
-	lea	r14, [r15 + 0x68]
-	jmp	.label_600
-.label_554:
-	mov	edi, 0x3c8
-	call	malloc
-	xor	ebp, ebp
-	test	rax, rax
-	je	.label_677
-	mov	rcx, qword ptr [rbx + 0x70]
-	mov	qword ptr [rax], rcx
-	mov	qword ptr [rbx + 0x70], rax
-	mov	dword ptr [rbx + 0x80], 0
-	jmp	.label_678
-.label_655:
-	mov	rcx, qword ptr [rdx + 8]
-	test	rcx, rcx
-	je	.label_579
-	movzx	esi, byte ptr [rcx + 0x30]
-	cmp	esi, 0x11
-	jne	.label_579
-	mov	rsi, qword ptr [rcx + 8]
-	mov	rcx, qword ptr [rcx + 0x28]
-	mov	qword ptr [rdx + 8], rsi
-	test	rsi, rsi
-	je	.label_688
-	mov	qword ptr [rsi], rdx
-.label_688:
-	mov	rsi, qword ptr [rdx + 0x28]
-	mov	rsi, qword ptr [rax + rsi*8]
-	mov	qword ptr [rax + rcx*8], rsi
-	cmp	rcx, 0x3f
-	jg	.label_579
-	mov	rsi, -2
-	rol	rsi, cl
-	and	qword ptr [r15 + 0xa0], rsi
-.label_579:
-	lea	r14, [r15 + 0x68]
-	jmp	.label_550
-.label_570:
-	mov	edi, 0x3c8
-	call	malloc
-	test	rax, rax
-	je	.label_584
-	mov	rcx, qword ptr [rbx + 0x70]
-	mov	qword ptr [rax], rcx
-	mov	qword ptr [rbx + 0x70], rax
-	mov	dword ptr [rbx + 0x80], 0
-	xor	ecx, ecx
-	jmp	.label_702
-.label_584:
-	mov	dword ptr [rsp + 0xcc], 0xc
-.label_551:
-	mov	qword ptr [r12 + 0x68], 0
-	jmp	.label_707
-.label_602:
-	mov	eax, 0xc
-	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_586:
-	mov	eax, 0xc
-	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_589:
-	mov	rsi, -2
-	rol	rsi, cl
-	and	qword ptr [r15 + 0xa0], rsi
-.label_550:
-	mov	rsi, rax
-.label_564:
-	test	rsi, rsi
-	jne	.label_543
-.label_561:
-	mov	rsi, rdx
-	mov	rdx, qword ptr [rdx + 8]
-	test	rdx, rdx
-	mov	ecx, 0
-	jne	.label_545
-	nop	word ptr cs:[rax + rax]
-.label_556:
-	mov	rdi, rcx
-	mov	rcx, rsi
-	mov	rdx, qword ptr [rcx + 0x10]
-	cmp	rdx, rdi
-	je	.label_697
-	test	rdx, rdx
-	jne	.label_545
-.label_697:
-	mov	rsi, qword ptr [rcx]
-	test	rsi, rsi
-	jne	.label_556
-	jmp	.label_557
-.label_545:
-	movzx	ecx, byte ptr [rdx + 0x30]
-	cmp	ecx, 0x11
-	je	.label_559
-	cmp	ecx, 4
-	mov	esi, 0
-	jne	.label_561
-	jmp	.label_564
-.label_559:
-	mov	rcx, qword ptr [rdx + 8]
-	test	rcx, rcx
-	je	.label_561
-	movzx	esi, byte ptr [rcx + 0x30]
-	cmp	esi, 0x11
-	jne	.label_561
-	lea	rsi, [rdx + 8]
-	lea	rdi, [rdx + 0x28]
-	jmp	.label_569
-.label_583:
-	movsxd	rcx, dword ptr [rdi]
-	mov	rcx, qword ptr [rsi + rcx*8]
-	mov	qword ptr [rdi], rcx
-	mov	edi, 1
-	shl	edi, cl
-	movsxd	rcx, edi
-	or	qword ptr [r15 + 0xa0], rcx
-.label_543:
-	mov	rdi, rdx
-	mov	rdx, qword ptr [rdi + 8]
-	test	rdx, rdx
-	mov	ecx, 0
-	jne	.label_573
-	nop	
-.label_580:
-	mov	rbp, rcx
-	mov	rcx, rdi
-	mov	rdx, qword ptr [rcx + 0x10]
-	cmp	rdx, rbp
-	je	.label_577
-	test	rdx, rdx
-	jne	.label_573
-.label_577:
-	mov	rdi, qword ptr [rcx]
-	test	rdi, rdi
-	jne	.label_580
-	jmp	.label_557
-.label_573:
-	lea	rdi, [rdx + 0x28]
-	movzx	ecx, byte ptr [rdx + 0x30]
-	cmp	ecx, 0x11
-	je	.label_581
-	cmp	ecx, 4
-	jne	.label_543
-	jmp	.label_583
-.label_581:
-	mov	rcx, qword ptr [rdx + 8]
-	test	rcx, rcx
-	je	.label_543
-	movzx	ebp, byte ptr [rcx + 0x30]
-	cmp	ebp, 0x11
-	jne	.label_543
-	lea	rsi, [rdx + 8]
-.label_569:
-	mov	rbp, qword ptr [rcx + 8]
-	mov	rcx, qword ptr [rcx + 0x28]
-	mov	qword ptr [rsi], rbp
+	jb	.label_537
+.label_562:
+	mov	rbx, qword ptr [r15 + 0x68]
+	mov	rdi, r15
+	mov	rsi, rbx
+	call	optimize_subexps
+	test	eax, eax
+	jne	.label_648
+.label_663:
+	mov	rbp, qword ptr [rbx + 8]
 	test	rbp, rbp
-	je	.label_587
-	mov	qword ptr [rbp], rdx
-.label_587:
-	mov	rsi, qword ptr [rdi]
-	mov	rsi, qword ptr [rax + rsi*8]
-	mov	qword ptr [rax + rcx*8], rsi
-	cmp	rcx, 0x3f
-	mov	rsi, rax
-	jg	.label_564
-	jmp	.label_589
-.label_557:
-	mov	rcx, qword ptr [rsp + 0x28]
-	mov	rcx, qword ptr [rcx + 0x30]
-	xor	edx, edx
-	test	rcx, rcx
-	je	.label_590
-	mov	rax, qword ptr [r15 + 0xe0]
-	xor	edx, edx
-	nop	word ptr cs:[rax + rax]
-.label_598:
-	cmp	rdx, qword ptr [rax + rdx*8]
-	jne	.label_590
-	inc	rdx
-	cmp	rdx, rcx
-	jb	.label_598
-.label_590:
-	cmp	rdx, rcx
-	jne	.label_600
-	mov	rdi, rax
+	mov	eax, 0
+	jne	.label_649
+	nop	dword ptr [rax]
+.label_656:
+	mov	rcx, rax
+	mov	rax, rbx
+	mov	rbp, qword ptr [rax + 0x10]
+	cmp	rbp, rcx
+	je	.label_651
+	test	rbp, rbp
+	jne	.label_649
+.label_651:
+	mov	rbx, qword ptr [rax]
+	test	rbx, rbx
+	jne	.label_656
+	jmp	.label_648
+.label_649:
+	mov	rdi, r15
+	mov	rsi, rbp
+	call	optimize_subexps
+	test	eax, eax
+	mov	rbx, rbp
+	je	.label_663
+.label_648:
+	mov	rax, qword ptr [rsp + 0x28]
+	mov	rax, qword ptr [rax + 0x30]
+	xor	ecx, ecx
+	test	rax, rax
+	je	.label_666
+	mov	rdx, qword ptr [r15 + 0xe0]
+	xor	ecx, ecx
+	nop	dword ptr [rax]
+.label_662:
+	cmp	rcx, qword ptr [rdx + rcx*8]
+	jne	.label_666
+	inc	rcx
+	cmp	rcx, rax
+	jb	.label_662
+.label_666:
+	lea	r14, [r15 + 0x68]
+	cmp	rcx, rax
+	jne	.label_514
+	mov	rdi, qword ptr [r15 + 0xe0]
 	call	free
 	mov	qword ptr [r15 + 0xe0], 0
-.label_600:
+	jmp	.label_514
+.label_596:
+	mov	eax, 0xc
+	mov	dword ptr [rsp + 0xcc], eax
+	jmp	.label_519
+.label_556:
+	mov	eax, 0xc
+	mov	dword ptr [rsp + 0xcc], eax
+	jmp	.label_519
+.label_606:
+	lea	r14, [r15 + 0x68]
+.label_514:
 	mov	rax, qword ptr [r14]
 	lea	rbx, [rsp + 0xd0]
 	nop	word ptr cs:[rax + rax]
-.label_610:
+.label_529:
 	mov	rbp, rax
 	mov	rax, qword ptr [rbp + 8]
 	test	rax, rax
-	jne	.label_610
+	jne	.label_529
 	mov	rax, qword ptr [rbp + 0x10]
 	test	rax, rax
-	mov	ecx, 0
-	jne	.label_610
-	jmp	.label_615
+	mov	edx, 0
+	jne	.label_529
+	jmp	.label_531
 	nop	dword ptr [rax]
-.label_640:
-	mov	rcx, qword ptr [rdx + 8]
-	mov	rbp, rdx
-.label_615:
+.label_555:
+	mov	rdx, qword ptr [rcx + 8]
+	mov	rbp, rcx
+.label_531:
 	mov	dword ptr [rsp + 0xd0], 0
-	test	rcx, rcx
-	je	.label_617
-	movzx	eax, byte ptr [rcx + 0x30]
+	test	rdx, rdx
+	je	.label_535
+	movzx	eax, byte ptr [rdx + 0x30]
 	cmp	eax, 0x11
-	jne	.label_617
-	mov	rax, qword ptr [rsp + 0x28]
-	mov	rsi, qword ptr [rax]
-	mov	edx, dword ptr [rax + 0x38]
+	jne	.label_535
 	mov	rdi, rbx
+	mov	rsi, qword ptr [rsp + 0x28]
 	call	lower_subexp
 	mov	qword ptr [rbp + 8], rax
 	test	rax, rax
-	je	.label_617
+	je	.label_535
 	mov	qword ptr [rax], rbp
-	nop	
-.label_617:
-	mov	rcx, qword ptr [rbp + 0x10]
-	test	rcx, rcx
-	je	.label_553
-	movzx	eax, byte ptr [rcx + 0x30]
+	nop	dword ptr [rax]
+.label_535:
+	mov	rdx, qword ptr [rbp + 0x10]
+	test	rdx, rdx
+	je	.label_542
+	movzx	eax, byte ptr [rdx + 0x30]
 	cmp	eax, 0x11
-	jne	.label_553
-	mov	rax, qword ptr [rsp + 0x28]
-	mov	rsi, qword ptr [rax]
-	mov	edx, dword ptr [rax + 0x38]
+	jne	.label_542
 	mov	rdi, rbx
+	mov	rsi, qword ptr [rsp + 0x28]
 	call	lower_subexp
 	mov	qword ptr [rbp + 0x10], rax
 	test	rax, rax
-	je	.label_553
+	je	.label_542
 	mov	qword ptr [rax], rbp
-	nop	word ptr cs:[rax + rax]
-.label_553:
+	nop	dword ptr [rax + rax]
+.label_542:
 	mov	eax, dword ptr [rsp + 0xd0]
 	test	eax, eax
-	jne	.label_544
-	mov	rdx, qword ptr [rbp]
-	test	rdx, rdx
-	je	.label_638
-	mov	rax, qword ptr [rdx + 0x10]
+	jne	.label_551
+	mov	rcx, qword ptr [rbp]
+	test	rcx, rcx
+	je	.label_554
+	mov	rax, qword ptr [rcx + 0x10]
 	cmp	rax, rbp
-	je	.label_640
+	je	.label_555
 	test	rax, rax
-	je	.label_640
-	jmp	.label_610
-.label_638:
+	je	.label_555
+	jmp	.label_529
+.label_554:
 	mov	rax, qword ptr [r14]
 	mov	ebx, 0xfffc00ff
-.label_645:
+.label_564:
 	mov	rbp, rax
 	mov	rax, qword ptr [rbp + 8]
 	test	rax, rax
-	jne	.label_645
+	jne	.label_564
 	mov	rax, qword ptr [rbp + 0x10]
 	test	rax, rax
-	jne	.label_645
-.label_670:
+	jne	.label_564
+.label_583:
 	movzx	eax, byte ptr [rbp + 0x30]
 	cmp	eax, 0x10
-	jne	.label_649
+	jne	.label_567
 	mov	rax, qword ptr [rbp + 8]
 	mov	rcx, qword ptr [rax + 0x18]
 	mov	qword ptr [rbp + 0x18], rcx
 	mov	rax, qword ptr [rax + 0x38]
 	mov	qword ptr [rbp + 0x38], rax
-	jmp	.label_651
-.label_649:
+	jmp	.label_557
+.label_567:
 	mov	qword ptr [rbp + 0x18], rbp
 	mov	rsi, qword ptr [rbp + 0x28]
 	mov	rdx, qword ptr [rbp + 0x30]
@@ -7682,10 +7192,10 @@ re_compile_internal:
 	call	re_dfa_add_node
 	mov	qword ptr [rbp + 0x38], rax
 	cmp	rax, -1
-	je	.label_656
+	je	.label_576
 	movzx	ecx, byte ptr [rbp + 0x30]
 	cmp	ecx, 0xc
-	jne	.label_651
+	jne	.label_557
 	mov	ecx, dword ptr [rbp + 0x28]
 	mov	rdx, qword ptr [r15]
 	shl	rax, 4
@@ -7695,55 +7205,82 @@ re_compile_internal:
 	and	esi, ebx
 	or	esi, ecx
 	mov	dword ptr [rdx + rax + 8], esi
-.label_651:
+.label_557:
 	mov	rcx, qword ptr [rbp]
 	test	rcx, rcx
-	je	.label_667
+	je	.label_582
 	mov	rax, qword ptr [rcx + 0x10]
 	cmp	rax, rbp
 	mov	rbp, rcx
-	je	.label_670
+	je	.label_583
 	test	rax, rax
 	mov	rbp, rcx
-	je	.label_670
-	jmp	.label_645
-.label_667:
+	je	.label_583
+	jmp	.label_564
+.label_553:
+	mov	edi, 0x3c8
+	call	malloc
+	xor	ebp, ebp
+	test	rax, rax
+	je	.label_585
+	mov	rcx, qword ptr [rbx + 0x70]
+	mov	qword ptr [rax], rcx
+	mov	qword ptr [rbx + 0x70], rax
+	mov	dword ptr [rbx + 0x80], 0
+	jmp	.label_586
+.label_582:
 	mov	rbx, qword ptr [r14]
 	movzx	eax, byte ptr [rbx + 0x30]
 	cmp	eax, 0x10
-	je	.label_673
+	je	.label_589
 	cmp	eax, 0xb
-	jne	.label_675
+	jne	.label_592
 	mov	rax, qword ptr [rbx + 8]
 	mov	qword ptr [rax + 0x20], rbx
-	jmp	.label_676
-.label_656:
+	jmp	.label_593
+.label_576:
 	mov	eax, 0xc
 	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_673:
+	jmp	.label_519
+.label_571:
+	mov	edi, 0x3c8
+	call	malloc
+	test	rax, rax
+	je	.label_575
+	mov	rcx, qword ptr [rbx + 0x70]
+	mov	qword ptr [rax], rcx
+	mov	qword ptr [rbx + 0x70], rax
+	mov	dword ptr [rbx + 0x80], 0
+	xor	ecx, ecx
+	jmp	.label_600
+.label_575:
+	mov	dword ptr [rsp + 0xcc], 0xc
+.label_550:
+	mov	qword ptr [r12 + 0x68], 0
+	jmp	.label_605
+.label_589:
 	mov	rax, qword ptr [rbx + 8]
 	mov	rcx, qword ptr [rbx + 0x10]
 	mov	rdx, qword ptr [rcx + 0x18]
 	mov	qword ptr [rax + 0x20], rdx
-	jmp	.label_681
-.label_675:
+	jmp	.label_609
+.label_592:
 	mov	rax, qword ptr [rbx + 8]
 	test	rax, rax
-	je	.label_687
+	je	.label_611
 	mov	rcx, qword ptr [rbx + 0x20]
 	mov	qword ptr [rax + 0x20], rcx
-.label_687:
+.label_611:
 	mov	rcx, qword ptr [rbx + 0x10]
 	test	rcx, rcx
-	je	.label_676
-.label_681:
+	je	.label_593
+.label_609:
 	mov	rdx, qword ptr [rbx + 0x20]
 	mov	qword ptr [rcx + 0x20], rdx
-.label_676:
+.label_593:
 	mov	rdx, rbx
-	jmp	.label_540
-.label_706:
+	jmp	.label_587
+.label_624:
 	mov	rax, qword ptr [rcx + 8]
 	mov	rdx, qword ptr [rcx + 0x10]
 	mov	rsi, qword ptr [rdx + 0x18]
@@ -7751,137 +7288,137 @@ re_compile_internal:
 	mov	rsi, qword ptr [rcx + 0x20]
 	mov	qword ptr [rdx + 0x20], rsi
 	mov	rdx, rcx
-.label_540:
+.label_587:
 	xor	esi, esi
 	test	rax, rax
 	mov	rcx, rax
-	jne	.label_699
-	nop	word ptr cs:[rax + rax]
-.label_703:
+	jne	.label_566
+	nop	
+.label_621:
 	mov	rax, rsi
 	mov	rsi, rdx
 	mov	rcx, qword ptr [rsi + 0x10]
 	cmp	rcx, rax
-	je	.label_629
+	je	.label_620
 	test	rcx, rcx
-	jne	.label_699
-.label_629:
+	jne	.label_566
+.label_620:
 	mov	rdx, qword ptr [rsi]
 	test	rdx, rdx
-	jne	.label_703
-	jmp	.label_705
-.label_699:
+	jne	.label_621
+	jmp	.label_623
+.label_566:
 	movzx	eax, byte ptr [rcx + 0x30]
 	cmp	eax, 0x10
-	je	.label_706
+	je	.label_624
 	cmp	eax, 0xb
-	jne	.label_685
+	jne	.label_627
 	mov	rax, qword ptr [rcx + 8]
 	mov	qword ptr [rax + 0x20], rcx
 	mov	rdx, rcx
-	jmp	.label_540
-.label_685:
+	jmp	.label_587
+.label_627:
 	mov	rax, qword ptr [rcx + 8]
 	test	rax, rax
-	je	.label_708
+	je	.label_630
 	mov	rdx, qword ptr [rcx + 0x20]
 	mov	qword ptr [rax + 0x20], rdx
-.label_708:
+.label_630:
 	mov	rsi, qword ptr [rcx + 0x10]
 	test	rsi, rsi
 	mov	rdx, rcx
-	je	.label_540
+	je	.label_587
 	mov	rdx, qword ptr [rcx + 0x20]
 	mov	qword ptr [rsi + 0x20], rdx
 	mov	rdx, rcx
-	jmp	.label_540
-.label_705:
+	jmp	.label_587
+.label_623:
 	mov	rdi, r15
 	mov	rsi, rbx
 	call	link_nfa_nodes
 	test	eax, eax
-	jne	.label_544
-.label_560:
+	jne	.label_551
+.label_647:
 	mov	rbp, qword ptr [rbx + 8]
 	test	rbp, rbp
 	mov	eax, 0
-	jne	.label_547
+	jne	.label_639
 	nop	word ptr cs:[rax + rax]
-.label_623:
+.label_644:
 	mov	rcx, rax
 	mov	rax, rbx
 	mov	rbp, qword ptr [rax + 0x10]
 	cmp	rbp, rcx
-	je	.label_555
+	je	.label_643
 	test	rbp, rbp
-	jne	.label_547
-.label_555:
+	jne	.label_639
+.label_643:
 	mov	rbx, qword ptr [rax]
 	test	rbx, rbx
-	jne	.label_623
-	jmp	.label_630
-.label_547:
+	jne	.label_644
+	jmp	.label_646
+.label_639:
 	mov	rdi, r15
 	mov	rsi, rbp
 	call	link_nfa_nodes
 	test	eax, eax
 	mov	rbx, rbp
-	je	.label_560
-	jmp	.label_544
-.label_630:
+	je	.label_647
+	jmp	.label_551
+.label_646:
 	xor	eax, eax
 	lea	r14, [rsp + 0xd0]
 	xor	r13d, r13d
-	jmp	.label_565
+	jmp	.label_650
 	nop	word ptr cs:[rax + rax]
-.label_574:
+.label_530:
 	inc	rbp
 	mov	rax, rbp
-.label_565:
+.label_650:
 	cmp	rax, qword ptr [r15 + 0x10]
-	jne	.label_696
+	jne	.label_657
 	xor	ebp, ebp
 	test	r13b, 1
 	mov	r13d, 0
-	jne	.label_571
-	jmp	.label_572
-.label_696:
+	jne	.label_660
+	jmp	.label_664
+.label_657:
 	mov	rbp, rax
-.label_571:
+.label_660:
 	mov	rax, qword ptr [r15 + 0x30]
 	lea	rbx, [rbp + rbp*2]
 	cmp	qword ptr [rax + rbx*8 + 8], 0
-	jne	.label_574
+	jne	.label_530
 	mov	ecx, 1
 	mov	rdi, r14
 	mov	rsi, r15
 	mov	rdx, rbp
 	call	calc_eclosure_iter
 	test	eax, eax
-	jne	.label_544
+	jne	.label_551
 	mov	rax, qword ptr [r15 + 0x30]
 	cmp	qword ptr [rax + rbx*8 + 8], 0
-	jne	.label_574
+	jne	.label_530
 	mov	rdi, qword ptr [rsp + 0xe0]
 	call	free
 	mov	r13b, 1
-	jmp	.label_574
-.label_544:
+	jmp	.label_530
+.label_551:
 	mov	dword ptr [rsp + 0xcc], eax
-.label_552:
+.label_519:
 	mov	r15, qword ptr [rsp + 0x28]
-.label_707:
+.label_605:
 	mov	rbx, qword ptr [r15]
 	mov	rdi, qword ptr [rbx + 0x70]
 	test	rdi, rdi
-	je	.label_585
-.label_650:
+	je	.label_520
+.label_523:
 	mov	rbp, qword ptr [rdi]
 	call	free
 	test	rbp, rbp
 	mov	rdi, rbp
-	jne	.label_650
-.label_585:
+	jne	.label_523
+.label_520:
 	mov	qword ptr [rbx + 0x70], 0
 	mov	dword ptr [rbx + 0x80], 0xf
 	mov	qword ptr [rbx + 0x68], 0
@@ -7893,17 +7430,17 @@ re_compile_internal:
 	mov	rdi, qword ptr [rsp + 0x48]
 	call	free
 	cmp	byte ptr [rsp + 0xbb], 0
-	je	.label_595
+	je	.label_533
 	mov	rdi, qword ptr [rsp + 0x38]
 	call	free
-.label_595:
+.label_533:
 	mov	rdi, r12
 	call	free_dfa_content
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [r15], xmm0
-.label_691:
+.label_616:
 	mov	eax, dword ptr [rsp + 0xcc]
-.label_549:
+.label_524:
 	add	rsp, 0xf8
 	pop	rbx
 	pop	r12
@@ -7912,27 +7449,27 @@ re_compile_internal:
 	pop	r15
 	pop	rbp
 	ret	
-.label_572:
+.label_664:
 	mov	rcx, qword ptr [rsp + 0x28]
 	test	byte ptr [rcx + 0x38], 0x10
-	jne	.label_609
+	jne	.label_541
 	mov	rcx, qword ptr [rsp + 0x28]
 	cmp	qword ptr [rcx + 0x30], 0
-	je	.label_609
+	je	.label_541
 	test	byte ptr [r15 + 0xb0], 1
-	jne	.label_614
-.label_609:
+	jne	.label_545
+.label_541:
 	cmp	qword ptr [r15 + 0x98], 0
-	je	.label_592
-.label_614:
+	je	.label_547
+.label_545:
 	shl	rax, 3
 	lea	rdi, [rax + rax*2]
 	call	malloc
 	mov	qword ptr [r15 + 0x38], rax
 	test	rax, rax
-	je	.label_620
+	je	.label_552
 	cmp	qword ptr [r15 + 0x10], 0
-	je	.label_592
+	je	.label_547
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [rax], xmm0
 	mov	qword ptr [rax + 0x10], 0
@@ -7940,8 +7477,8 @@ re_compile_internal:
 	mov	ecx, 1
 	mov	edx, 0x18
 	cmp	rax, 1
-	jbe	.label_622
-.label_627:
+	jbe	.label_558
+.label_565:
 	mov	rax, qword ptr [r15 + 0x38]
 	movdqu	xmmword ptr [rax + rdx], xmm0
 	mov	qword ptr [rax + rdx + 0x10], 0
@@ -7949,22 +7486,22 @@ re_compile_internal:
 	mov	rax, qword ptr [r15 + 0x10]
 	add	rdx, 0x18
 	cmp	rcx, rax
-	jb	.label_627
-.label_622:
+	jb	.label_565
+.label_558:
 	test	rax, rax
-	je	.label_592
+	je	.label_547
 	mov	r8, qword ptr [r15 + 0x30]
 	xor	r10d, r10d
-.label_669:
+.label_595:
 	mov	qword ptr [rsp + 0x18], r10
 	lea	r9, [r10 + r10*2]
 	mov	qword ptr [rsp + 0x20], r9
 	cmp	qword ptr [r8 + r9*8 + 8], 0
-	jle	.label_612
+	jle	.label_574
 	mov	rdi, qword ptr [r8 + r9*8 + 0x10]
 	mov	qword ptr [rsp + 8], rdi
 	xor	ebx, ebx
-.label_660:
+.label_668:
 	mov	r13, qword ptr [r15 + 0x38]
 	mov	rax, qword ptr [rdi + rbx*8]
 	lea	rbp, [rax + rax*2]
@@ -7972,7 +7509,7 @@ re_compile_internal:
 	lea	r14, [r13 + rbp*8 + 8]
 	mov	rdx, qword ptr [r13 + rbp*8 + 8]
 	cmp	rax, rdx
-	jne	.label_642
+	jne	.label_581
 	lea	rcx, [r13 + rbp*8]
 	lea	rdx, [rax + rax + 2]
 	lea	rax, [rax + rax]
@@ -7981,7 +7518,7 @@ re_compile_internal:
 	lea	rsi, [rax*8 + 0x10]
 	call	realloc
 	test	rax, rax
-	je	.label_648
+	je	.label_610
 	lea	rcx, [r13 + rbp*8 + 0x10]
 	mov	qword ptr [rcx], rax
 	mov	rdx, qword ptr [r14]
@@ -7989,120 +7526,128 @@ re_compile_internal:
 	mov	r10, qword ptr [rsp + 0x18]
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rdi, qword ptr [rsp + 8]
-	jmp	.label_654
-.label_642:
+	jmp	.label_634
+.label_581:
 	mov	rax, qword ptr [r13 + rbp*8 + 0x10]
-.label_654:
+.label_634:
 	lea	rsi, [rdx + 1]
 	mov	qword ptr [r14], rsi
 	mov	qword ptr [rax + rdx*8], r10
 	inc	rbx
 	cmp	rbx, qword ptr [r8 + r9*8 + 8]
-	jl	.label_660
+	jl	.label_668
 	mov	rax, qword ptr [r15 + 0x10]
-.label_612:
+.label_574:
 	inc	r10
 	cmp	r10, rax
-	jb	.label_669
-.label_592:
+	jb	.label_595
+.label_547:
 	mov	dword ptr [rsp + 0xcc], 0
 	cmp	qword ptr [rsp + 0x10], 0
-	jne	.label_664
+	jne	.label_597
 	mov	al, byte ptr [r12 + 0xb0]
 	mov	cl, al
 	and	cl, 4
-	je	.label_664
+	je	.label_597
 	mov	rcx, qword ptr [rsp + 0x28]
 	cmp	qword ptr [rcx + 0x28], 0
-	jne	.label_664
+	jne	.label_597
 	mov	rdx, qword ptr [r12 + 0x10]
 	test	rdx, rdx
-	je	.label_680
+	je	.label_604
 	mov	rbx, qword ptr [r12]
 	xor	r9d, r9d
 	movabs	r8, 0x1000000010001
 	mov	rcx, rbx
 	xor	r10d, r10d
 	xor	ebp, ebp
-.label_704:
+.label_622:
 	movzx	esi, byte ptr [rcx + 8]
 	dec	esi
 	cmp	esi, 0xb
-	ja	.label_690
-	jmp	qword ptr [word ptr [+ (rsi * 8) + label_692]]
-.label_2638:
-	mov	sil, 1
+	ja	.label_612
+	jmp	qword ptr [word ptr [+ (rsi * 8) + label_614]]
+.label_2481:
 	cmp	byte ptr [rcx], 0
-	js	.label_694
+	mov	sil, 1
+	js	.label_615
 	mov	sil, r10b
-.label_694:
+.label_615:
 	mov	r10b, sil
-	jmp	.label_637
-.label_2639:
+	jmp	.label_539
+.label_2482:
 	mov	rsi, qword ptr [rcx]
 	cmp	qword ptr [rsi + 0x10], 0
-	jne	.label_664
+	jne	.label_597
 	cmp	qword ptr [rsi + 0x18], 0
-	je	.label_637
-	jmp	.label_664
-.label_2640:
+	je	.label_539
+	jmp	.label_597
+.label_2483:
 	mov	r9b, 1
-	jmp	.label_637
-.label_2641:
+	jmp	.label_539
+.label_2484:
 	mov	esi, dword ptr [rcx]
 	lea	edi, [rsi - 0x10]
 	cmp	edi, 0x30
-	ja	.label_701
+	ja	.label_618
 	bt	r8, rdi
-	jb	.label_637
-.label_701:
+	jb	.label_539
+.label_618:
 	cmp	esi, 0x80
-	jne	.label_664
-.label_637:
+	jne	.label_597
+.label_539:
 	inc	rbp
 	add	rcx, 0x10
 	cmp	rbp, rdx
-	jb	.label_704
+	jb	.label_622
 	mov	cl, r9b
 	and	cl, 1
 	or	r10b, r9b
 	xor	edx, edx
 	mov	esi, 8
 	test	r10b, 1
-	je	.label_548
-	jmp	.label_709
-.label_575:
+	je	.label_626
+	jmp	.label_631
+.label_599:
+	mov	eax, 0xc
+	mov	dword ptr [rsp + 0xcc], eax
+	jmp	.label_519
+.label_601:
+	mov	eax, 0xc
+	mov	dword ptr [rsp + 0xcc], eax
+	jmp	.label_519
+.label_573:
 	add	rsi, 0x10
 	mov	rbx, qword ptr [r12]
-.label_709:
+.label_631:
 	mov	eax, dword ptr [rbx + rsi]
 	movzx	edi, al
 	cmp	edi, 5
-	je	.label_710
+	je	.label_640
 	cmp	edi, 1
-	jne	.label_539
+	jne	.label_637
 	cmp	byte ptr [rbx + rsi - 8], 0
-	jns	.label_539
+	jns	.label_637
 	and	eax, 0xffdfffff
-	jmp	.label_541
-.label_710:
+	jmp	.label_667
+.label_640:
 	and	eax, 0xffffff00
 	or	eax, 7
-.label_541:
+.label_667:
 	mov	dword ptr [rbx + rsi], eax
-.label_539:
+.label_637:
 	inc	rdx
 	cmp	rdx, qword ptr [r12 + 0x10]
-	jb	.label_575
+	jb	.label_573
 	mov	al, byte ptr [r12 + 0xb0]
-	jmp	.label_548
-.label_648:
+	jmp	.label_626
+.label_610:
 	mov	eax, 0xc
 	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_680:
+	jmp	.label_519
+.label_604:
 	xor	ecx, ecx
-.label_548:
+.label_626:
 	mov	dword ptr [r12 + 0xb4], 1
 	cmp	qword ptr [r12 + 0x98], 0
 	setg	dl
@@ -8111,7 +7656,7 @@ re_compile_internal:
 	and	al, 0xf9
 	or	al, dl
 	mov	byte ptr [r12 + 0xb0], al
-.label_664:
+.label_597:
 	mov	rax, qword ptr [r12 + 0x68]
 	mov	rax, qword ptr [rax + 0x18]
 	mov	rax, qword ptr [rax + 0x38]
@@ -8122,14 +7667,14 @@ re_compile_internal:
 	mov	qword ptr [rsp + 0xd8], r15
 	mov	r14, qword ptr [rbx + r13*8 + 8]
 	test	r14, r14
-	jle	.label_562
+	jle	.label_638
 	mov	qword ptr [rsp + 0xd0], r15
 	lea	rdi, [r15*8]
 	call	malloc
 	mov	rbp, rax
 	mov	qword ptr [rsp + 0xe0], rbp
 	test	rbp, rbp
-	je	.label_576
+	je	.label_670
 	mov	rsi, qword ptr [rbx + r13*8 + 0x10]
 	shl	r14, 3
 	mov	rdi, rbp
@@ -8137,55 +7682,55 @@ re_compile_internal:
 	call	memcpy
 	mov	dword ptr [rsp + 0xf4], 0
 	test	r15, r15
-	jle	.label_582
+	jle	.label_521
 	mov	rax, qword ptr [r12 + 0x98]
 	test	rax, rax
-	jle	.label_582
+	jle	.label_521
 	xor	eax, eax
 	lea	r14, [rsp + 0xd0]
-	jmp	.label_631
-.label_689:
+	jmp	.label_526
+.label_563:
 	mov	rbp, qword ptr [rsp + 0xe0]
-.label_631:
+.label_526:
 	mov	r8, qword ptr [rbp + rax*8]
 	mov	rdx, qword ptr [r12]
 	mov	rsi, r8
 	shl	rsi, 4
 	movzx	ecx, byte ptr [rdx + rsi + 8]
 	cmp	ecx, 4
-	jne	.label_608
+	jne	.label_528
 	test	r15, r15
 	mov	edi, 0
-	jle	.label_591
+	jle	.label_532
 	add	rsi, rdx
 	xor	edi, edi
-.label_597:
+.label_538:
 	mov	rcx, qword ptr [rbp + rdi*8]
 	shl	rcx, 4
 	movzx	ebx, byte ptr [rdx + rcx + 8]
 	cmp	ebx, 9
-	jne	.label_644
+	jne	.label_536
 	mov	rcx, qword ptr [rdx + rcx]
 	cmp	rcx, qword ptr [rsi]
-	je	.label_591
-.label_644:
+	je	.label_532
+.label_536:
 	inc	rdi
 	cmp	rdi, r15
-	jl	.label_597
-.label_591:
+	jl	.label_538
+.label_532:
 	cmp	rdi, r15
-	je	.label_608
+	je	.label_528
 	mov	rcx, qword ptr [r12 + 0x28]
 	lea	rdx, [r8 + r8*2]
 	mov	rcx, qword ptr [rcx + rdx*8 + 0x10]
 	mov	rcx, qword ptr [rcx]
 	test	r15, r15
-	jle	.label_601
+	jle	.label_540
 	mov	rsi, r15
 	dec	rsi
 	mov	edx, 0
-	je	.label_588
-.label_607:
+	je	.label_543
+.label_546:
 	lea	rdi, [rdx + rsi]
 	shr	rdi, 1
 	cmp	qword ptr [rbp + rdi*8], rcx
@@ -8193,33 +7738,33 @@ re_compile_internal:
 	cmovl	rdx, rbx
 	cmovge	rsi, rdi
 	cmp	rdx, rsi
-	jb	.label_607
-.label_588:
+	jb	.label_546
+.label_543:
 	cmp	rdx, -1
-	je	.label_601
+	je	.label_540
 	cmp	qword ptr [rbp + rdx*8], rcx
-	je	.label_608
-.label_601:
+	je	.label_528
+.label_540:
 	mov	rax, qword ptr [r12 + 0x30]
 	lea	rcx, [rcx + rcx*2]
 	lea	rsi, [rax + rcx*8]
 	mov	rdi, r14
 	call	re_node_set_merge
 	test	eax, eax
-	jne	.label_619
+	jne	.label_559
 	mov	r15, qword ptr [rsp + 0xd8]
 	xor	eax, eax
-.label_608:
+.label_528:
 	inc	rax
 	cmp	rax, r15
-	jl	.label_689
-	jmp	.label_582
-.label_562:
+	jl	.label_563
+	jmp	.label_521
+.label_638:
 	pxor	xmm0, xmm0
 	movdqa	xmmword ptr [rsp + 0xd0], xmm0
 	mov	qword ptr [rsp + 0xe0], 0
 	mov	dword ptr [rsp + 0xf4], 0
-.label_582:
+.label_521:
 	lea	rdi, [rsp + 0xf4]
 	lea	rdx, [rsp + 0xd0]
 	xor	ecx, ecx
@@ -8227,14 +7772,14 @@ re_compile_internal:
 	call	re_acquire_state_context
 	mov	qword ptr [r12 + 0x48], rax
 	test	rax, rax
-	je	.label_632
+	je	.label_577
 	cmp	byte ptr [rax + 0x68], 0
-	js	.label_603
+	js	.label_578
 	mov	qword ptr [r12 + 0x60], rax
 	mov	qword ptr [r12 + 0x58], rax
 	mov	qword ptr [r12 + 0x50], rax
-	jmp	.label_635
-.label_603:
+	jmp	.label_579
+.label_578:
 	lea	rbx, [rsp + 0xf4]
 	lea	rbp, [rsp + 0xd0]
 	mov	ecx, 1
@@ -8256,30 +7801,30 @@ re_compile_internal:
 	call	re_acquire_state_context
 	mov	qword ptr [r12 + 0x60], rax
 	cmp	qword ptr [r12 + 0x50], 0
-	je	.label_652
+	je	.label_588
 	test	rax, rax
-	je	.label_652
+	je	.label_588
 	mov	rax, qword ptr [r12 + 0x58]
 	test	rax, rax
-	je	.label_652
-.label_635:
+	je	.label_588
+.label_579:
 	mov	rdi, qword ptr [rsp + 0xe0]
 	call	free
 	xor	eax, eax
-.label_619:
+.label_559:
 	mov	dword ptr [rsp + 0xcc], eax
 	mov	r14, qword ptr [rsp + 0x28]
 	mov	rbx, qword ptr [r14]
 	mov	rdi, qword ptr [rbx + 0x70]
 	test	rdi, rdi
-	je	.label_662
-.label_624:
+	je	.label_544
+.label_602:
 	mov	rbp, qword ptr [rdi]
 	call	free
 	test	rbp, rbp
 	mov	rdi, rbp
-	jne	.label_624
-.label_662:
+	jne	.label_602
+.label_544:
 	mov	qword ptr [rbx + 0x70], 0
 	mov	dword ptr [rbx + 0x80], 0xf
 	mov	qword ptr [rbx + 0x68], 0
@@ -8291,40 +7836,40 @@ re_compile_internal:
 	mov	rdi, qword ptr [rsp + 0x48]
 	call	free
 	cmp	byte ptr [rsp + 0xbb], 0
-	je	.label_682
+	je	.label_613
 	mov	rdi, qword ptr [rsp + 0x38]
 	call	free
-.label_682:
+.label_613:
 	xor	eax, eax
 	cmp	dword ptr [rsp + 0xcc], 0
-	je	.label_549
+	je	.label_524
 	mov	rdi, r12
 	call	free_dfa_content
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [r14], xmm0
-	jmp	.label_691
-.label_652:
+	jmp	.label_616
+.label_588:
 	mov	eax, dword ptr [rsp + 0xf4]
-	jmp	.label_619
-.label_620:
+	jmp	.label_559
+.label_552:
 	mov	eax, 0xc
 	mov	dword ptr [rsp + 0xcc], eax
-	jmp	.label_552
-.label_632:
+	jmp	.label_519
+.label_577:
 	mov	eax, dword ptr [rsp + 0xf4]
-	jmp	.label_619
-.label_576:
+	jmp	.label_559
+.label_670:
 	pxor	xmm0, xmm0
 	movdqa	xmmword ptr [rsp + 0xd0], xmm0
 	mov	dword ptr [rsp + 0xf4], 0xc
 	mov	eax, 0xc
-	jmp	.label_619
-.label_690:
+	jmp	.label_559
+.label_612:
 	call	abort
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x408be0
+	#Procedure 0x408720
 	.globl rpl_re_set_syntax
 	.type rpl_re_set_syntax, @function
 rpl_re_set_syntax:
@@ -8335,11 +7880,11 @@ rpl_re_set_syntax:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x408bf0
+	#Procedure 0x408730
+
 	.globl rpl_re_compile_fastmap
 	.type rpl_re_compile_fastmap, @function
 rpl_re_compile_fastmap:
-
 	push	r15
 	push	r14
 	push	rbx
@@ -8369,27 +7914,27 @@ rpl_re_compile_fastmap:
 	mov	rax, qword ptr [r15 + 0x48]
 	mov	rsi, qword ptr [r15 + 0x50]
 	cmp	rax, rsi
-	je	.label_712
+	je	.label_672
 	mov	rdi, r14
 	mov	rdx, rbx
 	call	re_compile_fastmap_iter
 	mov	rax, qword ptr [r15 + 0x48]
-.label_712:
+.label_672:
 	mov	rsi, qword ptr [r15 + 0x58]
 	cmp	rax, rsi
-	je	.label_711
+	je	.label_671
 	mov	rdi, r14
 	mov	rdx, rbx
 	call	re_compile_fastmap_iter
 	mov	rax, qword ptr [r15 + 0x48]
-.label_711:
+.label_671:
 	mov	rsi, qword ptr [r15 + 0x60]
 	cmp	rax, rsi
-	je	.label_713
+	je	.label_673
 	mov	rdi, r14
 	mov	rdx, rbx
 	call	re_compile_fastmap_iter
-.label_713:
+.label_673:
 	or	byte ptr [r14 + 0x38], 8
 	xor	eax, eax
 	pop	rbx
@@ -8399,7 +7944,7 @@ rpl_re_compile_fastmap:
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x408cc0
+	#Procedure 0x408800
 
 	.globl re_compile_fastmap_iter
 	.type re_compile_fastmap_iter, @function
@@ -8414,26 +7959,24 @@ re_compile_fastmap_iter:
 	mov	r15, rdx
 	mov	qword ptr [rsp + 0x18], rsi
 	mov	r13, rdi
-	mov	qword ptr [rsp + 8], r13
+	mov	qword ptr [rsp + 0x10], r13
 	mov	rax, qword ptr [r13]
 	cmp	dword ptr [rax + 0xb4], 1
-	jne	.label_764
+	jne	.label_674
 	mov	qword ptr [rsp + 0x28], rax
-	mov	al, byte ptr [r13 + 0x1a]
-	and	al, 0x40
-	shr	al, 6
-	mov	dword ptr [rsp + 0x14], eax
-	jmp	.label_765
-.label_764:
+	mov	r14b, byte ptr [r13 + 0x1a]
+	and	r14b, 0x40
+	shr	r14b, 6
+	jmp	.label_685
+.label_674:
 	mov	qword ptr [rsp + 0x28], rax
-	mov	dword ptr [rsp + 0x14], 0
-.label_765:
+	xor	r14d, r14d
+.label_685:
 	cmp	qword ptr [rsi + 0x10], 0
-	jle	.label_715
+	jle	.label_688
 	xor	edx, edx
-	lea	r14, [rsp + 0x30]
 	nop	word ptr cs:[rax + rax]
-.label_746:
+.label_684:
 	mov	rax, qword ptr [rsi + 0x18]
 	mov	rbp, qword ptr [rax + rdx*8]
 	mov	rax, qword ptr [rsp + 0x28]
@@ -8443,250 +7986,178 @@ re_compile_fastmap_iter:
 	lea	rcx, [rax + r12]
 	movzx	ebx, byte ptr [rax + r12 + 8]
 	cmp	ebx, 1
-	je	.label_742
+	je	.label_691
 	mov	qword ptr [rsp + 0x20], rdx
 	cmp	ebx, 6
-	je	.label_735
+	je	.label_696
 	cmp	ebx, 3
-	jne	.label_738
+	jne	.label_699
 	mov	rax, qword ptr [rax + r12]
 	mov	rbp, qword ptr [rax]
-	mov	eax, dword ptr [rsp + 0x14]
-	test	al, al
-	mov	ebx, 0
-	mov	eax, 0
-	je	.label_725
-	nop	
-.label_759:
+	xor	ebx, ebx
+	nop	word ptr [rax + rax]
+.label_708:
 	bt	rbp, rbx
-	jae	.label_749
+	jae	.label_701
 	mov	byte ptr [r15 + rbx], 1
+	test	r14b, r14b
+	je	.label_701
 	lea	eax, [rbx + 0x80]
 	cmp	eax, 0x180
-	jae	.label_751
+	jae	.label_707
 	call	__ctype_tolower_loc
 	mov	rax, qword ptr [rax]
 	mov	eax, dword ptr [rax + rbx*4]
-	jmp	.label_758
-	nop	word ptr cs:[rax + rax]
-.label_751:
+	jmp	.label_710
+.label_707:
 	mov	eax, ebx
-.label_758:
+.label_710:
 	cdqe	
 	mov	byte ptr [r15 + rax], 1
-.label_749:
+.label_701:
 	inc	rbx
 	cmp	rbx, 0x40
-	jne	.label_759
+	jne	.label_708
 	mov	rax, qword ptr [rsp + 0x28]
 	mov	rax, qword ptr [rax]
 	mov	rax, qword ptr [rax + r12]
-	mov	rbx, qword ptr [rax + 8]
-	xor	ebp, ebp
+	mov	rbp, qword ptr [rax + 8]
+	xor	ebx, ebx
+	nop	
+.label_687:
+	bt	rbp, rbx
+	jae	.label_675
+	mov	byte ptr [r15 + rbx + 0x40], 1
+	test	r14b, r14b
+	je	.label_675
+	lea	eax, [rbx + 0xc0]
+	cmp	eax, 0x180
+	jae	.label_678
+	call	__ctype_tolower_loc
+	mov	rax, qword ptr [rax]
+	mov	eax, dword ptr [rax + rbx*4 + 0x100]
+	jmp	.label_681
+.label_678:
+	lea	rax, [rbx + 0x40]
+.label_681:
+	cdqe	
+	mov	byte ptr [r15 + rax], 1
+.label_675:
+	inc	rbx
+	cmp	rbx, 0x40
+	jne	.label_687
+	mov	rax, qword ptr [rsp + 0x28]
+	mov	rax, qword ptr [rax]
+	mov	rax, qword ptr [rax + r12]
+	mov	rbp, qword ptr [rax + 0x10]
+	xor	ebx, ebx
 	nop	word ptr cs:[rax + rax]
-.label_728:
-	bt	rbx, rbp
-	jae	.label_753
-	mov	byte ptr [r15 + rbp + 0x40], 1
-	lea	eax, [rbp + 0xc0]
+.label_700:
+	bt	rbp, rbx
+	jae	.label_692
+	mov	byte ptr [r15 + rbx + 0x80], 1
+	test	r14b, r14b
+	je	.label_692
+	lea	eax, [rbx + 0x100]
 	cmp	eax, 0x180
-	jae	.label_766
+	jae	.label_693
 	call	__ctype_tolower_loc
 	mov	rax, qword ptr [rax]
-	mov	eax, dword ptr [rax + rbp*4 + 0x100]
-	jmp	.label_719
-	nop	word ptr [rax + rax]
-.label_766:
-	lea	rax, [rbp + 0x40]
-.label_719:
+	mov	eax, dword ptr [rax + rbx*4 + 0x200]
+	jmp	.label_706
+.label_693:
+	lea	rax, [rbx + 0x80]
+.label_706:
 	cdqe	
 	mov	byte ptr [r15 + rax], 1
-.label_753:
-	inc	rbp
-	cmp	rbp, 0x40
-	jne	.label_728
+.label_692:
+	inc	rbx
+	cmp	rbx, 0x40
+	jne	.label_700
 	mov	rax, qword ptr [rsp + 0x28]
 	mov	rax, qword ptr [rax]
 	mov	rax, qword ptr [rax + r12]
-	mov	rbx, qword ptr [rax + 0x10]
-	xor	ebp, ebp
-	nop	word ptr cs:[rax + rax]
-.label_726:
-	bt	rbx, rbp
-	jae	.label_733
-	mov	byte ptr [r15 + rbp + 0x80], 1
-	lea	eax, [rbp + 0x100]
+	mov	rbp, qword ptr [rax + 0x18]
+	xor	ebx, ebx
+	nop	dword ptr [rax + rax]
+.label_690:
+	bt	rbp, rbx
+	jae	.label_705
+	mov	byte ptr [r15 + rbx + 0xc0], 1
+	test	r14b, r14b
+	je	.label_705
+	lea	eax, [rbx + 0x140]
 	cmp	eax, 0x180
-	jae	.label_734
+	jae	.label_711
 	call	__ctype_tolower_loc
 	mov	rax, qword ptr [rax]
-	mov	eax, dword ptr [rax + rbp*4 + 0x200]
-	jmp	.label_757
-	nop	dword ptr [rax]
-.label_734:
-	lea	rax, [rbp + 0x80]
-.label_757:
+	mov	eax, dword ptr [rax + rbx*4 + 0x300]
+	jmp	.label_709
+.label_711:
+	lea	rax, [rbx + 0xc0]
+.label_709:
 	cdqe	
 	mov	byte ptr [r15 + rax], 1
-.label_733:
-	inc	rbp
-	cmp	rbp, 0x40
-	jne	.label_726
-	mov	rax, qword ptr [rsp + 0x28]
-	mov	rax, qword ptr [rax]
-	mov	rax, qword ptr [rax + r12]
-	mov	rbx, qword ptr [rax + 0x18]
-	xor	ebp, ebp
-	nop	dword ptr [rax]
-.label_743:
-	bt	rbx, rbp
-	jae	.label_754
-	mov	byte ptr [r15 + rbp + 0xc0], 1
-	lea	eax, [rbp + 0x140]
-	cmp	eax, 0x180
-	jae	.label_756
-	call	__ctype_tolower_loc
-	mov	rax, qword ptr [rax]
-	mov	eax, dword ptr [rax + rbp*4 + 0x300]
-	jmp	.label_760
-	nop	dword ptr [rax]
-.label_756:
-	lea	rax, [rbp + 0xc0]
-.label_760:
-	cdqe	
-	mov	byte ptr [r15 + rax], 1
-.label_754:
-	inc	rbp
-	cmp	rbp, 0x40
-	jne	.label_743
-	jmp	.label_752
-	nop	dword ptr [rax]
-.label_725:
-	bt	rbp, rax
-	jae	.label_744
-	mov	byte ptr [r15 + rax], 1
-.label_744:
-	lea	rcx, [rax + 1]
-	bt	rbp, rcx
-	jae	.label_718
-	mov	byte ptr [r15 + rax + 1], 1
-.label_718:
-	inc	rcx
-	cmp	rcx, 0x40
-	mov	rax, rcx
-	jne	.label_725
-	mov	rax, qword ptr [rsp + 0x28]
-	mov	rax, qword ptr [rax]
-	mov	rax, qword ptr [rax + r12]
-	mov	rax, qword ptr [rax + 8]
-	xor	ecx, ecx
-	nop	dword ptr [rax]
-.label_736:
-	bt	rax, rcx
-	jae	.label_714
-	mov	byte ptr [r15 + rcx + 0x40], 1
-.label_714:
-	lea	edx, [rcx + 1]
-	bt	rax, rdx
-	jae	.label_732
-	mov	byte ptr [r15 + rcx + 0x41], 1
-.label_732:
-	add	rcx, 2
-	cmp	rcx, 0x40
-	jne	.label_736
-	mov	rax, qword ptr [rsp + 0x28]
-	mov	rax, qword ptr [rax]
-	mov	rax, qword ptr [rax + r12]
-	mov	rax, qword ptr [rax + 0x10]
-	xor	ecx, ecx
-	nop	word ptr [rax + rax]
-.label_755:
-	bt	rax, rcx
-	jae	.label_747
-	mov	byte ptr [r15 + rcx + 0x80], 1
-.label_747:
-	lea	edx, [rcx + 1]
-	bt	rax, rdx
-	jae	.label_748
-	mov	byte ptr [r15 + rcx + 0x81], 1
-.label_748:
-	add	rcx, 2
-	cmp	rcx, 0x40
-	jne	.label_755
-	mov	rax, qword ptr [rsp + 0x28]
-	mov	rax, qword ptr [rax]
-	mov	rax, qword ptr [rax + r12]
-	mov	rax, qword ptr [rax + 0x18]
-	xor	ecx, ecx
-	nop	dword ptr [rax]
-.label_763:
-	bt	rax, rcx
-	jae	.label_716
-	mov	byte ptr [r15 + rcx + 0xc0], 1
-.label_716:
-	lea	edx, [rcx + 1]
-	bt	rax, rdx
-	jae	.label_762
-	mov	byte ptr [r15 + rcx + 0xc1], 1
-.label_762:
-	add	rcx, 2
-	cmp	rcx, 0x40
-	jne	.label_763
-	jmp	.label_752
-.label_735:
+.label_705:
+	inc	rbx
+	cmp	rbx, 0x40
+	jne	.label_690
+	jmp	.label_676
+	nop	
+.label_696:
 	mov	r12, qword ptr [rcx]
 	mov	rax, qword ptr [rsp + 0x28]
 	cmp	dword ptr [rax + 0xb4], 1
-	jle	.label_723
+	jle	.label_677
 	cmp	qword ptr [r12 + 0x48], 0
-	jne	.label_717
+	jne	.label_682
 	test	byte ptr [r12 + 0x20], 1
-	jne	.label_717
+	jne	.label_682
 	cmp	qword ptr [r12 + 0x40], 0
-	je	.label_723
-.label_717:
+	je	.label_677
+.label_682:
 	mov	byte ptr [rsp + 0x138], 0
+	lea	rbx, [rsp + 0x30]
 	lea	rbp, [rsp + 0x138]
 	nop	word ptr cs:[rax + rax]
-.label_741:
+.label_697:
 	mov	qword ptr [rsp + 0x30], 0
 	xor	edi, edi
 	mov	edx, 1
 	mov	rsi, rbp
-	mov	rcx, r14
+	mov	rcx, rbx
 	call	rpl_mbrtowc
 	movzx	ecx, byte ptr [rsp + 0x138]
 	cmp	rax, -2
-	jne	.label_727
+	jne	.label_694
 	mov	byte ptr [r15 + rcx], 1
-.label_727:
+.label_694:
 	inc	cl
 	mov	byte ptr [rsp + 0x138], cl
-	jne	.label_741
-	jmp	.label_752
+	jne	.label_697
+	jmp	.label_676
 	nop	
-.label_742:
+.label_691:
 	mov	qword ptr [rsp + 0x20], rdx
 	movzx	ebx, byte ptr [rcx]
 	mov	byte ptr [r15 + rbx], 1
-	mov	eax, dword ptr [rsp + 0x14]
-	test	al, al
-	je	.label_745
+	test	r14b, r14b
+	je	.label_704
 	lea	eax, [rbx + 0x80]
 	cmp	eax, 0x17f
-	ja	.label_750
+	ja	.label_702
 	call	__ctype_tolower_loc
 	mov	rax, qword ptr [rax]
 	mov	ebx, dword ptr [rax + rbx*4]
-.label_750:
+.label_702:
 	movsxd	rax, ebx
 	mov	byte ptr [r15 + rax], 1
-.label_745:
+.label_704:
 	test	byte ptr [r13 + 0x1a], 0x40
-	je	.label_752
+	je	.label_676
 	mov	rax, qword ptr [rsp + 0x28]
 	cmp	dword ptr [rax + 0xb4], 2
-	jl	.label_752
+	jl	.label_676
 	mov	rcx, qword ptr [rsp + 0x28]
 	mov	rax, qword ptr [rcx]
 	mov	al, byte ptr [rax + r12]
@@ -8696,152 +8167,115 @@ re_compile_fastmap_iter:
 	cmp	rbp, qword ptr [rdx + 0x10]
 	lea	r13, [rsp + 0x31]
 	mov	esi, 0x2000ff
-	jae	.label_720
+	jae	.label_680
 	add	r12, 0x18
 	lea	r13, [rsp + 0x31]
-	nop	word ptr cs:[rax + rax]
-.label_740:
+	nop	
+.label_686:
 	mov	rax, qword ptr [rdx]
 	mov	ecx, dword ptr [rax + r12]
 	and	ecx, esi
 	cmp	ecx, 0x200001
-	jne	.label_720
+	jne	.label_680
 	mov	al, byte ptr [rax + r12 - 8]
 	mov	byte ptr [r13], al
 	inc	r13
 	inc	rbp
 	add	r12, 0x10
 	cmp	rbp, qword ptr [rdx + 0x10]
-	jb	.label_740
-.label_720:
+	jb	.label_686
+.label_680:
 	mov	qword ptr [rsp + 0x28], rdx
 	mov	qword ptr [rsp + 0x138], 0
-	sub	r13, r14
+	lea	rbp, [rsp + 0x30]
+	sub	r13, rbp
 	lea	rdi, [rsp + 0x144]
-	mov	rsi, r14
+	mov	rsi, rbp
 	mov	rdx, r13
 	lea	rbx, [rsp + 0x138]
 	mov	rcx, rbx
 	call	rpl_mbrtowc
 	cmp	rax, r13
-	jne	.label_739
+	jne	.label_695
 	mov	edi, dword ptr [rsp + 0x144]
 	call	towlower
-	mov	rdi, r14
+	mov	rdi, rbp
 	mov	esi, eax
 	mov	rdx, rbx
 	call	wcrtomb
 	cmp	rax, -1
-	je	.label_739
+	je	.label_695
 	movzx	eax, byte ptr [rsp + 0x30]
 	mov	byte ptr [r15 + rax], 1
-.label_739:
-	mov	r13, qword ptr [rsp + 8]
-	jmp	.label_752
-	nop	word ptr cs:[rax + rax]
-.label_738:
+.label_695:
+	mov	r13, qword ptr [rsp + 0x10]
+	jmp	.label_676
+	nop	dword ptr [rax]
+.label_699:
 	cmp	ebx, 2
-	je	.label_729
+	je	.label_703
 	mov	eax, ebx
 	or	eax, 2
 	cmp	eax, 7
-	jne	.label_752
-	jmp	.label_729
-.label_723:
+	jne	.label_676
+	jmp	.label_703
+.label_677:
 	cmp	qword ptr [r12 + 0x28], 0
-	jle	.label_752
-	mov	eax, dword ptr [rsp + 0x14]
-	test	al, al
-	mov	ebp, 0
-	mov	ebx, 0
-	je	.label_730
-	nop	
-.label_737:
+	jle	.label_676
+	xor	ebp, ebp
+	nop	word ptr [rax + rax]
+.label_698:
 	mov	qword ptr [rsp + 0x138], 0
 	mov	rax, qword ptr [r12]
 	mov	esi, dword ptr [rax + rbp*4]
-	mov	rdi, r14
+	lea	rdi, [rsp + 0x30]
 	lea	rdx, [rsp + 0x138]
 	call	wcrtomb
 	cmp	rax, -1
-	je	.label_721
+	je	.label_679
 	movzx	ebx, byte ptr [rsp + 0x30]
 	mov	byte ptr [r15 + rbx], 1
+	test	r14b, r14b
+	je	.label_679
 	lea	eax, [rbx + 0x80]
 	cmp	eax, 0x17f
-	ja	.label_724
+	ja	.label_683
 	call	__ctype_tolower_loc
 	mov	rax, qword ptr [rax]
 	mov	ebx, dword ptr [rax + rbx*4]
-.label_724:
+.label_683:
 	movsxd	rax, ebx
 	mov	byte ptr [r15 + rax], 1
-.label_721:
+.label_679:
 	test	byte ptr [r13 + 0x1a], 0x40
-	je	.label_731
+	je	.label_689
 	mov	rax, qword ptr [rsp + 0x28]
 	cmp	dword ptr [rax + 0xb4], 2
-	jl	.label_731
+	jl	.label_689
 	mov	rax, qword ptr [r12]
 	mov	edi, dword ptr [rax + rbp*4]
 	call	towlower
-	mov	rdi, r14
+	lea	rdi, [rsp + 0x30]
 	mov	esi, eax
 	lea	rdx, [rsp + 0x138]
 	call	wcrtomb
 	cmp	rax, -1
-	je	.label_731
+	je	.label_689
 	movzx	eax, byte ptr [rsp + 0x30]
 	mov	byte ptr [r15 + rax], 1
-	nop	word ptr cs:[rax + rax]
-.label_731:
+	nop	
+.label_689:
 	inc	rbp
 	cmp	rbp, qword ptr [r12 + 0x28]
-	jl	.label_737
-	jmp	.label_752
-	nop	word ptr cs:[rax + rax]
-.label_730:
-	mov	qword ptr [rsp + 0x138], 0
-	mov	rax, qword ptr [r12]
-	mov	esi, dword ptr [rax + rbx*4]
-	mov	rdi, r14
-	lea	rbp, [rsp + 0x138]
-	mov	rdx, rbp
-	call	wcrtomb
-	cmp	rax, -1
-	je	.label_761
-	movzx	eax, byte ptr [rsp + 0x30]
-	mov	byte ptr [r15 + rax], 1
-.label_761:
-	test	byte ptr [r13 + 0x1a], 0x40
-	je	.label_722
-	mov	rax, qword ptr [rsp + 0x28]
-	cmp	dword ptr [rax + 0xb4], 2
-	jl	.label_722
-	mov	rax, qword ptr [r12]
-	mov	edi, dword ptr [rax + rbx*4]
-	call	towlower
-	mov	rdi, r14
-	mov	esi, eax
-	mov	rdx, rbp
-	call	wcrtomb
-	cmp	rax, -1
-	je	.label_722
-	movzx	eax, byte ptr [rsp + 0x30]
-	mov	byte ptr [r15 + rax], 1
-	nop	word ptr cs:[rax + rax]
-.label_722:
-	inc	rbx
-	cmp	rbx, qword ptr [r12 + 0x28]
-	jl	.label_730
+	jl	.label_698
 	nop	
-.label_752:
+.label_676:
 	mov	rdx, qword ptr [rsp + 0x20]
 	inc	rdx
 	mov	rsi, qword ptr [rsp + 0x18]
 	cmp	rdx, qword ptr [rsi + 0x10]
-	jl	.label_746
-.label_715:
+	jl	.label_684
+.label_688:
 	add	rsp, 0x148
 	pop	rbx
 	pop	r12
@@ -8850,19 +8284,19 @@ re_compile_fastmap_iter:
 	pop	r15
 	pop	rbp
 	ret	
-.label_729:
+.label_703:
 	mov	esi, 1
 	mov	edx, 0x100
 	mov	rdi, r15
 	call	memset
 	cmp	ebx, 2
-	jne	.label_715
+	jne	.label_688
 	or	byte ptr [r13 + 0x38], 1
-	jmp	.label_715
+	jmp	.label_688
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x409390
+	#Procedure 0x408cf0
 	.globl rpl_regcomp
 	.type rpl_regcomp, @function
 rpl_regcomp:
@@ -8870,8 +8304,8 @@ rpl_regcomp:
 	push	rbp
 	push	r15
 	push	r14
-	push	r12
 	push	rbx
+	push	rax
 	mov	ebp, edx
 	mov	r14, rsi
 	mov	r15, rdi
@@ -8883,7 +8317,7 @@ rpl_regcomp:
 	mov	qword ptr [r15 + 0x20], rax
 	mov	ebx, 0xc
 	test	rax, rax
-	je	.label_772
+	je	.label_714
 	test	bpl, 1
 	mov	eax, 0x3b2fc
 	mov	ecx, 0x10102c6
@@ -8893,18 +8327,16 @@ rpl_regcomp:
 	shl	rbx, 0x15
 	or	rbx, rcx
 	test	bpl, 4
-	jne	.label_771
-	lea	r12, [r15 + 0x38]
+	jne	.label_712
 	mov	al, byte ptr [r15 + 0x38]
 	and	al, 0x7f
-	jmp	.label_773
-.label_771:
+	jmp	.label_713
+.label_712:
 	and	ebx, 0x143b2be
 	or	rbx, 0x100
-	lea	r12, [r15 + 0x38]
 	mov	al, byte ptr [r15 + 0x38]
 	or	al, 0x80
-.label_773:
+.label_713:
 	mov	byte ptr [r15 + 0x38], al
 	add	ebp, ebp
 	and	bpl, 0x10
@@ -8923,73 +8355,27 @@ rpl_regcomp:
 	mov	ebx, 8
 	cmovne	ebx, eax
 	test	ebx, ebx
-	jne	.label_768
-	mov	rbx, qword ptr [r15]
-	mov	rbp, qword ptr [r15 + 0x20]
-	xorps	xmm0, xmm0
-	movups	xmmword ptr [rbp + 0xf0], xmm0
-	movups	xmmword ptr [rbp + 0xe0], xmm0
-	movups	xmmword ptr [rbp + 0xd0], xmm0
-	movups	xmmword ptr [rbp + 0xc0], xmm0
-	movups	xmmword ptr [rbp + 0xb0], xmm0
-	movups	xmmword ptr [rbp + 0xa0], xmm0
-	movups	xmmword ptr [rbp + 0x90], xmm0
-	movups	xmmword ptr [rbp + 0x80], xmm0
-	movups	xmmword ptr [rbp + 0x70], xmm0
-	movups	xmmword ptr [rbp + 0x60], xmm0
-	movups	xmmword ptr [rbp + 0x50], xmm0
-	movups	xmmword ptr [rbp + 0x40], xmm0
-	movups	xmmword ptr [rbp + 0x30], xmm0
-	movups	xmmword ptr [rbp + 0x20], xmm0
-	movups	xmmword ptr [rbp + 0x10], xmm0
-	movups	xmmword ptr [rbp], xmm0
-	mov	rsi, qword ptr [rbx + 0x48]
+	jne	.label_715
 	mov	rdi, r15
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-	mov	rax, qword ptr [rbx + 0x48]
-	mov	rsi, qword ptr [rbx + 0x50]
-	cmp	rax, rsi
-	je	.label_770
-	mov	rdi, r15
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-	mov	rax, qword ptr [rbx + 0x48]
-.label_770:
-	mov	rsi, qword ptr [rbx + 0x58]
-	cmp	rax, rsi
-	je	.label_767
-	mov	rdi, r15
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-	mov	rax, qword ptr [rbx + 0x48]
-.label_767:
-	mov	rsi, qword ptr [rbx + 0x60]
-	cmp	rax, rsi
-	je	.label_769
-	mov	rdi, r15
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-.label_769:
-	or	byte ptr [r12], 8
+	call	rpl_re_compile_fastmap
 	xor	ebx, ebx
-.label_772:
+.label_714:
 	mov	eax, ebx
+	add	rsp, 8
 	pop	rbx
-	pop	r12
 	pop	r14
 	pop	r15
 	pop	rbp
 	ret	
-.label_768:
+.label_715:
 	mov	rdi, qword ptr [r15 + 0x20]
 	call	free
 	mov	qword ptr [r15 + 0x20], 0
-	jmp	.label_772
-	nop	word ptr [rax + rax]
+	jmp	.label_714
+	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x409540
+	#Procedure 0x408de0
 	.globl rpl_regerror
 	.type rpl_regerror, @function
 rpl_regerror:
@@ -9002,7 +8388,7 @@ rpl_regerror:
 	mov	r15, rcx
 	mov	r14, rdx
 	cmp	edi, 0x11
-	jae	.label_774
+	jae	.label_716
 	movsxd	rax, edi
 	mov	esi, OFFSET FLAT:__re_error_msgid
 	add	rsi,  qword ptr [word ptr [+ (rax * 8) + __re_error_msgid_idx]]
@@ -9015,15 +8401,15 @@ rpl_regerror:
 	mov	rbx, rax
 	inc	rbx
 	test	r15, r15
-	je	.label_776
+	je	.label_718
 	cmp	rbx, r15
 	mov	rdx, rbx
-	ja	.label_777
-.label_775:
+	ja	.label_719
+.label_717:
 	mov	rdi, r14
 	mov	rsi, r12
 	call	memcpy
-.label_776:
+.label_718:
 	mov	rax, rbx
 	add	rsp, 8
 	pop	rbx
@@ -9031,17 +8417,17 @@ rpl_regerror:
 	pop	r14
 	pop	r15
 	ret	
-.label_777:
+.label_719:
 	mov	byte ptr [r14 + r15 - 1], 0
 	dec	r15
 	mov	rdx, r15
-	jmp	.label_775
-.label_774:
+	jmp	.label_717
+.label_716:
 	call	abort
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4095c0
+	#Procedure 0x408e60
 
 	.globl rpl_regfree
 	.type rpl_regfree, @function
@@ -9050,9 +8436,9 @@ rpl_regfree:
 	mov	rbx, rdi
 	mov	rdi, qword ptr [rbx]
 	test	rdi, rdi
-	je	.label_778
+	je	.label_720
 	call	free_dfa_content
-.label_778:
+.label_720:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rbx], xmm0
 	mov	rdi, qword ptr [rbx + 0x20]
@@ -9066,7 +8452,7 @@ rpl_regfree:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x409600
+	#Procedure 0x408ea0
 
 	.globl free_dfa_content
 	.type free_dfa_content, @function
@@ -9081,24 +8467,24 @@ free_dfa_content:
 	mov	r14, rdi
 	mov	rax, qword ptr [r14]
 	test	rax, rax
-	je	.label_779
+	je	.label_728
 	xor	ebx, ebx
 	mov	r12d, 8
 	cmp	qword ptr [r14 + 0x10], 0
-	je	.label_779
+	je	.label_728
 	mov	ebp, 0x400ff
-	jmp	.label_783
+	jmp	.label_730
 	nop	dword ptr [rax]
-.label_781:
+.label_738:
 	add	r12, 0x10
 	mov	rax, qword ptr [r14]
-.label_783:
+.label_730:
 	mov	ecx, dword ptr [rax + r12]
 	and	ecx, ebp
 	cmp	ecx, 3
-	je	.label_785
+	je	.label_732
 	cmp	ecx, 6
-	jne	.label_788
+	jne	.label_735
 	mov	r15, qword ptr [rax + r12 - 8]
 	mov	rdi, qword ptr [r15]
 	call	free
@@ -9109,56 +8495,56 @@ free_dfa_content:
 	mov	rdi, qword ptr [r15 + 0x18]
 	call	free
 	mov	rdi, r15
-	jmp	.label_793
+	jmp	.label_723
 	nop	word ptr cs:[rax + rax]
-.label_785:
+.label_732:
 	mov	rdi, qword ptr [rax + r12 - 8]
-.label_793:
+.label_723:
 	call	free
-.label_788:
+.label_735:
 	inc	rbx
 	cmp	rbx, qword ptr [r14 + 0x10]
-	jb	.label_781
-.label_779:
+	jb	.label_738
+.label_728:
 	mov	rdi, qword ptr [r14 + 0x18]
 	call	free
 	cmp	qword ptr [r14 + 0x10], 0
-	je	.label_782
+	je	.label_729
 	lea	r12, [r14 + 0x30]
 	lea	r15, [r14 + 0x38]
 	lea	r13, [r14 + 0x28]
 	xor	ebp, ebp
 	mov	ebx, 0x10
 	nop	word ptr cs:[rax + rax]
-.label_795:
+.label_724:
 	mov	rax, qword ptr [r12]
 	test	rax, rax
-	je	.label_787
+	je	.label_734
 	mov	rdi, qword ptr [rax + rbx]
 	call	free
-.label_787:
+.label_734:
 	mov	rax, qword ptr [r15]
 	test	rax, rax
-	je	.label_790
+	je	.label_737
 	mov	rdi, qword ptr [rax + rbx]
 	call	free
-.label_790:
+.label_737:
 	mov	rax, qword ptr [r13]
 	test	rax, rax
-	je	.label_791
+	je	.label_721
 	mov	rdi, qword ptr [rax + rbx]
 	call	free
-.label_791:
+.label_721:
 	inc	rbp
 	add	rbx, 0x18
 	cmp	rbp, qword ptr [r14 + 0x10]
-	jb	.label_795
-	jmp	.label_780
-.label_782:
+	jb	.label_724
+	jmp	.label_726
+.label_729:
 	lea	r13, [r14 + 0x28]
 	lea	r12, [r14 + 0x30]
 	lea	r15, [r14 + 0x38]
-.label_780:
+.label_726:
 	mov	rdi, qword ptr [r13]
 	call	free
 	mov	rdi, qword ptr [r12]
@@ -9169,41 +8555,41 @@ free_dfa_content:
 	call	free
 	mov	rdi, qword ptr [r14 + 0x40]
 	test	rdi, rdi
-	je	.label_784
+	je	.label_731
 	xor	r15d, r15d
-	jmp	.label_786
-.label_796:
+	jmp	.label_733
+.label_725:
 	mov	rdi, qword ptr [r14 + 0x40]
-.label_786:
+.label_733:
 	lea	rax, [r15 + r15*2]
 	lea	r12, [rdi + rax*8 + 0x10]
 	cmp	qword ptr [rdi + rax*8], 0
-	jle	.label_789
+	jle	.label_736
 	lea	rbx, [rdi + rax*8]
 	xor	ebp, ebp
 	nop	word ptr [rax + rax]
-.label_792:
+.label_722:
 	mov	rax, qword ptr [r12]
 	mov	rdi, qword ptr [rax + rbp*8]
 	call	free_state
 	inc	rbp
 	cmp	rbp, qword ptr [rbx]
-	jl	.label_792
-.label_789:
+	jl	.label_722
+.label_736:
 	mov	rdi, qword ptr [r12]
 	call	free
 	inc	r15
 	cmp	r15, qword ptr [r14 + 0x88]
-	jbe	.label_796
+	jbe	.label_725
 	mov	rdi, qword ptr [r14 + 0x40]
-.label_784:
+.label_731:
 	call	free
 	mov	rdi, qword ptr [r14 + 0x78]
 	mov	eax, OFFSET FLAT:utf8_sb_map
 	cmp	rdi, rax
-	je	.label_794
+	je	.label_727
 	call	free
-.label_794:
+.label_727:
 	mov	rdi, qword ptr [r14 + 0xe0]
 	call	free
 	mov	rdi, r14
@@ -9218,7 +8604,7 @@ free_dfa_content:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4097d0
+	#Procedure 0x409070
 	.globl rpl_regexec
 	.type rpl_regexec, @function
 rpl_regexec:
@@ -9236,29 +8622,29 @@ rpl_regexec:
 	mov	rbx, rdi
 	mov	eax, 2
 	cmp	ebp, 7
-	ja	.label_797
+	ja	.label_739
 	test	bpl, 4
-	jne	.label_799
+	jne	.label_741
 	mov	rdi, r14
 	call	strlen
 	mov	rdx, rax
 	xor	ecx, ecx
-	jmp	.label_798
-.label_799:
+	jmp	.label_740
+.label_741:
 	mov	rcx, qword ptr [r12]
 	mov	rdx, qword ptr [r12 + 8]
-.label_798:
+.label_740:
 	test	byte ptr [rbx + 0x38], 0x10
-	jne	.label_800
+	jne	.label_743
 	mov	dword ptr [rsp + 0x10], ebp
 	mov	qword ptr [rsp + 8], r12
 	mov	qword ptr [rsp], r15
-	jmp	.label_801
-.label_800:
+	jmp	.label_742
+.label_743:
 	mov	dword ptr [rsp + 0x10], ebp
 	mov	qword ptr [rsp + 8], 0
 	mov	qword ptr [rsp], 0
-.label_801:
+.label_742:
 	mov	rdi, rbx
 	mov	rsi, r14
 	mov	r8, rdx
@@ -9267,7 +8653,7 @@ rpl_regexec:
 	test	eax, eax
 	setne	al
 	movzx	eax, al
-.label_797:
+.label_739:
 	add	rsp, 0x20
 	pop	rbx
 	pop	r12
@@ -9278,7 +8664,7 @@ rpl_regexec:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x409870
+	#Procedure 0x409110
 
 	.globl re_search_internal
 	.type re_search_internal, @function
@@ -9289,12 +8675,12 @@ re_search_internal:
 	push	r13
 	push	r12
 	push	rbx
-	sub	rsp, 0x268
-	mov	r15, rcx
-	mov	r13, qword ptr [rsp + 0x2a0]
+	sub	rsp, 0x258
+	mov	r13, r9
+	mov	rbp, rcx
+	mov	r9, qword ptr [rsp + 0x290]
 	mov	r11, qword ptr [rdi]
 	xorps	xmm0, xmm0
-	movaps	xmmword ptr [rsp + 0x1f0], xmm0
 	movaps	xmmword ptr [rsp + 0x1e0], xmm0
 	movaps	xmmword ptr [rsp + 0x1d0], xmm0
 	movaps	xmmword ptr [rsp + 0x1c0], xmm0
@@ -9310,489 +8696,474 @@ re_search_internal:
 	movaps	xmmword ptr [rsp + 0x120], xmm0
 	movaps	xmmword ptr [rsp + 0x110], xmm0
 	movaps	xmmword ptr [rsp + 0x100], xmm0
-	mov	qword ptr [rsp + 0x198], r11
+	movaps	xmmword ptr [rsp + 0xf0], xmm0
+	mov	qword ptr [rsp + 0x188], r11
 	mov	rax, qword ptr [rdi + 0x20]
-	xor	ebp, ebp
+	xor	r12d, r12d
 	test	rax, rax
-	je	.label_825
+	je	.label_796
 	mov	cl, byte ptr [rdi + 0x38]
 	and	cl, 9
 	movzx	ecx, cl
 	xor	ebx, ebx
 	cmp	ecx, 8
 	cmovne	rax, rbx
-	cmp	r15, r8
+	cmp	rbp, r8
 	cmove	rax, rbx
-	mov	rbp, rax
-.label_825:
+	mov	r12, rax
+.label_796:
 	mov	rax, qword ptr [rdi + 0x30]
-	lea	r14, [r13 - 1]
+	lea	r14, [r9 - 1]
 	mov	rcx, r14
 	sub	rcx, rax
 	xor	ebx, ebx
-	cmp	rax, r13
+	cmp	rax, r9
 	cmovb	rbx, rcx
-	mov	r12d, 1
+	mov	eax, 1
 	cmp	qword ptr [rdi + 0x10], 0
-	je	.label_827
-	mov	rax, qword ptr [r11 + 0x48]
-	test	rax, rax
-	je	.label_827
+	je	.label_835
+	mov	r15, qword ptr [r11 + 0x48]
+	test	r15, r15
+	je	.label_835
 	mov	rcx, qword ptr [r11 + 0x50]
 	test	rcx, rcx
-	je	.label_827
-	mov	qword ptr [rsp + 0xc8], rbp
+	je	.label_835
 	mov	r10, qword ptr [r11 + 0x58]
 	test	r10, r10
-	je	.label_827
+	je	.label_849
 	cmp	qword ptr [r11 + 0x60], 0
-	je	.label_827
-	mov	rbp, qword ptr [rdi + 0x28]
-	mov	qword ptr [rsp + 0xd0], rbp
-	cmp	qword ptr [rax + 0x10], 0
-	jne	.label_891
+	je	.label_849
+	mov	rax, r13
+	mov	r13, qword ptr [rdi + 0x28]
+	mov	qword ptr [rsp + 0xd0], r13
+	cmp	qword ptr [r15 + 0x10], 0
+	je	.label_852
+	mov	rcx, r8
+	mov	r13, rax
+	jmp	.label_842
+.label_849:
+	mov	eax, 1
+	jmp	.label_835
+.label_852:
 	cmp	qword ptr [rcx + 0x10], 0
-	jne	.label_891
-	cmp	qword ptr [r10 + 0x10], 0
-	je	.label_925
-	cmp	byte ptr [rdi + 0x38], 0
-	js	.label_891
-.label_925:
-	xor	eax, eax
-	mov	qword ptr [rsp + 0xb0], rax
-	test	r15, r15
-	mov	r10, rsi
-	je	.label_899
-	test	r8, r8
-	mov	r15d, 0
-	jne	.label_827
-	jmp	.label_813
-.label_891:
-	mov	qword ptr [rsp + 0xb0], r8
-	mov	r10, rsi
-.label_813:
-	mov	qword ptr [rsp + 0xe8], r9
-	mov	qword ptr [rsp + 0x70], r14
-	mov	byte ptr [rsp + 0xc6], 1
-	cmp	rbx, r13
-	mov	qword ptr [rsp + 0xa8], rbx
-	jne	.label_906
+	mov	r13, rax
+	je	.label_851
+	mov	rcx, r8
+.label_842:
+	mov	qword ptr [rsp + 0xb0], rcx
+	mov	qword ptr [rsp + 0xd8], r12
+	mov	qword ptr [rsp + 0x68], r14
+	mov	al, 1
+	cmp	rbx, r9
+	mov	qword ptr [rsp + 0xa0], rbx
+	jne	.label_862
 	cmp	qword ptr [r11 + 0x98], 0
-	setne	byte ptr [rsp + 0xc6]
-.label_906:
-	mov	r13, qword ptr [r11 + 0x10]
-	inc	r13
+	setne	al
+.label_862:
+	mov	byte ptr [rsp + 0xbe], al
+	mov	r12, qword ptr [r11 + 0x10]
+	inc	r12
 	mov	rcx, qword ptr [rdi + 0x18]
 	movsxd	rax, dword ptr [r11 + 0xb4]
-	cmp	rax, r13
-	cmovge	r13, rax
-	lea	rsi, [rdx + 1]
-	cmp	rsi, r13
-	cmovle	r13, rsi
-	mov	qword ptr [rsp + 0x100], r10
-	mov	qword ptr [rsp + 0x158], rdx
-	mov	qword ptr [rsp + 0x150], rdx
-	mov	qword ptr [rsp + 0xd0], rbp
-	mov	qword ptr [rsp + 0x178], rbp
+	cmp	rax, r12
+	cmovge	r12, rax
+	lea	rbx, [rdx + 1]
+	cmp	rbx, r12
+	cmovle	r12, rbx
+	mov	qword ptr [rsp + 0xf0], rsi
+	mov	qword ptr [rsp + 0x148], rdx
+	mov	qword ptr [rsp + 0x140], rdx
+	mov	rbx, qword ptr [rsp + 0xd0]
+	mov	qword ptr [rsp + 0x168], rbx
 	shr	rcx, 0x16
 	and	cl, 1
-	mov	byte ptr [rsp + 0x188], cl
-	test	rbp, rbp
+	mov	byte ptr [rsp + 0x178], cl
+	test	rbx, rbx
 	setne	bl
 	or	bl, cl
-	mov	byte ptr [rsp + 0x18b], bl
-	mov	dword ptr [rsp + 0x190], eax
+	mov	byte ptr [rsp + 0x17b], bl
+	mov	dword ptr [rsp + 0x180], eax
 	mov	cl, byte ptr [r11 + 0xb0]
 	shr	cl, 2
 	and	cl, 1
-	mov	byte ptr [rsp + 0x189], cl
+	mov	byte ptr [rsp + 0x179], cl
 	mov	cl, byte ptr [r11 + 0xb0]
 	shr	cl, 3
 	and	cl, 1
 	cmp	rax, 2
-	mov	byte ptr [rsp + 0x18a], cl
-	mov	qword ptr [rsp + 0x168], rdx
-	mov	qword ptr [rsp + 0x160], rdx
-	jl	.label_915
-	mov	qword ptr [rsp + 0xf8], r11
+	mov	byte ptr [rsp + 0x17a], cl
+	mov	qword ptr [rsp + 0x158], rdx
+	mov	qword ptr [rsp + 0x150], rdx
+	jl	.label_865
+	mov	qword ptr [rsp + 0xe8], r11
 	movabs	rax, 0x1ffffffffffffffe
 	inc	rax
-	mov	r12d, 0xc
-	cmp	r13, rax
-	ja	.label_816
-	mov	qword ptr [rsp + 0xd8], r10
-	mov	qword ptr [rsp + 0xf0], rdx
+	mov	ecx, 0xc
+	cmp	r12, rax
+	ja	.label_757
+	mov	qword ptr [rsp + 0xc0], rsi
+	mov	qword ptr [rsp + 0xe0], rdx
 	mov	r14, rdi
-	lea	rsi, [r13*4]
+	lea	rsi, [r12*4]
 	xor	edi, edi
 	call	realloc
+	mov	ecx, 0xc
 	test	rax, rax
-	je	.label_816
-	mov	qword ptr [rsp + 0x110], rax
-	mov	r11, qword ptr [rsp + 0xf8]
+	je	.label_757
+	mov	qword ptr [rsp + 0x100], rax
+	mov	r11, qword ptr [rsp + 0xe8]
 	mov	rdi, r14
-	mov	rdx, qword ptr [rsp + 0xf0]
-	mov	r10, qword ptr [rsp + 0xd8]
-.label_915:
-	mov	qword ptr [rsp + 0xf0], rdx
-	mov	al, 1
+	mov	rdx, qword ptr [rsp + 0xe0]
+	mov	rsi, qword ptr [rsp + 0xc0]
+.label_865:
+	mov	qword ptr [rsp + 0xc0], rsi
+	mov	qword ptr [rsp + 0xe0], rdx
 	test	bl, bl
-	je	.label_976
-	mov	r14, r10
-	mov	rbx, rdi
-	mov	qword ptr [rsp + 0xf8], r11
+	je	.label_869
+	mov	r14, rdi
+	mov	qword ptr [rsp + 0xe8], r11
 	xor	edi, edi
-	mov	rsi, r13
+	mov	rsi, r12
 	call	realloc
-	mov	r12d, 0xc
+	mov	ecx, 0xc
 	test	rax, rax
-	je	.label_816
-	mov	qword ptr [rsp + 0x108], rax
-	xor	eax, eax
-	mov	r11, qword ptr [rsp + 0xf8]
-	mov	rdi, rbx
-	mov	r10, r14
-.label_976:
-	mov	qword ptr [rsp + 0x140], r13
-	lea	rcx, [r11 + 0xb8]
-	mov	qword ptr [rsp + 0x180], rcx
-	mov	rcx, qword ptr [r11 + 0xb0]
-	mov	dl, cl
-	shr	dl, 4
-	and	dl, 1
-	mov	byte ptr [rsp + 0x18e], dl
-	xor	edx, edx
-	test	al, al
-	je	.label_889
-	shr	rcx, 0x20
-	mov	qword ptr [rsp + 0x108], r10
-	xor	edx, edx
-	cmp	ecx, 1
-	cmovle	rdx, qword ptr [rsp + 0xf0]
-.label_889:
-	mov	qword ptr [rsp + 0xd8], r10
-	mov	qword ptr [rsp + 0x130], rdx
-	mov	qword ptr [rsp + 0x138], rdx
-	mov	rax, qword ptr [rsp + 0xe8]
-	mov	qword ptr [rsp + 0x168], rax
-	mov	qword ptr [rsp + 0x160], rax
+	je	.label_757
+	mov	qword ptr [rsp + 0xf8], rax
+	mov	r11, qword ptr [rsp + 0xe8]
+	mov	rdi, r14
+.label_869:
+	mov	edx, dword ptr [rsp + 0x2a0]
+	mov	qword ptr [rsp + 0x130], r12
+	lea	rax, [r11 + 0xb8]
+	mov	qword ptr [rsp + 0x170], rax
+	mov	rax, qword ptr [r11 + 0xb0]
+	mov	cl, al
+	shr	cl, 4
+	and	cl, 1
+	mov	byte ptr [rsp + 0x17e], cl
+	xor	ecx, ecx
+	test	bl, bl
+	jne	.label_749
+	shr	rax, 0x20
+	mov	rcx, qword ptr [rsp + 0xc0]
+	mov	qword ptr [rsp + 0xf8], rcx
+	xor	ecx, ecx
+	cmp	eax, 1
+	cmovle	rcx, qword ptr [rsp + 0xe0]
+.label_749:
+	mov	qword ptr [rsp + 0x120], rcx
+	mov	qword ptr [rsp + 0x128], rcx
+	mov	qword ptr [rsp + 0x158], r13
+	mov	qword ptr [rsp + 0x150], r13
 	mov	al, byte ptr [rdi + 0x38]
 	mov	qword ptr [rsp + 0x80], rdi
 	shr	al, 7
-	mov	byte ptr [rsp + 0x18d], al
+	mov	byte ptr [rsp + 0x17d], al
 	mov	rbx, qword ptr [r11 + 0x98]
-	mov	qword ptr [rsp + 0xf8], r11
+	mov	qword ptr [rsp + 0xe8], r11
 	lea	r14, [rbx + rbx]
-	mov	eax, dword ptr [rsp + 0x2b0]
-	mov	dword ptr [rsp + 0x1a0], eax
-	mov	qword ptr [rsp + 0x1a8], -1
+	mov	dword ptr [rsp + 0x190], edx
+	mov	qword ptr [rsp + 0x198], -1
 	test	rbx, rbx
-	jle	.label_999
-	mov	r12d, 0xc
+	jle	.label_766
+	mov	ecx, 0xc
 	movabs	rax, 0x666666666666666
 	cmp	r14, rax
-	ja	.label_816
+	ja	.label_757
 	shl	rbx, 4
 	lea	rdi, [rbx + rbx*4]
 	call	malloc
-	mov	rbp, rax
-	mov	qword ptr [rsp + 0x1d8], rbp
+	mov	r13, rax
+	mov	qword ptr [rsp + 0x1c8], r13
 	mov	rdi, rbx
 	call	malloc
-	mov	qword ptr [rsp + 0x1f8], rax
-	test	rbp, rbp
-	je	.label_816
+	mov	qword ptr [rsp + 0x1e8], rax
+	test	r13, r13
+	je	.label_761
 	test	rax, rax
-	je	.label_816
-.label_999:
-	mov	rax, qword ptr [rsp + 0x2a0]
-	sub	rax, qword ptr [rsp + 0xa8]
-	mov	qword ptr [rsp + 0x78], rax
-	mov	qword ptr [rsp + 0x1d0], r14
-	mov	dword ptr [rsp + 0x1e0], 1
-	mov	qword ptr [rsp + 0x1f0], r14
-	cmp	rax, 1
-	mov	rax, qword ptr [rsp + 0xf8]
-	ja	.label_838
-	mov	rbx, qword ptr [rax + 0xb0]
-	test	bl, 2
-	jne	.label_838
-	shr	rbx, 0x20
-	mov	qword ptr [rsp + 0x1b8], 0
-	jmp	.label_857
-.label_838:
-	mov	r12d, 0xc
+	mov	ecx, 0xc
+	je	.label_757
+.label_766:
+	mov	rax, qword ptr [rsp + 0x290]
+	mov	rcx, rax
+	mov	rax, qword ptr [rsp + 0xa0]
+	sub	rcx, rax
+	mov	qword ptr [rsp + 0x58], rcx
+	mov	qword ptr [rsp + 0x1c0], r14
+	mov	dword ptr [rsp + 0x1d0], 1
+	mov	qword ptr [rsp + 0x1e0], r14
+	cmp	rcx, 1
+	mov	rax, qword ptr [rsp + 0xe8]
+	ja	.label_800
+	mov	rdi, qword ptr [rax + 0xb0]
+	test	dil, 2
+	jne	.label_800
+	shr	rdi, 0x20
+	mov	qword ptr [rsp + 0x1a8], 0
+	jmp	.label_819
+.label_800:
+	mov	ecx, 0xc
 	movabs	rax, 0x1ffffffffffffffe
-	cmp	r13, rax
-	ja	.label_816
-	lea	rdi, [r13*8 + 8]
+	cmp	r12, rax
+	ja	.label_757
+	lea	rdi, [r12*8 + 8]
 	call	malloc
-	mov	qword ptr [rsp + 0x1b8], rax
+	mov	ecx, 0xc
+	mov	qword ptr [rsp + 0x1a8], rax
 	test	rax, rax
-	je	.label_816
-	mov	rax, qword ptr [rsp + 0xf8]
-	mov	ebx, dword ptr [rax + 0xb4]
-.label_857:
-	mov	qword ptr [rsp + 0xe0], rbx
-	mov	qword ptr [rsp + 0xf8], rax
-	mov	qword ptr [rsp + 0x208], r15
-	mov	eax, dword ptr [rsp + 0x2b0]
+	je	.label_757
+	mov	rax, qword ptr [rsp + 0xe8]
+	mov	edi, dword ptr [rax + 0xb4]
+.label_819:
+	mov	r13, qword ptr [rsp + 0xd8]
+	mov	qword ptr [rsp + 0xc8], rdi
+	mov	qword ptr [rsp + 0xe8], rax
+	mov	qword ptr [rsp + 0x1f8], rbp
+	mov	eax, dword ptr [rsp + 0x2a0]
 	lea	eax, [rax + rax]
 	and	eax, 2
 	xor	eax, 6
-	mov	dword ptr [rsp + 0x170], eax
-	mov	rsi, qword ptr [rsp + 0xb0]
-	cmp	rsi, r15
-	mov	r13, r15
-	cmovle	r13, rsi
-	mov	rbp, rsi
-	cmovl	rbp, r15
-	mov	qword ptr [rsp + 0xb8], rbp
-	mov	ecx, 8
-	mov	r14, qword ptr [rsp + 0xc8]
-	test	r14, r14
-	mov	rdi, qword ptr [rsp + 0xd0]
-	je	.label_873
-	cmp	ebx, 1
-	je	.label_893
+	mov	dword ptr [rsp + 0x160], eax
+	mov	rbx, qword ptr [rsp + 0xb0]
+	cmp	rbx, rbp
+	mov	rax, rbp
+	cmovle	rax, rbx
+	mov	qword ptr [rsp + 0x78], rax
+	mov	r8, rax
+	mov	r14, rbx
+	cmovl	r14, rbp
+	mov	qword ptr [rsp + 0x70], r14
+	mov	edx, 8
+	test	r13, r13
+	je	.label_832
+	cmp	edi, 1
+	je	.label_811
 	mov	ecx, 0x400000
-	xor	r8d, r8d
-	test	rdi, rdi
-	jne	.label_894
+	xor	eax, eax
+	cmp	qword ptr [rsp + 0xd0], 0
 	mov	rdx, qword ptr [rsp + 0x80]
+	jne	.label_853
 	and	rcx, qword ptr [rdx + 0x18]
-	jne	.label_894
-.label_893:
-	mov	r8d, 4
-.label_894:
-	test	rdi, rdi
+	jne	.label_853
+.label_811:
+	mov	eax, 4
+.label_853:
+	cmp	qword ptr [rsp + 0xd0], 0
 	setne	cl
-	cmp	r15, rsi
+	cmp	rbp, rbx
 	setle	dl
 	movzx	ecx, cl
 	movzx	edx, dl
-	lea	ecx, [rcx + rdx*2]
-	or	ecx, r8d
-.label_873:
-	mov	qword ptr [rsp + 0xe0], rbx
-	mov	rbx, rdi
+	lea	edx, [rcx + rdx*2]
+	or	edx, eax
+.label_832:
+	mov	qword ptr [rsp + 0xc8], rdi
 	xor	eax, eax
-	cmp	r15, rsi
-	setle	byte ptr [rsp + 0xc7]
-	lea	rdx, [rsp + 0x208]
-	cmovg	rdx, rax
-	mov	qword ptr [rsp + 0x90], rdx
+	cmp	rbp, rbx
+	setle	byte ptr [rsp + 0xbf]
+	lea	rcx, [rsp + 0x1f8]
+	cmovg	rcx, rax
+	mov	qword ptr [rsp + 0x88], rcx
 	xor	eax, eax
-	mov	qword ptr [rsp + 0x58], rax
-	cmp	rsi, r15
+	mov	qword ptr [rsp + 0x48], rax
+	cmp	rbx, rbp
 	mov	eax, 1
-	mov	rdx, -1
-	cmovge	rdx, rax
-	mov	qword ptr [rsp + 0xe8], rdx
-	add	ecx, -4
-	mov	qword ptr [rsp + 0xa0], rcx
-	jmp	.label_870
-.label_981:
-	mov	rax, qword ptr [rsp + 0xe0]
-	cmp	eax, 1
-	je	.label_922
-	mov	rax, qword ptr [rsp + 0x130]
+	mov	rcx, -1
+	cmovge	rcx, rax
+	mov	qword ptr [rsp + 0xd8], rcx
+	add	edx, -4
+	mov	qword ptr [rsp + 0xb0], rdx
+	mov	rbx, r8
+	jmp	.label_789
+.label_806:
+	mov	r12, qword ptr [rsp + 0xc8]
+	cmp	r12d, 1
+	je	.label_872
+	mov	rax, qword ptr [rsp + 0x120]
 	test	rax, rax
-	je	.label_922
-	mov	rax, qword ptr [rsp + 0x110]
+	je	.label_872
+	mov	rax, qword ptr [rsp + 0x100]
 	cmp	dword ptr [rax], -1
-	je	.label_926
-.label_922:
-	mov	dword ptr [rsp + 0x1e0], 0
-	lea	rax, [rsp + 0x1c0]
+	je	.label_880
+.label_872:
+	mov	dword ptr [rsp + 0x1d0], 0
+	lea	rax, [rsp + 0x1b0]
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax], xmm0
-	mov	r12, qword ptr [rsp + 0x198]
-	mov	rdi, qword ptr [rsp + 0x148]
-	mov	dword ptr [rsp + 0x264], 0
-	mov	r15, qword ptr [r12 + 0x48]
-	cmp	byte ptr [r15 + 0x68], 0
-	js	.label_931
-	mov	rbx, qword ptr [rsp + 0xe0]
-	jmp	.label_810
-.label_931:
-	test	rdi, rdi
-	jle	.label_948
-	lea	rax, [rdi - 1]
-	cmp	qword ptr [rsp + 0x158], rax
-	je	.label_951
-	cmp	dword ptr [rsp + 0x190], 2
-	jl	.label_957
-	mov	rax, qword ptr [rsp + 0x110]
-	mov	rcx, rdi
-	nop	word ptr cs:[rax + rax]
-.label_966:
-	mov	ebx, dword ptr [rax + rcx*4 - 4]
-	cmp	ebx, -1
-	jne	.label_963
+	mov	r15, qword ptr [rsp + 0x188]
+	mov	r14, qword ptr [rsp + 0x138]
+	mov	dword ptr [rsp + 0x254], 0
+	mov	rbx, qword ptr [r15 + 0x48]
+	cmp	byte ptr [rbx + 0x68], 0
+	js	.label_886
+	mov	r12b, byte ptr [rsp + 0xbe]
+	jmp	.label_754
+.label_886:
+	test	r14, r14
+	jle	.label_904
+	lea	rax, [r14 - 1]
+	cmp	qword ptr [rsp + 0x148], rax
+	je	.label_906
+	cmp	dword ptr [rsp + 0x180], 2
+	mov	r12b, byte ptr [rsp + 0xbe]
+	jl	.label_909
+	mov	rax, qword ptr [rsp + 0x100]
+	mov	rcx, r14
+	nop	dword ptr [rax]
+.label_914:
+	mov	ebp, dword ptr [rax + rcx*4 - 4]
+	cmp	ebp, -1
+	jne	.label_813
 	dec	rcx
-	jg	.label_966
-	mov	ecx, dword ptr [rsp + 0x170]
-	jmp	.label_968
-.label_957:
-	mov	rcx, qword ptr [rsp + 0x108]
-	mov	rdx, qword ptr [rsp + 0x180]
+	jg	.label_914
+	mov	ecx, dword ptr [rsp + 0x160]
+	jmp	.label_746
+.label_909:
+	mov	rcx, qword ptr [rsp + 0xf8]
+	mov	rdx, qword ptr [rsp + 0x170]
 	movzx	eax, byte ptr [rcx + rax]
 	mov	cl, al
 	shr	cl, 6
 	movzx	ecx, cl
 	mov	rcx, qword ptr [rdx + rcx*8]
 	bt	rcx, rax
-	jb	.label_815
+	jb	.label_753
 	movzx	eax, al
 	cmp	eax, 0xa
-	je	.label_978
-	mov	rbx, qword ptr [rsp + 0xe0]
-	jmp	.label_810
-.label_963:
-	cmp	byte ptr [rsp + 0x18e], 0
-	jne	.label_839
-.label_817:
-	cmp	ebx, 0xa
-	jne	.label_848
-.label_978:
+	jne	.label_754
+	jmp	.label_899
+.label_813:
+	cmp	byte ptr [rsp + 0x17e], 0
+	jne	.label_923
+.label_770:
+	cmp	ebp, 0xa
+	jne	.label_754
+.label_899:
 	mov	ecx, 2
-	cmp	byte ptr [rsp + 0x18d], 0
-	jne	.label_968
+	cmp	byte ptr [rsp + 0x17d], 0
+	jne	.label_746
 	xor	ecx, ecx
-	jmp	.label_968
-.label_848:
-	mov	rbx, qword ptr [rsp + 0xe0]
-	jmp	.label_810
-.label_948:
-	mov	ecx, dword ptr [rsp + 0x170]
-	jmp	.label_968
-.label_951:
-	mov	ecx, dword ptr [rsp + 0x1a0]
+	jmp	.label_746
+.label_904:
+	mov	ecx, dword ptr [rsp + 0x160]
+	mov	r12b, byte ptr [rsp + 0xbe]
+	jmp	.label_746
+.label_906:
+	mov	ecx, dword ptr [rsp + 0x190]
 	and	ecx, 2
 	xor	ecx, 0xa
-.label_968:
+	mov	r12b, byte ptr [rsp + 0xbe]
+.label_746:
 	test	cl, 1
-	jne	.label_815
+	jne	.label_753
 	test	ecx, ecx
-	mov	rbx, qword ptr [rsp + 0xe0]
-	je	.label_810
-	mov	rsi, rbx
+	je	.label_754
 	mov	eax, ecx
 	and	eax, 4
-	sete	bl
+	sete	sil
 	mov	edx, ecx
 	and	edx, 2
-	je	.label_997
-	test	bl, bl
-	jne	.label_997
-	mov	r15, qword ptr [r12 + 0x60]
-	mov	rbx, rsi
-	jmp	.label_810
-.label_997:
+	je	.label_756
+	test	sil, sil
+	jne	.label_756
+	mov	rbx, qword ptr [r15 + 0x60]
+	jmp	.label_754
+.label_756:
 	test	edx, edx
-	jne	.label_1001
-	mov	qword ptr [rsp + 0xc8], rdi
-	mov	r15, qword ptr [r12 + 0x48]
+	jne	.label_764
 	test	eax, eax
-	mov	rbx, rsi
-	je	.label_1002
-	mov	rdx, qword ptr [r15 + 0x50]
-	lea	rdi, [rsp + 0x264]
-	mov	rsi, r12
+	je	.label_754
+	mov	rdx, qword ptr [rbx + 0x50]
+	lea	rdi, [rsp + 0x254]
+	mov	rsi, r15
 	call	re_acquire_state_context
-	mov	r15, rax
-.label_1002:
-	mov	rdi, qword ptr [rsp + 0xc8]
-	jmp	.label_810
-.label_1001:
-	mov	r15, qword ptr [r12 + 0x58]
-	mov	rbx, rsi
-	jmp	.label_810
-.label_839:
-	mov	qword ptr [rsp + 0xc8], rdi
-	mov	edi, ebx
+	mov	rbx, rax
+	jmp	.label_754
+.label_764:
+	mov	rbx, qword ptr [r15 + 0x58]
+	jmp	.label_754
+.label_923:
+	mov	edi, ebp
 	call	iswalnum
-	mov	rdi, qword ptr [rsp + 0xc8]
-	cmp	ebx, 0x5f
-	je	.label_815
+	cmp	ebp, 0x5f
+	je	.label_753
 	test	eax, eax
-	je	.label_817
-.label_815:
-	mov	r15, qword ptr [r12 + 0x50]
-	mov	rbx, qword ptr [rsp + 0xe0]
-.label_810:
-	test	r15, r15
-	je	.label_919
-	mov	rax, qword ptr [rsp + 0x1b8]
+	je	.label_770
+.label_753:
+	mov	rbx, qword ptr [r15 + 0x50]
+.label_754:
+	mov	cl, byte ptr [rsp + 0xbf]
+	test	rbx, rbx
+	je	.label_772
+	mov	rax, qword ptr [rsp + 0x1a8]
 	test	rax, rax
-	mov	cl, byte ptr [rsp + 0xc7]
 	mov	dl, cl
-	mov	dword ptr [rsp + 0x98], edx
-	je	.label_808
-	mov	qword ptr [rax + rdi*8], r15
-	cmp	qword ptr [r12 + 0x98], 0
+	mov	dword ptr [rsp + 0x90], edx
+	je	.label_773
+	mov	qword ptr [rax + r14*8], rbx
+	cmp	qword ptr [r15 + 0x98], 0
 	mov	al, cl
-	mov	dword ptr [rsp + 0x98], eax
-	jne	.label_969
-.label_808:
-	mov	byte ptr [rsp + 0xc7], cl
-	mov	al, byte ptr [r15 + 0x68]
-	mov	rbx, -1
-	test	al, 0x10
-	mov	ecx, 0
-	jne	.label_834
-.label_876:
-	mov	rax, qword ptr [rsp + 0x148]
-	mov	rdx, qword ptr [rsp + 0x90]
-.label_975:
-	mov	qword ptr [rsp + 0x68], rdx
-	cmp	qword ptr [rsp + 0x168], rax
-	jle	.label_811
-	test	rcx, rcx
-	sete	cl
-	or	cl, byte ptr [rsp + 0xc6]
-	mov	byte ptr [rsp + 0x67], cl
-	jmp	.label_853
-.label_980:
-	mov	qword ptr [rsp + 0x48], rbx
-	mov	qword ptr [rsp + 0x50], r13
-	cmp	qword ptr [r15 + 0x10], 0
-	jle	.label_901
-	mov	rdi, qword ptr [rsp + 0x198]
-	xor	r12d, r12d
-	jmp	.label_861
-.label_991:
-	mov	rax, qword ptr [rsp + 0x148]
+	mov	dword ptr [rsp + 0x90], eax
+	jne	.label_780
+.label_773:
+	mov	byte ptr [rsp + 0xbf], cl
+	mov	cl, byte ptr [rbx + 0x68]
+	mov	r15, -1
+	test	cl, 0x10
+	mov	eax, 0
+	jne	.label_784
+.label_795:
+	mov	rbp, qword ptr [rsp + 0x138]
+	mov	rcx, qword ptr [rsp + 0x88]
+.label_900:
+	mov	qword ptr [rsp + 0x60], rcx
+	mov	qword ptr [rsp + 0xa8], r14
+	cmp	qword ptr [rsp + 0x158], rbp
+	jle	.label_750
 	test	rax, rax
-	jle	.label_865
-	mov	qword ptr [rsp + 0xb0], r15
+	sete	al
+	or	al, r12b
+	mov	byte ptr [rsp + 0x57], al
+	mov	r14, rbx
+	jmp	.label_791
+.label_919:
+	mov	qword ptr [rsp + 0x40], r15
+	cmp	qword ptr [r14 + 0x10], 0
+	jle	.label_803
+	mov	rsi, qword ptr [rsp + 0x188]
+	mov	qword ptr [rsp + 0x30], rsi
+	xor	r15d, r15d
+	jmp	.label_859
+.label_793:
+	mov	rax, qword ptr [rsp + 0x138]
+	test	rax, rax
+	jle	.label_812
 	lea	rdx, [rax - 1]
 	mov	ecx, 0xa
-	cmp	qword ptr [rsp + 0x158], rdx
-	je	.label_868
-	cmp	dword ptr [rsp + 0x190], 2
-	jl	.label_872
-	mov	rcx, qword ptr [rsp + 0x110]
-.label_880:
+	cmp	qword ptr [rsp + 0x148], rdx
+	je	.label_816
+	cmp	dword ptr [rsp + 0x180], 2
+	jl	.label_820
+	mov	rcx, qword ptr [rsp + 0x100]
+.label_826:
 	mov	ebx, dword ptr [rcx + rax*4 - 4]
 	cmp	ebx, -1
-	jne	.label_878
+	jne	.label_823
 	dec	rax
-	jg	.label_880
-	mov	ecx, dword ptr [rsp + 0x170]
-	jmp	.label_868
-.label_850:
-	cmp	qword ptr [rsp + 0xb0], r15
-	mov	rdi, qword ptr [rsp + 0xc8]
-	je	.label_884
-	mov	dword ptr [rsp + 0x98], 0
-.label_884:
-	cmove	rdi, r12
-	jmp	.label_887
-.label_872:
-	mov	rax, qword ptr [rsp + 0x108]
-	mov	rcx, qword ptr [rsp + 0x180]
+	jg	.label_826
+	mov	ecx, dword ptr [rsp + 0x160]
+	jmp	.label_816
+.label_771:
+	cmp	r14, rbx
+	je	.label_848
+	mov	dword ptr [rsp + 0x90], 0
+.label_848:
+	mov	r14, qword ptr [rsp + 0xa8]
+	cmove	r14, qword ptr [rsp + 0x98]
+	jmp	.label_829
+.label_820:
+	mov	rax, qword ptr [rsp + 0xf8]
+	mov	rcx, qword ptr [rsp + 0x170]
 	movzx	eax, byte ptr [rax + rdx]
 	mov	dl, al
 	shr	dl, 6
@@ -9800,1095 +9171,976 @@ re_search_internal:
 	mov	rdx, qword ptr [rcx + rdx*8]
 	mov	ecx, 1
 	bt	rdx, rax
-	jb	.label_868
+	jb	.label_816
 	xor	ecx, ecx
 	movzx	eax, al
 	cmp	eax, 0xa
-	jne	.label_868
-	jmp	.label_900
-.label_878:
-	cmp	byte ptr [rsp + 0x18e], 0
-	jne	.label_962
-.label_959:
+	jne	.label_816
+	jmp	.label_844
+.label_823:
+	cmp	byte ptr [rsp + 0x17e], 0
+	jne	.label_846
+.label_873:
 	xor	ecx, ecx
 	cmp	ebx, 0xa
-	jne	.label_868
-.label_900:
+	jne	.label_816
+.label_844:
 	mov	ecx, 2
-	cmp	byte ptr [rsp + 0x18d], 0
-	jne	.label_868
+	cmp	byte ptr [rsp + 0x17d], 0
+	jne	.label_816
 	xor	ecx, ecx
-	jmp	.label_868
-.label_865:
-	mov	qword ptr [rsp + 0xb0], r15
-	mov	ecx, dword ptr [rsp + 0x170]
-.label_868:
+	jmp	.label_816
+.label_912:
+	mov	dword ptr [rsp + 0x2c], eax
+	mov	qword ptr [rsp + 0x38], rcx
+	mov	qword ptr [rsp + 0x30], rsi
+	mov	edi, ebx
+	call	iswalnum
+	xor	edx, edx
+	cmp	ebx, 0x5f
+	mov	edi, 1
+	je	.label_858
+	test	eax, eax
+	mov	rsi, qword ptr [rsp + 0x30]
+	mov	rcx, qword ptr [rsp + 0x38]
+	mov	eax, dword ptr [rsp + 0x2c]
+	je	.label_788
+	jmp	.label_867
+.label_878:
+	mov	edi, ebx
+	call	iswalnum
+	cmp	ebx, 0x5f
+	mov	ecx, 1
+	je	.label_787
+	test	eax, eax
+	lea	rdi, [rsp + 0x238]
+	je	.label_847
+	jmp	.label_822
+.label_858:
+	mov	rsi, qword ptr [rsp + 0x30]
+	mov	rcx, qword ptr [rsp + 0x38]
+	mov	eax, dword ptr [rsp + 0x2c]
+	jmp	.label_867
+.label_787:
+	lea	rdi, [rsp + 0x238]
+	jmp	.label_822
+.label_859:
+	mov	rax, qword ptr [r14 + 0x18]
+	mov	rbp, qword ptr [rax + r15*8]
+	mov	rax, qword ptr [rsi]
+	mov	rcx, rbp
+	shl	rcx, 4
+	mov	eax, dword ptr [rax + rcx + 8]
+	test	eax, 0x100000
+	je	.label_747
+	mov	r12d, eax
+	shr	r12d, 8
+	test	r12w, 0x3ff
+	mov	rcx, qword ptr [rsp + 0x138]
+	je	.label_767
+	test	rcx, rcx
+	js	.label_884
+	cmp	qword ptr [rsp + 0x148], rcx
+	je	.label_887
+	mov	r8d, eax
+	cmp	dword ptr [rsp + 0x180], 2
+	jl	.label_891
+	mov	rax, qword ptr [rsp + 0x100]
+	lea	rdx, [rcx + 1]
+.label_897:
+	mov	ebx, dword ptr [rax + rdx*4 - 4]
+	cmp	ebx, -1
+	jne	.label_894
+	dec	rdx
+	test	rdx, rdx
+	jg	.label_897
+	mov	edi, dword ptr [rsp + 0x160]
+	jmp	.label_841
+.label_891:
+	mov	rax, qword ptr [rsp + 0xf8]
+	mov	rdi, qword ptr [rsp + 0x170]
+	movzx	eax, byte ptr [rax + rcx]
+	mov	dl, al
+	shr	dl, 6
+	movzx	edx, dl
+	mov	rdx, qword ptr [rdi + rdx*8]
+	xor	edi, edi
+	bt	rdx, rax
+	jae	.label_902
+	mov	edi, 1
+	xor	edx, edx
+	mov	eax, r8d
+	jmp	.label_867
+.label_894:
+	cmp	byte ptr [rsp + 0x17e], 0
+	mov	eax, r8d
+	jne	.label_912
+.label_788:
+	mov	r8d, eax
+	xor	edi, edi
+	cmp	ebx, 0xa
+	je	.label_913
+	jmp	.label_841
+.label_902:
+	movzx	eax, al
+	cmp	eax, 0xa
+	jne	.label_841
+.label_913:
+	mov	edi, 2
+	cmp	byte ptr [rsp + 0x17d], 0
+	jne	.label_841
+	xor	edi, edi
+	jmp	.label_841
+.label_884:
+	mov	r8d, eax
+	mov	edi, dword ptr [rsp + 0x160]
+	jmp	.label_841
+.label_887:
+	mov	r8d, eax
+	mov	edi, dword ptr [rsp + 0x190]
+	and	edi, 2
+	xor	edi, 0xa
+.label_841:
+	mov	eax, edi
+	and	eax, 1
+	sete	dl
+	test	r12b, 4
+	je	.label_920
+	test	eax, eax
+	mov	eax, r8d
+	je	.label_747
+	jmp	.label_867
+.label_920:
+	mov	eax, r8d
+.label_867:
+	test	ah, 8
+	je	.label_926
+	test	dl, dl
+	je	.label_747
+.label_926:
+	test	ah, 0x20
+	je	.label_751
+	mov	eax, edi
+	and	eax, 2
+	je	.label_747
+.label_751:
+	test	r12b, r12b
+	jns	.label_767
+	and	edi, 8
+	je	.label_747
+.label_767:
+	mov	rbx, rsi
+	mov	rdi, rbx
+	mov	rsi, rbp
+	lea	rdx, [rsp + 0xf0]
+	call	check_node_accept_bytes
+	mov	rsi, rbx
+	test	eax, eax
+	je	.label_747
+	movsxd	r12, eax
+	add	r12, qword ptr [rsp + 0x138]
+	mov	ecx, dword ptr [rsp + 0x1d0]
+	cmp	ecx, eax
+	cmovl	ecx, eax
+	mov	dword ptr [rsp + 0x1d0], ecx
+	mov	rbx, qword ptr [rsp + 0x1b0]
+	mov	rcx, qword ptr [rsp + 0x130]
+	mov	rax, qword ptr [rsp + 0x148]
+	cmp	rcx, r12
+	jg	.label_759
+	cmp	rcx, rax
+	jl	.label_879
+.label_759:
+	mov	rcx, qword ptr [rsp + 0x120]
+	cmp	rcx, r12
+	jg	.label_769
+	cmp	rcx, rax
+	jge	.label_769
+.label_879:
+	lea	esi, [r12 + 1]
+	lea	rdi, [rsp + 0xf0]
+	call	extend_buffers
+	test	eax, eax
+	jne	.label_774
+.label_769:
+	mov	rdx, r12
+	sub	rdx, rbx
+	jle	.label_776
+	mov	rax, qword ptr [rsp + 0x1a8]
+	lea	rdi, [rax + rbx*8 + 8]
+	shl	rdx, 3
+	xor	esi, esi
+	call	memset
+	mov	qword ptr [rsp + 0x1b0], r12
+.label_776:
+	mov	dword ptr [rsp + 0x238], 0
+	mov	rcx, qword ptr [rsp + 0x30]
+	mov	rax, qword ptr [rcx + 0x18]
+	mov	rax, qword ptr [rax + rbp*8]
+	lea	rdx, [rax + rax*2]
+	shl	rdx, 3
+	add	rdx, qword ptr [rcx + 0x30]
+	mov	rax, qword ptr [rsp + 0x1a8]
+	mov	rbx, qword ptr [rax + r12*8]
+	mov	rbp, rcx
+	test	rbx, rbx
+	je	.label_785
+	mov	rsi, qword ptr [rbx + 0x50]
+	lea	rdi, [rsp + 0x200]
+	call	re_node_set_init_union
+	mov	dword ptr [rsp + 0x238], eax
+	test	eax, eax
+	je	.label_870
+	jmp	.label_802
+.label_785:
+	mov	rax, qword ptr [rdx + 0x10]
+	mov	qword ptr [rsp + 0x210], rax
+	movups	xmm0, xmmword ptr [rdx]
+	movaps	xmmword ptr [rsp + 0x200], xmm0
+.label_870:
+	mov	qword ptr [rsp + 0x38], rbx
+	test	r12, r12
+	jle	.label_917
+	lea	rax, [r12 - 1]
+	cmp	qword ptr [rsp + 0x148], rax
+	lea	rdi, [rsp + 0x238]
+	je	.label_786
+	cmp	dword ptr [rsp + 0x180], 2
+	jl	.label_818
+	mov	rax, qword ptr [rsp + 0x100]
+	mov	rcx, r12
+.label_877:
+	mov	ebx, dword ptr [rax + rcx*4 - 4]
+	cmp	ebx, -1
+	jne	.label_821
+	dec	rcx
+	jg	.label_877
+	mov	ecx, dword ptr [rsp + 0x160]
+	jmp	.label_822
+.label_818:
+	mov	rcx, qword ptr [rsp + 0xf8]
+	mov	rdx, qword ptr [rsp + 0x170]
+	movzx	eax, byte ptr [rcx + rax]
+	mov	cl, al
+	shr	cl, 6
+	movzx	ecx, cl
+	mov	rdx, qword ptr [rdx + rcx*8]
+	mov	ecx, 1
+	bt	rdx, rax
+	jb	.label_822
+	xor	ecx, ecx
+	movzx	eax, al
+	cmp	eax, 0xa
+	jne	.label_822
+	jmp	.label_831
+.label_821:
+	cmp	byte ptr [rsp + 0x17e], 0
+	jne	.label_878
+.label_847:
+	xor	ecx, ecx
+	cmp	ebx, 0xa
+	jne	.label_822
+.label_831:
+	mov	ecx, 2
+	cmp	byte ptr [rsp + 0x17d], 0
+	jne	.label_822
+	xor	ecx, ecx
+	jmp	.label_822
+.label_917:
+	mov	ecx, dword ptr [rsp + 0x160]
+	lea	rdi, [rsp + 0x238]
+	jmp	.label_822
+.label_786:
+	mov	ecx, dword ptr [rsp + 0x190]
+	and	ecx, 2
+	xor	ecx, 0xa
+.label_822:
+	mov	rsi, rbp
+	lea	rdx, [rsp + 0x200]
+	call	re_acquire_state_context
+	cmp	qword ptr [rsp + 0x38], 0
+	mov	rcx, qword ptr [rsp + 0x1a8]
+	mov	qword ptr [rcx + r12*8], rax
+	je	.label_850
+	mov	rdi, qword ptr [rsp + 0x210]
+	call	free
+.label_850:
+	mov	rax, qword ptr [rsp + 0x1a8]
+	cmp	qword ptr [rax + r12*8], 0
+	mov	rsi, rbp
+	jne	.label_747
+	mov	eax, dword ptr [rsp + 0x238]
+	test	eax, eax
+	jne	.label_802
+.label_747:
+	inc	r15
+	cmp	r15, qword ptr [r14 + 0x10]
+	jl	.label_859
+.label_803:
+	mov	dword ptr [rsp + 0x254], 0
+	mov	r12b, byte ptr [rsp + 0xbe]
+	mov	r15, qword ptr [rsp + 0x40]
+	jmp	.label_863
+.label_812:
+	mov	ecx, dword ptr [rsp + 0x160]
+.label_816:
 	and	ecx, 1
 	shl	rcx, 8
 	or	rcx, rbp
-	mov	r15, qword ptr [r12 + rcx*8]
-	mov	rbx, qword ptr [rsp + 0x48]
-	jmp	.label_833
-.label_898:
-	mov	r15, rdi
-	mov	edi, ebx
-	call	iswalnum
-	cmp	ebx, 0x5f
-	mov	ecx, 1
-	je	.label_916
-	test	eax, eax
-	mov	rdi, r15
-	mov	r15, qword ptr [rsp + 0xb0]
-	je	.label_918
-	jmp	.label_888
-.label_916:
-	mov	rdi, r15
-	mov	r15, qword ptr [rsp + 0xb0]
-	jmp	.label_888
-.label_861:
-	mov	rax, qword ptr [r15 + 0x18]
-	mov	rsi, qword ptr [rax + r12*8]
-	mov	rax, qword ptr [rdi]
-	mov	rbp, rsi
-	shl	rbp, 4
-	mov	r13d, dword ptr [rax + rbp + 8]
-	test	r13d, 0x100000
-	je	.label_803
-	shr	r13d, 8
-	test	r13w, 0x3ff
-	je	.label_932
-	mov	rax, qword ptr [rsp + 0x148]
-	test	rax, rax
-	js	.label_936
-	cmp	qword ptr [rsp + 0x158], rax
-	je	.label_939
-	cmp	dword ptr [rsp + 0x190], 2
-	jl	.label_941
-	mov	rcx, qword ptr [rsp + 0x110]
-	inc	rax
-.label_949:
-	mov	ebx, dword ptr [rcx + rax*4 - 4]
-	cmp	ebx, -1
-	jne	.label_945
-	dec	rax
-	test	rax, rax
-	jg	.label_949
-	mov	ecx, dword ptr [rsp + 0x170]
-	jmp	.label_952
-.label_941:
-	mov	rcx, qword ptr [rsp + 0x108]
-	mov	rdx, qword ptr [rsp + 0x180]
-	movzx	eax, byte ptr [rcx + rax]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rdx, qword ptr [rdx + rcx*8]
-	xor	ecx, ecx
-	bt	rdx, rax
-	jae	.label_955
-	mov	ecx, 1
-	xor	edx, edx
-	jmp	.label_892
-.label_945:
-	cmp	byte ptr [rsp + 0x18e], 0
-	jne	.label_965
-.label_987:
-	xor	ecx, ecx
-	cmp	ebx, 0xa
-	je	.label_946
-	jmp	.label_952
-.label_955:
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_952
-.label_946:
-	mov	ecx, 2
-	cmp	byte ptr [rsp + 0x18d], 0
-	jne	.label_952
-	xor	ecx, ecx
-	jmp	.label_952
-.label_936:
-	mov	ecx, dword ptr [rsp + 0x170]
-	jmp	.label_952
-.label_939:
-	mov	ecx, dword ptr [rsp + 0x1a0]
-	and	ecx, 2
-	xor	ecx, 0xa
-.label_952:
-	mov	eax, ecx
-	and	eax, 1
-	sete	dl
-	test	r13b, 4
-	je	.label_892
-	test	eax, eax
-	je	.label_803
-	jmp	.label_892
-.label_965:
-	mov	qword ptr [rsp + 0x40], rsi
-	mov	qword ptr [rsp + 0x38], rdi
-	mov	edi, ebx
-	call	iswalnum
-	xor	edx, edx
-	cmp	ebx, 0x5f
-	mov	ecx, 1
-	je	.label_984
-	test	eax, eax
-	mov	rdi, qword ptr [rsp + 0x38]
-	mov	rsi, qword ptr [rsp + 0x40]
-	je	.label_987
-	jmp	.label_892
-.label_984:
-	mov	rdi, qword ptr [rsp + 0x38]
-	mov	rsi, qword ptr [rsp + 0x40]
-.label_892:
-	mov	rax, qword ptr [rdi]
-	mov	eax, dword ptr [rax + rbp + 8]
-	test	dl, dl
-	jne	.label_993
-	mov	edx, eax
-	and	edx, 0x800
-	jne	.label_803
-.label_993:
-	test	cl, 2
-	jne	.label_996
-	mov	edx, eax
-	and	edx, 0x2000
-	jne	.label_803
-.label_996:
-	test	cl, 8
-	jne	.label_932
-	shr	eax, 8
-	test	al, al
-	js	.label_803
-.label_932:
-	mov	rcx, qword ptr [rsp + 0x148]
-	mov	rbx, rdi
-	lea	rdx, [rsp + 0x100]
-	mov	rbp, rsi
-	call	check_node_accept_bytes
-	mov	rcx, rbp
-	mov	rdi, rbx
-	test	eax, eax
-	je	.label_803
-	mov	qword ptr [rsp + 0x40], rcx
-	mov	rbp, rdi
-	movsxd	rsi, eax
-	add	rsi, qword ptr [rsp + 0x148]
-	mov	ecx, dword ptr [rsp + 0x1e0]
-	cmp	ecx, eax
-	cmovl	ecx, eax
-	mov	dword ptr [rsp + 0x1e0], ecx
-	mov	rbx, qword ptr [rsp + 0x1c0]
-	mov	rcx, qword ptr [rsp + 0x140]
-	mov	rax, qword ptr [rsp + 0x158]
-	cmp	rcx, rsi
-	jg	.label_806
-	cmp	rcx, rax
-	jl	.label_820
-.label_806:
-	mov	rcx, qword ptr [rsp + 0x130]
-	cmp	rcx, rsi
-	jg	.label_822
-	cmp	rcx, rax
-	jge	.label_822
-.label_820:
-	mov	r13, rsi
-	lea	esi, [r13 + 1]
-	lea	rdi, [rsp + 0x100]
-	call	extend_buffers
-	mov	rsi, r13
-	test	eax, eax
-	jne	.label_828
-.label_822:
-	mov	rdx, rsi
-	sub	rdx, rbx
-	jle	.label_974
-	mov	rax, qword ptr [rsp + 0x1b8]
-	lea	rdi, [rax + rbx*8 + 8]
-	shl	rdx, 3
-	mov	rbx, rsi
-	xor	esi, esi
-	call	memset
-	mov	rsi, rbx
-	mov	qword ptr [rsp + 0x1c0], rsi
-.label_974:
-	mov	dword ptr [rsp + 0x248], 0
-	mov	r13, rbp
-	mov	rax, qword ptr [r13 + 0x18]
-	mov	rdx, qword ptr [rsp + 0x40]
-	mov	rax, qword ptr [rax + rdx*8]
-	lea	rdx, [rax + rax*2]
-	shl	rdx, 3
-	add	rdx, qword ptr [r13 + 0x30]
-	mov	rax, qword ptr [rsp + 0x1b8]
-	mov	rbp, qword ptr [rax + rsi*8]
-	test	rbp, rbp
-	je	.label_841
-	mov	rbx, rsi
-	mov	rsi, qword ptr [rbp + 0x50]
-	lea	rdi, [rsp + 0x210]
-	call	re_node_set_init_union
-	mov	rsi, rbx
-	mov	dword ptr [rsp + 0x248], eax
-	test	eax, eax
-	je	.label_859
-	jmp	.label_862
-.label_841:
-	mov	rax, qword ptr [rdx + 0x10]
-	mov	qword ptr [rsp + 0x220], rax
-	movups	xmm0, xmmword ptr [rdx]
-	movaps	xmmword ptr [rsp + 0x210], xmm0
-.label_859:
-	test	rsi, rsi
-	jle	.label_867
-	lea	rax, [rsi - 1]
-	cmp	qword ptr [rsp + 0x158], rax
-	lea	rdi, [rsp + 0x248]
-	je	.label_869
-	cmp	dword ptr [rsp + 0x190], 2
-	mov	r15, qword ptr [rsp + 0xb0]
-	jl	.label_831
-	mov	rax, qword ptr [rsp + 0x110]
-	mov	rcx, rsi
+	mov	rbx, qword ptr [r15 + rcx*8]
+	mov	r15, qword ptr [rsp + 0x40]
+	jmp	.label_861
+.label_774:
+	mov	dword ptr [rsp + 0x238], eax
+.label_802:
+	mov	dword ptr [rsp + 0x254], eax
+	xor	ebx, ebx
+	mov	r12b, byte ptr [rsp + 0xbe]
+	mov	r15, qword ptr [rsp + 0x40]
+	jmp	.label_861
 .label_846:
-	mov	ebx, dword ptr [rax + rcx*4 - 4]
-	cmp	ebx, -1
-	jne	.label_881
-	dec	rcx
-	jg	.label_846
-	mov	qword ptr [rsp + 0x40], rsi
-	mov	ecx, dword ptr [rsp + 0x170]
-	jmp	.label_888
-.label_831:
-	mov	qword ptr [rsp + 0x40], rsi
-	mov	rcx, qword ptr [rsp + 0x108]
-	mov	rdx, qword ptr [rsp + 0x180]
-	movzx	eax, byte ptr [rcx + rax]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rdx, qword ptr [rdx + rcx*8]
-	mov	ecx, 1
-	bt	rdx, rax
-	jb	.label_888
-	xor	ecx, ecx
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_888
-	jmp	.label_897
-.label_881:
-	mov	qword ptr [rsp + 0x40], rsi
-	cmp	byte ptr [rsp + 0x18e], 0
-	jne	.label_898
-.label_918:
-	xor	ecx, ecx
-	cmp	ebx, 0xa
-	jne	.label_888
-.label_897:
-	mov	ecx, 2
-	cmp	byte ptr [rsp + 0x18d], 0
-	jne	.label_888
-	xor	ecx, ecx
-	jmp	.label_888
-.label_867:
-	mov	qword ptr [rsp + 0x40], rsi
-	mov	ecx, dword ptr [rsp + 0x170]
-	lea	rdi, [rsp + 0x248]
-	mov	r15, qword ptr [rsp + 0xb0]
-	jmp	.label_888
-.label_869:
-	mov	qword ptr [rsp + 0x40], rsi
-	mov	ecx, dword ptr [rsp + 0x1a0]
-	and	ecx, 2
-	xor	ecx, 0xa
-	mov	r15, qword ptr [rsp + 0xb0]
-.label_888:
-	mov	rsi, r13
-	lea	rdx, [rsp + 0x210]
-	call	re_acquire_state_context
-	test	rbp, rbp
-	mov	rcx, qword ptr [rsp + 0x1b8]
-	mov	rdx, qword ptr [rsp + 0x40]
-	mov	qword ptr [rcx + rdx*8], rax
-	je	.label_821
-	mov	rdi, qword ptr [rsp + 0x220]
-	mov	rbx, rdx
-	call	free
-	mov	rdx, rbx
-.label_821:
-	mov	rax, qword ptr [rsp + 0x1b8]
-	cmp	qword ptr [rax + rdx*8], 0
-	mov	rdi, r13
-	jne	.label_803
-	mov	eax, dword ptr [rsp + 0x248]
-	test	eax, eax
-	jne	.label_928
-.label_803:
-	inc	r12
-	cmp	r12, qword ptr [r15 + 0x10]
-	jl	.label_861
-.label_901:
-	mov	dword ptr [rsp + 0x264], 0
-	mov	r13, qword ptr [rsp + 0x50]
-	mov	rbx, qword ptr [rsp + 0x48]
-	jmp	.label_935
-.label_928:
-	mov	qword ptr [rsp + 0xb0], r15
-	jmp	.label_862
-.label_828:
-	mov	qword ptr [rsp + 0xb0], r15
-	mov	dword ptr [rsp + 0x248], eax
-.label_862:
-	mov	dword ptr [rsp + 0x264], eax
-	xor	r15d, r15d
-	mov	r13, qword ptr [rsp + 0x50]
-	mov	rbx, qword ptr [rsp + 0x48]
-	jmp	.label_833
-.label_962:
 	mov	edi, ebx
 	call	iswalnum
 	cmp	ebx, 0x5f
 	mov	ecx, 1
-	je	.label_868
+	je	.label_816
 	test	eax, eax
-	je	.label_959
-	jmp	.label_868
-.label_853:
-	mov	qword ptr [rsp + 0xb0], r15
-	mov	qword ptr [rsp + 0xc8], rdi
-	lea	rbp, [rax + 1]
-	mov	rdx, qword ptr [rsp + 0x140]
-	mov	rcx, qword ptr [rsp + 0x158]
-	cmp	rbp, rdx
-	jl	.label_960
-	cmp	rdx, rcx
-	jl	.label_971
-.label_960:
-	mov	rdx, qword ptr [rsp + 0x130]
-	cmp	rbp, rdx
-	jl	.label_972
-	cmp	rdx, rcx
-	jge	.label_972
-.label_971:
-	add	eax, 2
-	lea	rdi, [rsp + 0x100]
-	mov	esi, eax
-	call	extend_buffers
-	mov	dword ptr [rsp + 0x264], eax
-	test	eax, eax
-	jne	.label_977
-.label_972:
-	mov	qword ptr [rsp + 0x88], rbp
-	test	byte ptr [r15 + 0x68], 0x20
-	jne	.label_980
-.label_935:
+	je	.label_873
+	jmp	.label_816
+.label_791:
+	lea	rdx, [rbp + 1]
+	mov	qword ptr [rsp + 0x98], rdx
+	mov	rcx, qword ptr [rsp + 0x130]
 	mov	rax, qword ptr [rsp + 0x148]
+	cmp	rdx, rcx
+	jl	.label_876
+	cmp	rcx, rax
+	jl	.label_888
+.label_876:
+	mov	rcx, qword ptr [rsp + 0x120]
+	cmp	qword ptr [rsp + 0x98], rcx
+	jl	.label_889
+	cmp	rcx, rax
+	jge	.label_889
+.label_888:
+	add	ebp, 2
+	lea	rdi, [rsp + 0xf0]
+	mov	esi, ebp
+	call	extend_buffers
+	mov	dword ptr [rsp + 0x254], eax
+	test	eax, eax
+	jne	.label_896
+.label_889:
+	test	byte ptr [r14 + 0x68], 0x20
+	jne	.label_919
+.label_863:
+	mov	rax, qword ptr [rsp + 0x138]
 	lea	rcx, [rax + 1]
-	mov	qword ptr [rsp + 0x148], rcx
-	mov	rcx, qword ptr [rsp + 0x108]
+	mov	qword ptr [rsp + 0x138], rcx
+	mov	rcx, qword ptr [rsp + 0xf8]
 	movzx	ebp, byte ptr [rcx + rax]
-.label_995:
-	mov	rax, qword ptr [r15 + 0x58]
+.label_916:
+	mov	rax, qword ptr [r14 + 0x58]
 	test	rax, rax
-	jne	.label_988
-	mov	qword ptr [rsp + 0x48], rbx
-	mov	r12, qword ptr [r15 + 0x60]
-	test	r12, r12
-	jne	.label_991
-	mov	rdi, qword ptr [rsp + 0x198]
-	mov	rsi, r15
+	jne	.label_910
+	mov	qword ptr [rsp + 0x40], r15
+	mov	r15, qword ptr [r14 + 0x60]
+	test	r15, r15
+	jne	.label_793
+	mov	rdi, qword ptr [rsp + 0x188]
+	mov	rsi, r14
 	call	build_trtable
 	test	al, al
-	mov	rbx, qword ptr [rsp + 0x48]
-	jne	.label_995
-	mov	qword ptr [rsp + 0xb0], r15
-	mov	dword ptr [rsp + 0x264], 0xc
-	xor	r15d, r15d
-	jmp	.label_833
-.label_988:
-	mov	qword ptr [rsp + 0xb0], r15
-	mov	r15, qword ptr [rax + rbp*8]
-.label_833:
-	cmp	qword ptr [rsp + 0x1b8], 0
-	mov	r12, qword ptr [rsp + 0x88]
-	je	.label_1000
-	lea	rdi, [rsp + 0x264]
-	lea	rsi, [rsp + 0x100]
-	mov	rdx, r15
+	mov	r15, qword ptr [rsp + 0x40]
+	jne	.label_916
+	mov	dword ptr [rsp + 0x254], 0xc
+	xor	ebx, ebx
+	jmp	.label_861
+.label_910:
+	mov	rbx, qword ptr [rax + rbp*8]
+.label_861:
+	cmp	qword ptr [rsp + 0x1a8], 0
+	je	.label_801
+	lea	rdi, [rsp + 0x254]
+	lea	rsi, [rsp + 0xf0]
+	mov	rdx, rbx
 	call	merge_state_with_log
-	mov	r15, rax
-.label_1000:
-	mov	rdi, qword ptr [rsp + 0xb8]
-	test	r15, r15
-	jne	.label_809
-	cmp	dword ptr [rsp + 0x264], 0
-	jne	.label_807
-	mov	rax, qword ptr [rsp + 0x1b8]
+	mov	rbx, rax
+.label_801:
+	test	rbx, rbx
+	jne	.label_924
+	cmp	dword ptr [rsp + 0x254], 0
+	jne	.label_761
+	mov	rax, qword ptr [rsp + 0x1a8]
 	test	rax, rax
 	setne	cl
-	and	cl, byte ptr [rsp + 0x67]
+	and	cl, byte ptr [rsp + 0x57]
 	movzx	ecx, cl
 	cmp	ecx, 1
-	je	.label_812
-	jmp	.label_819
-.label_844:
-	mov	rax, qword ptr [rsp + 0x1b8]
-	mov	rdi, rbp
-.label_812:
-	mov	rdx, qword ptr [rsp + 0x148]
-	mov	rcx, qword ptr [rsp + 0x1c0]
+	je	.label_763
+	jmp	.label_750
+.label_768:
+	mov	rax, qword ptr [rsp + 0x1a8]
+.label_763:
+	mov	rdx, qword ptr [rsp + 0x138]
+	mov	rcx, qword ptr [rsp + 0x1b0]
 	nop	word ptr cs:[rax + rax]
-.label_875:
+.label_827:
 	cmp	rdx, rcx
-	jge	.label_829
+	jge	.label_750
 	lea	rsi, [rdx + 1]
-	mov	qword ptr [rsp + 0x148], rsi
+	mov	qword ptr [rsp + 0x138], rsi
 	cmp	qword ptr [rax + rdx*8 + 8], 0
 	mov	rdx, rsi
-	je	.label_875
-	mov	rbp, rdi
+	je	.label_827
 	xor	edx, edx
-	lea	rdi, [rsp + 0x264]
-	lea	rsi, [rsp + 0x100]
+	lea	rdi, [rsp + 0x254]
+	lea	rsi, [rsp + 0xf0]
 	call	merge_state_with_log
-	mov	r15, rax
-	test	r15, r15
-	jne	.label_842
-	mov	eax, dword ptr [rsp + 0x264]
-	test	eax, eax
-	je	.label_844
-.label_842:
-	test	r15, r15
-	je	.label_849
-.label_809:
-	mov	eax, dword ptr [rsp + 0x98]
-	test	al, 1
-	jne	.label_850
-	mov	rdi, qword ptr [rsp + 0xc8]
-.label_887:
-	mov	al, byte ptr [r15 + 0x68]
-	test	al, 0x10
-	je	.label_854
-	test	al, al
-	jns	.label_856
-	mov	rdx, qword ptr [rsp + 0x148]
-	mov	rbp, rdi
-	lea	rdi, [rsp + 0x100]
-	mov	rsi, r15
-	call	check_halt_state_context
-	mov	rdi, rbp
-	test	rax, rax
-	jne	.label_856
-.label_854:
-	mov	rax, qword ptr [rsp + 0x148]
-	cmp	qword ptr [rsp + 0x168], rax
-	jg	.label_853
-	jmp	.label_811
-.label_856:
-	mov	rax, qword ptr [rsp + 0x148]
-	cmp	byte ptr [rsp + 0xc6], 0
 	mov	rbx, rax
-	mov	ecx, 1
-	mov	edx, 0
-	mov	rbp, qword ptr [rsp + 0xb8]
-	jne	.label_975
-	jmp	.label_877
+	test	rbx, rbx
+	jne	.label_882
+	mov	eax, dword ptr [rsp + 0x254]
+	test	eax, eax
+	je	.label_768
+.label_882:
+	test	rbx, rbx
+	je	.label_750
+.label_924:
+	mov	eax, dword ptr [rsp + 0x90]
+	test	al, 1
+	jne	.label_771
+	mov	r14, qword ptr [rsp + 0xa8]
 .label_829:
-	mov	rdi, qword ptr [rsp + 0xc8]
-.label_811:
-	mov	rax, qword ptr [rsp + 0x68]
-	test	rax, rax
-	je	.label_992
-	add	qword ptr [rax], rdi
-	mov	rax, rbx
-	jmp	.label_855
-.label_992:
-	mov	rax, rbx
-.label_855:
-	mov	rbp, qword ptr [rsp + 0xb8]
-.label_877:
-	cmp	rax, -1
-	mov	rbx, qword ptr [rsp + 0xd0]
-	je	.label_836
-	mov	r12d, 0xc
-	cmp	rax, -2
-	je	.label_816
-.label_814:
-	mov	qword ptr [rsp + 0xb8], rbp
-	mov	qword ptr [rsp + 0x50], r13
-	mov	qword ptr [rsp + 0xd0], rbx
-	mov	qword ptr [rsp + 0x1a8], rax
-	mov	rbx, qword ptr [rsp + 0x80]
-	mov	cl, byte ptr [rbx + 0x38]
-	cmp	qword ptr [rsp + 0x78], 2
-	mov	rbp, qword ptr [rsp + 0xf8]
-	jb	.label_890
-	mov	dl, cl
-	and	dl, 0x10
-	je	.label_904
-.label_890:
-	cmp	qword ptr [rbp + 0x98], 0
-	je	.label_905
-.label_904:
-	mov	rcx, qword ptr [rsp + 0x1b8]
-	mov	rsi, qword ptr [rcx + rax*8]
-	lea	rdi, [rsp + 0x100]
-	mov	rdx, rax
+	mov	al, byte ptr [rbx + 0x68]
+	test	al, 0x10
+	jne	.label_775
+	mov	qword ptr [rsp + 0xa8], r14
+	mov	rbp, qword ptr [rsp + 0x138]
+	jmp	.label_778
+.label_775:
+	mov	rbp, qword ptr [rsp + 0x138]
+	test	al, al
+	jns	.label_782
+	lea	rdi, [rsp + 0xf0]
+	mov	rsi, rbx
+	mov	rdx, rbp
 	call	check_halt_state_context
-	mov	qword ptr [rsp + 0x1b0], rax
-	mov	cl, byte ptr [rbx + 0x38]
-.label_905:
-	cmp	qword ptr [rsp + 0x78], 2
-	mov	r9, qword ptr [rsp + 0xa8]
-	jb	.label_911
-	and	cl, 0x10
-	jne	.label_911
-	test	byte ptr [rbp + 0xb0], 1
-	jne	.label_914
+	test	rax, rax
+	jne	.label_782
+	mov	qword ptr [rsp + 0xa8], r14
+.label_778:
+	cmp	qword ptr [rsp + 0x158], rbp
+	mov	r14, rbx
+	jg	.label_791
+	jmp	.label_750
+.label_782:
+	test	r12b, r12b
+	mov	r15, rbp
+	mov	eax, 1
+	mov	ecx, 0
+	jne	.label_900
+	jmp	.label_798
+.label_750:
+	mov	rcx, qword ptr [rsp + 0x60]
+	test	rcx, rcx
+	je	.label_797
+	mov	rax, qword ptr [rsp + 0xa8]
+	add	qword ptr [rcx], rax
+	mov	rbp, r15
+	jmp	.label_798
+.label_797:
+	mov	rbp, r15
+.label_798:
+	mov	byte ptr [rsp + 0xbe], r12b
+	cmp	rbp, -1
+	mov	r12, qword ptr [rsp + 0xc8]
+	mov	rbx, qword ptr [rsp + 0x78]
+	mov	r14, qword ptr [rsp + 0x70]
+	je	.label_804
+	mov	ecx, 0xc
+	cmp	rbp, -2
+	je	.label_757
+	cmp	qword ptr [rsp + 0x58], 1
+	seta	al
+	mov	qword ptr [rsp + 0x198], rbp
+	mov	rcx, qword ptr [rsp + 0x80]
+	test	byte ptr [rcx + 0x38], 0x10
+	sete	bl
+	and	bl, al
+	je	.label_911
+	mov	rax, qword ptr [rsp + 0x1a8]
+	mov	rsi, qword ptr [rax + rbp*8]
+	lea	rdi, [rsp + 0xf0]
+	mov	rdx, rbp
+	call	check_halt_state_context
+	mov	qword ptr [rsp + 0x1a0], rax
+	mov	r12, qword ptr [rsp + 0xe8]
+	jmp	.label_825
 .label_911:
-	cmp	qword ptr [rbp + 0x98], 0
-	je	.label_835
-.label_914:
-	mov	rbp, qword ptr [rsp + 0x1a8]
+	mov	r12, qword ptr [rsp + 0xe8]
+	cmp	qword ptr [r12 + 0x98], 0
+	je	.label_828
+	mov	rax, qword ptr [rsp + 0x1a8]
+	mov	rsi, qword ptr [rax + rbp*8]
+	lea	rdi, [rsp + 0xf0]
+	mov	rdx, rbp
+	call	check_halt_state_context
+	mov	qword ptr [rsp + 0x1a0], rax
+	test	bl, 1
+	je	.label_838
+.label_825:
+	test	byte ptr [r12 + 0xb0], 1
+	jne	.label_840
+.label_838:
+	cmp	qword ptr [r12 + 0x98], 0
+	je	.label_828
+.label_840:
+	mov	qword ptr [rsp + 0xe8], r12
 	movabs	rax, 0x1ffffffffffffffe
 	cmp	rbp, rax
-	ja	.label_807
-	mov	qword ptr [rsp + 0x80], rbx
-	mov	r13, qword ptr [rsp + 0x198]
-	mov	rax, qword ptr [rsp + 0x1b0]
-	mov	qword ptr [rsp + 0xb0], rax
-	lea	rbx, [rbp*8 + 8]
-	mov	rdi, rbx
+	ja	.label_761
+	mov	r14, qword ptr [rsp + 0x188]
+	mov	rax, qword ptr [rsp + 0x1a0]
+	mov	qword ptr [rsp + 0x98], rax
+	lea	r12, [rbp*8 + 8]
+	mov	rdi, r12
 	call	malloc
-	mov	r12, rax
-	test	r12, r12
+	test	rax, rax
+	mov	rbx, rax
 	mov	r15d, 0
-	je	.label_934
-	cmp	qword ptr [r13 + 0x98], 0
-	je	.label_938
-	mov	qword ptr [rsp + 0x98], r13
-	mov	rdi, rbx
+	je	.label_857
+	cmp	qword ptr [r14 + 0x98], 0
+	je	.label_860
+	mov	qword ptr [rsp + 0x90], r14
+	mov	rdi, r12
 	call	malloc
 	mov	r15, rax
 	test	r15, r15
-	je	.label_944
+	je	.label_895
 	xor	esi, esi
 	mov	rdi, r15
-	mov	rdx, rbx
+	mov	rdx, r12
 	call	memset
-	mov	qword ptr [rsp + 0x210], r12
-	mov	qword ptr [rsp + 0x218], r15
-	mov	rax, qword ptr [rsp + 0xb0]
-	mov	qword ptr [rsp + 0x220], rax
-	mov	qword ptr [rsp + 0x228], rbp
-	lea	rax, [rsp + 0x230]
+	mov	r12, rbx
+	mov	qword ptr [rsp + 0xa8], r12
+	mov	qword ptr [rsp + 0x200], r12
+	mov	qword ptr [rsp + 0x208], r15
+	mov	rax, qword ptr [rsp + 0x98]
+	mov	qword ptr [rsp + 0x210], rax
+	mov	qword ptr [rsp + 0x218], rbp
+	lea	rax, [rsp + 0x220]
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax], xmm0
 	mov	qword ptr [rax + 0x10], 0
-	lea	rdi, [rsp + 0x100]
-	lea	rsi, [rsp + 0x210]
+	lea	rdi, [rsp + 0xf0]
+	lea	rsi, [rsp + 0x200]
 	call	sift_states_backward
-	mov	rbx, r12
-	mov	qword ptr [rsp + 0xc8], rbx
-	mov	r12d, eax
-	test	r12d, r12d
-	mov	rdx, qword ptr [rsp + 0xe0]
-	mov	r13, qword ptr [rsp + 0x50]
-	jne	.label_823
-.label_885:
-	mov	rsi, qword ptr [rbx]
+	test	eax, eax
+	mov	rbx, qword ptr [rsp + 0x78]
+	mov	r14, qword ptr [rsp + 0x70]
+	jne	.label_883
+.label_927:
+	mov	rsi, qword ptr [r12]
 	test	rsi, rsi
-	mov	rax, rbx
-	jne	.label_979
+	jne	.label_805
 	cmp	qword ptr [r15], 0
 	mov	esi, 0
-	jne	.label_979
+	jne	.label_805
+	mov	r12, r15
 	test	rbp, rbp
-	jle	.label_982
-	mov	rax, qword ptr [rsp + 0x1b8]
+	jle	.label_893
+	mov	rax, qword ptr [rsp + 0x1a8]
 	dec	rbp
 	nop	word ptr cs:[rax + rax]
-.label_908:
+.label_907:
 	mov	rsi, qword ptr [rax + rbp*8]
 	test	rsi, rsi
-	je	.label_986
+	je	.label_922
 	test	byte ptr [rsi + 0x68], 0x10
-	jne	.label_990
-.label_986:
+	jne	.label_905
+.label_922:
 	lea	rcx, [rbp - 1]
 	inc	rbp
 	cmp	rbp, 2
 	mov	rbp, rcx
-	jge	.label_908
-	jmp	.label_982
-.label_990:
-	lea	r12, [rsp + 0x100]
-	mov	rdi, r12
+	jge	.label_907
+	jmp	.label_893
+.label_905:
+	lea	r15, [rsp + 0xf0]
+	mov	rdi, r15
 	mov	rdx, rbp
 	call	check_halt_state_context
-	mov	qword ptr [rsp + 0xb0], rax
+	mov	qword ptr [rsp + 0x98], rax
 	lea	rdx, [rbp*8 + 8]
 	xor	esi, esi
-	mov	rdi, r15
-	call	memset
-	mov	rbx, qword ptr [rsp + 0xc8]
-	mov	qword ptr [rsp + 0x210], rbx
-	mov	qword ptr [rsp + 0x218], r15
-	mov	rax, qword ptr [rsp + 0xb0]
-	mov	qword ptr [rsp + 0x220], rax
-	mov	qword ptr [rsp + 0x228], rbp
-	lea	rax, [rsp + 0x230]
-	xorps	xmm0, xmm0
-	movups	xmmword ptr [rax], xmm0
-	mov	qword ptr [rax + 0x10], 0
 	mov	rdi, r12
-	lea	rsi, [rsp + 0x210]
-	call	sift_states_backward
-	mov	rdx, qword ptr [rsp + 0xe0]
-	mov	r12d, eax
-	test	r12d, r12d
-	je	.label_885
-	jmp	.label_823
-.label_938:
-	mov	qword ptr [rsp + 0x210], r12
-	mov	qword ptr [rsp + 0xc8], r12
-	mov	qword ptr [rsp + 0x218], 0
-	mov	rax, qword ptr [rsp + 0xb0]
-	mov	qword ptr [rsp + 0x220], rax
-	mov	qword ptr [rsp + 0x228], rbp
-	lea	rax, [rsp + 0x230]
+	call	memset
+	mov	rcx, qword ptr [rsp + 0xa8]
+	mov	qword ptr [rsp + 0x200], rcx
+	mov	qword ptr [rsp + 0x208], r12
+	mov	rax, qword ptr [rsp + 0x98]
+	mov	qword ptr [rsp + 0x210], rax
+	mov	qword ptr [rsp + 0x218], rbp
+	lea	rax, [rsp + 0x220]
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax], xmm0
 	mov	qword ptr [rax + 0x10], 0
-	lea	rdi, [rsp + 0x100]
-	lea	rsi, [rsp + 0x210]
-	call	sift_states_backward
-	mov	r12d, eax
-	test	r12d, r12d
-	mov	r15d, 0
-	mov	rdx, qword ptr [rsp + 0xe0]
-	mov	r13, qword ptr [rsp + 0x50]
-	jne	.label_823
-	mov	rax, qword ptr [rsp + 0xc8]
-	cmp	qword ptr [rax], 0
-	mov	r15d, 0
-	jne	.label_824
-.label_982:
-	mov	qword ptr [rsp + 0xe0], rdx
-	mov	rdi, qword ptr [rsp + 0xc8]
-	call	free
 	mov	rdi, r15
+	mov	r15, r12
+	mov	r12, rcx
+	lea	rsi, [rsp + 0x200]
+	call	sift_states_backward
+	test	eax, eax
+	je	.label_927
+	mov	r12, r15
+	jmp	.label_745
+.label_860:
+	mov	qword ptr [rsp + 0xa8], rbx
+	mov	qword ptr [rsp + 0x200], rbx
+	mov	qword ptr [rsp + 0x208], 0
+	mov	rax, qword ptr [rsp + 0x98]
+	mov	qword ptr [rsp + 0x210], rax
+	mov	qword ptr [rsp + 0x218], rbp
+	lea	rax, [rsp + 0x220]
+	xorps	xmm0, xmm0
+	movups	xmmword ptr [rax], xmm0
+	mov	qword ptr [rax + 0x10], 0
+	lea	rdi, [rsp + 0xf0]
+	lea	rsi, [rsp + 0x200]
+	call	sift_states_backward
+	test	eax, eax
+	mov	r12d, 0
+	mov	rbx, qword ptr [rsp + 0x78]
+	mov	r14, qword ptr [rsp + 0x70]
+	jne	.label_745
+	mov	rax, qword ptr [rsp + 0xa8]
+	cmp	qword ptr [rax], 0
+	mov	r12d, 0
+	jne	.label_864
+.label_893:
+	mov	rdi, qword ptr [rsp + 0xa8]
 	call	free
-	mov	rbx, qword ptr [rsp + 0xd0]
-	mov	rbp, qword ptr [rsp + 0xb8]
-.label_836:
-	lea	rdi, [rsp + 0x100]
+	mov	rdi, r12
+	call	free
+	mov	r12, qword ptr [rsp + 0xc8]
+.label_804:
+	lea	rdi, [rsp + 0xf0]
 	call	match_ctx_clean
-.label_926:
-	mov	r15, qword ptr [rsp + 0x208]
-	add	r15, qword ptr [rsp + 0xe8]
-	mov	qword ptr [rsp + 0x208], r15
-	cmp	r15, r13
-	mov	r12d, 1
-	jl	.label_816
-	cmp	rbp, r15
-	jge	.label_870
-	jmp	.label_816
-.label_834:
-	test	al, al
-	js	.label_874
-	cmp	byte ptr [rsp + 0xc6], 0
-	mov	rbx, rdi
+.label_880:
+	mov	rbp, qword ptr [rsp + 0x1f8]
+	add	rbp, qword ptr [rsp + 0xd8]
+	mov	qword ptr [rsp + 0x1f8], rbp
+	cmp	rbp, rbx
 	mov	ecx, 1
-	jne	.label_876
-	mov	rax, rdi
-	jmp	.label_877
-.label_969:
-	mov	qword ptr [rsp + 0xb8], rbp
-	mov	qword ptr [rsp + 0xe0], rbx
-	mov	rax, qword ptr [r15 + 0x10]
-	test	rax, rax
-	jle	.label_882
-	mov	rbp, qword ptr [rsp + 0x198]
-	xor	ebx, ebx
-	jmp	.label_886
-.label_874:
-	mov	r12, rdi
-	lea	rdi, [rsp + 0x100]
-	mov	rsi, r15
-	mov	rdx, r12
+	jl	.label_757
+	mov	qword ptr [rsp + 0xc8], r12
+	cmp	r14, rbp
+	jge	.label_789
+	jmp	.label_757
+.label_784:
+	test	cl, cl
+	js	.label_794
+	test	r12b, r12b
+	mov	r15, r14
+	mov	eax, 1
+	jne	.label_795
+	mov	rbp, r14
+	jmp	.label_798
+.label_780:
+	mov	byte ptr [rsp + 0xbf], cl
+	lea	rbp, [rbx + 8]
+	xor	edx, edx
+	lea	rdi, [rsp + 0xf0]
+	mov	rsi, rbp
+	call	check_subexp_matching_top
+	mov	dword ptr [rsp + 0x254], eax
+	test	eax, eax
+	jne	.label_807
+	test	byte ptr [rbx + 0x68], 0x40
+	je	.label_810
+	lea	rdi, [rsp + 0xf0]
+	mov	rsi, rbp
+	call	transit_state_bkref
+	mov	dword ptr [rsp + 0x254], eax
+	test	eax, eax
+	jne	.label_815
+.label_810:
+	mov	dword ptr [rsp + 0x90], 0
+	mov	cl, byte ptr [rsp + 0xbf]
+	jmp	.label_773
+.label_794:
+	lea	rdi, [rsp + 0xf0]
+	mov	rsi, rbx
+	mov	rdx, r14
 	call	check_halt_state_context
 	cmp	rax, 1
-	sbb	rdx, rdx
+	sbb	r15, r15
 	test	rax, rax
-	sete	al
-	setne	cl
-	movzx	ecx, cl
-	or	al, byte ptr [rsp + 0xc6]
-	je	.label_921
-	or	rdx, r12
-	mov	rdi, r12
-	mov	rbx, rdx
-	jmp	.label_876
-.label_921:
-	mov	rax, r12
-	jmp	.label_877
-.label_819:
-	mov	qword ptr [rsp + 0xb8], rdi
-	mov	rdi, qword ptr [rsp + 0xc8]
-	jmp	.label_811
-.label_979:
+	sete	cl
+	setne	al
+	movzx	eax, al
+	or	cl, r12b
+	je	.label_824
+	or	r15, r14
+	jmp	.label_795
+.label_824:
+	mov	rbp, r14
+	jmp	.label_798
+.label_805:
+	mov	qword ptr [rsp + 0xa8], r12
 	test	rbp, rbp
-	js	.label_802
-	xor	ebx, ebx
-	jmp	.label_909
-.label_940:
-	mov	rax, qword ptr [rsp + 0xc8]
-	mov	rsi, qword ptr [rax + rbx*8 + 8]
-	inc	rbx
-.label_909:
-	mov	rdx, qword ptr [r15 + rbx*8]
+	js	.label_830
+	xor	r12d, r12d
+	jmp	.label_833
+.label_809:
+	mov	rax, qword ptr [rsp + 0xa8]
+	mov	rsi, qword ptr [rax + r12*8 + 8]
+	inc	r12
+.label_833:
+	mov	rdx, qword ptr [r15 + r12*8]
 	test	rsi, rsi
-	je	.label_912
-	mov	qword ptr [rsp + 0xc8], rax
+	je	.label_837
 	test	rdx, rdx
-	je	.label_913
+	je	.label_855
 	add	rsi, 8
 	add	rdx, 8
-	lea	r13, [rsp + 0x248]
-	mov	rdi, r13
+	lea	rbx, [rsp + 0x238]
+	mov	rdi, rbx
 	call	re_node_set_init_union
-	mov	r12d, eax
-	mov	dword ptr [rsp + 0x264], r12d
-	test	r12d, r12d
-	jne	.label_895
-	lea	rdi, [rsp + 0x264]
-	mov	rsi, qword ptr [rsp + 0x98]
-	mov	rdx, r13
-	call	re_acquire_state
-	mov	rcx, qword ptr [rsp + 0xc8]
-	mov	qword ptr [rcx + rbx*8], rax
-	mov	rdi, qword ptr [rsp + 0x258]
-	call	free
-	mov	r12d, dword ptr [rsp + 0x264]
-	test	r12d, r12d
-	je	.label_913
-	jmp	.label_895
-.label_912:
-	mov	qword ptr [rax + rbx*8], rdx
-	mov	qword ptr [rsp + 0xc8], rax
-.label_913:
-	cmp	rbx, rbp
-	jl	.label_940
-	jmp	.label_942
-.label_973:
-	mov	rdi, qword ptr [rsp + 0x1f8]
-	mov	rsi, r13
-	shl	rsi, 4
-	call	realloc
-	test	rax, rax
-	je	.label_852
-	add	r13, r13
-	mov	qword ptr [rsp + 0x1f8], rax
-	mov	qword ptr [rsp + 0x1f0], r13
-	jmp	.label_950
-.label_886:
-	mov	rcx, qword ptr [r15 + 0x18]
-	mov	r12, qword ptr [rcx + rbx*8]
-	mov	rcx, qword ptr [rbp]
-	mov	rdx, r12
-	shl	rdx, 4
-	movzx	esi, byte ptr [rcx + rdx + 8]
-	cmp	esi, 8
-	jne	.label_958
-	mov	rcx, qword ptr [rcx + rdx]
-	cmp	rcx, 0x3f
-	jg	.label_958
-	mov	rdx, qword ptr [rbp + 0xa0]
-	bt	rdx, rcx
-	jae	.label_958
-	mov	qword ptr [rsp + 0xc8], rdi
-	mov	qword ptr [rsp + 0x50], r13
-	mov	r13, qword ptr [rsp + 0x1e8]
-	cmp	r13, qword ptr [rsp + 0x1f0]
-	je	.label_973
-.label_950:
-	mov	edi, 1
-	mov	esi, 0x30
-	call	rpl_calloc
-	mov	rcx, qword ptr [rsp + 0x1e8]
-	mov	rdx, qword ptr [rsp + 0x1f8]
-	mov	qword ptr [rdx + rcx*8], rax
-	mov	rax, qword ptr [rsp + 0x1f8]
-	mov	rax, qword ptr [rax + rcx*8]
-	test	rax, rax
-	je	.label_852
-	mov	qword ptr [rax + 8], r12
-	inc	rcx
-	mov	qword ptr [rsp + 0x1e8], rcx
-	mov	qword ptr [rax], 0
-	mov	rax, qword ptr [r15 + 0x10]
-	mov	r13, qword ptr [rsp + 0x50]
-	mov	rdi, qword ptr [rsp + 0xc8]
-.label_958:
-	inc	rbx
-	cmp	rbx, rax
-	jl	.label_886
-.label_882:
-	mov	rbp, r13
-	mov	dword ptr [rsp + 0x264], 0
-	test	byte ptr [r15 + 0x68], 0x40
-	jne	.label_994
-	mov	dword ptr [rsp + 0x98], 0
-	mov	r13, rbp
-	mov	rbp, qword ptr [rsp + 0xb8]
-	mov	cl, byte ptr [rsp + 0xc7]
-	jmp	.label_808
-.label_994:
-	mov	r12, rdi
-	lea	rsi, [r15 + 8]
-	lea	rdi, [rsp + 0x100]
-	call	transit_state_bkref
-	mov	dword ptr [rsp + 0x264], eax
+	mov	dword ptr [rsp + 0x254], eax
 	test	eax, eax
-	jne	.label_804
-	mov	dword ptr [rsp + 0x98], 0
-	mov	r13, rbp
-	mov	rbp, qword ptr [rsp + 0xb8]
-	mov	cl, byte ptr [rsp + 0xc7]
-	mov	rdi, r12
-	jmp	.label_808
-.label_852:
-	mov	eax, 0xc
-	mov	rbx, qword ptr [rsp + 0xd0]
-	mov	r13, qword ptr [rsp + 0x50]
-	mov	rbp, qword ptr [rsp + 0xb8]
-	jmp	.label_814
-.label_802:
-	mov	qword ptr [rsp + 0xc8], rax
-.label_942:
-	xor	r12d, r12d
-.label_895:
-	mov	rdi, r15
+	jne	.label_845
+	lea	rdi, [rsp + 0x254]
+	mov	rsi, qword ptr [rsp + 0x90]
+	mov	rdx, rbx
+	call	re_acquire_state
+	mov	rcx, qword ptr [rsp + 0xa8]
+	mov	qword ptr [rcx + r12*8], rax
+	mov	rdi, qword ptr [rsp + 0x248]
 	call	free
-	test	r12d, r12d
-	mov	r15d, 0
-	mov	rdx, qword ptr [rsp + 0xe0]
-	mov	r13, qword ptr [rsp + 0x50]
-	je	.label_824
-.label_823:
-	mov	qword ptr [rsp + 0x50], r13
-	mov	r13, rdx
-	mov	rdi, qword ptr [rsp + 0xc8]
-	call	free
-	mov	rdi, r15
-	call	free
-	test	r12d, r12d
-	mov	rbp, qword ptr [rsp + 0xf8]
-	mov	r9, qword ptr [rsp + 0xa8]
-	mov	rbx, qword ptr [rsp + 0x80]
-	je	.label_835
-	cmp	r12d, 1
-	mov	rbx, qword ptr [rsp + 0xd0]
-	mov	qword ptr [rsp + 0xe0], r13
-	mov	r13, qword ptr [rsp + 0x50]
-	mov	rbp, qword ptr [rsp + 0xb8]
-	je	.label_836
-	jmp	.label_816
-.label_804:
-	cdqe	
-	mov	r13, rbp
-	jmp	.label_855
-.label_849:
-	mov	rdi, qword ptr [rsp + 0xc8]
-	jmp	.label_811
-.label_870:
-	mov	rax, qword ptr [rsp + 0xa0]
-	cmp	eax, 4
-	ja	.label_860
-	jmp	qword ptr [word ptr [+ (rax * 8) + label_864]]
-.label_2706:
-	cmp	r15, r13
-	jge	.label_964
-	mov	rax, r15
-	mov	rcx, qword ptr [rsp + 0xf0]
-	mov	rdx, qword ptr [rsp + 0xd8]
-	jmp	.label_866
-.label_2708:
-	cmp	r15, rbp
-	mov	rcx, qword ptr [rsp + 0xd8]
-	jge	.label_851
-.label_879:
-	movzx	eax, byte ptr [rcx + r15]
-	movzx	eax, byte ptr [rbx + rax]
-	cmp	byte ptr [r14 + rax], 0
-	jne	.label_851
-	inc	r15
-	mov	qword ptr [rsp + 0x208], r15
-	cmp	r15, rbp
-	jl	.label_879
-	jmp	.label_851
-.label_860:
-	mov	rax, qword ptr [rsp + 0x128]
-	jmp	.label_883
-	nop	word ptr cs:[rax + rax]
-.label_863:
-	add	r15, qword ptr [rsp + 0xe8]
-	mov	qword ptr [rsp + 0x208], r15
-	cmp	r15, r13
-	mov	r12d, 1
-	jl	.label_816
-	cmp	r15, rbp
-	jle	.label_883
-	jmp	.label_816
-.label_907:
-	lea	rdi, [rsp + 0x100]
-	mov	rsi, r15
-	mov	edx, dword ptr [rsp + 0x2b0]
-	call	re_string_reconstruct
-	mov	r12d, eax
-	test	r12d, r12d
-	jne	.label_816
-	mov	r15, qword ptr [rsp + 0x208]
-	mov	rax, qword ptr [rsp + 0x128]
-	mov	rcx, r15
-	sub	rcx, rax
-	jmp	.label_903
-	nop	word ptr cs:[rax + rax]
-.label_883:
-	mov	rcx, r15
-	sub	rcx, rax
-	cmp	rcx, qword ptr [rsp + 0x138]
-	jae	.label_907
-.label_903:
-	mov	rdx, qword ptr [rsp + 0xf0]
-	cmp	r15, rdx
-	mov	edx, 0
-	jge	.label_910
-	mov	rdx, qword ptr [rsp + 0x108]
-	movzx	edx, byte ptr [rdx + rcx]
-.label_910:
-	cmp	byte ptr [r14 + rdx], 0
-	je	.label_863
-	jmp	.label_917
-.label_2707:
-	cmp	r15, rbp
-	mov	rcx, qword ptr [rsp + 0xd8]
-	jge	.label_851
-	nop	dword ptr [rax + rax]
-.label_924:
-	movzx	eax, byte ptr [rcx + r15]
-	cmp	byte ptr [r14 + rax], 0
-	jne	.label_851
-	inc	r15
-	mov	qword ptr [rsp + 0x208], r15
-	cmp	r15, rbp
-	jl	.label_924
-.label_851:
-	mov	qword ptr [rsp + 0xd8], rcx
-	cmp	r15, rbp
-	jne	.label_917
+	mov	eax, dword ptr [rsp + 0x254]
+	test	eax, eax
+	je	.label_855
+	jmp	.label_845
+.label_837:
+	mov	rax, qword ptr [rsp + 0xa8]
+	mov	qword ptr [rax + r12*8], rdx
+.label_855:
+	cmp	r12, rbp
+	jl	.label_809
+.label_830:
 	xor	eax, eax
-	mov	rcx, qword ptr [rsp + 0xf0]
-	cmp	rbp, rcx
-	mov	rcx, qword ptr [rsp + 0xd8]
-	jge	.label_929
-	movzx	eax, byte ptr [rcx + rbp]
-.label_929:
-	test	rbx, rbx
-	je	.label_937
-	movzx	eax, byte ptr [rbx + rax]
-.label_937:
-	mov	r12d, 1
-	cmp	byte ptr [r14 + rax], 0
-	mov	r15, rbp
-	jne	.label_917
-	jmp	.label_816
-.label_964:
-	test	rbx, rbx
-	mov	rcx, qword ptr [rsp + 0xf0]
-	mov	rdx, qword ptr [rsp + 0xd8]
-	je	.label_943
-	nop	
-.label_956:
-	cmp	r15, rcx
-	mov	eax, 0
-	jge	.label_947
-	movzx	eax, byte ptr [rdx + r15]
-.label_947:
-	movzx	eax, byte ptr [rbx + rax]
-	cmp	byte ptr [r14 + rax], 0
-	jne	.label_953
-	lea	rax, [r15 - 1]
-	mov	qword ptr [rsp + 0x208], rax
-	cmp	r15, r13
-	mov	r15, rax
-	jg	.label_956
-	jmp	.label_866
-.label_943:
-	cmp	r15, rcx
-	mov	eax, 0
-	jge	.label_961
-	movzx	eax, byte ptr [rdx + r15]
-.label_961:
-	cmp	byte ptr [r14 + rax], 0
-	jne	.label_923
-	lea	rax, [r15 - 1]
-	mov	qword ptr [rsp + 0x208], rax
-	cmp	r15, r13
-	mov	r15, rax
-	jg	.label_943
-	jmp	.label_866
-.label_953:
-	mov	rax, r15
-	jmp	.label_866
-.label_923:
-	mov	rax, r15
-.label_866:
-	mov	qword ptr [rsp + 0xd8], rdx
-	mov	qword ptr [rsp + 0xf0], rcx
-	mov	r12d, 1
-	cmp	rax, r13
-	mov	r15, rax
-	jl	.label_816
-.label_917:
-	lea	rdi, [rsp + 0x100]
-	mov	rsi, r15
-	mov	edx, dword ptr [rsp + 0x2b0]
-	call	re_string_reconstruct
-	mov	r12d, eax
-	test	r12d, r12d
-	je	.label_981
-	jmp	.label_816
-.label_977:
-	cmp	eax, 0xc
-	jne	.label_983
+.label_845:
+	mov	rdi, r15
+	mov	ebx, eax
+	call	free
+	mov	eax, ebx
+	test	eax, eax
+	mov	r12d, 0
+	mov	r14, qword ptr [rsp + 0x70]
+	mov	rbx, qword ptr [rsp + 0x78]
+	je	.label_864
+	jmp	.label_745
+.label_883:
+	mov	qword ptr [rsp + 0xa8], r12
+	mov	r12, r15
+.label_745:
+	mov	r15, rbx
+	mov	rdi, qword ptr [rsp + 0xa8]
+	mov	ebp, eax
+	call	free
+	mov	rdi, r12
+	call	free
+	test	ebp, ebp
+	mov	eax, ebp
+	mov	r12, qword ptr [rsp + 0xe8]
+	je	.label_828
+	mov	ecx, eax
+	cmp	ecx, 1
+	mov	r12, qword ptr [rsp + 0xc8]
+	mov	rbx, r15
+	je	.label_804
+	jmp	.label_757
 .label_807:
-	mov	r12d, 0xc
-.label_816:
-	mov	rdi, qword ptr [rsp + 0x1b8]
+	movsxd	rbp, eax
+	jmp	.label_798
+.label_815:
+	movsxd	rbp, eax
+	jmp	.label_798
+.label_789:
+	mov	rax, qword ptr [rsp + 0xb0]
+	cmp	eax, 4
+	ja	.label_881
+	jmp	qword ptr [word ptr [+ (rax * 8) + label_885]]
+.label_2377:
+	cmp	rbp, rbx
+	mov	rax, rbp
+	mov	rcx, qword ptr [rsp + 0xe0]
+	mov	rdx, qword ptr [rsp + 0xc0]
+	mov	rsi, qword ptr [rsp + 0xd0]
+	jl	.label_856
+	nop	word ptr cs:[rax + rax]
+.label_908:
+	xor	eax, eax
+	cmp	rbp, rcx
+	jge	.label_898
+	movzx	eax, byte ptr [rdx + rbp]
+.label_898:
+	test	rsi, rsi
+	je	.label_901
+	movzx	eax, byte ptr [rsi + rax]
+.label_901:
+	cmp	byte ptr [r13 + rax], 0
+	jne	.label_903
+	lea	rax, [rbp - 1]
+	mov	qword ptr [rsp + 0x1f8], rax
+	cmp	rbp, rbx
+	mov	rbp, rax
+	jg	.label_908
+	jmp	.label_856
+.label_881:
+	mov	rax, qword ptr [rsp + 0x118]
+	jmp	.label_817
+	nop	word ptr cs:[rax + rax]
+.label_752:
+	add	rbp, qword ptr [rsp + 0xd8]
+	mov	qword ptr [rsp + 0x1f8], rbp
+	cmp	rbp, rbx
+	mov	ecx, 1
+	jl	.label_757
+	cmp	rbp, r14
+	jle	.label_817
+	jmp	.label_757
+.label_744:
+	lea	rdi, [rsp + 0xf0]
+	mov	rsi, rbp
+	mov	edx, dword ptr [rsp + 0x2a0]
+	call	re_string_reconstruct
+	mov	ecx, eax
+	test	ecx, ecx
+	jne	.label_757
+	mov	rbp, qword ptr [rsp + 0x1f8]
+	mov	rax, qword ptr [rsp + 0x118]
+	mov	rcx, rbp
+	sub	rcx, rax
+	jmp	.label_890
+	nop	word ptr cs:[rax + rax]
+.label_817:
+	mov	rcx, rbp
+	sub	rcx, rax
+	cmp	rcx, qword ptr [rsp + 0x128]
+	jae	.label_744
+.label_890:
+	mov	rdx, qword ptr [rsp + 0xe0]
+	cmp	rbp, rdx
+	mov	edx, 0
+	jge	.label_748
+	mov	rdx, qword ptr [rsp + 0xf8]
+	movzx	edx, byte ptr [rdx + rcx]
+.label_748:
+	cmp	byte ptr [r13 + rdx], 0
+	je	.label_752
+	jmp	.label_755
+.label_2378:
+	cmp	rbp, r14
+	mov	rcx, qword ptr [rsp + 0xc0]
+	mov	rdx, qword ptr [rsp + 0xd0]
+	jge	.label_758
+	nop	word ptr cs:[rax + rax]
+.label_765:
+	movzx	eax, byte ptr [rcx + rbp]
+	cmp	byte ptr [r13 + rax], 0
+	jne	.label_758
+	inc	rbp
+	mov	qword ptr [rsp + 0x1f8], rbp
+	cmp	rbp, r14
+	jl	.label_765
+	jmp	.label_758
+.label_2379:
+	cmp	rbp, r14
+	mov	rcx, qword ptr [rsp + 0xc0]
+	mov	rdx, qword ptr [rsp + 0xd0]
+	jge	.label_758
+	nop	word ptr cs:[rax + rax]
+.label_777:
+	movzx	eax, byte ptr [rcx + rbp]
+	movzx	eax, byte ptr [rdx + rax]
+	cmp	byte ptr [r13 + rax], 0
+	jne	.label_758
+	inc	rbp
+	mov	qword ptr [rsp + 0x1f8], rbp
+	cmp	rbp, r14
+	jl	.label_777
+.label_758:
+	mov	qword ptr [rsp + 0xd0], rdx
+	mov	qword ptr [rsp + 0xc0], rcx
+	cmp	rbp, r14
+	jne	.label_755
+	xor	eax, eax
+	mov	rcx, qword ptr [rsp + 0xe0]
+	cmp	r14, rcx
+	mov	rcx, qword ptr [rsp + 0xc0]
+	jge	.label_783
+	movzx	eax, byte ptr [rcx + r14]
+.label_783:
+	mov	rcx, qword ptr [rsp + 0xd0]
+	test	rcx, rcx
+	je	.label_792
+	movzx	eax, byte ptr [rcx + rax]
+.label_792:
+	mov	ecx, 1
+	cmp	byte ptr [r13 + rax], 0
+	mov	rbp, r14
+	jne	.label_755
+	jmp	.label_757
+.label_903:
+	mov	rax, rbp
+.label_856:
+	mov	ecx, 1
+	cmp	rax, rbx
+	mov	rbp, rax
+	jl	.label_757
+.label_755:
+	lea	rdi, [rsp + 0xf0]
+	mov	rsi, rbp
+	mov	edx, dword ptr [rsp + 0x2a0]
+	call	re_string_reconstruct
+	mov	ecx, eax
+	test	ecx, ecx
+	je	.label_806
+	jmp	.label_757
+.label_896:
+	cmp	eax, 0xc
+	jne	.label_808
+.label_761:
+	mov	ecx, 0xc
+.label_757:
+	mov	ebx, ecx
+	mov	rdi, qword ptr [rsp + 0x1a8]
 	call	free
-	mov	rax, qword ptr [rsp + 0xf8]
+	mov	rax, qword ptr [rsp + 0xe8]
 	cmp	qword ptr [rax + 0x98], 0
-	je	.label_989
-	lea	rdi, [rsp + 0x100]
+	je	.label_814
+	lea	rdi, [rsp + 0xf0]
 	call	match_ctx_clean
-	mov	rdi, qword ptr [rsp + 0x1f8]
+	mov	rdi, qword ptr [rsp + 0x1e8]
 	call	free
-	mov	rdi, qword ptr [rsp + 0x1d8]
+	mov	rdi, qword ptr [rsp + 0x1c8]
 	call	free
-.label_989:
-	mov	rdi, qword ptr [rsp + 0x110]
+.label_814:
+	mov	rdi, qword ptr [rsp + 0x100]
 	call	free
-	mov	rdi, qword ptr [rsp + 0x118]
-	call	free
-	cmp	byte ptr [rsp + 0x18b], 0
-	je	.label_827
 	mov	rdi, qword ptr [rsp + 0x108]
 	call	free
-.label_827:
-	mov	eax, r12d
-	add	rsp, 0x268
+	cmp	byte ptr [rsp + 0x17b], 0
+	je	.label_854
+	mov	rdi, qword ptr [rsp + 0xf8]
+	call	free
+.label_854:
+	mov	eax, ebx
+.label_835:
+	add	rsp, 0x258
 	pop	rbx
 	pop	r12
 	pop	r13
@@ -10896,73 +10148,83 @@ re_search_internal:
 	pop	r15
 	pop	rbp
 	ret	
-.label_919:
-	cmp	dword ptr [rsp + 0x264], 0xc
-	je	.label_807
+.label_851:
+	cmp	qword ptr [r10 + 0x10], 0
+	je	.label_834
+	cmp	byte ptr [rdi + 0x38], 0
+	js	.label_836
+.label_834:
+	xor	ecx, ecx
+	test	rbp, rbp
+	je	.label_915
+	test	r8, r8
+	mov	ebp, 0
+	mov	eax, 1
+	jne	.label_835
+	jmp	.label_842
+.label_772:
+	cmp	dword ptr [rsp + 0x254], 0xc
+	je	.label_761
 	mov	edi, OFFSET FLAT:.str.25
 	mov	esi, OFFSET FLAT:.str.22_0
 	mov	edx, 0x435
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.check_matching
 	call	__assert_fail
-.label_899:
-	xor	r15d, r15d
-	jmp	.label_813
-.label_824:
-	mov	rdi, qword ptr [rsp + 0x1b8]
+.label_836:
+	mov	rcx, r8
+	jmp	.label_842
+.label_915:
+	xor	ebp, ebp
+	jmp	.label_842
+.label_864:
+	mov	rdi, qword ptr [rsp + 0x1a8]
 	call	free
-	mov	rax, qword ptr [rsp + 0xc8]
-	mov	qword ptr [rsp + 0x1b8], rax
-	mov	rax, qword ptr [rsp + 0xb0]
-	mov	qword ptr [rsp + 0x1b0], rax
-	mov	qword ptr [rsp + 0x1a8], rbp
-	mov	rbp, qword ptr [rsp + 0xf8]
-	mov	r9, qword ptr [rsp + 0xa8]
-	mov	rbx, qword ptr [rsp + 0x80]
-.label_835:
-	cmp	r9, qword ptr [rsp + 0x2a0]
-	lea	r13, [rsp + 0x138]
-	jne	.label_830
-	mov	qword ptr [rsp + 0xf8], rbp
-	xor	r12d, r12d
-	jmp	.label_816
-.label_830:
-	mov	r8, rbx
-	mov	qword ptr [rsp + 0xf8], rbp
-	cmp	qword ptr [rsp + 0x78], 2
-	jb	.label_837
-	mov	rsi, qword ptr [rsp + 0x2a0]
+	mov	rax, qword ptr [rsp + 0xa8]
+	mov	qword ptr [rsp + 0x1a8], rax
+	mov	rax, qword ptr [rsp + 0x98]
+	mov	qword ptr [rsp + 0x1a0], rax
+	mov	qword ptr [rsp + 0x198], rbp
+	mov	r12, qword ptr [rsp + 0xe8]
+.label_828:
+	mov	qword ptr [rsp + 0xe8], r12
+	xor	ecx, ecx
+	mov	rax, qword ptr [rsp + 0x290]
+	cmp	qword ptr [rsp + 0xa0], rax
+	mov	r14, qword ptr [rsp + 0x298]
+	je	.label_757
+	cmp	qword ptr [rsp + 0x58], 2
+	jb	.label_866
+	mov	rsi, qword ptr [rsp + 0x290]
 	lea	edx, [rsi + 7]
-	sub	edx, r9d
+	mov	rdi, qword ptr [rsp + 0xa0]
+	sub	edx, edi
 	lea	rax, [rsi - 2]
-	sub	rax, r9
+	sub	rax, rdi
 	mov	ecx, 1
 	test	dl, 7
-	je	.label_847
-	mov	rcx, qword ptr [rsp + 0x2a8]
-	lea	rdx, [rcx + 0x10]
+	je	.label_868
+	lea	rdx, [r14 + 0x10]
 	lea	esi, [rsi + 7]
-	sub	esi, r9d
+	sub	esi, edi
 	and	esi, 7
 	xor	edi, edi
-.label_858:
+.label_874:
 	mov	rcx, rdi
 	mov	qword ptr [rdx + 8], -1
 	mov	qword ptr [rdx], -1
 	lea	rdi, [rcx + 1]
 	add	rdx, 0x10
 	cmp	rsi, rdi
-	jne	.label_858
+	jne	.label_874
 	add	rcx, 2
-.label_847:
+.label_868:
 	cmp	rax, 7
-	jb	.label_837
-	mov	rax, qword ptr [rsp + 0x2a0]
-	sub	rax, r9
+	jb	.label_866
+	mov	rax, qword ptr [rsp + 0x58]
 	sub	rax, rcx
 	shl	rcx, 4
-	mov	rdx, qword ptr [rsp + 0x2a8]
-	lea	rcx, [rcx + rdx + 0x70]
-.label_871:
+	lea	rcx, [rcx + r14 + 0x70]
+.label_892:
 	mov	qword ptr [rcx - 0x68], -1
 	mov	qword ptr [rcx - 0x70], -1
 	mov	qword ptr [rcx - 0x58], -1
@@ -10981,126 +10243,122 @@ re_search_internal:
 	mov	qword ptr [rcx], -1
 	add	rcx, 0x80
 	add	rax, -8
-	jne	.label_871
-.label_837:
-	mov	rbp, r9
-	mov	rax, qword ptr [rsp + 0x2a8]
-	mov	rcx, rax
-	mov	qword ptr [rcx], 0
-	mov	rax, qword ptr [rsp + 0x1a8]
-	mov	qword ptr [rcx + 8], rax
-	mov	r14, rcx
-	cmp	qword ptr [rsp + 0x78], 2
-	jb	.label_902
-	mov	al, byte ptr [r8 + 0x38]
+	jne	.label_892
+.label_866:
+	mov	qword ptr [r14], 0
+	mov	rax, qword ptr [rsp + 0x198]
+	mov	qword ptr [r14 + 8], rax
+	cmp	qword ptr [rsp + 0x58], 2
+	jb	.label_918
+	mov	rax, qword ptr [rsp + 0x80]
+	mov	al, byte ptr [rax + 0x38]
 	and	al, 0x10
-	jne	.label_902
-	mov	rax, qword ptr [rsp + 0xf8]
+	jne	.label_918
+	mov	rax, qword ptr [rsp + 0xe8]
 	test	byte ptr [rax + 0xb0], 1
-	jne	.label_818
+	jne	.label_921
 	xor	eax, eax
-	jmp	.label_840
-.label_944:
-	mov	rax, r12
-	mov	qword ptr [rsp + 0x58], rax
-.label_934:
-	mov	rdi, qword ptr [rsp + 0x58]
+	jmp	.label_925
+.label_895:
+	mov	rax, rbx
+	mov	qword ptr [rsp + 0x48], rax
+.label_857:
+	mov	rdi, qword ptr [rsp + 0x48]
 	call	free
 	mov	rdi, r15
 	call	free
-	jmp	.label_807
-.label_818:
+	jmp	.label_761
+.label_921:
 	cmp	qword ptr [rax + 0x98], 0
 	setg	al
-.label_840:
-	mov	rdi, qword ptr [r8]
+.label_925:
+	mov	rdi, qword ptr [rsp + 0x80]
 	movzx	r8d, al
-	lea	rsi, [rsp + 0x100]
-	mov	rdx, qword ptr [rsp + 0x78]
+	lea	rsi, [rsp + 0xf0]
+	mov	rdx, qword ptr [rsp + 0x58]
 	mov	rcx, r14
 	call	set_regs
-	mov	r12d, eax
-	test	r12d, r12d
-	jne	.label_816
-.label_902:
-	cmp	byte ptr [rsp + 0x18c], 0
-	jne	.label_927
-	mov	rax, qword ptr [rsp + 0x208]
-	mov	rcx, qword ptr [rsp + 0x2a0]
-	mov	rbx, rbp
-	sub	ecx, ebx
-	xor	edx, edx
-	test	cl, 1
-	mov	r8, qword ptr [rsp + 0xf8]
-	je	.label_930
-	mov	rcx, qword ptr [r14]
-	mov	edx, 1
-	cmp	rcx, -1
-	je	.label_930
-	add	rcx, rax
-	mov	qword ptr [r14], rcx
-	add	qword ptr [r14 + 8], rax
-	mov	edx, 1
-.label_930:
-	cmp	qword ptr [rsp + 0x70], rbx
-	je	.label_845
-	mov	rcx, qword ptr [rsp + 0x2a0]
-	sub	rcx, rbx
-	sub	rcx, rdx
-	shl	rdx, 4
-	lea	rdx, [rdx + r14 + 0x18]
-.label_920:
-	mov	rsi, qword ptr [rdx - 0x18]
-	cmp	rsi, -1
-	je	.label_954
-	add	rsi, rax
-	mov	qword ptr [rdx - 0x18], rsi
-	add	qword ptr [rdx - 0x10], rax
-.label_954:
-	mov	rsi, qword ptr [rdx - 8]
-	cmp	rsi, -1
-	je	.label_896
-	add	rsi, rax
-	mov	qword ptr [rdx - 8], rsi
-	add	qword ptr [rdx], rax
-.label_896:
-	add	rdx, 0x20
-	add	rcx, -2
-	jne	.label_920
-.label_845:
-	test	rbx, rbx
-	jle	.label_933
-	lea	rcx, [rbx - 1]
+	mov	ecx, eax
+	test	ecx, ecx
+	jne	.label_757
+.label_918:
+	mov	r10b, byte ptr [rsp + 0x17c]
+	mov	r8, qword ptr [rsp + 0x108]
+	lea	rdx, [r14 + 8]
+	xor	ecx, ecx
+	mov	r9, qword ptr [rsp + 0xa0]
+	mov	rax, qword ptr [rsp + 0x290]
+	lea	r11, [rsp + 0x128]
+	jmp	.label_760
+.label_781:
+	mov	rbx, qword ptr [rsp + 0x120]
+	cmp	rdi, rbx
+	lea	rdi, [r8 + rdi*8]
+	cmove	rdi, r11
+	mov	rdi, qword ptr [rdi]
+	mov	qword ptr [rdx - 8], rdi
+	mov	rsi, rcx
+	shl	rsi, 4
+	lea	rbp, [r14 + rsi + 8]
+	mov	rsi, qword ptr [rdx]
+	cmp	rsi, rbx
+	lea	rsi, [r8 + rsi*8]
+	cmove	rsi, r11
+	mov	rbx, qword ptr [rsi]
+	mov	qword ptr [rdx], rbx
+	jmp	.label_871
+.label_760:
+	mov	rdi, qword ptr [rdx - 8]
+	cmp	rdi, -1
+	je	.label_779
+	test	r10b, r10b
+	jne	.label_781
+	mov	rbx, qword ptr [rdx]
+	mov	rbp, rdx
+.label_871:
+	mov	rsi, qword ptr [rsp + 0x1f8]
+	add	rdi, rsi
+	mov	qword ptr [rdx - 8], rdi
+	add	rbx, rsi
+	mov	qword ptr [rbp], rbx
+.label_779:
+	inc	rcx
+	add	rdx, 0x10
+	dec	rax
+	cmp	r9, rax
+	jne	.label_760
+	test	r9, r9
+	mov	rdi, qword ptr [rsp + 0xe8]
+	jle	.label_790
+	lea	rcx, [r9 - 1]
 	xor	eax, eax
-	test	bl, 3
-	je	.label_970
-	mov	rdx, qword ptr [rsp + 0x2a0]
-	sub	rdx, rbx
+	test	r9b, 3
+	je	.label_839
+	mov	rdx, qword ptr [rsp + 0x58]
 	shl	rdx, 4
 	add	rdx, r14
-	mov	esi, ebx
+	mov	esi, r9d
 	and	esi, 3
 	xor	eax, eax
-.label_985:
+.label_799:
 	inc	rax
 	mov	qword ptr [rdx + 8], -1
 	mov	qword ptr [rdx], -1
 	add	rdx, 0x10
 	cmp	rsi, rax
-	jne	.label_985
-.label_970:
+	jne	.label_799
+.label_839:
 	cmp	rcx, 3
-	jb	.label_933
-	mov	rcx, rbx
+	jb	.label_790
+	mov	rcx, r9
 	sub	rcx, rax
-	mov	rdx, qword ptr [rsp + 0x2a0]
-	sub	rdx, rbx
+	mov	rdx, qword ptr [rsp + 0x58]
 	shl	rdx, 4
 	add	rdx, r14
 	shl	rax, 4
 	add	rax, rdx
 	xor	edx, edx
-.label_967:
+.label_875:
 	mov	qword ptr [rax + rdx + 8], -1
 	mov	qword ptr [rax + rdx], -1
 	mov	qword ptr [rax + rdx + 0x18], -1
@@ -11111,81 +10369,47 @@ re_search_internal:
 	mov	qword ptr [rax + rdx + 0x30], -1
 	add	rdx, 0x40
 	add	rcx, -4
-	jne	.label_967
-.label_933:
-	mov	rax, qword ptr [r8 + 0xe0]
-	mov	qword ptr [rsp + 0xf8], r8
+	jne	.label_875
+.label_790:
+	mov	rax, qword ptr [rdi + 0xe0]
+	xor	ecx, ecx
 	test	rax, rax
-	je	.label_998
-	cmp	qword ptr [rsp + 0x78], 2
-	mov	r12d, 0
-	jb	.label_816
-	sub	qword ptr [rsp + 0x70], rbx
-	lea	rcx, [r14 + 0x18]
+	je	.label_757
+	cmp	qword ptr [rsp + 0x58], 2
+	jb	.label_757
+	sub	qword ptr [rsp + 0x68], r9
+	lea	rdi, [r14 + 0x18]
 	xor	edx, edx
-	xor	r12d, r12d
-.label_832:
+.label_843:
 	mov	rsi, qword ptr [rax + rdx*8]
 	cmp	rdx, rsi
-	je	.label_805
+	je	.label_762
 	shl	rsi, 4
 	mov	rsi, qword ptr [rsi + r14 + 0x10]
-	mov	qword ptr [rcx - 8], rsi
-	mov	rsi, qword ptr [rsp + 0xf8]
+	mov	qword ptr [rdi - 8], rsi
+	mov	rsi, qword ptr [rsp + 0xe8]
 	mov	rsi, qword ptr [rsi + 0xe0]
 	mov	rsi, qword ptr [rsi + rdx*8]
 	shl	rsi, 4
 	mov	rsi, qword ptr [rsi + r14 + 0x18]
-	mov	qword ptr [rcx], rsi
-.label_805:
+	mov	qword ptr [rdi], rsi
+.label_762:
 	inc	rdx
-	add	rcx, 0x10
-	cmp	qword ptr [rsp + 0x70], rdx
-	jne	.label_832
-	jmp	.label_816
-.label_998:
-	xor	r12d, r12d
-	jmp	.label_816
-.label_927:
-	mov	rax, qword ptr [rsp + 0x118]
-	lea	rcx, [r14 + 8]
-	mov	rdx, qword ptr [rsp + 0x78]
-	mov	r8, qword ptr [rsp + 0xf8]
-	mov	rbx, rbp
-.label_843:
-	mov	rsi, qword ptr [rcx - 8]
-	cmp	rsi, -1
-	je	.label_826
-	mov	rdi, qword ptr [rsp + 0x130]
-	cmp	rsi, rdi
-	lea	rsi, [rax + rsi*8]
-	cmove	rsi, r13
-	mov	rsi, qword ptr [rsi]
-	mov	qword ptr [rcx - 8], rsi
-	mov	rbp, qword ptr [rcx]
-	cmp	rbp, rdi
-	lea	rdi, [rax + rbp*8]
-	cmove	rdi, r13
-	mov	rbp, qword ptr [rsp + 0x208]
-	add	rsi, rbp
-	add	rbp, qword ptr [rdi]
-	mov	qword ptr [rcx - 8], rsi
-	mov	qword ptr [rcx], rbp
-.label_826:
-	add	rcx, 0x10
-	dec	rdx
+	add	rdi, 0x10
+	xor	ecx, ecx
+	cmp	qword ptr [rsp + 0x68], rdx
 	jne	.label_843
-	jmp	.label_845
-.label_983:
+	jmp	.label_757
+.label_808:
 	mov	edi, OFFSET FLAT:.str.25
 	mov	esi, OFFSET FLAT:.str.22_0
 	mov	edx, 0x46c
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.check_matching
 	call	__assert_fail
-	nop	word ptr cs:[rax + rax]
+	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40b8f0
+	#Procedure 0x40ae40
 
 	.globl rpl_re_match
 	.type rpl_re_match, @function
@@ -11200,7 +10424,7 @@ rpl_re_match:
 	ret	
 	.section	.text
 	.align	16
-	#Procedure 0x40b910
+	#Procedure 0x40ae60
 
 	.globl re_search_stub
 	.type re_search_stub, @function
@@ -11212,121 +10436,82 @@ re_search_stub:
 	push	r12
 	push	rbx
 	sub	rsp, 0x48
-	mov	r15, rcx
 	mov	rbx, rdi
-	test	r15, r15
-	mov	rbp, -1
-	js	.label_1010
+	test	rcx, rcx
+	mov	r14, -1
+	js	.label_928
 	mov	qword ptr [rsp + 0x30], rsi
 	mov	qword ptr [rsp + 0x38], r9
-	cmp	r15, rdx
-	jg	.label_1010
-	mov	rsi, qword ptr [rsp + 0x80]
+	cmp	rcx, rdx
+	jg	.label_928
+	mov	r14, qword ptr [rsp + 0x80]
 	xor	r12d, r12d
-	add	r8, r15
+	add	r8, rcx
 	cmovns	r12, r8
 	cmp	r8, rdx
 	cmovg	r12, rdx
-	mov	qword ptr [rsp + 0x40], rdx
 	movzx	r13d, byte ptr [rbx + 0x38]
-	cmp	r12, r15
+	cmp	r12, rcx
 	mov	al, r13b
-	jle	.label_1006
+	jle	.label_934
 	test	r13b, 8
 	mov	al, r13b
-	jne	.label_1006
-	mov	rbp, qword ptr [rbx + 0x20]
-	test	rbp, rbp
+	jne	.label_934
+	mov	rax, qword ptr [rbx + 0x20]
+	test	rax, rax
 	mov	al, r13b
-	je	.label_1006
-	mov	r14, qword ptr [rbx]
-	xorps	xmm0, xmm0
-	movups	xmmword ptr [rbp + 0xf0], xmm0
-	movups	xmmword ptr [rbp + 0xe0], xmm0
-	movups	xmmword ptr [rbp + 0xd0], xmm0
-	movups	xmmword ptr [rbp + 0xc0], xmm0
-	movups	xmmword ptr [rbp + 0xb0], xmm0
-	movups	xmmword ptr [rbp + 0xa0], xmm0
-	movups	xmmword ptr [rbp + 0x90], xmm0
-	movups	xmmword ptr [rbp + 0x80], xmm0
-	movups	xmmword ptr [rbp + 0x70], xmm0
-	movups	xmmword ptr [rbp + 0x60], xmm0
-	movups	xmmword ptr [rbp + 0x50], xmm0
-	movups	xmmword ptr [rbp + 0x40], xmm0
-	movups	xmmword ptr [rbp + 0x30], xmm0
-	movups	xmmword ptr [rbp + 0x20], xmm0
-	movups	xmmword ptr [rbp + 0x10], xmm0
-	movups	xmmword ptr [rbp], xmm0
-	mov	rsi, qword ptr [r14 + 0x48]
+	je	.label_934
 	mov	rdi, rbx
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-	mov	rax, qword ptr [r14 + 0x48]
-	mov	rsi, qword ptr [r14 + 0x50]
-	cmp	rax, rsi
-	je	.label_1003
-	mov	rdi, rbx
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-	mov	rax, qword ptr [r14 + 0x48]
-.label_1003:
-	mov	rsi, qword ptr [r14 + 0x58]
-	cmp	rax, rsi
-	je	.label_1013
-	mov	rdi, rbx
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-	mov	rax, qword ptr [r14 + 0x48]
-.label_1013:
-	mov	rsi, qword ptr [r14 + 0x60]
-	cmp	rax, rsi
-	je	.label_1018
-	mov	rdi, rbx
-	mov	rdx, rbp
-	call	re_compile_fastmap_iter
-.label_1018:
+	mov	rbp, rcx
+	mov	r15, rdx
+	call	rpl_re_compile_fastmap
+	mov	rdx, r15
+	mov	rcx, rbp
 	mov	al, byte ptr [rbx + 0x38]
-	or	al, 8
-	mov	byte ptr [rbx + 0x38], al
-	mov	rsi, qword ptr [rsp + 0x80]
-.label_1006:
-	xor	edx, edx
-	test	rsi, rsi
-	mov	r14d, 1
-	je	.label_1011
+.label_934:
+	xor	esi, esi
+	test	r14, r14
+	mov	ebp, 1
+	je	.label_951
+	mov	qword ptr [rsp + 0x40], rdx
+	mov	r15, rcx
 	mov	cl, al
 	and	cl, 0x10
-	jne	.label_1011
+	jne	.label_929
 	and	al, 6
 	movzx	eax, al
 	cmp	eax, 4
-	jne	.label_1028
-	mov	rax, qword ptr [rsi]
-	mov	r14, qword ptr [rbx + 0x30]
-	cmp	rax, r14
-	ja	.label_1022
+	jne	.label_931
+	mov	rax, qword ptr [r14]
+	mov	rbp, qword ptr [rbx + 0x30]
+	cmp	rax, rbp
+	ja	.label_932
 	xor	ecx, ecx
 	test	rax, rax
-	cmovle	rsi, rcx
-	mov	r14d, 1
-	cmovg	r14, rax
-	jmp	.label_1005
-.label_1028:
-	mov	r14, qword ptr [rbx + 0x30]
-.label_1022:
-	inc	r14
-.label_1005:
-	mov	rdx, rsi
-.label_1011:
-	mov	qword ptr [rsp + 0x28], rdx
-	mov	rdi, r14
+	cmovle	r14, rcx
+	mov	ebp, 1
+	cmovg	rbp, rax
+	jmp	.label_935
+.label_951:
+	mov	qword ptr [rsp + 0x40], rdx
+	mov	r15, rcx
+	jmp	.label_929
+.label_931:
+	mov	rbp, qword ptr [rbx + 0x30]
+.label_932:
+	inc	rbp
+.label_935:
+	mov	rsi, r14
+.label_929:
+	mov	qword ptr [rsp + 0x28], rsi
+	mov	rdi, rbp
 	shl	rdi, 4
 	call	malloc
 	mov	rdi, rbx
-	mov	rbp, -2
+	mov	r14, -2
 	test	rax, rax
 	mov	rdx, qword ptr [rsp + 0x40]
-	je	.label_1010
+	je	.label_928
 	mov	cl, r13b
 	shr	cl, 5
 	and	cl, 1
@@ -11337,155 +10522,161 @@ re_search_stub:
 	mov	dword ptr [rsp + 0x10], r13d
 	mov	qword ptr [rsp + 8], rax
 	mov	r13, rax
-	mov	qword ptr [rsp], r14
+	mov	qword ptr [rsp], rbp
 	mov	rsi, qword ptr [rsp + 0x30]
 	mov	rcx, r15
 	mov	r8, r12
-	mov	rbp, rdi
+	mov	r14, rdi
 	mov	r9, qword ptr [rsp + 0x38]
 	call	re_search_internal
 	test	eax, eax
-	je	.label_1008
+	je	.label_941
 	cmp	eax, 1
 	sete	al
-	movzx	ebp, al
-	or	rbp, 0xfffffffffffffffe
-	jmp	.label_1009
-.label_1008:
+	movzx	r14d, al
+	or	r14, 0xfffffffffffffffe
+	mov	rdi, r13
+	jmp	.label_942
+.label_941:
 	mov	qword ptr [rsp + 0x40], r15
-	mov	rbx, qword ptr [rsp + 0x28]
-	test	rbx, rbx
-	je	.label_1014
-	mov	r8, rbp
+	mov	r12, qword ptr [rsp + 0x28]
+	test	r12, r12
+	mov	rdi, r13
+	je	.label_946
+	mov	r8, r14
 	mov	al, byte ptr [r8 + 0x38]
 	shr	al, 1
 	and	al, 3
 	movzx	eax, al
 	cmp	eax, 2
-	je	.label_1017
-	lea	r15, [r14 + 1]
+	je	.label_949
+	lea	rbx, [rbp + 1]
 	cmp	eax, 1
-	je	.label_1021
-	mov	qword ptr [rsp + 0x30], r13
-	mov	qword ptr [rsp + 0x38], r8
+	je	.label_953
+	mov	r13, r12
+	mov	qword ptr [rsp + 0x38], rdi
+	mov	r15, r8
 	test	eax, eax
-	jne	.label_1023
-	lea	r13, [r15*8]
-	mov	rdi, r13
+	jne	.label_955
+	lea	r12, [rbx*8]
+	mov	rdi, r12
 	call	malloc
+	mov	r14, rax
+	mov	rax, r13
+	mov	qword ptr [rax + 8], r14
+	xor	r13d, r13d
+	test	r14, r14
+	je	.label_936
+	mov	rdi, r12
 	mov	r12, rax
-	mov	qword ptr [rbx + 8], r12
-	xor	ebp, ebp
-	test	r12, r12
-	je	.label_1031
-	mov	rdi, r13
 	call	malloc
-	mov	qword ptr [rbx + 0x10], rax
+	mov	qword ptr [r12 + 0x10], rax
 	test	rax, rax
-	je	.label_1025
-	mov	qword ptr [rbx], r15
-	mov	r12d, 1
-	mov	r8, qword ptr [rsp + 0x38]
-	mov	r13, qword ptr [rsp + 0x30]
-	jmp	.label_1016
-.label_1017:
-	mov	r15, qword ptr [rbx]
-	mov	r12d, 2
-	cmp	r15, r14
-	jae	.label_1016
+	je	.label_952
+	mov	qword ptr [r12], rbx
+	mov	r14d, 1
+	mov	r8, r15
+	mov	rdi, qword ptr [rsp + 0x38]
+	jmp	.label_947
+.label_949:
+	mov	rbx, qword ptr [r12]
+	mov	r14d, 2
+	cmp	rbx, rbp
+	jae	.label_947
 	mov	edi, OFFSET FLAT:.str.24
 	mov	esi, OFFSET FLAT:.str.22_0
 	mov	edx, 0x1fb
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.re_copy_regs
 	call	__assert_fail
-.label_1021:
-	mov	rax, qword ptr [rbx]
-	mov	r12d, 1
-	cmp	r15, rax
-	ja	.label_1024
-	mov	r15, rax
-.label_1016:
-	test	r14, r14
-	jle	.label_1029
-	mov	rdx, qword ptr [rbx + 8]
-	mov	rcx, qword ptr [rbx + 0x10]
+.label_953:
+	mov	r15, rdi
+	mov	rax, qword ptr [r12]
+	mov	r14d, 1
+	cmp	rbx, rax
+	ja	.label_930
+	mov	rbx, rax
+	mov	rdi, r15
+.label_947:
+	test	rbp, rbp
+	jle	.label_939
+	mov	rdx, qword ptr [r12 + 8]
+	mov	rcx, qword ptr [r12 + 0x10]
 	xor	esi, esi
-	test	r14b, 1
-	je	.label_1020
-	mov	rax, qword ptr [r13]
+	test	bpl, 1
+	je	.label_943
+	mov	rax, qword ptr [rdi]
 	mov	qword ptr [rdx], rax
-	mov	rax, qword ptr [r13 + 8]
+	mov	rax, qword ptr [rdi + 8]
 	mov	qword ptr [rcx], rax
 	mov	esi, 1
-.label_1020:
-	cmp	r14, 1
-	je	.label_1012
-	mov	rax, r14
+.label_943:
+	cmp	rbp, 1
+	je	.label_950
+	mov	rax, rbp
 	sub	rax, rsi
 	lea	rcx, [rcx + rsi*8 + 8]
 	lea	rdx, [rdx + rsi*8 + 8]
 	shl	rsi, 4
-	lea	rsi, [rsi + r13 + 0x18]
-	nop	dword ptr [rax + rax]
-.label_1019:
-	mov	rbp, qword ptr [rsi - 0x18]
-	mov	qword ptr [rdx - 8], rbp
-	mov	rbp, qword ptr [rsi - 0x10]
-	mov	qword ptr [rcx - 8], rbp
-	mov	rbp, qword ptr [rsi - 8]
-	mov	qword ptr [rdx], rbp
-	mov	rbp, qword ptr [rsi]
-	mov	qword ptr [rcx], rbp
+	lea	rsi, [rsi + rdi + 0x18]
+	nop	
+.label_954:
+	mov	rbx, qword ptr [rsi - 0x18]
+	mov	qword ptr [rdx - 8], rbx
+	mov	rbx, qword ptr [rsi - 0x10]
+	mov	qword ptr [rcx - 8], rbx
+	mov	rbx, qword ptr [rsi - 8]
+	mov	qword ptr [rdx], rbx
+	mov	rbx, qword ptr [rsi]
+	mov	qword ptr [rcx], rbx
 	add	rcx, 0x10
 	add	rsi, 0x20
 	add	rdx, 0x10
 	add	rax, -2
-	jne	.label_1019
-.label_1012:
-	mov	r15, qword ptr [rbx]
-	jmp	.label_1030
-.label_1029:
-	xor	r14d, r14d
-.label_1030:
-	cmp	r14, r15
-	jae	.label_1032
-	mov	rax, qword ptr [rbx + 8]
-	mov	rcx, qword ptr [rbx + 0x10]
+	jne	.label_954
+.label_950:
+	mov	rbx, qword ptr [r12]
+	jmp	.label_938
+.label_939:
+	xor	ebp, ebp
+.label_938:
+	cmp	rbp, rbx
+	jae	.label_940
+	mov	rax, qword ptr [r12 + 8]
+	mov	rcx, qword ptr [r12 + 0x10]
 	nop	word ptr cs:[rax + rax]
-.label_1027:
-	mov	qword ptr [rcx + r14*8], -1
-	mov	qword ptr [rax + r14*8], -1
-	inc	r14
-	cmp	r14, qword ptr [rbx]
-	jb	.label_1027
-.label_1032:
-	mov	ebp, r12d
-.label_1007:
+.label_945:
+	mov	qword ptr [rcx + rbp*8], -1
+	mov	qword ptr [rax + rbp*8], -1
+	inc	rbp
+	cmp	rbp, qword ptr [r12]
+	jb	.label_945
+.label_940:
+	mov	r13d, r14d
+.label_937:
 	mov	al, byte ptr [r8 + 0x38]
-	add	bpl, bpl
+	add	r13b, r13b
 	and	al, 0xf9
-	mov	cl, bpl
+	mov	cl, r13b
 	and	cl, 6
 	or	cl, al
-	and	bpl, 6
+	and	r13b, 6
 	mov	byte ptr [r8 + 0x38], cl
-	mov	rbp, -2
-	je	.label_1009
-.label_1014:
+	mov	r14, -2
+	je	.label_942
+.label_946:
 	mov	al, byte ptr [rsp + 0x88]
-	mov	rbp, qword ptr [r13]
+	mov	r14, qword ptr [rdi]
 	test	al, al
-	je	.label_1009
+	je	.label_942
 	mov	rax, qword ptr [rsp + 0x40]
-	cmp	rbp, rax
-	jne	.label_1026
-	mov	rbp, qword ptr [r13 + 8]
-	sub	rbp, rax
-.label_1009:
-	mov	rdi, r13
+	cmp	r14, rax
+	jne	.label_933
+	mov	r14, qword ptr [rdi + 8]
+	sub	r14, rax
+.label_942:
 	call	free
-.label_1010:
-	mov	rax, rbp
+.label_928:
+	mov	rax, r14
 	add	rsp, 0x48
 	pop	rbx
 	pop	r12
@@ -11494,49 +10685,49 @@ re_search_stub:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1024:
+.label_930:
 	mov	qword ptr [rsp + 0x38], r8
-	mov	rdi, qword ptr [rbx + 8]
-	lea	rsi, [r15*8]
+	mov	rdi, qword ptr [r12 + 8]
+	lea	rsi, [rbx*8]
 	mov	qword ptr [rsp + 0x30], rsi
 	call	realloc
-	xor	ebp, ebp
+	xor	r13d, r13d
 	test	rax, rax
-	je	.label_1015
+	je	.label_948
 	mov	qword ptr [rsp + 0x20], rax
-	mov	rdi, qword ptr [rbx + 0x10]
+	mov	rdi, qword ptr [r12 + 0x10]
 	mov	rsi, qword ptr [rsp + 0x30]
 	call	realloc
 	test	rax, rax
-	je	.label_1004
+	je	.label_944
 	mov	rcx, qword ptr [rsp + 0x20]
-	mov	qword ptr [rbx + 8], rcx
-	mov	qword ptr [rbx + 0x10], rax
-	mov	qword ptr [rbx], r15
+	mov	qword ptr [r12 + 8], rcx
+	mov	qword ptr [r12 + 0x10], rax
+	mov	qword ptr [r12], rbx
 	mov	r8, qword ptr [rsp + 0x38]
-	jmp	.label_1016
-.label_1025:
-	mov	rdi, r12
+	mov	rdi, r15
+	jmp	.label_947
+.label_952:
+	mov	rdi, r14
 	call	free
-.label_1031:
-	mov	r8, qword ptr [rsp + 0x38]
-	mov	r13, qword ptr [rsp + 0x30]
-	jmp	.label_1007
-.label_1015:
-	mov	r8, qword ptr [rsp + 0x38]
-	jmp	.label_1007
-.label_1004:
+.label_936:
+	mov	r8, r15
+	mov	rdi, qword ptr [rsp + 0x38]
+	jmp	.label_937
+.label_944:
 	mov	rdi, qword ptr [rsp + 0x20]
 	call	free
+.label_948:
 	mov	r8, qword ptr [rsp + 0x38]
-	jmp	.label_1007
-.label_1023:
+	mov	rdi, r15
+	jmp	.label_937
+.label_955:
 	mov	edi, OFFSET FLAT:.str.23_0
 	mov	esi, OFFSET FLAT:.str.22_0
 	mov	edx, 0x1f9
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.re_copy_regs
 	call	__assert_fail
-.label_1026:
+.label_933:
 	mov	edi, OFFSET FLAT:.str.21
 	mov	esi, OFFSET FLAT:.str.22_0
 	mov	edx, 0x1be
@@ -11545,7 +10736,7 @@ re_search_stub:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40bdd0
+	#Procedure 0x40b280
 	.globl rpl_re_search
 	.type rpl_re_search, @function
 rpl_re_search:
@@ -11560,7 +10751,7 @@ rpl_re_search:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40bdf0
+	#Procedure 0x40b2a0
 	.globl rpl_re_match_2
 	.type rpl_re_match_2, @function
 rpl_re_match_2:
@@ -11580,22 +10771,22 @@ rpl_re_match_2:
 	mov	rax, rbx
 	or	rax, r14
 	or	rax, rbp
-	js	.label_1035
+	js	.label_956
 	movabs	rax, 0x7fffffffffffffff
 	test	rbx, rbx
-	js	.label_1038
+	js	.label_959
 	sub	rax, rbx
 	cmp	rax, r14
-	jl	.label_1035
+	jl	.label_956
 	lea	rdx, [rbx + r14]
 	xor	r12d, r12d
 	test	rbx, rbx
-	jle	.label_1034
+	jle	.label_957
 	mov	qword ptr [rsp + 0x18], rdi
 	mov	qword ptr [rsp + 0x20], r9
 	xor	r12d, r12d
 	test	r14, r14
-	jle	.label_1036
+	jle	.label_961
 	mov	rdi, rdx
 	mov	qword ptr [rsp + 0x10], rdx
 	call	malloc
@@ -11603,7 +10794,7 @@ rpl_re_match_2:
 	test	r12, r12
 	mov	rax, qword ptr [rsp + 0x20]
 	mov	rbp, qword ptr [rsp + 0x18]
-	je	.label_1035
+	je	.label_956
 	mov	rdi, r12
 	mov	rsi, r13
 	mov	rdx, r14
@@ -11619,25 +10810,25 @@ rpl_re_match_2:
 	mov	r9, r13
 	mov	r13, r12
 	mov	rdx, qword ptr [rsp + 0x10]
-	jmp	.label_1034
-.label_1038:
+	jmp	.label_957
+.label_959:
 	inc	rax
 	sub	rax, rbx
 	cmp	rax, r14
-	jle	.label_1037
-.label_1035:
+	jle	.label_958
+.label_956:
 	mov	rax, -2
-	jmp	.label_1033
-.label_1037:
+	jmp	.label_960
+.label_958:
 	add	rbx, r14
 	xor	r12d, r12d
 	mov	rdx, rbx
-	jmp	.label_1034
-.label_1036:
+	jmp	.label_957
+.label_961:
 	mov	r13, r15
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rdi, qword ptr [rsp + 0x18]
-.label_1034:
+.label_957:
 	mov	rax, qword ptr [rsp + 0x60]
 	mov	qword ptr [rsp], rax
 	mov	dword ptr [rsp + 8], 1
@@ -11650,7 +10841,7 @@ rpl_re_match_2:
 	mov	rdi, r12
 	call	free
 	mov	rax, rbx
-.label_1033:
+.label_960:
 	add	rsp, 0x28
 	pop	rbx
 	pop	r12
@@ -11661,7 +10852,7 @@ rpl_re_match_2:
 	ret	
 	.section	.text
 	.align	16
-	#Procedure 0x40bf20
+	#Procedure 0x40b3d0
 	.globl rpl_re_search_2
 	.type rpl_re_search_2, @function
 rpl_re_search_2:
@@ -11681,22 +10872,22 @@ rpl_re_search_2:
 	mov	rax, rbx
 	or	rax, r14
 	or	rax, rbp
-	js	.label_1039
+	js	.label_964
 	movabs	rax, 0x7fffffffffffffff
 	test	rbx, rbx
-	js	.label_1042
+	js	.label_967
 	sub	rax, rbx
 	cmp	rax, r14
-	jl	.label_1039
+	jl	.label_964
 	lea	rdx, [rbx + r14]
 	xor	r12d, r12d
 	test	rbx, rbx
-	jle	.label_1041
+	jle	.label_963
 	mov	qword ptr [rsp + 0x18], rdi
 	mov	qword ptr [rsp + 0x20], r9
 	xor	r12d, r12d
 	test	r14, r14
-	jle	.label_1044
+	jle	.label_965
 	mov	rdi, rdx
 	mov	qword ptr [rsp + 0x10], rdx
 	call	malloc
@@ -11704,7 +10895,7 @@ rpl_re_search_2:
 	test	r12, r12
 	mov	rax, qword ptr [rsp + 0x20]
 	mov	rbp, qword ptr [rsp + 0x18]
-	je	.label_1039
+	je	.label_964
 	mov	rdi, r12
 	mov	rsi, r13
 	mov	rdx, r14
@@ -11720,25 +10911,25 @@ rpl_re_search_2:
 	mov	r9, r13
 	mov	r13, r12
 	mov	rdx, qword ptr [rsp + 0x10]
-	jmp	.label_1041
-.label_1042:
+	jmp	.label_963
+.label_967:
 	inc	rax
 	sub	rax, rbx
 	cmp	rax, r14
-	jle	.label_1040
-.label_1039:
+	jle	.label_966
+.label_964:
 	mov	rax, -2
-	jmp	.label_1043
-.label_1040:
+	jmp	.label_962
+.label_966:
 	add	rbx, r14
 	xor	r12d, r12d
 	mov	rdx, rbx
-	jmp	.label_1041
-.label_1044:
+	jmp	.label_963
+.label_965:
 	mov	r13, r15
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rdi, qword ptr [rsp + 0x18]
-.label_1041:
+.label_963:
 	mov	rax, qword ptr [rsp + 0x68]
 	mov	r8, qword ptr [rsp + 0x60]
 	mov	qword ptr [rsp], rax
@@ -11751,7 +10942,7 @@ rpl_re_search_2:
 	mov	rdi, r12
 	call	free
 	mov	rax, rbx
-.label_1043:
+.label_962:
 	add	rsp, 0x28
 	pop	rbx
 	pop	r12
@@ -11763,7 +10954,7 @@ rpl_re_search_2:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40c060
+	#Procedure 0x40b510
 	.globl rpl_re_set_registers
 	.type rpl_re_set_registers, @function
 rpl_re_set_registers:
@@ -11773,9 +10964,9 @@ rpl_re_set_registers:
 	mov	r9b, al
 	or	r9b, 2
 	test	rdx, rdx
-	je	.label_1045
+	je	.label_968
 	mov	al, r9b
-.label_1045:
+.label_968:
 	cmove	r8, rdx
 	cmove	rcx, rdx
 	mov	byte ptr [rdi + 0x38], al
@@ -11786,7 +10977,7 @@ rpl_re_set_registers:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40c090
+	#Procedure 0x40b540
 
 	.globl free_state
 	.type free_state, @function
@@ -11800,12 +10991,12 @@ free_state:
 	mov	rax, qword ptr [rbx + 0x50]
 	lea	rcx, [rbx + 8]
 	cmp	rax, rcx
-	je	.label_1046
+	je	.label_969
 	mov	rdi, qword ptr [rax + 0x10]
 	call	free
 	mov	rdi, qword ptr [rbx + 0x50]
 	call	free
-.label_1046:
+.label_969:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, qword ptr [rbx + 0x60]
@@ -11818,7 +11009,59 @@ free_state:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40c0f0
+	#Procedure 0x40b5a0
+
+	.globl re_string_realloc_buffers
+	.type re_string_realloc_buffers, @function
+re_string_realloc_buffers:
+	push	rbp
+	push	r14
+	push	rbx
+	mov	r14, rsi
+	mov	rbx, rdi
+	cmp	dword ptr [rbx + 0x90], 2
+	jl	.label_970
+	mov	rax, r14
+	shr	rax, 0x3d
+	mov	ebp, 0xc
+	jne	.label_971
+	mov	rdi, qword ptr [rbx + 0x10]
+	lea	rsi, [r14*4]
+	call	realloc
+	test	rax, rax
+	je	.label_971
+	mov	qword ptr [rbx + 0x10], rax
+	mov	rdi, qword ptr [rbx + 0x18]
+	test	rdi, rdi
+	je	.label_970
+	lea	rsi, [r14*8]
+	call	realloc
+	test	rax, rax
+	je	.label_971
+	mov	qword ptr [rbx + 0x18], rax
+.label_970:
+	cmp	byte ptr [rbx + 0x8b], 0
+	je	.label_972
+	mov	rdi, qword ptr [rbx + 8]
+	mov	rsi, r14
+	call	realloc
+	mov	ebp, 0xc
+	test	rax, rax
+	je	.label_971
+	mov	qword ptr [rbx + 8], rax
+.label_972:
+	mov	qword ptr [rbx + 0x40], r14
+	xor	ebp, ebp
+.label_971:
+	mov	eax, ebp
+	pop	rbx
+	pop	r14
+	pop	rbp
+	ret	
+	nop	word ptr [rax + rax]
+	.section	.text
+	.align	16
+	#Procedure 0x40b630
 
 	.globl build_wcs_upper_buffer
 	.type build_wcs_upper_buffer, @function
@@ -11837,31 +11080,31 @@ build_wcs_upper_buffer:
 	cmp	r13, rax
 	cmovg	r13, rax
 	cmp	byte ptr [r12 + 0x8a], 0
-	jne	.label_1060
+	jne	.label_1000
 	cmp	qword ptr [r12 + 0x78], 0
-	jne	.label_1060
+	jne	.label_1000
 	cmp	byte ptr [r12 + 0x8c], 0
-	je	.label_1061
-.label_1060:
+	je	.label_1001
+.label_1000:
 	mov	rbx, qword ptr [r12 + 0x38]
-	jmp	.label_1063
-.label_1061:
+	jmp	.label_976
+.label_1001:
 	cmp	r13, r15
-	jle	.label_1067
+	jle	.label_1005
 	lea	rax, [r12 + 0x78]
 	mov	qword ptr [rsp + 0x10], rax
 	lea	r14, [r12 + 0x20]
-	jmp	.label_1049
-.label_1074:
+	jmp	.label_991
+.label_1012:
 	lea	rax, [rbp + 1]
 	cmp	rax, 2
-	jb	.label_1080
+	jb	.label_1013
 	cmp	rbp, -2
-	jne	.label_1076
+	jne	.label_1015
 	mov	rax, qword ptr [r12 + 0x40]
 	cmp	rax, qword ptr [r12 + 0x58]
-	jl	.label_1076
-.label_1080:
+	jl	.label_1015
+.label_1013:
 	mov	rax, qword ptr [r12 + 0x28]
 	add	rax, r15
 	mov	rcx, qword ptr [r12]
@@ -11872,27 +11115,27 @@ build_wcs_upper_buffer:
 	mov	dword ptr [rcx + r15*4], eax
 	inc	r15
 	cmp	rbp, -1
-	je	.label_1079
-.label_1093:
+	je	.label_1019
+.label_1030:
 	mov	rax, r15
-	jmp	.label_1086
-.label_1079:
+	jmp	.label_980
+.label_1019:
 	mov	rax, qword ptr [rsp + 0x70]
 	mov	qword ptr [r14], rax
-	jmp	.label_1093
+	jmp	.label_1030
 	nop	word ptr [rax + rax]
-.label_1049:
+.label_991:
 	mov	qword ptr [rsp + 0x20], r13
 	mov	rbp, qword ptr [r12]
 	mov	rbx, qword ptr [r12 + 0x28]
 	lea	rax, [rbx + r15]
 	movzx	r13d, byte ptr [rbp + rax]
 	test	r13b, r13b
-	js	.label_1098
+	js	.label_973
 	mov	rdi, r14
 	call	mbsinit
 	test	eax, eax
-	je	.label_1098
+	je	.label_973
 	call	__ctype_toupper_loc
 	mov	rax, qword ptr [rax]
 	mov	al, byte ptr [rax + r13*4]
@@ -11905,9 +11148,9 @@ build_wcs_upper_buffer:
 	inc	r15
 	mov	rax, r15
 	mov	r13, qword ptr [rsp + 0x20]
-	jmp	.label_1086
+	jmp	.label_980
 	nop	word ptr cs:[rax + rax]
-.label_1098:
+.label_973:
 	mov	r13, qword ptr [rsp + 0x20]
 	mov	rdx, r13
 	sub	rdx, r15
@@ -11922,12 +11165,12 @@ build_wcs_upper_buffer:
 	mov	rbp, rax
 	lea	rax, [rbp - 1]
 	cmp	rax, -4
-	ja	.label_1074
+	ja	.label_1012
 	mov	edi, dword ptr [rsp + 0x2c]
 	call	towupper
 	mov	ebx, eax
 	cmp	ebx, dword ptr [rsp + 0x2c]
-	jne	.label_1078
+	jne	.label_1017
 	mov	rdi, qword ptr [r12 + 8]
 	add	rdi, r15
 	mov	rsi, qword ptr [r12]
@@ -11935,8 +11178,8 @@ build_wcs_upper_buffer:
 	add	rsi, r15
 	mov	rdx, rbp
 	call	memcpy
-	jmp	.label_1087
-.label_1078:
+	jmp	.label_1024
+.label_1017:
 	mov	esi, ebx
 	mov	dword ptr [rsp + 0x18], esi
 	mov	rbx, rbp
@@ -11945,7 +11188,7 @@ build_wcs_upper_buffer:
 	lea	rdx, [rsp + 0x70]
 	call	wcrtomb
 	cmp	rbx, rax
-	jne	.label_1095
+	jne	.label_1018
 	mov	rdi, qword ptr [r12 + 8]
 	add	rdi, r15
 	mov	rsi, rbp
@@ -11953,54 +11196,54 @@ build_wcs_upper_buffer:
 	call	memcpy
 	mov	rbp, rbx
 	mov	ebx, dword ptr [rsp + 0x18]
-.label_1087:
+.label_1024:
 	mov	rax, qword ptr [r12 + 0x10]
 	mov	dword ptr [rax + r15*4], ebx
 	lea	rbx, [rbp + r15]
 	lea	rax, [r15 + 1]
 	cmp	rax, rbx
-	jge	.label_1086
+	jge	.label_980
 	mov	rax, qword ptr [r12 + 0x10]
 	lea	rdi, [rax + r15*4 + 4]
 	lea	rdx, [rbp*4 - 4]
 	mov	esi, 0xff
 	call	memset
 	mov	rax, rbx
-.label_1086:
+.label_980:
 	cmp	r13, rax
 	mov	r15, rax
-	jg	.label_1049
-	jmp	.label_1056
-.label_1095:
+	jg	.label_991
+	jmp	.label_996
+.label_1018:
 	mov	rbx, r15
 	mov	rcx, qword ptr [rsp + 0x10]
-	jmp	.label_1057
-.label_1076:
+	jmp	.label_997
+.label_1015:
 	mov	rax, qword ptr [rsp + 0x70]
 	mov	qword ptr [r14], rax
-.label_1067:
+.label_1005:
 	mov	rax, r15
-.label_1056:
+.label_996:
 	mov	qword ptr [r12 + 0x30], rax
 	mov	qword ptr [r12 + 0x38], rax
-	jmp	.label_1062
-.label_1063:
+	jmp	.label_1002
+.label_976:
 	cmp	r15, r13
-	jge	.label_1065
+	jge	.label_1003
 	lea	r14, [r12 + 0x20]
 	lea	rcx, [r12 + 0x78]
-.label_1057:
+.label_997:
 	mov	rdx, r13
 	sub	rdx, r15
 	mov	rax, qword ptr [r14]
 	mov	qword ptr [rsp + 0x70], rax
 	mov	rax, qword ptr [rcx]
 	test	rax, rax
-	jne	.label_1072
+	jne	.label_1010
 	mov	rbp, qword ptr [r12]
 	add	rbp, qword ptr [r12 + 0x28]
 	add	rbp, rbx
-.label_1064:
+.label_985:
 	lea	rdi, [rsp + 0x28]
 	mov	rsi, rbp
 	mov	rcx, r14
@@ -12009,14 +11252,14 @@ build_wcs_upper_buffer:
 	mov	r14, rax
 	lea	rax, [r14 - 1]
 	cmp	rax, -4
-	ja	.label_1084
+	ja	.label_1022
 	mov	qword ptr [rsp + 0x10], rax
 	mov	qword ptr [rsp + 0x20], r13
 	mov	edi, dword ptr [rsp + 0x28]
 	call	towupper
 	mov	r13d, eax
 	cmp	r13d, dword ptr [rsp + 0x28]
-	je	.label_1092
+	je	.label_1029
 	lea	rdi, [rsp + 0x30]
 	lea	rdx, [rsp + 0x70]
 	mov	esi, r13d
@@ -12024,22 +11267,22 @@ build_wcs_upper_buffer:
 	mov	r8, rax
 	mov	rcx, r8
 	sub	rcx, r14
-	jne	.label_1101
+	jne	.label_978
 	mov	rdi, qword ptr [r12 + 8]
 	add	rdi, r15
 	lea	rsi, [rsp + 0x30]
-	jmp	.label_1104
-.label_1072:
+	jmp	.label_983
+.label_1010:
 	lea	rbp, [rsp + 0x30]
 	movsxd	rcx, dword ptr [r12 + 0x90]
 	test	rcx, rcx
-	jle	.label_1064
+	jle	.label_985
 	mov	r8, rbx
 	xor	esi, esi
 	nop	dword ptr [rax]
-.label_1058:
+.label_998:
 	cmp	rsi, rdx
-	jge	.label_1053
+	jge	.label_993
 	mov	rdi, qword ptr [r12]
 	add	rdi, qword ptr [r12 + 0x28]
 	add	rdi, r8
@@ -12048,19 +11291,19 @@ build_wcs_upper_buffer:
 	mov	byte ptr [rsp + rsi + 0x30], bl
 	inc	rsi
 	cmp	rsi, rcx
-	jl	.label_1058
+	jl	.label_998
 	mov	rbx, r8
-	jmp	.label_1064
-.label_1084:
+	jmp	.label_985
+.label_1022:
 	lea	rax, [r14 + 1]
 	cmp	rax, 2
-	jb	.label_1068
+	jb	.label_1006
 	cmp	r14, -2
-	jne	.label_1071
+	jne	.label_1009
 	mov	rax, qword ptr [r12 + 0x40]
 	cmp	rax, qword ptr [r12 + 0x58]
-	jl	.label_1071
-.label_1068:
+	jl	.label_1009
+.label_1006:
 	mov	rax, qword ptr [r12 + 0x28]
 	add	rax, rbx
 	mov	rdx, qword ptr [r12]
@@ -12068,40 +11311,40 @@ build_wcs_upper_buffer:
 	mov	al, byte ptr [rdx + rax]
 	movzx	edx, al
 	test	rcx, rcx
-	jne	.label_1075
-.label_1103:
+	jne	.label_1014
+.label_982:
 	movzx	eax, al
 	mov	rcx, qword ptr [r12 + 8]
 	mov	byte ptr [rcx + r15], al
 	cmp	byte ptr [r12 + 0x8c], 0
-	jne	.label_1081
-.label_1105:
+	jne	.label_1020
+.label_984:
 	inc	rbx
 	mov	rcx, qword ptr [r12 + 0x10]
 	mov	dword ptr [rcx + r15*4], eax
 	inc	r15
 	cmp	r14, -1
-	je	.label_1088
-.label_1089:
+	je	.label_1025
+.label_986:
 	mov	rbp, r15
-	jmp	.label_1063
-.label_1101:
+	jmp	.label_976
+.label_978:
 	cmp	r8, -1
-	je	.label_1092
+	je	.label_1029
 	lea	rbp, [r8 + r15]
 	mov	rdi, qword ptr [r12 + 0x40]
 	cmp	rbp, rdi
-	jbe	.label_1100
-.label_1071:
+	jbe	.label_975
+.label_1009:
 	mov	rax, qword ptr [rsp + 0x70]
 	mov	rcx, qword ptr [rsp + 0x18]
 	mov	qword ptr [rcx], rax
-.label_1065:
+.label_1003:
 	mov	qword ptr [r12 + 0x30], r15
 	mov	qword ptr [r12 + 0x38], rbx
-.label_1062:
+.label_1002:
 	xor	eax, eax
-.label_1047:
+.label_990:
 	add	rsp, 0x78
 	pop	rbx
 	pop	r12
@@ -12110,23 +11353,23 @@ build_wcs_upper_buffer:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1092:
+.label_1029:
 	mov	rdi, qword ptr [r12 + 8]
 	add	rdi, r15
 	mov	rsi, rbp
-.label_1104:
+.label_983:
 	mov	rdx, r14
 	call	memcpy
 	cmp	byte ptr [r12 + 0x8c], 0
-	je	.label_1052
+	je	.label_992
 	mov	rax, qword ptr [r12 + 0x18]
 	xor	esi, esi
 	cmp	r14, 4
-	jb	.label_1059
+	jb	.label_999
 	xor	esi, esi
 	mov	rcx, r14
 	and	rcx, 0xfffffffffffffffc
-	je	.label_1059
+	je	.label_999
 	movq	xmm0, rbx
 	pshufd	xmm0, xmm0, 0x44
 	lea	rdi, [r14 - 4]
@@ -12134,26 +11377,26 @@ build_wcs_upper_buffer:
 	shr	rsi, 2
 	xor	edx, edx
 	bt	rdi, 2
-	jb	.label_1066
+	jb	.label_1004
 	mov	edx, 1
 	movq	xmm1, rdx
 	pslldq	xmm1, 8
 	paddq	xmm1, xmm0
-	movdqa	xmm2,  xmmword ptr [word ptr [rip + label_625]]
+	movdqa	xmm2,  xmmword ptr [word ptr [rip + label_619]]
 	paddq	xmm2, xmm0
 	movdqu	xmmword ptr [rax + r15*8], xmm1
 	movdqu	xmmword ptr [rax + r15*8 + 0x10], xmm2
 	mov	edx, 4
-.label_1066:
+.label_1004:
 	test	rsi, rsi
-	je	.label_1085
+	je	.label_1023
 	lea	rsi, [rax + r15*8 + 0x30]
 	mov	edi, 1
 	movq	xmm1, rdi
 	pslldq	xmm1, 8
-	movdqa	xmm2,  xmmword ptr [word ptr [rip + label_625]]
+	movdqa	xmm2,  xmmword ptr [word ptr [rip + label_619]]
 	nop	word ptr cs:[rax + rax]
-.label_1096:
+.label_1026:
 	movq	xmm3, rdx
 	pshufd	xmm3, xmm3, 0x44
 	paddq	xmm3, xmm0
@@ -12173,32 +11416,32 @@ build_wcs_upper_buffer:
 	movdqu	xmmword ptr [rsi + rdx*8], xmm3
 	add	rdx, 8
 	cmp	rdx, rcx
-	jne	.label_1096
-.label_1085:
+	jne	.label_1026
+.label_1023:
 	cmp	r14, rcx
 	mov	rsi, rcx
-	je	.label_1052
-.label_1059:
+	je	.label_992
+.label_999:
 	mov	rcx, r14
 	sub	rcx, rsi
 	lea	rdx, [rsi + rbx]
 	add	rsi, r15
 	lea	rax, [rax + rsi*8]
 	nop	word ptr cs:[rax + rax]
-.label_1082:
+.label_974:
 	mov	qword ptr [rax], rdx
 	inc	rdx
 	add	rax, 8
 	dec	rcx
-	jne	.label_1082
-.label_1052:
+	jne	.label_974
+.label_992:
 	add	rbx, r14
 	mov	rax, qword ptr [r12 + 0x10]
 	mov	dword ptr [rax + r15*4], r13d
 	lea	rbp, [r14 + r15]
 	inc	r15
 	cmp	r15, rbp
-	jge	.label_1073
+	jge	.label_1011
 	mov	rax, qword ptr [r12 + 0x10]
 	lea	rdi, [rax + r15*4]
 	lea	rdx, [r14*4 - 4]
@@ -12206,18 +11449,18 @@ build_wcs_upper_buffer:
 	call	memset
 	mov	r13, qword ptr [rsp + 0x20]
 	mov	r15, rbp
-	jmp	.label_1063
-.label_1073:
+	jmp	.label_976
+.label_1011:
 	mov	rbp, r15
 	mov	r13, qword ptr [rsp + 0x20]
-	jmp	.label_1063
-.label_1053:
+	jmp	.label_976
+.label_993:
 	mov	rbx, r8
-	jmp	.label_1064
-.label_1100:
+	jmp	.label_985
+.label_975:
 	mov	rax, qword ptr [r12 + 0x18]
 	test	rax, rax
-	jne	.label_1090
+	jne	.label_1027
 	shl	rdi, 3
 	mov	qword ptr [rsp + 8], rcx
 	mov	qword ptr [rsp + 0x20], r8
@@ -12226,41 +11469,41 @@ build_wcs_upper_buffer:
 	mov	rcx, qword ptr [rsp + 8]
 	mov	qword ptr [r12 + 0x18], rax
 	test	rax, rax
-	je	.label_1099
-.label_1090:
+	je	.label_977
+.label_1027:
 	mov	qword ptr [rsp + 8], rcx
 	cmp	byte ptr [r12 + 0x8c], 0
-	jne	.label_1102
+	jne	.label_981
 	test	r15, r15
-	je	.label_1048
+	je	.label_979
 	xor	edx, edx
 	cmp	r15, 4
-	jb	.label_1051
+	jb	.label_988
 	xor	edx, edx
 	mov	rcx, r15
 	and	rcx, 0xfffffffffffffffc
-	je	.label_1051
+	je	.label_988
 	lea	rdi, [r15 - 4]
 	mov	rsi, rdi
 	shr	rsi, 2
 	xor	edx, edx
 	bt	rdi, 2
-	jb	.label_1054
+	jb	.label_994
 	mov	edx, 1
 	movq	xmm0, rdx
 	pslldq	xmm0, 8
 	movdqu	xmmword ptr [rax], xmm0
-	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_625]]
+	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_619]]
 	movdqu	xmmword ptr [rax + 0x10], xmm0
 	mov	edx, 4
-.label_1054:
+.label_994:
 	test	rsi, rsi
-	je	.label_1097
+	je	.label_989
 	mov	esi, 1
 	movq	xmm0, rsi
 	pslldq	xmm0, 8
-	movdqa	xmm1,  xmmword ptr [word ptr [rip + label_625]]
-.label_1077:
+	movdqa	xmm1,  xmmword ptr [word ptr [rip + label_619]]
+.label_1016:
 	movq	xmm2, rdx
 	pshufd	xmm2, xmm2, 0x44
 	movdqa	xmm3, xmm2
@@ -12278,19 +11521,19 @@ build_wcs_upper_buffer:
 	movdqu	xmmword ptr [rax + rdx*8 + 0x30], xmm2
 	add	rdx, 8
 	cmp	rdx, rcx
-	jne	.label_1077
-.label_1097:
+	jne	.label_1016
+.label_989:
 	cmp	r15, rcx
 	mov	rdx, rcx
-	je	.label_1048
-.label_1051:
+	je	.label_979
+.label_988:
 	mov	qword ptr [rax + rdx*8], rdx
 	inc	rdx
 	cmp	r15, rdx
-	jne	.label_1051
-.label_1048:
+	jne	.label_988
+.label_979:
 	mov	byte ptr [r12 + 0x8c], 1
-.label_1102:
+.label_981:
 	mov	rdi, qword ptr [r12 + 8]
 	add	rdi, r15
 	lea	rsi, [rsp + 0x30]
@@ -12304,19 +11547,19 @@ build_wcs_upper_buffer:
 	mov	qword ptr [rax + r15*8], rbx
 	cmp	rdi, 2
 	mov	r11, qword ptr [rsp + 0x10]
-	jb	.label_1050
+	jb	.label_987
 	mov	r9, qword ptr [r12 + 0x10]
 	mov	r8, qword ptr [r12 + 0x18]
 	lea	r10, [rdi - 1]
 	mov	eax, 1
 	cmp	r10, 4
-	jb	.label_1055
+	jb	.label_995
 	mov	rcx, r10
 	and	rcx, 0xfffffffffffffffc
 	mov	r13, r10
 	and	r13, 0xfffffffffffffffc
 	mov	eax, 1
-	je	.label_1055
+	je	.label_995
 	mov	rax, rcx
 	or	rax, 1
 	movq	xmm0, r14
@@ -12333,11 +11576,11 @@ build_wcs_upper_buffer:
 	mov	ebx, 1
 	movq	xmm10, rbx
 	pslldq	xmm10, 8
-	movdqa	xmm8,  xmmword ptr [word ptr [rip + label_625]]
-	movdqa	xmm9,  xmmword ptr [word ptr [rip + label_1069]]
+	movdqa	xmm8,  xmmword ptr [word ptr [rip + label_619]]
+	movdqa	xmm9,  xmmword ptr [word ptr [rip + label_1007]]
 	pxor	xmm3, xmm9
-	pshufd	xmm6,  xmmword ptr [word ptr [rip + label_1070]],  0xe8
-.label_1094:
+	pshufd	xmm6,  xmmword ptr [word ptr [rip + label_1008]],  0xe8
+.label_1031:
 	lea	rbx, [rsi + 1]
 	movq	xmm4, rbx
 	pshufd	xmm7, xmm4, 0x44
@@ -12378,16 +11621,16 @@ build_wcs_upper_buffer:
 	movq	qword ptr [rdx + rsi*4], xmm6
 	add	rsi, 4
 	cmp	r13, rsi
-	jne	.label_1094
+	jne	.label_1031
 	cmp	r10, r13
 	mov	rbx, r11
 	mov	r11, rdi
 	mov	rdi, qword ptr [rsp + 0x20]
-	je	.label_1050
-.label_1055:
+	je	.label_987
+.label_995:
 	lea	rcx, [r9 + r15*4]
 	lea	rdx, [r8 + r15*8]
-.label_1083:
+.label_1021:
 	cmp	rax, r14
 	mov	rsi, r11
 	cmovb	rsi, rax
@@ -12396,41 +11639,41 @@ build_wcs_upper_buffer:
 	mov	dword ptr [rcx + rax*4], 0xffffffff
 	inc	rax
 	cmp	rdi, rax
-	jne	.label_1083
-.label_1050:
+	jne	.label_1021
+.label_987:
 	mov	rax, qword ptr [r12 + 0x58]
 	mov	rcx, qword ptr [rsp + 8]
 	add	rax, rcx
 	mov	qword ptr [r12 + 0x58], rax
 	cmp	qword ptr [r12 + 0x60], rbx
-	jle	.label_1091
+	jle	.label_1028
 	add	qword ptr [r12 + 0x68], rcx
-.label_1091:
+.label_1028:
 	mov	r13, qword ptr [r12 + 0x40]
 	cmp	r13, rax
 	cmovg	r13, rax
 	add	rbx, r14
 	mov	r15, rbp
-	jmp	.label_1063
-.label_1075:
+	jmp	.label_976
+.label_1014:
 	mov	al, byte ptr [rcx + rdx]
-	jmp	.label_1103
-.label_1081:
+	jmp	.label_982
+.label_1020:
 	mov	rcx, qword ptr [r12 + 0x18]
 	mov	qword ptr [rcx + r15*8], rbx
-	jmp	.label_1105
-.label_1088:
+	jmp	.label_984
+.label_1025:
 	mov	rax, qword ptr [rsp + 0x70]
 	mov	rcx, qword ptr [rsp + 0x18]
 	mov	qword ptr [rcx], rax
-	jmp	.label_1089
-.label_1099:
+	jmp	.label_986
+.label_977:
 	mov	eax, 0xc
-	jmp	.label_1047
+	jmp	.label_990
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40ca10
+	#Procedure 0x40bf50
 
 	.globl build_wcs_buffer
 	.type build_wcs_buffer, @function
@@ -12449,12 +11692,12 @@ build_wcs_buffer:
 	cmp	r12, rax
 	cmovg	r12, rax
 	cmp	r12, r13
-	jle	.label_1110
+	jle	.label_1037
 	lea	r14, [rbx + 0x20]
 	lea	r15, [rsp + 0xc]
-	jmp	.label_1111
+	jmp	.label_1042
 	nop	dword ptr [rax + rax]
-.label_1108:
+.label_1034:
 	mov	rax, qword ptr [rbx + 0x28]
 	add	rax, r13
 	mov	rcx, qword ptr [rbx]
@@ -12462,41 +11705,41 @@ build_wcs_buffer:
 	mov	dword ptr [rsp + 0xc], ecx
 	mov	rax, qword ptr [rbx + 0x78]
 	test	rax, rax
-	jne	.label_1114
-.label_1112:
+	jne	.label_1036
+.label_1038:
 	mov	qword ptr [r14], rbp
 	mov	eax, 1
-	jmp	.label_1116
-.label_1117:
+	jmp	.label_1041
+.label_1043:
 	mov	ecx, dword ptr [rsp + 0xc]
 	nop	dword ptr [rax]
-.label_1116:
+.label_1041:
 	mov	rdx, qword ptr [rbx + 0x10]
 	mov	dword ptr [rdx + r13*4], ecx
 	lea	rbp, [rax + r13]
 	lea	rcx, [r13 + 1]
 	cmp	rcx, rbp
-	jge	.label_1107
+	jge	.label_1033
 	mov	rcx, qword ptr [rbx + 0x10]
 	lea	rdi, [rcx + r13*4 + 4]
 	lea	rdx, [rax*4 - 4]
 	mov	esi, 0xff
 	call	memset
 	mov	rcx, rbp
-.label_1107:
+.label_1033:
 	cmp	r12, rcx
 	mov	r13, rcx
-	jg	.label_1111
-	jmp	.label_1118
-.label_1106:
+	jg	.label_1042
+	jmp	.label_1044
+.label_1032:
 	cmp	dword ptr [rbx + 0x90], 0
 	mov	eax, 0
 	lea	rsi, [rsp + 0x10]
-	jle	.label_1109
+	jle	.label_1035
 	nop	dword ptr [rax + rax]
-.label_1115:
+.label_1040:
 	cmp	rax, rdx
-	jge	.label_1113
+	jge	.label_1039
 	mov	rcx, qword ptr [rbx]
 	mov	rsi, qword ptr [rbx + 0x78]
 	add	rcx, qword ptr [rbx + 0x28]
@@ -12510,42 +11753,42 @@ build_wcs_buffer:
 	inc	rax
 	movsxd	rcx, dword ptr [rbx + 0x90]
 	cmp	rax, rcx
-	jl	.label_1115
+	jl	.label_1040
 	lea	rsi, [rsp + 0x10]
-	jmp	.label_1109
-.label_1114:
+	jmp	.label_1035
+.label_1036:
 	movzx	ecx, byte ptr [rax + rcx]
 	mov	dword ptr [rsp + 0xc], ecx
-	jmp	.label_1112
-.label_1113:
+	jmp	.label_1038
+.label_1039:
 	lea	rsi, [rsp + 0x10]
-	jmp	.label_1109
+	jmp	.label_1035
 	nop	word ptr cs:[rax + rax]
-.label_1111:
+.label_1042:
 	mov	rdx, r12
 	sub	rdx, r13
 	mov	rbp, qword ptr [rbx + 0x20]
 	cmp	qword ptr [rbx + 0x78], 0
-	jne	.label_1106
+	jne	.label_1032
 	mov	rsi, qword ptr [rbx]
 	add	rsi, qword ptr [rbx + 0x28]
 	add	rsi, r13
-.label_1109:
+.label_1035:
 	mov	rdi, r15
 	mov	rcx, r14
 	call	rpl_mbrtowc
 	lea	rcx, [rax + 1]
 	cmp	rcx, 2
-	jb	.label_1108
+	jb	.label_1034
 	cmp	rax, -2
-	jne	.label_1117
+	jne	.label_1043
 	mov	rax, qword ptr [rbx + 0x40]
 	cmp	rax, qword ptr [rbx + 0x58]
-	jge	.label_1108
+	jge	.label_1034
 	mov	qword ptr [r14], rbp
-.label_1110:
+.label_1037:
 	mov	rcx, r13
-.label_1118:
+.label_1044:
 	mov	qword ptr [rbx + 0x30], rcx
 	mov	qword ptr [rbx + 0x38], rcx
 	add	rsp, 0x58
@@ -12559,7 +11802,7 @@ build_wcs_buffer:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40cbb0
+	#Procedure 0x40c0f0
 
 	.globl parse_reg_exp
 	.type parse_reg_exp, @function
@@ -12571,217 +11814,152 @@ parse_reg_exp:
 	push	r12
 	push	rbx
 	sub	rsp, 0x38
-	mov	qword ptr [rsp + 0x28], r9
-	mov	qword ptr [rsp + 8], r8
-	mov	qword ptr [rsp + 0x20], rcx
-	mov	r12, rdx
-	mov	qword ptr [rsp + 0x18], rsi
-	mov	r14, rdi
-	mov	r15, qword ptr [rsi]
-	mov	rax, qword ptr [r15 + 0xa8]
-	mov	qword ptr [rsp + 0x10], rax
+	mov	qword ptr [rsp + 0x18], r9
+	mov	qword ptr [rsp + 0x28], r8
+	mov	qword ptr [rsp + 0x10], rcx
+	mov	r13, rdx
+	mov	qword ptr [rsp + 8], rsi
+	mov	r12, rdi
+	mov	r14, qword ptr [rsi]
+	mov	rax, qword ptr [r14 + 0xa8]
+	mov	qword ptr [rsp], rax
 	call	parse_branch
 	mov	rbx, rax
-	xor	r13d, r13d
+	xor	ebp, ebp
 	test	rbx, rbx
-	jne	.label_1141
-	mov	rax, qword ptr [rsp + 0x28]
+	jne	.label_1051
+	mov	rax, qword ptr [rsp + 0x18]
 	mov	eax, dword ptr [rax]
 	test	eax, eax
-	jne	.label_1130
-.label_1141:
-	movzx	eax, byte ptr [r12 + 8]
+	jne	.label_1053
+.label_1051:
+	movzx	eax, byte ptr [r13 + 8]
 	cmp	eax, 0xa
-	jne	.label_1122
-	mov	rax, qword ptr [rsp + 0x20]
+	jne	.label_1056
+	mov	rax, qword ptr [rsp + 0x10]
 	or	rax, 0x800000
 	mov	qword ptr [rsp + 0x30], rax
-	cmp	qword ptr [rsp + 8], 0
-	jne	.label_1139
-	jmp	.label_1127
-.label_1122:
-	mov	r13, rbx
-	jmp	.label_1130
-.label_1142:
+	jmp	.label_1058
+.label_1055:
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1120
-	mov	rcx, qword ptr [r15 + 0x70]
+	je	.label_1047
+	mov	rcx, qword ptr [r14 + 0x70]
 	mov	qword ptr [rax], rcx
-	mov	qword ptr [r15 + 0x70], rax
-	mov	dword ptr [r15 + 0x80], 0
+	mov	qword ptr [r14 + 0x70], rax
+	mov	dword ptr [r14 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1136
+	jmp	.label_1062
 	nop	word ptr cs:[rax + rax]
-.label_1139:
-	mov	rdi, r12
-	mov	rsi, r14
+.label_1058:
+	mov	rdi, r13
+	mov	rsi, r12
 	mov	rdx, qword ptr [rsp + 0x30]
 	call	peek_token
 	cdqe	
-	add	qword ptr [r14 + 0x48], rax
-	movzx	eax, byte ptr [r12 + 8]
-	cmp	eax, 0xa
-	ja	.label_1119
-	mov	ecx, 0x604
-	bt	ecx, eax
-	mov	ebp, 0
-	jb	.label_1125
-.label_1119:
-	mov	rax, qword ptr [r15 + 0xa8]
-	mov	qword ptr [rsp], rax
-	mov	rax, qword ptr [rsp + 0x10]
-	mov	qword ptr [r15 + 0xa8], rax
-	mov	rdi, r14
-	mov	rsi, qword ptr [rsp + 0x18]
-	mov	rdx, r12
-	mov	rcx, qword ptr [rsp + 0x20]
-	mov	r8, qword ptr [rsp + 8]
-	mov	r13, qword ptr [rsp + 0x28]
-	mov	r9, r13
-	call	parse_branch
-	mov	rbp, rax
-	test	rbp, rbp
-	jne	.label_1138
-	mov	eax, dword ptr [r13]
-	test	eax, eax
-	jne	.label_1128
-.label_1138:
+	add	qword ptr [r12 + 0x48], rax
+	movzx	eax, byte ptr [r13 + 8]
+	mov	ecx, eax
+	or	ecx, 8
+	cmp	ecx, 0xa
+	mov	r15d, 0
+	je	.label_1052
+	cmp	qword ptr [rsp + 0x28], 0
+	je	.label_1057
+	cmp	eax, 9
+	mov	r15d, 0
+	je	.label_1052
+.label_1057:
+	mov	rax, qword ptr [r14 + 0xa8]
+	mov	qword ptr [rsp + 0x20], rax
 	mov	rax, qword ptr [rsp]
-	or	qword ptr [r15 + 0xa8], rax
-.label_1125:
-	mov	ecx, dword ptr [r15 + 0x80]
-	cmp	ecx, 0xf
-	je	.label_1142
-	mov	rax, qword ptr [r15 + 0x70]
-.label_1136:
-	lea	edx, [rcx + 1]
-	mov	dword ptr [r15 + 0x80], edx
-	movsxd	rcx, ecx
-	shl	rcx, 6
-	lea	r13, [rax + rcx + 8]
-	mov	qword ptr [rax + rcx + 8], 0
-	mov	qword ptr [rax + rcx + 0x10], rbx
-	mov	qword ptr [rax + rcx + 0x18], rbp
-	mov	dword ptr [rax + rcx + 0x38], 0xa
-	xorps	xmm0, xmm0
-	movups	xmmword ptr [rax + rcx + 0x20], xmm0
-	mov	qword ptr [rax + rcx + 0x40], -1
-	test	rbx, rbx
-	je	.label_1124
-	mov	qword ptr [rbx], r13
-.label_1124:
-	test	rbp, rbp
-	je	.label_1137
-	mov	qword ptr [rbp], r13
-.label_1137:
-	movzx	eax, byte ptr [r12 + 8]
-	cmp	eax, 0xa
-	mov	rbx, r13
-	je	.label_1139
-	jmp	.label_1130
-.label_1131:
-	mov	edi, 0x3c8
-	call	malloc
-	test	rax, rax
-	je	.label_1120
-	mov	rcx, qword ptr [r15 + 0x70]
-	mov	qword ptr [rax], rcx
-	mov	qword ptr [r15 + 0x70], rax
-	mov	dword ptr [r15 + 0x80], 0
-	xor	ecx, ecx
-	jmp	.label_1123
-	nop	word ptr cs:[rax + rax]
-.label_1127:
+	mov	qword ptr [r14 + 0xa8], rax
 	mov	rdi, r12
-	mov	rsi, r14
-	mov	rdx, qword ptr [rsp + 0x30]
-	call	peek_token
-	cdqe	
-	add	qword ptr [r14 + 0x48], rax
-	mov	eax, dword ptr [r12 + 8]
-	or	eax, 8
-	movzx	eax, al
-	cmp	eax, 0xa
-	mov	ebp, 0
-	je	.label_1133
-	mov	rax, qword ptr [r15 + 0xa8]
-	mov	qword ptr [rsp + 8], rax
-	mov	rax, qword ptr [rsp + 0x10]
-	mov	qword ptr [r15 + 0xa8], rax
-	xor	r8d, r8d
-	mov	rdi, r14
-	mov	rsi, qword ptr [rsp + 0x18]
-	mov	rdx, r12
-	mov	rcx, qword ptr [rsp + 0x20]
-	mov	r13, qword ptr [rsp + 0x28]
-	mov	r9, r13
+	mov	rsi, qword ptr [rsp + 8]
+	mov	rdx, r13
+	mov	rcx, qword ptr [rsp + 0x10]
+	mov	r8, qword ptr [rsp + 0x28]
+	mov	rbp, qword ptr [rsp + 0x18]
+	mov	r9, rbp
 	call	parse_branch
-	mov	rbp, rax
-	test	rbp, rbp
-	jne	.label_1126
-	mov	eax, dword ptr [r13]
+	mov	r15, rax
+	test	r15, r15
+	jne	.label_1048
+	mov	eax, dword ptr [rbp]
 	test	eax, eax
-	jne	.label_1128
-.label_1126:
-	mov	rax, qword ptr [rsp + 8]
-	or	qword ptr [r15 + 0xa8], rax
-.label_1133:
-	mov	ecx, dword ptr [r15 + 0x80]
+	jne	.label_1050
+.label_1048:
+	mov	rax, qword ptr [rsp + 0x20]
+	or	qword ptr [r14 + 0xa8], rax
+	nop	word ptr [rax + rax]
+.label_1052:
+	mov	ecx, dword ptr [r14 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1131
-	mov	rax, qword ptr [r15 + 0x70]
-.label_1123:
+	je	.label_1055
+	mov	rax, qword ptr [r14 + 0x70]
+.label_1062:
 	lea	edx, [rcx + 1]
-	mov	dword ptr [r15 + 0x80], edx
+	mov	dword ptr [r14 + 0x80], edx
 	movsxd	rcx, ecx
 	shl	rcx, 6
-	lea	r13, [rax + rcx + 8]
+	lea	rbp, [rax + rcx + 8]
 	mov	qword ptr [rax + rcx + 8], 0
 	mov	qword ptr [rax + rcx + 0x10], rbx
-	mov	qword ptr [rax + rcx + 0x18], rbp
+	mov	qword ptr [rax + rcx + 0x18], r15
 	mov	dword ptr [rax + rcx + 0x38], 0xa
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	test	rbx, rbx
-	je	.label_1135
-	mov	qword ptr [rbx], r13
-.label_1135:
-	test	rbp, rbp
-	je	.label_1132
-	mov	qword ptr [rbp], r13
-.label_1132:
-	movzx	eax, byte ptr [r12 + 8]
+	je	.label_1059
+	mov	qword ptr [rbx], rbp
+.label_1059:
+	test	r15, r15
+	je	.label_1049
+	mov	qword ptr [r15], rbp
+.label_1049:
+	movzx	eax, byte ptr [r13 + 8]
 	cmp	eax, 0xa
-	mov	rbx, r13
-	je	.label_1127
-	jmp	.label_1130
-.label_1128:
-	xor	r13d, r13d
-	test	rbx, rbx
-	je	.label_1130
-	mov	r14d, 0x400ff
-	xor	r13d, r13d
-	nop	word ptr cs:[rax + rax]
-.label_1121:
+	mov	rbx, rbp
+	je	.label_1058
+	jmp	.label_1053
+.label_1056:
 	mov	rbp, rbx
-	mov	rbx, qword ptr [rbp + 8]
+.label_1053:
+	mov	rax, rbp
+	add	rsp, 0x38
+	pop	rbx
+	pop	r12
+	pop	r13
+	pop	r14
+	pop	r15
+	pop	rbp
+	ret	
+.label_1050:
+	xor	ebp, ebp
 	test	rbx, rbx
-	jne	.label_1121
-	mov	rbx, qword ptr [rbp + 0x10]
+	je	.label_1053
+	mov	r14d, 0x400ff
+	xor	ebp, ebp
+	nop	dword ptr [rax]
+.label_1061:
+	mov	r15, rbx
+	mov	rbx, qword ptr [r15 + 8]
 	test	rbx, rbx
-	jne	.label_1121
+	jne	.label_1061
+	mov	rbx, qword ptr [r15 + 0x10]
+	test	rbx, rbx
+	jne	.label_1061
 	nop	word ptr cs:[rax + rax]
-.label_1134:
-	mov	eax, dword ptr [rbp + 0x30]
+.label_1060:
+	mov	eax, dword ptr [r15 + 0x30]
 	and	eax, r14d
 	cmp	eax, 3
-	je	.label_1129
+	je	.label_1045
 	cmp	eax, 6
-	jne	.label_1143
-	mov	rbx, qword ptr [rbp + 0x28]
+	jne	.label_1046
+	mov	rbx, qword ptr [r15 + 0x28]
 	mov	rdi, qword ptr [rbx]
 	call	free
 	mov	rdi, qword ptr [rbx + 8]
@@ -12791,42 +11969,32 @@ parse_reg_exp:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, rbx
-	jmp	.label_1140
+	jmp	.label_1054
 	nop	dword ptr [rax]
-.label_1129:
-	mov	rdi, qword ptr [rbp + 0x28]
-.label_1140:
+.label_1045:
+	mov	rdi, qword ptr [r15 + 0x28]
+.label_1054:
 	call	free
-.label_1143:
-	mov	rax, qword ptr [rbp]
+.label_1046:
+	mov	rax, qword ptr [r15]
 	test	rax, rax
-	je	.label_1130
+	je	.label_1053
 	mov	rbx, qword ptr [rax + 0x10]
-	cmp	rbx, rbp
-	mov	rbp, rax
-	je	.label_1134
+	cmp	rbx, r15
+	mov	r15, rax
+	je	.label_1060
 	test	rbx, rbx
-	mov	rbp, rax
-	je	.label_1134
-	jmp	.label_1121
-.label_1120:
-	mov	rax, qword ptr [rsp + 0x28]
+	mov	r15, rax
+	je	.label_1060
+	jmp	.label_1061
+.label_1047:
+	mov	rax, qword ptr [rsp + 0x18]
 	mov	dword ptr [rax], 0xc
-	xor	r13d, r13d
-.label_1130:
-	mov	rax, r13
-	add	rsp, 0x38
-	pop	rbx
-	pop	r12
-	pop	r13
-	pop	r14
-	pop	r15
-	pop	rbp
-	ret	
-	nop	dword ptr [rax + rax]
+	xor	ebp, ebp
+	jmp	.label_1053
 	.section	.text
 	.align	16
-	#Procedure 0x40cf80
+	#Procedure 0x40c380
 
 	.globl peek_token
 	.type peek_token, @function
@@ -12842,7 +12010,7 @@ peek_token:
 	mov	r15, rdi
 	mov	rax, qword ptr [rbp + 0x48]
 	cmp	qword ptr [rbp + 0x68], rax
-	jle	.label_1164
+	jle	.label_1082
 	mov	r13, rdx
 	mov	rcx, qword ptr [rbp + 8]
 	movzx	r12d, byte ptr [rcx + rax]
@@ -12853,32 +12021,32 @@ peek_token:
 	mov	dword ptr [r15 + 8], eax
 	mov	edx, dword ptr [rbp + 0x90]
 	cmp	edx, 2
-	jl	.label_1169
+	jl	.label_1087
 	mov	rax, qword ptr [rbp + 0x48]
 	cmp	rax, qword ptr [rbp + 0x30]
-	je	.label_1169
+	je	.label_1087
 	mov	rcx, qword ptr [rbp + 0x10]
 	cmp	dword ptr [rcx + rax*4], -1
-	je	.label_1175
-.label_1169:
+	je	.label_1093
+.label_1087:
 	cmp	r12d, 0x5c
-	jne	.label_1177
+	jne	.label_1095
 	mov	rcx, qword ptr [rbp + 0x48]
 	lea	rax, [rcx + 1]
 	cmp	rax, qword ptr [rbp + 0x58]
-	jge	.label_1166
+	jge	.label_1084
 	cmp	byte ptr [rbp + 0x8b], 0
-	jne	.label_1182
-.label_1145:
+	jne	.label_1101
+.label_1064:
 	mov	rcx, qword ptr [rbp + 8]
 	mov	r14b, byte ptr [rcx + rax]
-.label_1146:
+.label_1065:
 	mov	byte ptr [r15], r14b
 	and	ebx, 0xff9fff00
 	or	ebx, 1
 	mov	dword ptr [r15 + 8], ebx
 	cmp	dword ptr [rbp + 0x90], 2
-	jl	.label_1148
+	jl	.label_1067
 	mov	rax, qword ptr [rbp + 0x10]
 	mov	rcx, qword ptr [rbp + 0x48]
 	mov	ebp, dword ptr [rax + rcx*4 + 4]
@@ -12894,17 +12062,17 @@ peek_token:
 	mov	eax, 0xffbfffff
 	and	eax, dword ptr [r15 + 8]
 	or	eax, ecx
-	jmp	.label_1153
-.label_1164:
+	jmp	.label_1072
+.label_1082:
 	mov	byte ptr [r15 + 8], 2
 	xor	r14d, r14d
-	jmp	.label_1144
-.label_1177:
+	jmp	.label_1063
+.label_1095:
 	and	ebx, 0xff9fff00
 	or	ebx, 1
 	mov	dword ptr [r15 + 8], ebx
 	cmp	dword ptr [rbp + 0x90], 2
-	jl	.label_1162
+	jl	.label_1080
 	mov	rax, qword ptr [rbp + 0x10]
 	mov	rcx, qword ptr [rbp + 0x48]
 	mov	ebx, dword ptr [rax + rcx*4]
@@ -12920,12 +12088,12 @@ peek_token:
 	mov	eax, 0xffbfffff
 	and	eax, dword ptr [r15 + 8]
 	or	eax, ecx
-	jmp	.label_1168
-.label_1166:
+	jmp	.label_1086
+.label_1084:
 	and	ebx, 0xff9fff00
 	or	ebx, 0x24
-	jmp	.label_1173
-.label_1162:
+	jmp	.label_1091
+.label_1080:
 	call	__ctype_b_loc
 	mov	rax, qword ptr [rax]
 	movzx	eax, word ptr [rax + r12*2]
@@ -12937,23 +12105,23 @@ peek_token:
 	or	eax, ecx
 	shl	eax, 0x16
 	or	eax, ebx
-.label_1168:
+.label_1086:
 	mov	dword ptr [r15 + 8], eax
 	mov	r14d, 1
 	cmp	r12d, 0x3e
-	jg	.label_1161
+	jg	.label_1083
 	lea	ecx, [r12 - 0x24]
 	cmp	ecx, 0xa
-	ja	.label_1181
-	jmp	qword ptr [word ptr [+ (rcx * 8) + label_1155]]
-.label_2695:
+	ja	.label_1100
+	jmp	qword ptr [word ptr [+ (rcx * 8) + label_1074]]
+.label_2475:
 	mov	rdx, r13
 	test	dl, 8
-	jne	.label_1147
+	jne	.label_1066
 	mov	rcx, qword ptr [rbp + 0x48]
 	inc	rcx
 	cmp	rcx, qword ptr [rbp + 0x58]
-	je	.label_1147
+	je	.label_1066
 	mov	qword ptr [rbp + 0x48], rcx
 	lea	rdi, [rsp + 8]
 	mov	rsi, rbp
@@ -12962,42 +12130,42 @@ peek_token:
 	movzx	eax, byte ptr [rsp + 0x10]
 	add	eax, -9
 	cmp	eax, 1
-	ja	.label_1144
+	ja	.label_1063
 	mov	eax, dword ptr [r15 + 8]
-.label_1147:
+.label_1066:
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 0x20
-	jmp	.label_1144
-.label_1161:
+	jmp	.label_1063
+.label_1083:
 	cmp	r12d, 0x7a
-	jg	.label_1159
+	jg	.label_1078
 	cmp	r12d, 0x3f
-	je	.label_1172
+	je	.label_1090
 	cmp	r12d, 0x5b
 	mov	rdx, r13
-	je	.label_1179
+	je	.label_1081
 	cmp	r12d, 0x5e
-	jne	.label_1144
+	jne	.label_1063
 	test	edx, 0x800008
-	jne	.label_1167
+	jne	.label_1085
 	mov	rcx, qword ptr [rbp + 0x48]
 	test	rcx, rcx
-	je	.label_1167
+	je	.label_1085
 	test	dh, 8
-	je	.label_1144
+	je	.label_1063
 	mov	rdx, qword ptr [rbp + 8]
 	movzx	ecx, byte ptr [rcx + rdx - 1]
 	cmp	ecx, 0xa
-	jne	.label_1144
-.label_1167:
+	jne	.label_1063
+.label_1085:
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 0x10
-	jmp	.label_1144
-.label_1148:
+	jmp	.label_1063
+.label_1067:
 	movzx	ebp, r14b
 	call	__ctype_b_loc
 	mov	rax, qword ptr [rax]
@@ -13010,46 +12178,46 @@ peek_token:
 	or	eax, ecx
 	shl	eax, 0x16
 	or	eax, ebx
-.label_1153:
+.label_1072:
 	mov	dword ptr [r15 + 8], eax
 	movzx	ecx, r14b
 	mov	r14d, 2
 	cmp	ecx, 0x5f
-	jg	.label_1180
+	jg	.label_1099
 	lea	edx, [rcx - 0x27]
 	cmp	edx, 0x2c
-	ja	.label_1165
-	jmp	qword ptr [word ptr [+ (rdx * 8) + label_1150]]
-.label_2681:
+	ja	.label_1068
+	jmp	qword ptr [word ptr [+ (rdx * 8) + label_1069]]
+.label_2436:
 	mov	rdx, r13
 	test	dh, 0x40
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 4
 	mov	dword ptr [r15 + 8], eax
 	add	ecx, -0x31
 	movsxd	rax, ecx
 	mov	qword ptr [r15], rax
-	jmp	.label_1144
-.label_1159:
+	jmp	.label_1063
+.label_1078:
 	cmp	r12d, 0x7b
-	je	.label_1154
+	je	.label_1073
 	cmp	r12d, 0x7c
 	mov	rcx, r13
-	je	.label_1157
+	je	.label_1096
 	cmp	r12d, 0x7d
-	jne	.label_1144
+	jne	.label_1063
 	and	ecx, 0x1200
 	cmp	rcx, 0x1200
-	je	.label_1158
-	jmp	.label_1144
-.label_1175:
+	je	.label_1077
+	jmp	.label_1063
+.label_1093:
 	and	ebx, 0xff9fff00
 	or	ebx, 0x200001
-.label_1173:
+.label_1091:
 	mov	dword ptr [r15 + 8], ebx
 	mov	r14d, 1
-.label_1144:
+.label_1063:
 	mov	eax, r14d
 	add	rsp, 0x18
 	pop	rbx
@@ -13059,239 +12227,239 @@ peek_token:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1180:
+.label_1099:
 	lea	edx, [rcx - 0x73]
 	cmp	edx, 0xa
-	ja	.label_1174
-	jmp	qword ptr [word ptr [+ (rdx * 8) + label_1170]]
-.label_2596:
+	ja	.label_1092
+	jmp	qword ptr [word ptr [+ (rdx * 8) + label_1088]]
+.label_2469:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0x22
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_1181:
+	jmp	.label_1063
+.label_1100:
 	cmp	r12d, 0xa
-	jne	.label_1144
+	jne	.label_1063
 	mov	rcx, r13
 	test	ch, 8
-	jne	.label_1160
-	jmp	.label_1144
-.label_2696:
+	jne	.label_1079
+	jmp	.label_1063
+.label_2476:
 	mov	rcx, r13
 	test	ch, 0x20
-	jne	.label_1176
-	jmp	.label_1144
-.label_2697:
+	jne	.label_1094
+	jmp	.label_1063
+.label_2477:
 	mov	rcx, r13
 	test	ch, 0x20
-	jne	.label_1178
-	jmp	.label_1144
-.label_2698:
+	jne	.label_1097
+	jmp	.label_1063
+.label_2478:
 	and	eax, 0xffffff00
 	or	eax, 0xb
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2699:
+	jmp	.label_1063
+.label_2479:
 	test	r13w, 0x402
-	jne	.label_1144
-	jmp	.label_1149
-.label_2700:
+	jne	.label_1063
+	jmp	.label_1075
+.label_2480:
 	and	eax, 0xffffff00
 	or	eax, 5
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_1172:
+	jmp	.label_1063
+.label_1090:
 	test	r13w, 0x402
-	jne	.label_1144
-	jmp	.label_1152
-.label_1179:
+	jne	.label_1063
+	jmp	.label_1071
+.label_1081:
 	and	eax, 0xffffff00
 	or	eax, 0x14
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_1154:
+	jmp	.label_1063
+.label_1073:
 	and	r13d, 0x1200
 	cmp	r13, 0x1200
-	je	.label_1156
-	jmp	.label_1144
-.label_1157:
+	je	.label_1076
+	jmp	.label_1063
+.label_1096:
 	test	ch, 4
-	jne	.label_1144
+	jne	.label_1063
 	test	cx, cx
-	js	.label_1160
-	jmp	.label_1144
-.label_1174:
+	js	.label_1079
+	jmp	.label_1063
+.label_1092:
 	cmp	ecx, 0x60
-	je	.label_1163
+	je	.label_1098
 	cmp	ecx, 0x62
-	jne	.label_1144
+	jne	.label_1063
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 0x100
-	jmp	.label_1144
-.label_1182:
+	jmp	.label_1063
+.label_1101:
 	cmp	edx, 2
-	jl	.label_1171
+	jl	.label_1089
 	mov	rdx, qword ptr [rbp + 0x10]
 	cmp	dword ptr [rdx + rcx*4 + 4], -1
-	je	.label_1145
+	je	.label_1064
 	lea	rsi, [rcx + 2]
 	cmp	qword ptr [rbp + 0x30], rsi
-	je	.label_1171
+	je	.label_1089
 	cmp	dword ptr [rdx + rcx*4 + 8], -1
-	je	.label_1145
-.label_1171:
+	je	.label_1064
+.label_1089:
 	mov	dl, byte ptr [rbp + 0x8c]
 	test	dl, dl
 	mov	rsi, rax
-	je	.label_1151
+	je	.label_1070
 	mov	rsi, qword ptr [rbp + 0x18]
 	mov	rsi, qword ptr [rsi + rcx*8 + 8]
-.label_1151:
+.label_1070:
 	add	rsi, qword ptr [rbp + 0x28]
 	test	dl, dl
 	mov	rcx, qword ptr [rbp]
 	mov	r14b, byte ptr [rcx + rsi]
-	je	.label_1146
+	je	.label_1065
 	test	r14b, r14b
-	js	.label_1145
-	jmp	.label_1146
-.label_1165:
+	js	.label_1064
+	jmp	.label_1065
+.label_1068:
 	cmp	ecx, 0x57
-	jne	.label_1144
+	jne	.label_1063
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0x21
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2597:
+	jmp	.label_1063
+.label_2470:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0x20
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2598:
+	jmp	.label_1063
+.label_2471:
 	and	r13d, 0x1200
 	cmp	r13, 0x200
-	jne	.label_1144
-.label_1156:
+	jne	.label_1063
+.label_1076:
 	and	eax, 0xffffff00
 	or	eax, 0x17
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2599:
+	jmp	.label_1063
+.label_2472:
 	mov	rcx, r13
 	test	ch, 4
-	jne	.label_1144
+	jne	.label_1063
 	test	cx, cx
-	js	.label_1144
-.label_1160:
+	js	.label_1063
+.label_1079:
 	and	eax, 0xffffff00
 	or	eax, 0xa
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2600:
+	jmp	.label_1063
+.label_2473:
 	and	r13d, 0x1200
 	cmp	r13, 0x200
-	jne	.label_1144
-.label_1158:
+	jne	.label_1063
+.label_1077:
 	and	eax, 0xffffff00
 	or	eax, 0x18
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_1163:
+	jmp	.label_1063
+.label_1098:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 0x40
-	jmp	.label_1144
-.label_2677:
+	jmp	.label_1063
+.label_2432:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 0x80
-	jmp	.label_1144
-.label_2678:
+	jmp	.label_1063
+.label_2433:
 	mov	rcx, r13
 	test	ch, 0x20
-	jne	.label_1144
-.label_1176:
+	jne	.label_1063
+.label_1094:
 	and	eax, 0xffffff00
 	or	eax, 8
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2679:
+	jmp	.label_1063
+.label_2434:
 	mov	rcx, r13
 	test	ch, 0x20
-	jne	.label_1144
-.label_1178:
+	jne	.label_1063
+.label_1097:
 	and	eax, 0xffffff00
 	or	eax, 9
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2680:
+	jmp	.label_1063
+.label_2435:
 	and	r13d, 0x402
 	cmp	r13, 2
-	jne	.label_1144
-.label_1149:
+	jne	.label_1063
+.label_1075:
 	and	eax, 0xffffff00
 	or	eax, 0x12
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2682:
+	jmp	.label_1063
+.label_2437:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 6
-	jmp	.label_1144
-.label_2683:
+	jmp	.label_1063
+.label_2438:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 9
-	jmp	.label_1144
-.label_2684:
+	jmp	.label_1063
+.label_2439:
 	and	r13d, 0x402
 	cmp	r13, 2
-	jne	.label_1144
-.label_1152:
+	jne	.label_1063
+.label_1071:
 	and	eax, 0xffffff00
 	or	eax, 0x13
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
-.label_2685:
+	jmp	.label_1063
+.label_2440:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0xc
 	mov	dword ptr [r15 + 8], eax
 	mov	dword ptr [r15], 0x200
-	jmp	.label_1144
-.label_2686:
+	jmp	.label_1063
+.label_2441:
 	test	r13d, 0x80000
-	jne	.label_1144
+	jne	.label_1063
 	and	eax, 0xffffff00
 	or	eax, 0x23
 	mov	dword ptr [r15 + 8], eax
-	jmp	.label_1144
+	jmp	.label_1063
 	.section	.text
 	.align	16
-	#Procedure 0x40d620
+	#Procedure 0x40ca20
 
 	.globl parse_branch
 	.type parse_branch, @function
@@ -13303,174 +12471,111 @@ parse_branch:
 	push	r12
 	push	rbx
 	sub	rsp, 0x18
-	mov	r14, r9
+	mov	rbx, r9
 	mov	r15, r8
 	mov	qword ptr [rsp + 0x10], rcx
-	mov	r12, rdx
+	mov	r13, rdx
 	mov	qword ptr [rsp + 8], rsi
 	mov	qword ptr [rsp], rdi
-	mov	rbp, qword ptr [rsi]
+	mov	r14, qword ptr [rsi]
 	call	parse_expression
+	mov	rbp, rbx
 	mov	rbx, rax
-	xor	r13d, r13d
+	xor	r12d, r12d
 	test	rbx, rbx
-	jne	.label_1191
-	mov	eax, dword ptr [r14]
+	jne	.label_1111
+	mov	eax, dword ptr [rbp]
 	test	eax, eax
-	jne	.label_1184
-.label_1191:
-	mov	r13, r14
-	test	r15, r15
-	jne	.label_1190
-	jmp	.label_1196
-.label_1211:
+	je	.label_1111
+	jmp	.label_1105
+	nop	word ptr [rax + rax]
+.label_1120:
 	test	rbx, rbx
-	cmove	rbx, r14
-.label_1190:
-	movzx	eax, byte ptr [r12 + 8]
-	cmp	eax, 0xa
-	ja	.label_1198
-	mov	ecx, 0x604
-	bt	ecx, eax
-	jb	.label_1200
-.label_1198:
+	cmove	rbx, r12
+.label_1111:
+	movzx	eax, byte ptr [r13 + 8]
+	mov	ecx, eax
+	or	ecx, 8
+	cmp	ecx, 0xa
+	je	.label_1121
+	test	r15, r15
+	je	.label_1104
+	cmp	eax, 9
+	je	.label_1106
+.label_1104:
 	mov	rdi, qword ptr [rsp]
 	mov	rsi, qword ptr [rsp + 8]
-	mov	rdx, r12
+	mov	rdx, r13
 	mov	rcx, qword ptr [rsp + 0x10]
 	mov	r8, r15
-	mov	r9, r13
+	mov	r9, rbp
 	call	parse_expression
-	mov	r14, rax
+	mov	r12, rax
+	test	r12, r12
+	jne	.label_1116
+	mov	eax, dword ptr [rbp]
+	test	eax, eax
+	jne	.label_1126
+.label_1116:
 	test	rbx, rbx
-	setne	al
-	test	r14, r14
-	jne	.label_1207
-	mov	ecx, dword ptr [r13]
-	test	ecx, ecx
-	jne	.label_1205
-.label_1207:
-	test	rbx, rbx
-	je	.label_1211
-	test	r14, r14
-	je	.label_1211
-	mov	ecx, dword ptr [rbp + 0x80]
+	je	.label_1120
+	test	r12, r12
+	je	.label_1120
+	mov	ecx, dword ptr [r14 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1212
-	mov	rax, qword ptr [rbp + 0x70]
-.label_1201:
+	je	.label_1123
+	mov	rax, qword ptr [r14 + 0x70]
+.label_1119:
 	lea	edx, [rcx + 1]
-	mov	dword ptr [rbp + 0x80], edx
+	mov	dword ptr [r14 + 0x80], edx
 	movsxd	rcx, ecx
 	shl	rcx, 6
 	lea	rdx, [rax + rcx + 8]
 	mov	qword ptr [rax + rcx + 8], 0
 	mov	qword ptr [rax + rcx + 0x10], rbx
-	mov	qword ptr [rax + rcx + 0x18], r14
+	mov	qword ptr [rax + rcx + 0x18], r12
 	mov	dword ptr [rax + rcx + 0x38], 0x10
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	qword ptr [rbx], rdx
-	mov	qword ptr [r14], rdx
+	mov	qword ptr [r12], rdx
 	mov	rbx, rdx
-	jmp	.label_1190
-.label_1212:
+	jmp	.label_1111
+.label_1123:
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1187
-	mov	rcx, qword ptr [rbp + 0x70]
+	je	.label_1127
+	mov	rcx, qword ptr [r14 + 0x70]
 	mov	qword ptr [rax], rcx
-	mov	qword ptr [rbp + 0x70], rax
-	mov	dword ptr [rbp + 0x80], 0
+	mov	qword ptr [r14 + 0x70], rax
+	mov	dword ptr [r14 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1201
-	nop	word ptr [rax + rax]
-.label_1208:
+	jmp	.label_1119
+.label_1126:
+	xor	r12d, r12d
 	test	rbx, rbx
-	cmove	rbx, r14
-.label_1196:
-	mov	eax, dword ptr [r12 + 8]
-	or	eax, 8
-	movzx	eax, al
-	cmp	eax, 0xa
-	je	.label_1195
-	xor	r8d, r8d
-	mov	rdi, qword ptr [rsp]
-	mov	rsi, qword ptr [rsp + 8]
-	mov	rdx, r12
-	mov	rcx, qword ptr [rsp + 0x10]
-	mov	r9, r13
-	call	parse_expression
-	mov	r14, rax
-	test	rbx, rbx
-	setne	al
-	test	r14, r14
-	jne	.label_1203
-	mov	ecx, dword ptr [r13]
-	test	ecx, ecx
-	jne	.label_1205
-.label_1203:
-	test	rbx, rbx
-	je	.label_1208
-	test	r14, r14
-	je	.label_1208
-	mov	ecx, dword ptr [rbp + 0x80]
-	cmp	ecx, 0xf
-	je	.label_1210
-	mov	rax, qword ptr [rbp + 0x70]
-.label_1189:
-	lea	edx, [rcx + 1]
-	mov	dword ptr [rbp + 0x80], edx
-	movsxd	rcx, ecx
-	shl	rcx, 6
-	lea	rdx, [rax + rcx + 8]
-	mov	qword ptr [rax + rcx + 8], 0
-	mov	qword ptr [rax + rcx + 0x10], rbx
-	mov	qword ptr [rax + rcx + 0x18], r14
-	mov	dword ptr [rax + rcx + 0x38], 0x10
-	xorps	xmm0, xmm0
-	movups	xmmword ptr [rax + rcx + 0x20], xmm0
-	mov	qword ptr [rax + rcx + 0x40], -1
-	mov	qword ptr [rbx], rdx
-	mov	qword ptr [r14], rdx
-	mov	rbx, rdx
-	jmp	.label_1196
-.label_1210:
-	mov	edi, 0x3c8
-	call	malloc
-	test	rax, rax
-	je	.label_1187
-	mov	rcx, qword ptr [rbp + 0x70]
-	mov	qword ptr [rax], rcx
-	mov	qword ptr [rbp + 0x70], rax
-	mov	dword ptr [rbp + 0x80], 0
-	xor	ecx, ecx
-	jmp	.label_1189
-.label_1205:
-	xor	r13d, r13d
-	test	al, al
-	je	.label_1184
-	mov	r15d, 0x400ff
-	xor	r13d, r13d
-	nop	dword ptr [rax]
-.label_1193:
+	je	.label_1105
+	mov	r14d, 0x400ff
+	xor	r12d, r12d
+	nop	word ptr cs:[rax + rax]
+.label_1102:
 	mov	rbp, rbx
 	mov	rbx, qword ptr [rbp + 8]
 	test	rbx, rbx
-	jne	.label_1193
+	jne	.label_1102
 	mov	rbx, qword ptr [rbp + 0x10]
 	test	rbx, rbx
-	jne	.label_1193
+	jne	.label_1102
 	nop	word ptr cs:[rax + rax]
-.label_1213:
+.label_1128:
 	mov	eax, dword ptr [rbp + 0x30]
-	and	eax, r15d
+	and	eax, r14d
 	cmp	eax, 3
-	je	.label_1199
+	je	.label_1109
 	cmp	eax, 6
-	jne	.label_1202
+	jne	.label_1113
 	mov	rbx, qword ptr [rbp + 0x28]
 	mov	rdi, qword ptr [rbx]
 	call	free
@@ -13481,31 +12586,31 @@ parse_branch:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, rbx
-	jmp	.label_1209
+	jmp	.label_1124
 	nop	dword ptr [rax]
-.label_1199:
+.label_1109:
 	mov	rdi, qword ptr [rbp + 0x28]
-.label_1209:
+.label_1124:
 	call	free
-.label_1202:
+.label_1113:
 	mov	rax, qword ptr [rbp]
 	test	rax, rax
-	je	.label_1184
+	je	.label_1105
 	mov	rbx, qword ptr [rax + 0x10]
 	cmp	rbx, rbp
 	mov	rbp, rax
-	je	.label_1213
+	je	.label_1128
 	test	rbx, rbx
 	mov	rbp, rax
-	je	.label_1213
-	jmp	.label_1193
-.label_1200:
-	mov	r13, rbx
-	jmp	.label_1184
-.label_1195:
-	mov	r13, rbx
-.label_1184:
-	mov	rax, r13
+	je	.label_1128
+	jmp	.label_1102
+.label_1121:
+	mov	r12, rbx
+	jmp	.label_1105
+.label_1106:
+	mov	r12, rbx
+.label_1105:
+	mov	rax, r12
 	add	rsp, 0x18
 	pop	rbx
 	pop	r12
@@ -13514,70 +12619,75 @@ parse_branch:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1187:
-	mov	r15d, 0x400ff
-.label_1185:
-	mov	rbp, r14
-	mov	r14, qword ptr [rbp + 8]
-	test	r14, r14
-	jne	.label_1185
-	mov	r14, qword ptr [rbp + 0x10]
-	test	r14, r14
-	jne	.label_1185
-.label_1197:
-	mov	eax, dword ptr [rbp + 0x30]
-	and	eax, r15d
-	cmp	eax, 3
-	je	.label_1186
-	cmp	eax, 6
-	jne	.label_1188
-	mov	r14, qword ptr [rbp + 0x28]
-	mov	rdi, qword ptr [r14]
-	call	free
-	mov	rdi, qword ptr [r14 + 8]
-	call	free
-	mov	rdi, qword ptr [r14 + 0x10]
-	call	free
-	mov	rdi, qword ptr [r14 + 0x18]
-	call	free
-	mov	rdi, r14
-	jmp	.label_1192
-.label_1186:
-	mov	rdi, qword ptr [rbp + 0x28]
-.label_1192:
-	call	free
-.label_1188:
-	mov	rax, qword ptr [rbp]
-	test	rax, rax
-	je	.label_1194
-	mov	r14, qword ptr [rax + 0x10]
-	cmp	r14, rbp
-	mov	rbp, rax
-	je	.label_1197
-	test	r14, r14
-	mov	rbp, rax
-	je	.label_1197
-	jmp	.label_1185
-.label_1194:
+.label_1127:
 	mov	r14d, 0x400ff
-.label_1183:
-	mov	rbp, rbx
-	mov	rbx, qword ptr [rbp + 8]
-	test	rbx, rbx
-	jne	.label_1183
-	mov	rbx, qword ptr [rbp + 0x10]
-	test	rbx, rbx
-	jne	.label_1183
-	nop	
-.label_1216:
+	mov	rcx, rbp
+.label_1115:
+	mov	rbp, r12
+	mov	r12, qword ptr [rbp + 8]
+	test	r12, r12
+	jne	.label_1115
+	mov	r12, qword ptr [rbp + 0x10]
+	test	r12, r12
+	jne	.label_1115
+	nop	word ptr cs:[rax + rax]
+.label_1110:
+	mov	r12, rcx
 	mov	eax, dword ptr [rbp + 0x30]
 	and	eax, r14d
 	cmp	eax, 3
-	je	.label_1204
+	je	.label_1122
 	cmp	eax, 6
-	jne	.label_1206
+	jne	.label_1125
+	mov	r15, qword ptr [rbp + 0x28]
+	mov	rdi, qword ptr [r15]
+	call	free
+	mov	rdi, qword ptr [r15 + 8]
+	call	free
+	mov	rdi, qword ptr [r15 + 0x10]
+	call	free
+	mov	rdi, qword ptr [r15 + 0x18]
+	call	free
+	mov	rdi, r15
+	jmp	.label_1108
+.label_1122:
+	mov	rdi, qword ptr [rbp + 0x28]
+.label_1108:
+	call	free
+.label_1125:
+	mov	rax, qword ptr [rbp]
+	test	rax, rax
+	mov	rcx, r12
+	je	.label_1107
+	mov	r12, qword ptr [rax + 0x10]
+	cmp	r12, rbp
+	mov	rbp, rax
+	je	.label_1110
+	test	r12, r12
+	mov	rbp, rax
+	je	.label_1110
+	jmp	.label_1115
+.label_1107:
+	mov	r14d, 0x400ff
+.label_1112:
+	mov	rbp, rbx
+	mov	rbx, qword ptr [rbp + 8]
+	test	rbx, rbx
+	jne	.label_1112
+	mov	rbx, qword ptr [rbp + 0x10]
+	test	rbx, rbx
+	jne	.label_1112
+	nop	dword ptr [rax + rax]
+.label_1118:
+	mov	eax, dword ptr [rbp + 0x30]
+	and	eax, r14d
+	cmp	eax, 3
+	je	.label_1114
+	cmp	eax, 6
+	jne	.label_1103
 	mov	rbx, qword ptr [rbp + 0x28]
 	mov	rdi, qword ptr [rbx]
+	mov	r15, rcx
 	call	free
 	mov	rdi, qword ptr [rbx + 8]
 	call	free
@@ -13586,31 +12696,34 @@ parse_branch:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, rbx
-	jmp	.label_1214
-.label_1204:
-	mov	rdi, qword ptr [rbp + 0x28]
-.label_1214:
 	call	free
-.label_1206:
+	mov	rcx, r15
+	jmp	.label_1103
+.label_1114:
+	mov	rdi, qword ptr [rbp + 0x28]
+	mov	rbx, rcx
+	call	free
+	mov	rcx, rbx
+.label_1103:
 	mov	rax, qword ptr [rbp]
 	test	rax, rax
-	je	.label_1215
+	je	.label_1117
 	mov	rbx, qword ptr [rax + 0x10]
 	cmp	rbx, rbp
 	mov	rbp, rax
-	je	.label_1216
+	je	.label_1118
 	test	rbx, rbx
 	mov	rbp, rax
-	je	.label_1216
-	jmp	.label_1183
-.label_1215:
-	mov	dword ptr [r13], 0xc
-	xor	r13d, r13d
-	jmp	.label_1184
+	je	.label_1118
+	jmp	.label_1112
+.label_1117:
+	mov	dword ptr [rcx], 0xc
+	xor	r12d, r12d
+	jmp	.label_1105
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x40da20
+	#Procedure 0x40cd70
 
 	.globl parse_expression
 	.type parse_expression, @function
@@ -13634,10 +12747,10 @@ parse_expression:
 	xor	r15d, r15d
 	lea	edx, [rcx - 1]
 	cmp	edx, 0x23
-	ja	.label_1280
+	ja	.label_1138
 	mov	r9, qword ptr [rbx]
-	jmp	qword ptr [word ptr [+ (rdx * 8) + label_1359]]
-.label_2616:
+	jmp	qword ptr [word ptr [+ (rdx * 8) + label_1234]]
+.label_2330:
 	mov	rax, qword ptr [rsp + 0x38]
 	mov	rsi, qword ptr [rax + 0x78]
 	cmp	ecx, 0x21
@@ -13652,10 +12765,10 @@ parse_expression:
 	mov	rbp, rax
 	xor	r15d, r15d
 	test	rbp, rbp
-	je	.label_1443
+	je	.label_1351
 	mov	r9, rbx
-	jmp	.label_1236
-.label_2617:
+	jmp	.label_1140
+.label_2331:
 	mov	rax, qword ptr [rsp + 0x38]
 	mov	rsi, qword ptr [rax + 0x78]
 	cmp	ecx, 0x23
@@ -13670,19 +12783,19 @@ parse_expression:
 	mov	rbp, rax
 	xor	r15d, r15d
 	test	rbp, rbp
-	jne	.label_1391
-.label_1443:
+	jne	.label_1264
+.label_1351:
 	mov	eax, dword ptr [r12]
 	test	eax, eax
 	mov	r9, rbx
-	je	.label_1236
-	jmp	.label_1280
-.label_2607:
+	je	.label_1140
+	jmp	.label_1138
+.label_2321:
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1400
+	je	.label_1276
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1245:
+.label_1155:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -13698,18 +12811,18 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	cmp	dword ptr [r9 + 0xb4], 2
-	jl	.label_1408
+	jl	.label_1282
 	mov	rcx, qword ptr [rsp + 0x38]
 	mov	rax, qword ptr [rcx + 0x48]
 	cmp	qword ptr [rcx + 0x68], rax
-	jg	.label_1256
+	jg	.label_1303
 	mov	rbp, r15
-	jmp	.label_1236
-.label_1332:
+	jmp	.label_1140
+.label_1152:
 	mov	rbp, r9
 	mov	rcx, qword ptr [rbx + 0x10]
 	cmp	dword ptr [rcx + rax*4], -1
-	jne	.label_1437
+	jne	.label_1309
 	mov	rdi, qword ptr [rsp + 0x40]
 	mov	rsi, rbx
 	mov	rdx, qword ptr [rsp + 0x48]
@@ -13719,9 +12832,9 @@ parse_expression:
 	mov	r9, rbp
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1447
+	je	.label_1321
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1271:
+.label_1375:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -13736,12 +12849,12 @@ parse_expression:
 	and	byte ptr [rax + rcx + 0x3a], 0xf3
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm1
 	mov	qword ptr [rax + rcx + 0x40], -1
-.label_1266:
+.label_1371:
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1226
+	je	.label_1345
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1282:
+.label_1195:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -13756,61 +12869,61 @@ parse_expression:
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	qword ptr [r15], rdx
 	test	rbp, rbp
-	je	.label_1242
+	je	.label_1137
 	mov	qword ptr [rbp], rdx
 	mov	rax, qword ptr [rbx + 0x48]
 	cmp	qword ptr [rbx + 0x68], rax
 	mov	r15, rdx
 	mov	rbp, rdx
-	jg	.label_1256
-	jmp	.label_1236
-.label_1447:
+	jg	.label_1303
+	jmp	.label_1140
+.label_1321:
 	mov	edi, 0x3c8
 	mov	rbp, r9
 	call	malloc
 	mov	r9, rbp
 	test	rax, rax
 	mov	ebp, 0
-	je	.label_1266
+	je	.label_1371
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1271
-.label_1226:
+	jmp	.label_1375
+.label_1345:
 	mov	edi, 0x3c8
 	mov	r13, r9
 	call	malloc
 	mov	r9, r13
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1282
-.label_1256:
+	jmp	.label_1195
+.label_1303:
 	mov	rbx, qword ptr [rsp + 0x38]
 	cmp	rax, qword ptr [rbx + 0x30]
-	jne	.label_1332
+	jne	.label_1152
 	mov	rbp, r15
-	jmp	.label_1236
-.label_2608:
+	jmp	.label_1140
+.label_2322:
 	mov	rbx, qword ptr [rsp + 0x40]
 	mov	cl, byte ptr [rbx]
 	mov	eax, 1
 	shl	eax, cl
 	cdqe	
 	test	qword ptr [r9 + 0xa8], rax
-	je	.label_1290
+	je	.label_1157
 	or	qword ptr [r9 + 0xa0], rax
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1297
+	je	.label_1164
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1284:
+.label_1145:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -13826,14 +12939,14 @@ parse_expression:
 	mov	qword ptr [rax + rcx + 0x40], -1
 	inc	qword ptr [r9 + 0x98]
 	or	byte ptr [r9 + 0xb0], 2
-	jmp	.label_1236
-.label_2609:
+	jmp	.label_1140
+.label_2323:
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1321
+	je	.label_1187
 	mov	rax, qword ptr [r9 + 0x70]
 	mov	rsi, qword ptr [rsp + 0x40]
-.label_1268:
+.label_1373:
 	mov	qword ptr [rsp + 0x40], rsi
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
@@ -13849,10 +12962,10 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	cmp	dword ptr [r9 + 0xb4], 1
-	jle	.label_1236
+	jle	.label_1140
 	or	byte ptr [r9 + 0xb0], 2
-	jmp	.label_1236
-.label_2610:
+	jmp	.label_1140
+.label_2324:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	r15, qword ptr [rbx + 0x30]
 	lea	rax, [r15 + 1]
@@ -13869,7 +12982,7 @@ parse_expression:
 	movzx	eax, byte ptr [r14 + 8]
 	xor	esi, esi
 	cmp	eax, 9
-	je	.label_1342
+	je	.label_1231
 	mov	rbp, r15
 	inc	r13
 	mov	rdi, qword ptr [rsp + 0x38]
@@ -13882,27 +12995,27 @@ parse_expression:
 	mov	rsi, rax
 	xor	r15d, r15d
 	cmp	dword ptr [r12], 0
-	jne	.label_1280
+	jne	.label_1138
 	movzx	eax, byte ptr [r14 + 8]
 	cmp	eax, 9
-	jne	.label_1373
+	jne	.label_1245
 	mov	r15, rbp
-.label_1342:
+.label_1231:
 	cmp	r15, 8
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rbx, r15
-	ja	.label_1376
+	ja	.label_1250
 	mov	eax, 1
 	mov	cl, bl
 	shl	eax, cl
 	cdqe	
 	or	qword ptr [r9 + 0xa8], rax
-.label_1376:
+.label_1250:
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1387
+	je	.label_1258
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1294:
+.label_1160:
 	mov	qword ptr [rsp + 0x40], r14
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
@@ -13917,55 +13030,55 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	test	rsi, rsi
-	je	.label_1395
+	je	.label_1268
 	mov	qword ptr [rsi], rbp
-.label_1395:
+.label_1268:
 	mov	qword ptr [rax + rcx + 0x30], rbx
-	jmp	.label_1236
-.label_2611:
+	jmp	.label_1140
+.label_2325:
 	mov	rcx, qword ptr [rsp + 0x48]
 	test	ecx, 0x20000
-	jne	.label_1419
+	jne	.label_1354
 	mov	dword ptr [r12], 0x10
-	jmp	.label_1258
-.label_2613:
+	jmp	.label_1144
+.label_2327:
 	mov	r15, qword ptr [rsp + 0x40]
 	mov	eax, dword ptr [r15]
 	test	ax, 0x30f
-	je	.label_1427
+	je	.label_1300
 	mov	al, byte ptr [r9 + 0xb0]
 	test	al, 0x10
-	jne	.label_1351
+	jne	.label_1222
 	mov	cl, al
 	or	cl, 0x10
 	mov	byte ptr [r9 + 0xb0], cl
 	xor	ebx, ebx
 	test	al, 8
 	mov	ebp, 0
-	jne	.label_1434
-	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_1444]]
+	jne	.label_1308
+	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_1316]]
 	movdqu	xmmword ptr [r9 + 0xb8], xmm0
 	mov	ebp, 2
 	mov	ebx, 0x80
 	test	al, 4
-	je	.label_1434
+	je	.label_1308
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [r9 + 0xc8], xmm0
-.label_1351:
+.label_1222:
 	mov	eax, dword ptr [r15]
-.label_1427:
+.label_1300:
 	cmp	eax, 0x200
-	je	.label_1453
+	je	.label_1328
 	cmp	eax, 0x100
-	jne	.label_1455
+	jne	.label_1329
 	mov	dword ptr [r15], 6
 	mov	r13, r15
 	lea	r15, [r9 + 0x80]
 	mov	ebp, dword ptr [r9 + 0x80]
 	cmp	ebp, 0xf
-	je	.label_1458
+	je	.label_1323
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1415:
+.label_1291:
 	lea	ecx, [rbp + 1]
 	mov	dword ptr [r15], ecx
 	movsxd	rcx, ebp
@@ -13980,27 +13093,27 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	ecx, 9
-	jmp	.label_1217
-.label_2615:
+	jmp	.label_1340
+.label_2329:
 	mov	rcx, qword ptr [rsp + 0x48]
 	test	ecx, 0x1000000
-	jne	.label_1235
-.label_2612:
+	jne	.label_1260
+.label_2326:
 	mov	rcx, qword ptr [rsp + 0x48]
 	test	cl, 0x20
-	jne	.label_1235
+	jne	.label_1260
 	test	cl, 0x10
-	jne	.label_1254
-.label_1419:
+	jne	.label_1364
+.label_1354:
 	and	eax, 0xffffff00
 	or	eax, 1
 	mov	rbx, qword ptr [rsp + 0x40]
 	mov	dword ptr [rbx + 8], eax
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1259
+	je	.label_1367
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1459:
+.label_1332:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -14012,14 +13125,14 @@ parse_expression:
 	movdqu	xmm1, xmmword ptr [rbx]
 	movdqu	xmmword ptr [rax + rcx + 0x30], xmm1
 	and	byte ptr [rax + rcx + 0x3a], 0xf3
-.label_1461:
+.label_1334:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
-	jmp	.label_1236
-.label_2618:
+	jmp	.label_1140
+.label_2332:
 	mov	dword ptr [r12], 5
-	jmp	.label_1258
-.label_2614:
+	jmp	.label_1144
+.label_2328:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	qword ptr [rsp + 0xe0], 0
 	mov	edi, 0x20
@@ -14031,9 +13144,9 @@ parse_expression:
 	call	rpl_calloc
 	mov	rbx, rax
 	test	r13, r13
-	je	.label_1295
+	je	.label_1161
 	test	rbx, rbx
-	je	.label_1295
+	je	.label_1161
 	mov	qword ptr [rsp + 0x58], rbx
 	mov	rbp, qword ptr [rsp + 0x40]
 	mov	rdi, rbp
@@ -14044,15 +13157,15 @@ parse_expression:
 	mov	ecx, dword ptr [rbp + 8]
 	movzx	edx, cl
 	cmp	edx, 0x19
-	je	.label_1306
+	je	.label_1173
 	cmp	edx, 2
-	je	.label_1247
+	je	.label_1148
 	mov	dword ptr [rsp + 0x50], 0
-	jmp	.label_1311
-.label_1391:
+	jmp	.label_1179
+.label_1264:
 	mov	r9, rbx
-	jmp	.label_1236
-.label_1254:
+	jmp	.label_1140
+.label_1364:
 	mov	r15, qword ptr [rsp + 0x40]
 	mov	rdi, r15
 	mov	rbp, qword ptr [rsp + 0x38]
@@ -14076,16 +13189,16 @@ parse_expression:
 	pop	r15
 	pop	rbp
 	jmp	parse_expression
-.label_1408:
+.label_1282:
 	mov	rbp, r15
-	jmp	.label_1236
-.label_1306:
+	jmp	.label_1140
+.label_1173:
 	mov	rcx, qword ptr [rsp + 0x58]
 	or	byte ptr [rcx + 0x20], 1
 	test	bh, 1
-	je	.label_1348
+	je	.label_1317
 	or	byte ptr [r13 + 1], 4
-.label_1348:
+.label_1317:
 	cdqe	
 	mov	rsi, qword ptr [rsp + 0x38]
 	add	qword ptr [rsi + 0x48], rax
@@ -14095,18 +13208,18 @@ parse_expression:
 	mov	ecx, dword ptr [rbp + 8]
 	movzx	edx, cl
 	cmp	edx, 2
-	je	.label_1247
+	je	.label_1148
 	mov	dl, 1
 	mov	dword ptr [rsp + 0x50], edx
-.label_1311:
+.label_1179:
 	mov	qword ptr [rsp + 0x60], r13
 	movzx	edx, cl
 	cmp	edx, 0x15
-	jne	.label_1345
+	jne	.label_1217
 	and	ecx, 0xffffff00
 	or	ecx, 1
 	mov	dword ptr [rbp + 8], ecx
-.label_1345:
+.label_1217:
 	lea	rcx, [rsp + 0xa0]
 	mov	qword ptr [rsp + 0xd8], rcx
 	mov	dword ptr [rsp + 0xd0], 3
@@ -14119,7 +13232,7 @@ parse_expression:
 	mov	r8, rbx
 	call	parse_bracket_element
 	test	eax, eax
-	jne	.label_1399
+	jne	.label_1275
 	mov	eax, ebx
 	and	eax, 0x10000
 	mov	qword ptr [rsp + 0x30], rax
@@ -14127,10 +13240,10 @@ parse_expression:
 	mov	qword ptr [rsp + 0x28], rax
 	xor	eax, eax
 	mov	qword ptr [rsp + 0x10], rax
-	jmp	.label_1361
-.label_1439:
+	jmp	.label_1271
+.label_1312:
 	cmp	eax, 2
-	je	.label_1369
+	je	.label_1241
 	mov	qword ptr [rsp + 0x58], r15
 	mov	qword ptr [rsp + 0x60], r13
 	mov	qword ptr [rsp + 0x20], r9
@@ -14147,9 +13260,9 @@ parse_expression:
 	mov	r8, rbx
 	call	parse_bracket_element
 	test	eax, eax
-	je	.label_1361
-	jmp	.label_1399
-.label_2647:
+	je	.label_1271
+	jmp	.label_1275
+.label_2452:
 	mov	cl, byte ptr [rsp + 0xd8]
 	mov	eax, 1
 	shl	rax, cl
@@ -14157,117 +13270,117 @@ parse_expression:
 	movzx	ecx, cl
 	mov	r13, qword ptr [rsp + 0x60]
 	or	qword ptr [r13 + rcx*8], rax
-	jmp	.label_1401
-.label_2648:
+	jmp	.label_1277
+.label_2453:
 	mov	r15, qword ptr [rsp + 0x58]
 	mov	rcx, qword ptr [r15 + 0x28]
 	mov	rbp, qword ptr [rsp + 0x28]
 	cmp	rbp, rcx
-	je	.label_1411
+	je	.label_1285
 	mov	rax, qword ptr [r15]
-.label_1275:
+.label_1132:
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	r13, qword ptr [rsp + 0x60]
 	mov	edx, dword ptr [rsp + 0xd8]
 	lea	rsi, [rcx + 1]
 	mov	qword ptr [r15 + 0x28], rsi
 	mov	dword ptr [rax + rcx*4], edx
-	jmp	.label_1265
-.label_1314:
+	jmp	.label_1189
+.label_1227:
 	mov	rax, qword ptr [rsp + 0xd8]
 	mov	al, byte ptr [rax]
-	jmp	.label_1405
-.label_1402:
+	jmp	.label_1218
+.label_1278:
 	xor	eax, eax
-.label_1405:
+.label_1218:
 	cmp	ebx, 3
-	je	.label_1430
+	je	.label_1304
 	test	ebx, ebx
-	jne	.label_1431
+	jne	.label_1159
 	mov	bpl, byte ptr [rsp + 0xc8]
-	jmp	.label_1333
-.label_1430:
+	jmp	.label_1306
+.label_1304:
 	mov	rcx, qword ptr [rsp + 0xc8]
 	mov	bpl, byte ptr [rcx]
-	jmp	.label_1333
-.label_1431:
+	jmp	.label_1306
+.label_1159:
 	xor	ebp, ebp
-.label_1333:
+.label_1306:
 	cmp	r15d, 3
-	je	.label_1302
+	je	.label_1228
 	test	r15d, r15d
-	jne	.label_1442
-.label_1302:
+	jne	.label_1205
+.label_1228:
 	test	r12, r12
 	movzx	edx, al
-	je	.label_1445
+	je	.label_1225
 	mov	edi, edx
 	call	btowc
 	mov	edx, eax
-	jmp	.label_1445
-.label_1442:
+	jmp	.label_1225
+.label_1205:
 	mov	edx, dword ptr [rsp + 0xd8]
-.label_1445:
+.label_1225:
 	cmp	ebx, 3
-	je	.label_1381
+	je	.label_1170
 	test	ebx, ebx
-	jne	.label_1449
-.label_1381:
+	jne	.label_1324
+.label_1170:
 	test	r12, r12
 	movzx	ebp, bpl
-	je	.label_1451
+	je	.label_1232
 	mov	edi, ebp
 	mov	ebx, edx
 	call	btowc
 	mov	edx, ebx
 	mov	ebp, eax
-	jmp	.label_1451
-.label_1449:
+	jmp	.label_1232
+.label_1324:
 	mov	ebp, dword ptr [rsp + 0xc8]
-.label_1451:
+.label_1232:
 	cmp	edx, -1
 	mov	ecx, 3
-	je	.label_1344
+	je	.label_1191
 	cmp	ebp, -1
-	je	.label_1344
+	je	.label_1191
 	cmp	qword ptr [rsp + 0x30], 0
-	je	.label_1288
+	je	.label_1336
 	cmp	edx, ebp
 	mov	ecx, 0xb
-	ja	.label_1344
-.label_1288:
+	ja	.label_1191
+.label_1336:
 	test	r12, r12
-	je	.label_1219
+	je	.label_1289
 	mov	rax, qword ptr [r12 + 0x40]
 	cmp	qword ptr [rsp + 0x10], rax
-	je	.label_1222
+	je	.label_1343
 	mov	rdi, qword ptr [r12 + 8]
 	mov	r14, qword ptr [r12 + 0x10]
 	mov	r9, r13
 	mov	r15, qword ptr [rsp + 0x58]
 	mov	ebx, dword ptr [rsp + 0xc]
-.label_1252:
+.label_1168:
 	mov	dword ptr [rdi + rax*4], edx
 	lea	rcx, [rax + 1]
 	mov	qword ptr [r12 + 0x40], rcx
 	mov	dword ptr [r14 + rax*4], ebp
 	mov	r12, qword ptr [rsp + 0x18]
-	jmp	.label_1416
-.label_1219:
+	jmp	.label_1366
+.label_1289:
 	mov	r12, qword ptr [rsp + 0x18]
 	mov	r9, r13
 	mov	r15, qword ptr [rsp + 0x58]
 	mov	ebx, dword ptr [rsp + 0xc]
-.label_1416:
+.label_1366:
 	mov	eax, ebp
 	mov	edx, edx
 	xor	ecx, ecx
 	mov	r13, qword ptr [rsp + 0x60]
-.label_1424:
+.label_1279:
 	cmp	rdx, rcx
-	ja	.label_1354
+	ja	.label_1210
 	cmp	rcx, rax
-	ja	.label_1354
+	ja	.label_1210
 	mov	esi, 1
 	shl	rsi, cl
 	mov	rdi, rcx
@@ -14276,25 +13389,25 @@ parse_expression:
 	add	rdi, rcx
 	sar	rdi, 6
 	or	qword ptr [r13 + rdi*8], rsi
-.label_1354:
+.label_1210:
 	inc	rcx
 	cmp	rcx, 0x100
-	jne	.label_1424
+	jne	.label_1279
 	mov	dword ptr [r12], 0
-	jmp	.label_1265
-.label_1411:
+	jmp	.label_1189
+.label_1285:
 	lea	rax, [rbp + rbp]
 	mov	rdi, qword ptr [r15]
 	lea	rsi, [rax*4 + 4]
 	call	realloc
 	test	rax, rax
-	je	.label_1244
+	je	.label_1130
 	lea	rbp, [rbp + rbp + 1]
 	mov	qword ptr [rsp + 0x28], rbp
 	mov	qword ptr [r15], rax
 	mov	rcx, qword ptr [r15 + 0x28]
-	jmp	.label_1275
-.label_1222:
+	jmp	.label_1132
+.label_1343:
 	mov	dword ptr [rsp + 8], edx
 	mov	rax, qword ptr [rsp + 0x10]
 	lea	rax, [rax + rax]
@@ -14310,9 +13423,9 @@ parse_expression:
 	mov	r14, rax
 	test	rdi, rdi
 	mov	r15, qword ptr [rsp + 0x58]
-	je	.label_1293
+	je	.label_1147
 	test	r14, r14
-	je	.label_1293
+	je	.label_1147
 	mov	rax, qword ptr [rsp + 0x10]
 	lea	rax, [rax + rax + 1]
 	mov	qword ptr [rsp + 0x10], rax
@@ -14322,8 +13435,8 @@ parse_expression:
 	mov	r9, r13
 	mov	ebx, dword ptr [rsp + 0xc]
 	mov	edx, dword ptr [rsp + 8]
-	jmp	.label_1252
-.label_1361:
+	jmp	.label_1168
+.label_1271:
 	mov	rdi, rbp
 	mov	rsi, qword ptr [rsp + 0x38]
 	mov	rdx, rbx
@@ -14331,9 +13444,9 @@ parse_expression:
 	mov	ebx, eax
 	mov	r15d, dword ptr [rsp + 0xd0]
 	cmp	r15d, 2
-	je	.label_1309
+	je	.label_1178
 	cmp	r15d, 4
-	jne	.label_1316
+	jne	.label_1182
 	mov	rax, qword ptr [rsp + 0x38]
 	mov	rdi, qword ptr [rax + 0x78]
 	mov	r8, qword ptr [rsp + 0xd8]
@@ -14347,17 +13460,17 @@ parse_expression:
 	mov	dword ptr [r12], eax
 	test	eax, eax
 	mov	r9, qword ptr [rsp + 0x20]
-	je	.label_1265
-	jmp	.label_1324
-.label_1316:
+	je	.label_1189
+	jmp	.label_1193
+.label_1182:
 	movzx	eax, byte ptr [rbp + 8]
 	cmp	eax, 0x16
 	mov	r9, qword ptr [rsp + 0x20]
-	je	.label_1380
+	je	.label_1194
 	cmp	eax, 2
-	jne	.label_1326
-	jmp	.label_1328
-.label_1380:
+	jne	.label_1196
+	jmp	.label_1200
+.label_1194:
 	mov	r13, r9
 	movsxd	rax, ebx
 	mov	rbp, qword ptr [rsp + 0x38]
@@ -14368,9 +13481,9 @@ parse_expression:
 	call	peek_token_bracket
 	movzx	ecx, byte ptr [rsp + 0x78]
 	cmp	ecx, 0x15
-	je	.label_1338
+	je	.label_1211
 	cmp	ecx, 2
-	je	.label_1343
+	je	.label_1216
 	lea	rcx, [rsp + 0x80]
 	mov	qword ptr [rsp + 0xc8], rcx
 	mov	dword ptr [rsp + 0xc0], 3
@@ -14384,7 +13497,7 @@ parse_expression:
 	mov	r8, rbx
 	call	parse_bracket_element
 	test	eax, eax
-	jne	.label_1357
+	jne	.label_1233
 	mov	qword ptr [rsp + 0x18], r12
 	mov	rdi, qword ptr [rsp + 0x40]
 	mov	rsi, rbp
@@ -14392,39 +13505,39 @@ parse_expression:
 	call	peek_token_bracket
 	cmp	dword ptr [r13 + 0xb4], 1
 	mov	r12, qword ptr [rsp + 0x58]
-	jg	.label_1363
+	jg	.label_1238
 	xor	r12d, r12d
-.label_1363:
+.label_1238:
 	mov	ecx, 0xb
 	mov	ebx, dword ptr [rsp + 0xc0]
 	cmp	ebx, 2
-	je	.label_1344
+	je	.label_1191
 	mov	dword ptr [rsp + 0xc], eax
 	cmp	ebx, 4
-	je	.label_1344
+	je	.label_1191
 	cmp	r15d, 3
-	jne	.label_1378
+	jne	.label_1252
 	mov	rdi, qword ptr [rsp + 0xd8]
 	call	strlen
 	mov	ecx, 3
 	cmp	rax, 1
-	ja	.label_1344
-.label_1378:
+	ja	.label_1191
+.label_1252:
 	cmp	ebx, 3
-	jne	.label_1463
+	jne	.label_1262
 	mov	rdi, qword ptr [rsp + 0xc8]
 	call	strlen
 	mov	ecx, 3
 	cmp	rax, 1
-	ja	.label_1344
-.label_1463:
+	ja	.label_1191
+.label_1262:
 	cmp	r15d, 3
-	je	.label_1314
+	je	.label_1227
 	test	r15d, r15d
-	jne	.label_1402
+	jne	.label_1278
 	mov	al, byte ptr [rsp + 0xd8]
-	jmp	.label_1405
-.label_1338:
+	jmp	.label_1218
+.label_1211:
 	mov	eax, ebx
 	neg	eax
 	cdqe	
@@ -14432,18 +13545,18 @@ parse_expression:
 	mov	rax, qword ptr [rsp + 0x40]
 	mov	byte ptr [rax + 8], 1
 	mov	r9, r13
-.label_1326:
+.label_1196:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	eax, r15d
 	cmp	r15d, 3
-	ja	.label_1414
-	jmp	qword ptr [word ptr [+ (rax * 8) + label_1417]]
-.label_1309:
+	ja	.label_1288
+	jmp	qword ptr [word ptr [+ (rax * 8) + label_1292]]
+.label_1178:
 	mov	rbp, qword ptr [rsp + 0xd8]
 	mov	rdi, rbp
 	call	strlen
 	cmp	rax, 1
-	jne	.label_1422
+	jne	.label_1295
 	mov	cl, byte ptr [rbp]
 	mov	eax, 1
 	shl	rax, cl
@@ -14452,20 +13565,20 @@ parse_expression:
 	mov	r13, qword ptr [rsp + 0x60]
 	or	qword ptr [r13 + rcx*8], rax
 	mov	dword ptr [r12], 0
-.label_1401:
+.label_1277:
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	r15, qword ptr [rsp + 0x58]
-.label_1265:
+.label_1189:
 	mov	rax, qword ptr [rsp + 0x40]
 	movzx	eax, byte ptr [rax + 8]
 	cmp	eax, 0x15
-	jne	.label_1439
+	jne	.label_1312
 	movsxd	rax, ebx
 	mov	rcx, qword ptr [rsp + 0x38]
 	add	qword ptr [rcx + 0x48], rax
 	mov	eax, dword ptr [rsp + 0x50]
 	test	al, al
-	je	.label_1446
+	je	.label_1318
 	movdqu	xmm0, xmmword ptr [r13]
 	pcmpeqd	xmm1, xmm1
 	pxor	xmm0, xmm1
@@ -14473,10 +13586,10 @@ parse_expression:
 	movdqu	xmm0, xmmword ptr [r13 + 0x10]
 	pxor	xmm0, xmm1
 	movdqu	xmmword ptr [r13 + 0x10], xmm0
-.label_1446:
+.label_1318:
 	mov	eax, dword ptr [r9 + 0xb4]
 	cmp	eax, 2
-	jl	.label_1456
+	jl	.label_1310
 	mov	rcx, qword ptr [r9 + 0x78]
 	mov	rdx, qword ptr [rcx]
 	and	qword ptr [r13], rdx
@@ -14486,22 +13599,22 @@ parse_expression:
 	and	qword ptr [r13 + 0x10], rdx
 	mov	rcx, qword ptr [rcx + 0x18]
 	and	qword ptr [r13 + 0x18], rcx
-.label_1456:
+.label_1310:
 	cmp	qword ptr [r15 + 0x28], 0
-	jne	.label_1225
+	jne	.label_1212
 	cmp	qword ptr [r15 + 0x30], 0
-	jne	.label_1225
+	jne	.label_1212
 	cmp	qword ptr [r15 + 0x38], 0
-	jne	.label_1225
+	jne	.label_1212
 	cmp	qword ptr [r15 + 0x40], 0
-	jne	.label_1225
+	jne	.label_1212
 	cmp	eax, 2
-	jl	.label_1291
+	jl	.label_1286
 	cmp	qword ptr [r15 + 0x48], 0
-	jne	.label_1225
+	jne	.label_1212
 	test	byte ptr [r15 + 0x20], 1
-	jne	.label_1225
-.label_1291:
+	jne	.label_1212
+.label_1286:
 	mov	rdi, qword ptr [r15]
 	mov	rbp, r9
 	call	free
@@ -14516,9 +13629,9 @@ parse_expression:
 	mov	r9, rbp
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1386
+	je	.label_1299
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1273:
+.label_1153:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -14529,14 +13642,14 @@ parse_expression:
 	mov	qword ptr [rax + rcx + 0x18], 0
 	mov	qword ptr [rax + rcx + 0x30], r13
 	mov	dword ptr [rax + rcx + 0x38], 3
-	jmp	.label_1461
-.label_1225:
+	jmp	.label_1334
+.label_1212:
 	or	byte ptr [r9 + 0xb0], 2
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1277
+	je	.label_1134
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1346:
+.label_1169:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -14550,20 +13663,20 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	cmp	qword ptr [r13], 0
-	jne	.label_1283
+	jne	.label_1143
 	cmp	qword ptr [r13 + 8], 0
-	jne	.label_1283
+	jne	.label_1143
 	cmp	qword ptr [r13 + 0x10], 0
-	jne	.label_1283
+	jne	.label_1143
 	cmp	qword ptr [r13 + 0x18], 0
-	je	.label_1435
-.label_1283:
+	je	.label_1358
+.label_1143:
 	mov	qword ptr [rsp + 0x60], r13
 	mov	eax, dword ptr [r9 + 0x80]
 	cmp	eax, 0xf
-	je	.label_1301
+	je	.label_1167
 	mov	rbp, qword ptr [r9 + 0x70]
-.label_1370:
+.label_1360:
 	lea	ecx, [rax + 1]
 	mov	dword ptr [r9 + 0x80], ecx
 	movsxd	rbx, eax
@@ -14578,9 +13691,9 @@ parse_expression:
 	mov	qword ptr [rbp + rbx + 0x40], -1
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1308
+	je	.label_1142
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1432:
+.label_1201:
 	lea	rdx, [rbp + rbx + 8]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], esi
@@ -14596,16 +13709,16 @@ parse_expression:
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	qword ptr [rdx], rbp
 	mov	qword ptr [rdi], rbp
-	jmp	.label_1236
-.label_1453:
+	jmp	.label_1140
+.label_1328:
 	mov	dword ptr [r15], 5
 	mov	r13, r15
 	lea	r15, [r9 + 0x80]
 	mov	ebp, dword ptr [r9 + 0x80]
 	cmp	ebp, 0xf
-	je	.label_1341
+	je	.label_1215
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1433:
+.label_1307:
 	lea	ecx, [rbp + 1]
 	mov	dword ptr [r15], ecx
 	movsxd	rcx, ebp
@@ -14620,13 +13733,13 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	ecx, 0xa
-.label_1217:
+.label_1340:
 	mov	dword ptr [r13], ecx
 	mov	ebx, dword ptr [r15]
 	cmp	ebx, 0xf
-	je	.label_1364
+	je	.label_1239
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1237:
+.label_1136:
 	lea	ecx, [rbx + 1]
 	mov	dword ptr [r15], ecx
 	movsxd	rcx, ebx
@@ -14640,12 +13753,12 @@ parse_expression:
 	and	byte ptr [rax + rcx + 0x3a], 0xf3
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
-.label_1305:
+.label_1172:
 	mov	ecx, dword ptr [r15]
 	cmp	ecx, 0xf
-	je	.label_1392
+	je	.label_1265
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1318:
+.label_1185:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r15], edx
 	movsxd	rcx, ecx
@@ -14659,23 +13772,23 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	test	rbp, rbp
-	je	.label_1396
+	je	.label_1269
 	mov	qword ptr [rbp], r15
-.label_1396:
+.label_1269:
 	test	rbx, rbx
 	mov	rdx, qword ptr [rsp + 0x48]
-	je	.label_1242
+	je	.label_1137
 	mov	qword ptr [rbx], r15
 	test	rbp, rbp
-	jne	.label_1418
-	jmp	.label_1242
-.label_1455:
+	jne	.label_1293
+	jmp	.label_1137
+.label_1329:
 	mov	ecx, dword ptr [r9 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1421
+	je	.label_1294
 	mov	r13, r15
 	mov	rax, qword ptr [r9 + 0x70]
-.label_1448:
+.label_1322:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r9 + 0x80], edx
 	movsxd	rcx, ecx
@@ -14690,100 +13803,100 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	rdx, qword ptr [rsp + 0x48]
-.label_1418:
+.label_1293:
 	mov	rdi, r13
 	mov	rbx, qword ptr [rsp + 0x38]
 	mov	rsi, rbx
 	call	peek_token
 	cdqe	
 	add	qword ptr [rbx + 0x48], rax
-	jmp	.label_1280
-.label_1259:
+	jmp	.label_1138
+.label_1367:
 	mov	rbp, r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	r9, rbp
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1459
-.label_1399:
+	jmp	.label_1332
+.label_1275:
 	mov	qword ptr [rsp + 0x48], rbx
 	mov	dword ptr [r12], eax
 	mov	r9, qword ptr [rsp + 0x20]
-	jmp	.label_1218
-.label_1247:
+	jmp	.label_1188
+.label_1148:
 	mov	dword ptr [r12], 2
-	jmp	.label_1227
-.label_1369:
+	jmp	.label_1347
+.label_1241:
 	mov	dword ptr [r12], 7
-.label_1324:
+.label_1193:
 	mov	qword ptr [rsp + 0x20], r9
-	jmp	.label_1234
-.label_1437:
+	jmp	.label_1150
+.label_1309:
 	mov	r9, rbp
 	mov	rbp, r15
-	jmp	.label_1236
-.label_1400:
+	jmp	.label_1140
+.label_1276:
 	mov	rbx, r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	r9, rbx
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1245
-.label_1290:
+	jmp	.label_1155
+.label_1157:
 	mov	dword ptr [r12], 6
-	jmp	.label_1258
-.label_1321:
+	jmp	.label_1144
+.label_1187:
 	mov	rbx, r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
 	mov	rsi, qword ptr [rsp + 0x40]
-	je	.label_1242
+	je	.label_1137
 	mov	r9, rbx
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1268
-.label_1295:
+	jmp	.label_1373
+.label_1161:
 	mov	rdi, r13
 	call	free
 	mov	rdi, rbx
 	call	free
-	jmp	.label_1242
-.label_1297:
+	jmp	.label_1137
+.label_1164:
 	mov	rbp, r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	r9, rbp
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1284
-.label_1387:
+	jmp	.label_1145
+.label_1258:
 	mov	r15, rsi
 	mov	rbp, r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	r9, rbp
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -14791,83 +13904,83 @@ parse_expression:
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
 	mov	rsi, r15
-	jmp	.label_1294
-.label_1364:
+	jmp	.label_1160
+.label_1239:
 	mov	edi, 0x3c8
 	mov	rbx, r9
 	call	malloc
 	mov	r9, rbx
 	xor	ebx, ebx
 	test	rax, rax
-	je	.label_1305
+	je	.label_1172
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r15], 0
-	jmp	.label_1237
-.label_1392:
+	jmp	.label_1136
+.label_1265:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	rdx, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [rdx + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [rdx + 0x70], rax
 	mov	dword ptr [r15], 0
 	xor	ecx, ecx
-	jmp	.label_1318
-.label_1422:
+	jmp	.label_1185
+.label_1295:
 	mov	dword ptr [r12], 3
 	mov	r9, qword ptr [rsp + 0x20]
-	jmp	.label_1218
-.label_1434:
+	jmp	.label_1188
+.label_1308:
 	mov	r13, r9
 	call	__ctype_b_loc
 	mov	r9, r13
 	mov	rdx, qword ptr [rax]
 	inc	rbx
-.label_1349:
+.label_1219:
 	mov	rsi, rbx
 	xor	eax, eax
 	nop	word ptr cs:[rax + rax]
-.label_1347:
+.label_1165:
 	test	byte ptr [rdx + rsi*2 - 2], 8
-	je	.label_1329
+	je	.label_1202
 	mov	edi, 1
 	mov	cl, al
 	shl	rdi, cl
 	or	qword ptr [r9 + rbp*8 + 0xb8], rdi
-.label_1329:
+.label_1202:
 	cmp	esi, 0x5f
-	je	.label_1335
+	je	.label_1207
 	movzx	ecx, word ptr [rdx + rsi*2]
 	and	ecx, 8
 	test	cx, cx
-	je	.label_1337
-.label_1335:
+	je	.label_1209
+.label_1207:
 	lea	ecx, [rax + 1]
 	mov	edi, 1
 	shl	rdi, cl
 	or	qword ptr [r9 + rbp*8 + 0xb8], rdi
-.label_1337:
+.label_1209:
 	add	rax, 2
 	add	rsi, 2
 	cmp	rax, 0x40
-	jne	.label_1347
+	jne	.label_1165
 	inc	rbp
 	add	rbx, 0x40
 	cmp	ebp, 4
-	jne	.label_1349
-	jmp	.label_1351
-.label_1277:
+	jne	.label_1219
+	jmp	.label_1222
+.label_1134:
 	mov	qword ptr [rsp + 0x60], r13
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1244
+	je	.label_1130
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -14876,15 +13989,15 @@ parse_expression:
 	xor	ecx, ecx
 	mov	r13, qword ptr [rsp + 0x60]
 	mov	r15, qword ptr [rsp + 0x58]
-	jmp	.label_1346
-.label_1301:
+	jmp	.label_1169
+.label_1167:
 	mov	rbx, rdi
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	mov	rbp, rax
 	test	rbp, rbp
-	je	.label_1244
+	je	.label_1130
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rax, qword ptr [r9 + 0x70]
 	mov	qword ptr [rbp], rax
@@ -14892,14 +14005,14 @@ parse_expression:
 	mov	dword ptr [r9 + 0x80], 0
 	xor	eax, eax
 	mov	rdi, rbx
-	jmp	.label_1370
-.label_1308:
+	jmp	.label_1360
+.label_1142:
 	mov	r15, rdi
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1244
+	je	.label_1130
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -14907,44 +14020,44 @@ parse_expression:
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
 	mov	rdi, r15
-	jmp	.label_1432
-.label_1328:
+	jmp	.label_1201
+.label_1200:
 	mov	dword ptr [r12], 7
-	jmp	.label_1218
-.label_1458:
+	jmp	.label_1188
+.label_1323:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	mov	ecx, 9
 	xor	ebp, ebp
 	test	rax, rax
-	je	.label_1413
+	je	.label_1287
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
-	jmp	.label_1415
-.label_1341:
+	jmp	.label_1291
+.label_1215:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	mov	ecx, 0xa
 	xor	ebp, ebp
 	test	rax, rax
-	je	.label_1428
+	je	.label_1302
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
-	jmp	.label_1433
-.label_1421:
+	jmp	.label_1307
+.label_1294:
 	mov	rbx, r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1242
+	je	.label_1137
 	mov	r13, r15
 	mov	r9, rbx
 	mov	rcx, qword ptr [r9 + 0x70]
@@ -14952,39 +14065,39 @@ parse_expression:
 	mov	qword ptr [r9 + 0x70], rax
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1448
-.label_1242:
+	jmp	.label_1322
+.label_1137:
 	mov	dword ptr [r12], 0xc
-	jmp	.label_1258
-.label_1343:
+	jmp	.label_1144
+.label_1216:
 	mov	dword ptr [r12], 7
-	jmp	.label_1269
-.label_1435:
+	jmp	.label_1331
+.label_1358:
 	mov	rbp, rdi
 	mov	rdi, r13
 	mov	rbx, r9
 	call	free
 	mov	r9, rbx
-	jmp	.label_1236
-.label_1373:
+	jmp	.label_1140
+.label_1245:
 	test	rsi, rsi
-	je	.label_1246
+	je	.label_1338
 	mov	r14d, 0x400ff
-.label_1220:
+.label_1341:
 	mov	rbp, rsi
 	mov	rsi, qword ptr [rbp + 8]
 	test	rsi, rsi
-	jne	.label_1220
+	jne	.label_1341
 	mov	rsi, qword ptr [rbp + 0x10]
 	test	rsi, rsi
-	jne	.label_1220
-.label_1251:
+	jne	.label_1341
+.label_1362:
 	mov	eax, dword ptr [rbp + 0x30]
 	and	eax, r14d
 	cmp	eax, 3
-	je	.label_1229
+	je	.label_1349
 	cmp	eax, 6
-	jne	.label_1231
+	jne	.label_1352
 	mov	rbx, qword ptr [rbp + 0x28]
 	mov	rdi, qword ptr [rbx]
 	call	free
@@ -14995,42 +14108,42 @@ parse_expression:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, rbx
-	jmp	.label_1243
-.label_1229:
+	jmp	.label_1357
+.label_1349:
 	mov	rdi, qword ptr [rbp + 0x28]
-.label_1243:
+.label_1357:
 	call	free
-.label_1231:
+.label_1352:
 	mov	rax, qword ptr [rbp]
 	test	rax, rax
-	je	.label_1246
+	je	.label_1338
 	mov	rsi, qword ptr [rax + 0x10]
 	cmp	rsi, rbp
 	mov	rbp, rax
-	je	.label_1251
+	je	.label_1362
 	test	rsi, rsi
 	mov	rbp, rax
-	je	.label_1251
-	jmp	.label_1220
-.label_1246:
+	je	.label_1362
+	jmp	.label_1341
+.label_1338:
 	mov	dword ptr [r12], 8
-	jmp	.label_1258
-.label_1413:
+	jmp	.label_1144
+.label_1287:
 	mov	r9, qword ptr [rsp + 0x20]
-	jmp	.label_1217
-.label_1428:
+	jmp	.label_1340
+.label_1302:
 	mov	r9, qword ptr [rsp + 0x20]
-	jmp	.label_1217
-.label_1357:
+	jmp	.label_1340
+.label_1233:
 	mov	dword ptr [r12], eax
-	jmp	.label_1269
-.label_1386:
+	jmp	.label_1331
+.label_1299:
 	mov	qword ptr [rsp + 0x60], r13
 	mov	qword ptr [rsp + 0x20], r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1244
+	je	.label_1130
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r9 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -15038,28 +14151,28 @@ parse_expression:
 	mov	dword ptr [r9 + 0x80], 0
 	xor	ecx, ecx
 	mov	r13, qword ptr [rsp + 0x60]
-	jmp	.label_1273
-.label_1244:
+	jmp	.label_1153
+.label_1130:
 	mov	dword ptr [r12], 0xc
 	mov	r13, qword ptr [rsp + 0x60]
-.label_1227:
+.label_1347:
 	mov	r15, qword ptr [rsp + 0x58]
-	jmp	.label_1234
-.label_1293:
+	jmp	.label_1150
+.label_1147:
 	call	free
 	mov	rdi, r14
 	call	free
 	mov	ecx, 0xc
-.label_1344:
+.label_1191:
 	mov	r12, qword ptr [rsp + 0x18]
 	mov	dword ptr [r12], ecx
-.label_1269:
+.label_1331:
 	mov	r9, r13
-.label_1218:
+.label_1188:
 	mov	r13, qword ptr [rsp + 0x60]
 	mov	r15, qword ptr [rsp + 0x58]
 	mov	qword ptr [rsp + 0x20], r9
-.label_1234:
+.label_1150:
 	mov	rdi, r13
 	call	free
 	mov	rdi, qword ptr [r15]
@@ -15076,8 +14189,8 @@ parse_expression:
 	mov	r15d, 0
 	mov	r9, qword ptr [rsp + 0x20]
 	mov	ebp, 0
-	jne	.label_1280
-.label_1236:
+	jne	.label_1138
+.label_1140:
 	mov	qword ptr [rsp + 0x20], r9
 	mov	rbx, qword ptr [rsp + 0x40]
 	mov	rdi, rbx
@@ -15094,19 +14207,19 @@ parse_expression:
 	and	r14d, 0x200000
 	mov	qword ptr [rsp + 0x10], r14
 	nop	word ptr cs:[rax + rax]
-.label_1221:
+.label_1342:
 	movzx	eax, byte ptr [rbx + 8]
 	cmp	eax, 0x17
-	ja	.label_1365
+	ja	.label_1192
 	mov	ecx, 0x8c0800
 	bt	ecx, eax
-	jae	.label_1325
+	jae	.label_1301
 	mov	r14, qword ptr [r13 + 0x48]
 	movdqu	xmm0, xmmword ptr [rbx]
 	movdqa	xmmword ptr [rsp + 0xa0], xmm0
 	mov	rdx, -1
 	cmp	eax, 0x17
-	je	.label_1278
+	je	.label_1199
 	mov	r14, rbp
 	cmp	eax, 0x12
 	sete	cl
@@ -15115,15 +14228,15 @@ parse_expression:
 	mov	rcx, -1
 	mov	eax, 1
 	cmove	rcx, rax
-	jmp	.label_1334
-.label_1371:
+	jmp	.label_1206
+.label_1242:
 	lea	rax, [r15 + r15*4]
 	lea	rax, [rcx + rax*2 - 0x30]
 	cmp	rax, 0x8000
 	mov	edx, 0x8000
 	cmovle	rdx, rax
 	nop	word ptr cs:[rax + rax]
-.label_1278:
+.label_1199:
 	mov	r15, rdx
 	mov	rdi, rbx
 	mov	rsi, r13
@@ -15136,69 +14249,69 @@ parse_expression:
 	movzx	eax, byte ptr [rbx + 8]
 	mov	esi, 0x18
 	cmp	eax, 0x18
-	je	.label_1355
+	je	.label_1229
 	cmp	eax, 2
-	je	.label_1360
+	je	.label_1235
 	mov	dl, 0x2c
 	cmp	ecx, 0x2c
-	je	.label_1303
+	je	.label_1237
 	cmp	ecx, 0x30
 	mov	rdx, -2
-	jb	.label_1278
+	jb	.label_1199
 	cmp	eax, 1
-	jne	.label_1278
+	jne	.label_1199
 	cmp	r15, -2
-	je	.label_1278
+	je	.label_1199
 	cmp	ecx, 0x39
-	ja	.label_1278
+	ja	.label_1199
 	cmp	r15, -1
-	jne	.label_1371
+	jne	.label_1242
 	lea	rdx, [rcx - 0x30]
-	jmp	.label_1278
-.label_1303:
+	jmp	.label_1199
+.label_1237:
 	mov	esi, eax
 	nop	word ptr [rax + rax]
-.label_1355:
+.label_1229:
 	cmp	r15, -1
-	jne	.label_1377
+	jne	.label_1251
 	movzx	eax, dl
 	cmp	eax, 0x2c
-	jne	.label_1379
+	jne	.label_1253
 	cmp	esi, 1
 	mov	r15d, 0
-	je	.label_1382
-.label_1379:
+	je	.label_1254
+.label_1253:
 	mov	qword ptr [rsp + 0x50], rbp
-	jmp	.label_1385
+	jmp	.label_1257
 	nop	word ptr cs:[rax + rax]
-.label_1377:
+.label_1251:
 	cmp	r15, -2
-	je	.label_1360
+	je	.label_1235
 	cmp	esi, 0x18
-	je	.label_1397
+	je	.label_1270
 	cmp	esi, 1
-	jne	.label_1360
+	jne	.label_1235
 	movzx	ecx, dl
 	cmp	ecx, 0x2c
-	jne	.label_1360
-.label_1382:
+	jne	.label_1235
+.label_1254:
 	mov	qword ptr [rsp + 0x60], r14
 	mov	r14, rbp
 	mov	rbp, r12
 	mov	rdx, -1
-	jmp	.label_1287
-.label_1397:
+	jmp	.label_1184
+.label_1270:
 	mov	r14, rbp
 	mov	rcx, r15
-	jmp	.label_1410
-.label_1310:
+	jmp	.label_1284
+.label_1208:
 	lea	rax, [r12 + r12*4]
 	lea	rdx, [rcx + rax*2 - 0x30]
 	cmp	rdx, 0x8000
 	mov	eax, 0x8000
 	cmovg	rdx, rax
 	nop	dword ptr [rax]
-.label_1287:
+.label_1184:
 	mov	r12, rdx
 	mov	rdi, rbx
 	mov	rsi, r13
@@ -15209,44 +14322,44 @@ parse_expression:
 	movzx	ecx, byte ptr [rbx]
 	movzx	eax, byte ptr [rbx + 8]
 	cmp	eax, 0x18
-	je	.label_1423
+	je	.label_1296
 	cmp	eax, 2
-	je	.label_1429
+	je	.label_1230
 	cmp	ecx, 0x2c
-	je	.label_1423
+	je	.label_1296
 	cmp	ecx, 0x30
 	mov	rdx, -2
-	jb	.label_1287
+	jb	.label_1184
 	cmp	eax, 1
-	jne	.label_1287
+	jne	.label_1184
 	cmp	r12, -2
-	je	.label_1287
+	je	.label_1184
 	movzx	eax, cl
 	cmp	eax, 0x39
-	ja	.label_1287
+	ja	.label_1184
 	cmp	r12, -1
-	jne	.label_1310
+	jne	.label_1208
 	add	rcx, -0x30
 	mov	rdx, rcx
-	jmp	.label_1287
-.label_1423:
+	jmp	.label_1184
+.label_1296:
 	mov	rcx, r12
 	cmp	rcx, -2
-	je	.label_1429
+	je	.label_1230
 	cmp	rcx, -1
 	mov	r12, rbp
-	je	.label_1410
+	je	.label_1284
 	cmp	r15, rcx
-	jg	.label_1450
-.label_1410:
+	jg	.label_1325
+.label_1284:
 	cmp	eax, 0x18
-	jne	.label_1450
+	jne	.label_1325
 	cmp	rcx, -1
 	mov	rax, rcx
 	cmove	rax, r15
 	cmp	rax, 0x8000
-	jge	.label_1454
-.label_1334:
+	jge	.label_1247
+.label_1206:
 	mov	rbp, rcx
 	mov	rdi, rbx
 	mov	rsi, r13
@@ -15257,68 +14370,68 @@ parse_expression:
 	test	r14, r14
 	mov	qword ptr [rsp + 0x50], r14
 	mov	ecx, 0
-	je	.label_1281
+	je	.label_1146
 	mov	r9, rbp
 	mov	qword ptr [rsp + 0x58], r9
 	mov	rax, r9
 	or	rax, r15
 	mov	rdi, qword ptr [rsp + 0x50]
 	mov	rax, rdi
-	je	.label_1224
+	je	.label_1175
 	test	r15, r15
 	mov	eax, 0
 	mov	qword ptr [rsp + 0x28], rax
 	mov	r12, rdi
 	mov	r8, qword ptr [rsp + 0x20]
 	pxor	xmm1, xmm1
-	jg	.label_1233
-.label_1426:
+	jg	.label_1353
+.label_1298:
 	movzx	eax, byte ptr [r12 + 0x30]
 	cmp	eax, 0x11
-	jne	.label_1241
+	jne	.label_1223
 	mov	rax, qword ptr [r12 + 0x28]
 	mov	rdx, r12
 	nop	word ptr [rax + rax]
-.label_1248:
+.label_1129:
 	mov	rcx, rdx
 	mov	rdx, qword ptr [rcx + 8]
 	test	rdx, rdx
-	jne	.label_1248
+	jne	.label_1129
 	mov	rdx, qword ptr [rcx + 0x10]
 	test	rdx, rdx
-	jne	.label_1248
+	jne	.label_1129
 	nop	word ptr cs:[rax + rax]
-.label_1270:
+.label_1374:
 	mov	edx, dword ptr [rcx + 0x30]
 	movzx	esi, dl
 	cmp	esi, 0x11
-	jne	.label_1262
+	jne	.label_1319
 	cmp	qword ptr [rcx + 0x28], rax
-	jne	.label_1262
+	jne	.label_1319
 	or	edx, 0x80000
 	mov	dword ptr [rcx + 0x30], edx
-.label_1262:
+.label_1319:
 	mov	rsi, qword ptr [rcx]
 	test	rsi, rsi
-	je	.label_1241
+	je	.label_1223
 	mov	rdx, qword ptr [rsi + 0x10]
 	cmp	rdx, rcx
 	mov	rcx, rsi
-	je	.label_1270
+	je	.label_1374
 	test	rdx, rdx
 	mov	rcx, rsi
-	je	.label_1270
-	jmp	.label_1248
+	je	.label_1374
+	jmp	.label_1129
 	nop	dword ptr [rax + rax]
-.label_1241:
+.label_1223:
 	mov	qword ptr [rsp + 0x50], rdi
 	cmp	r9, -1
 	sete	bl
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1274
+	je	.label_1131
 	mov	rax, qword ptr [r8 + 0x70]
-.label_1350:
+.label_1221:
 	movzx	edx, bl
 	or	edx, 0xa
 	lea	esi, [rcx + 1]
@@ -15333,31 +14446,31 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm1
 	mov	qword ptr [rax + rcx + 0x40], -1
 	test	r12, r12
-	je	.label_1299
+	je	.label_1141
 	mov	qword ptr [r12], r13
-.label_1299:
+.label_1141:
 	add	r15, 2
 	cmp	r15, r9
-	jg	.label_1296
-	jmp	.label_1298
+	jg	.label_1163
+	jmp	.label_1154
 	nop	word ptr cs:[rax + rax]
-.label_1224:
+.label_1175:
 	mov	rbx, rax
 	mov	rax, qword ptr [rbx + 8]
 	test	rax, rax
-	jne	.label_1224
+	jne	.label_1175
 	mov	rax, qword ptr [rbx + 0x10]
 	test	rax, rax
-	jne	.label_1224
+	jne	.label_1175
 	nop	word ptr cs:[rax + rax]
-.label_1327:
+.label_1198:
 	mov	eax, dword ptr [rbx + 0x30]
 	mov	ecx, 0x400ff
 	and	eax, ecx
 	cmp	eax, 3
-	je	.label_1313
+	je	.label_1180
 	cmp	eax, 6
-	jne	.label_1317
+	jne	.label_1183
 	mov	rbp, qword ptr [rbx + 0x28]
 	mov	rdi, qword ptr [rbp]
 	call	free
@@ -15368,33 +14481,33 @@ parse_expression:
 	mov	rdi, qword ptr [rbp + 0x18]
 	call	free
 	mov	rdi, rbp
-	jmp	.label_1339
+	jmp	.label_1243
 	nop	word ptr cs:[rax + rax]
-.label_1313:
+.label_1180:
 	mov	rdi, qword ptr [rbx + 0x28]
-.label_1339:
+.label_1243:
 	call	free
-.label_1317:
+.label_1183:
 	mov	rdx, qword ptr [rbx]
 	test	rdx, rdx
 	mov	ecx, 0
-	je	.label_1281
+	je	.label_1146
 	mov	rax, qword ptr [rdx + 0x10]
 	cmp	rax, rbx
 	mov	rbx, rdx
-	je	.label_1327
+	je	.label_1198
 	test	rax, rax
 	mov	rbx, rdx
-	je	.label_1327
-	jmp	.label_1224
-.label_1320:
+	je	.label_1198
+	jmp	.label_1175
+.label_1272:
 	mov	qword ptr [rsp + 0x58], r9
 	mov	qword ptr [rsp + 0x60], r15
 	mov	r15, r8
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1238
+	je	.label_1370
 	mov	r8, r15
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -15404,13 +14517,13 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r15, qword ptr [rsp + 0x60]
 	mov	r9, qword ptr [rsp + 0x58]
-	jmp	.label_1340
-.label_1403:
+	jmp	.label_1214
+.label_1315:
 	mov	qword ptr [rsp + 0x60], r15
 	mov	r15, r8
 	mov	r12, rbx
-	jmp	.label_1353
-.label_1279:
+	jmp	.label_1224
+.label_1220:
 	mov	edi, 0x3c8
 	mov	rbp, r8
 	mov	r14, r9
@@ -15419,21 +14532,21 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r8, rbp
 	test	rax, rax
-	je	.label_1272
+	je	.label_1174
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r8 + 0x70], rax
 	mov	dword ptr [r8 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1261
-.label_1238:
+	jmp	.label_1226
+.label_1370:
 	mov	qword ptr [rsp + 0x80], 0
-	jmp	.label_1367
-.label_1312:
+	jmp	.label_1240
+.label_1356:
 	mov	qword ptr [r14], 0
-.label_1367:
+.label_1240:
 	xor	r12d, r12d
-.label_1353:
+.label_1224:
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
@@ -15441,21 +14554,21 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r15, qword ptr [rsp + 0x60]
 	mov	r9, qword ptr [rsp + 0x58]
-	je	.label_1272
+	je	.label_1174
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r8 + 0x70], rax
 	mov	dword ptr [r8 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1384
+	jmp	.label_1256
 	nop	word ptr cs:[rax + rax]
-.label_1298:
+.label_1154:
 	mov	rbp, qword ptr [r12]
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1320
+	je	.label_1272
 	mov	rax, qword ptr [r8 + 0x70]
-.label_1340:
+.label_1214:
 	lea	rdx, [r12 + 0x28]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], esi
@@ -15472,9 +14585,9 @@ parse_expression:
 	mov	qword ptr [rsp + 0x80], rbx
 	mov	rcx, rbx
 	lea	r14, [rsp + 0x80]
-	jmp	.label_1406
+	jmp	.label_1280
 	nop	word ptr cs:[rax + rax]
-.label_1240:
+.label_1305:
 	lea	rdx, [r12 + 0x28]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], esi
@@ -15489,50 +14602,50 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rsi + 0x20], xmm1
 	mov	qword ptr [rax + rsi + 0x40], -1
 	mov	qword ptr [r14], rcx
-.label_1406:
+.label_1280:
 	mov	qword ptr [rcx], rbp
 	mov	rax, qword ptr [r14]
 	or	dword ptr [rax + 0x30], 0x40000
 	mov	rbp, qword ptr [r14]
 	mov	rax, qword ptr [r12 + 8]
 	test	rax, rax
-	je	.label_1452
+	je	.label_1327
 	lea	r14, [rbp + 8]
 	mov	r12, rax
-	jmp	.label_1457
+	jmp	.label_1314
 	nop	
-.label_1452:
+.label_1327:
 	xor	eax, eax
 	nop	word ptr cs:[rax + rax]
-.label_1315:
+.label_1335:
 	mov	rcx, rax
 	mov	rax, r12
 	mov	r12, qword ptr [rax + 0x10]
 	cmp	r12, rcx
-	je	.label_1322
+	je	.label_1355
 	test	r12, r12
-	jne	.label_1464
-.label_1322:
+	jne	.label_1339
+.label_1355:
 	mov	r12, qword ptr [rax]
 	mov	rbp, qword ptr [rbp]
 	test	r12, r12
-	jne	.label_1315
-	jmp	.label_1249
-.label_1464:
+	jne	.label_1335
+	jmp	.label_1320
+.label_1339:
 	lea	r14, [rbp + 0x10]
-.label_1457:
+.label_1314:
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1228
+	je	.label_1348
 	mov	rax, qword ptr [r8 + 0x70]
-	jmp	.label_1240
-.label_1228:
+	jmp	.label_1305
+.label_1348:
 	mov	qword ptr [rsp + 0x60], r15
 	mov	r15, r8
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1312
+	je	.label_1356
 	mov	r8, r15
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -15542,15 +14655,15 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r15, qword ptr [rsp + 0x60]
 	mov	r9, qword ptr [rsp + 0x58]
-	jmp	.label_1240
+	jmp	.label_1305
 	nop	word ptr cs:[rax + rax]
-.label_1249:
+.label_1320:
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1403
+	je	.label_1315
 	mov	rax, qword ptr [r8 + 0x70]
 	mov	r12, rbx
-.label_1384:
+.label_1256:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], edx
 	movsxd	rcx, ecx
@@ -15564,13 +14677,13 @@ parse_expression:
 	mov	qword ptr [rax + rcx + 0x40], -1
 	mov	qword ptr [r13], rbx
 	test	r12, r12
-	je	.label_1272
+	je	.label_1174
 	mov	qword ptr [r12], rbx
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1279
+	je	.label_1220
 	mov	rax, qword ptr [r8 + 0x70]
-.label_1261:
+.label_1226:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], edx
 	movsxd	rcx, ecx
@@ -15585,18 +14698,18 @@ parse_expression:
 	mov	qword ptr [rbx], r13
 	cmp	r15, r9
 	lea	r15, [r15 + 1]
-	jl	.label_1298
-.label_1296:
+	jl	.label_1154
+.label_1163:
 	mov	rax, qword ptr [rsp + 0x28]
 	test	rax, rax
-	je	.label_1304
+	je	.label_1171
 	mov	rbx, rax
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
 	mov	r12, qword ptr [rsp + 0x18]
-	je	.label_1230
+	je	.label_1376
 	mov	rax, qword ptr [r8 + 0x70]
-.label_1319:
+.label_1186:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], edx
 	movsxd	rcx, ecx
@@ -15611,31 +14724,31 @@ parse_expression:
 	mov	qword ptr [rbx], rdx
 	mov	qword ptr [r13], rdx
 	mov	r13, rdx
-	jmp	.label_1362
-.label_1304:
+	jmp	.label_1213
+.label_1171:
 	mov	r12, qword ptr [rsp + 0x18]
-.label_1362:
+.label_1213:
 	xor	eax, eax
 	mov	rcx, r13
-	jmp	.label_1336
-.label_1450:
+	jmp	.label_1139
+.label_1325:
 	mov	qword ptr [rsp + 0x50], r14
-.label_1385:
+.label_1257:
 	mov	dword ptr [r12], 0xa
 	xor	ecx, ecx
-	jmp	.label_1281
-.label_1233:
+	jmp	.label_1146
+.label_1353:
 	cmp	r15, 2
 	mov	r13, rdi
 	mov	rbp, rdi
-	jl	.label_1331
+	jl	.label_1203
 	mov	rax, qword ptr [rsp + 0x50]
 	mov	rbp, qword ptr [rax]
 	mov	r13, rax
 	mov	ebx, 2
 	mov	rdi, rax
-	jmp	.label_1300
-.label_1274:
+	jmp	.label_1166
+.label_1131:
 	mov	edi, 0x3c8
 	mov	rbp, r8
 	mov	r14, r9
@@ -15644,34 +14757,34 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r8, rbp
 	test	rax, rax
-	je	.label_1272
+	je	.label_1174
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r8 + 0x70], rax
 	mov	dword ptr [r8 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1350
-.label_1429:
+	jmp	.label_1221
+.label_1230:
 	mov	r12, rbp
 	mov	rbp, r14
 	mov	r14, qword ptr [rsp + 0x60]
-.label_1360:
+.label_1235:
 	cmp	qword ptr [rsp + 0x10], 0
-	je	.label_1356
+	je	.label_1248
 	mov	qword ptr [r13 + 0x48], r14
 	movdqa	xmm0, xmmword ptr [rsp + 0xa0]
 	movdqu	xmmword ptr [rbx], xmm0
 	mov	byte ptr [rbx + 8], 1
 	mov	rcx, rbp
 	mov	qword ptr [rsp + 0x50], rbp
-	jmp	.label_1281
-.label_1436:
+	jmp	.label_1146
+.label_1346:
 	mov	qword ptr [rsp + 0x60], rdi
 	mov	qword ptr [rsp + 0x58], r9
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1372
+	je	.label_1244
 	mov	r14, rbp
 	mov	r8, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r8 + 0x70]
@@ -15682,41 +14795,41 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r9, qword ptr [rsp + 0x58]
 	mov	rdi, qword ptr [rsp + 0x60]
-	jmp	.label_1374
-.label_1412:
+	jmp	.label_1246
+.label_1290:
 	mov	qword ptr [rsp + 0x60], rdi
 	mov	r13, rbp
-	jmp	.label_1388
-.label_1372:
+	jmp	.label_1261
+.label_1244:
 	mov	qword ptr [rsp + 0x80], 0
-	jmp	.label_1393
-.label_1267:
+	jmp	.label_1266
+.label_1372:
 	mov	qword ptr [r12], 0
-.label_1393:
+.label_1266:
 	xor	r13d, r13d
-.label_1388:
+.label_1261:
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
 	mov	r8, qword ptr [rsp + 0x20]
 	pxor	xmm1, xmm1
 	mov	r9, qword ptr [rsp + 0x58]
-	je	.label_1272
+	je	.label_1174
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r8 + 0x70], rax
 	mov	dword ptr [r8 + 0x80], 0
 	xor	ecx, ecx
 	mov	rdi, qword ptr [rsp + 0x60]
-	jmp	.label_1366
+	jmp	.label_1283
 	nop	dword ptr [rax + rax]
-.label_1300:
+.label_1166:
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1436
+	je	.label_1346
 	mov	r14, rbp
 	mov	rax, qword ptr [r8 + 0x70]
-.label_1374:
+.label_1246:
 	lea	rdx, [r13 + 0x28]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], esi
@@ -15733,9 +14846,9 @@ parse_expression:
 	mov	qword ptr [rsp + 0x80], rbp
 	mov	rcx, rbp
 	lea	r12, [rsp + 0x80]
-	jmp	.label_1425
+	jmp	.label_1297
 	nop	word ptr cs:[rax + rax]
-.label_1263:
+.label_1369:
 	lea	rdx, [r13 + 0x28]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], esi
@@ -15750,51 +14863,51 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rsi + 0x20], xmm1
 	mov	qword ptr [rax + rsi + 0x40], -1
 	mov	qword ptr [r12], rcx
-.label_1425:
+.label_1297:
 	mov	qword ptr [rcx], r14
 	mov	rax, qword ptr [r12]
 	or	dword ptr [rax + 0x30], 0x40000
 	mov	rdx, qword ptr [r12]
 	mov	rax, qword ptr [r13 + 8]
 	test	rax, rax
-	je	.label_1223
+	je	.label_1344
 	mov	r14, rdx
 	lea	r12, [r14 + 8]
 	mov	r13, rax
-	jmp	.label_1232
+	jmp	.label_1181
 	nop	word ptr cs:[rax + rax]
-.label_1223:
+.label_1344:
 	xor	eax, eax
 	nop	word ptr cs:[rax + rax]
-.label_1250:
+.label_1361:
 	mov	rcx, rax
 	mov	rax, r13
 	mov	r13, qword ptr [rax + 0x10]
 	cmp	r13, rcx
-	je	.label_1330
+	je	.label_1236
 	test	r13, r13
-	jne	.label_1352
-.label_1330:
+	jne	.label_1359
+.label_1236:
 	mov	r13, qword ptr [rax]
 	mov	rdx, qword ptr [rdx]
 	test	r13, r13
-	jne	.label_1250
-	jmp	.label_1255
-.label_1352:
+	jne	.label_1361
+	jmp	.label_1365
+.label_1359:
 	mov	r14, rdx
 	lea	r12, [r14 + 0x10]
-.label_1232:
+.label_1181:
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1260
+	je	.label_1368
 	mov	rax, qword ptr [r8 + 0x70]
-	jmp	.label_1263
-.label_1260:
+	jmp	.label_1369
+.label_1368:
 	mov	qword ptr [rsp + 0x60], rdi
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1267
+	je	.label_1372
 	mov	r8, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -15804,15 +14917,15 @@ parse_expression:
 	pxor	xmm1, xmm1
 	mov	r9, qword ptr [rsp + 0x58]
 	mov	rdi, qword ptr [rsp + 0x60]
-	jmp	.label_1263
+	jmp	.label_1369
 	nop	word ptr cs:[rax + rax]
-.label_1255:
+.label_1365:
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1412
+	je	.label_1290
 	mov	rax, qword ptr [r8 + 0x70]
 	mov	r13, rbp
-.label_1366:
+.label_1283:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], edx
 	movsxd	rcx, ecx
@@ -15825,31 +14938,31 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm1
 	mov	qword ptr [rax + rcx + 0x40], -1
 	test	rdi, rdi
-	je	.label_1286
+	je	.label_1151
 	mov	qword ptr [rdi], rdx
-.label_1286:
+.label_1151:
 	test	r13, r13
-	je	.label_1272
+	je	.label_1174
 	mov	rbp, rdx
 	mov	qword ptr [r13], rbp
 	cmp	rbx, r15
 	lea	rbx, [rbx + 1]
 	mov	rdi, rbp
-	jl	.label_1300
-.label_1331:
+	jl	.label_1166
+.label_1203:
 	cmp	r15, r9
-	jne	.label_1307
+	jne	.label_1176
 	mov	qword ptr [rsp + 0x20], r8
 	mov	rcx, rbp
 	mov	r12, qword ptr [rsp + 0x18]
-	jmp	.label_1281
-.label_1230:
+	jmp	.label_1146
+.label_1376:
 	mov	qword ptr [rsp + 0x20], r8
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
 	mov	ecx, 0
-	je	.label_1281
+	je	.label_1146
 	mov	r8, qword ptr [rsp + 0x20]
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -15857,15 +14970,15 @@ parse_expression:
 	mov	dword ptr [r8 + 0x80], 0
 	xor	ecx, ecx
 	pxor	xmm1, xmm1
-	jmp	.label_1319
-.label_1307:
+	jmp	.label_1186
+.label_1176:
 	mov	rbx, qword ptr [r13]
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1323
+	je	.label_1190
 	mov	qword ptr [rsp + 0x28], rbp
 	mov	rax, qword ptr [r8 + 0x70]
-.label_1440:
+.label_1313:
 	lea	rdx, [r13 + 0x28]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], esi
@@ -15882,9 +14995,9 @@ parse_expression:
 	mov	qword ptr [rsp + 0x80], r12
 	mov	rcx, r12
 	lea	rbp, [rsp + 0x80]
-	jmp	.label_1404
+	jmp	.label_1197
 	nop	word ptr cs:[rax + rax]
-.label_1257:
+.label_1273:
 	lea	rdx, [r13 + 0x28]
 	lea	esi, [rcx + 1]
 	mov	dword ptr [r8 + 0x80], esi
@@ -15899,49 +15012,49 @@ parse_expression:
 	movdqu	xmmword ptr [rax + rsi + 0x20], xmm1
 	mov	qword ptr [rax + rsi + 0x40], -1
 	mov	qword ptr [rbp], rcx
-.label_1404:
+.label_1197:
 	mov	qword ptr [rcx], rbx
 	mov	rax, qword ptr [rbp]
 	or	dword ptr [rax + 0x30], 0x40000
 	mov	rbx, qword ptr [rbp]
 	mov	rax, qword ptr [r13 + 8]
 	test	rax, rax
-	je	.label_1368
+	je	.label_1330
 	lea	rbp, [rbx + 8]
 	mov	r13, rax
-	jmp	.label_1375
-.label_1368:
+	jmp	.label_1249
+.label_1330:
 	xor	eax, eax
 	nop	word ptr cs:[rax + rax]
-.label_1390:
+.label_1263:
 	mov	rcx, rax
 	mov	rax, r13
 	mov	r13, qword ptr [rax + 0x10]
 	cmp	r13, rcx
-	je	.label_1383
+	je	.label_1255
 	test	r13, r13
-	jne	.label_1409
-.label_1383:
+	jne	.label_1259
+.label_1255:
 	mov	r13, qword ptr [rax]
 	mov	rbx, qword ptr [rbx]
 	test	r13, r13
-	jne	.label_1390
-	jmp	.label_1394
-.label_1409:
+	jne	.label_1263
+	jmp	.label_1267
+.label_1259:
 	lea	rbp, [rbx + 0x10]
-.label_1375:
+.label_1249:
 	mov	ecx, dword ptr [r8 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1389
+	je	.label_1204
 	mov	rax, qword ptr [r8 + 0x70]
-	jmp	.label_1257
-.label_1389:
+	jmp	.label_1273
+.label_1204:
 	mov	qword ptr [rsp + 0x58], r9
 	mov	r14, r8
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1407
+	je	.label_1281
 	mov	r8, r14
 	mov	rcx, qword ptr [r8 + 0x70]
 	mov	qword ptr [rax], rcx
@@ -15950,8 +15063,8 @@ parse_expression:
 	xor	ecx, ecx
 	pxor	xmm1, xmm1
 	mov	r9, qword ptr [rsp + 0x58]
-	jmp	.label_1257
-.label_1356:
+	jmp	.label_1273
+.label_1248:
 	mov	qword ptr [rsp + 0x50], rbp
 	cmp	eax, 2
 	setne	al
@@ -15959,22 +15072,22 @@ parse_expression:
 	add	eax, 9
 	mov	dword ptr [r12], eax
 	xor	ecx, ecx
-	jmp	.label_1281
-.label_1394:
+	jmp	.label_1146
+.label_1267:
 	mov	rdi, qword ptr [rsp + 0x50]
-	jmp	.label_1426
-.label_1454:
+	jmp	.label_1298
+.label_1247:
 	mov	qword ptr [rsp + 0x50], r14
 	mov	dword ptr [r12], 0xf
 	xor	ecx, ecx
-	jmp	.label_1281
-.label_1323:
+	jmp	.label_1146
+.label_1190:
 	mov	r14, r9
 	mov	r12, r8
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1438
+	je	.label_1311
 	mov	qword ptr [rsp + 0x28], rbp
 	mov	r8, r12
 	mov	rcx, qword ptr [r8 + 0x70]
@@ -15984,60 +15097,60 @@ parse_expression:
 	xor	ecx, ecx
 	pxor	xmm1, xmm1
 	mov	r9, r14
-	jmp	.label_1440
-.label_1438:
+	jmp	.label_1313
+.label_1311:
 	mov	qword ptr [rsp + 0x80], 0
-	jmp	.label_1272
-.label_1407:
+	jmp	.label_1174
+.label_1281:
 	mov	qword ptr [rbp], 0
-.label_1272:
+.label_1174:
 	mov	r12, qword ptr [rsp + 0x18]
 	mov	dword ptr [r12], 0xc
 	xor	ecx, ecx
-.label_1281:
+.label_1146:
 	test	rcx, rcx
 	sete	al
-	jne	.label_1336
+	jne	.label_1139
 	mov	edx, dword ptr [r12]
 	test	edx, edx
 	mov	rbx, qword ptr [rsp + 0x40]
-	je	.label_1460
-	jmp	.label_1462
+	je	.label_1333
+	jmp	.label_1337
 	nop	word ptr cs:[rax + rax]
-.label_1336:
+.label_1139:
 	mov	rbx, qword ptr [rsp + 0x40]
-.label_1460:
+.label_1333:
 	cmp	qword ptr [rsp + 0x30], 0
 	mov	rbp, rcx
 	mov	r13, qword ptr [rsp + 0x38]
-	je	.label_1221
+	je	.label_1342
 	movzx	edx, byte ptr [rbx + 8]
 	cmp	edx, 0x17
-	je	.label_1398
+	je	.label_1162
 	cmp	edx, 0xb
 	mov	rbp, rcx
-	jne	.label_1221
-.label_1398:
+	jne	.label_1342
+.label_1162:
 	test	al, al
-	jne	.label_1235
+	jne	.label_1260
 	mov	r14d, 0x400ff
 	nop	dword ptr [rax]
-.label_1239:
+.label_1135:
 	mov	rbp, rcx
 	mov	rcx, qword ptr [rbp + 8]
 	test	rcx, rcx
-	jne	.label_1239
+	jne	.label_1135
 	mov	rcx, qword ptr [rbp + 0x10]
 	test	rcx, rcx
-	jne	.label_1239
+	jne	.label_1135
 	nop	word ptr cs:[rax + rax]
-.label_1276:
+.label_1133:
 	mov	eax, dword ptr [rbp + 0x30]
 	and	eax, r14d
 	cmp	eax, 3
-	je	.label_1420
+	je	.label_1274
 	cmp	eax, 6
-	jne	.label_1253
+	jne	.label_1363
 	mov	rbx, qword ptr [rbp + 0x28]
 	mov	rdi, qword ptr [rbx]
 	call	free
@@ -16048,48 +15161,48 @@ parse_expression:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, rbx
-	jmp	.label_1441
+	jmp	.label_1350
 	nop	dword ptr [rax]
-.label_1420:
+.label_1274:
 	mov	rdi, qword ptr [rbp + 0x28]
-.label_1441:
+.label_1350:
 	call	free
-.label_1253:
+.label_1363:
 	mov	rax, qword ptr [rbp]
 	test	rax, rax
-	je	.label_1235
+	je	.label_1260
 	mov	rcx, qword ptr [rax + 0x10]
 	cmp	rcx, rbp
 	mov	rbp, rax
-	je	.label_1276
+	je	.label_1133
 	test	rcx, rcx
 	mov	rbp, rax
-	je	.label_1276
-	jmp	.label_1239
-.label_1462:
+	je	.label_1133
+	jmp	.label_1135
+.label_1337:
 	xor	r15d, r15d
 	mov	rcx, qword ptr [rsp + 0x50]
 	test	rcx, rcx
-	je	.label_1280
+	je	.label_1138
 	mov	r14d, 0x400ff
 	xor	r15d, r15d
 	nop	dword ptr [rax]
-.label_1285:
+.label_1149:
 	mov	rbp, rcx
 	mov	rcx, qword ptr [rbp + 8]
 	test	rcx, rcx
-	jne	.label_1285
+	jne	.label_1149
 	mov	rcx, qword ptr [rbp + 0x10]
 	test	rcx, rcx
-	jne	.label_1285
+	jne	.label_1149
 	nop	word ptr cs:[rax + rax]
-.label_1264:
+.label_1177:
 	mov	eax, dword ptr [rbp + 0x30]
 	and	eax, r14d
 	cmp	eax, 3
-	je	.label_1289
+	je	.label_1156
 	cmp	eax, 6
-	jne	.label_1292
+	jne	.label_1158
 	mov	rbx, qword ptr [rbp + 0x28]
 	mov	rdi, qword ptr [rbx]
 	call	free
@@ -16100,35 +15213,35 @@ parse_expression:
 	mov	rdi, qword ptr [rbx + 0x18]
 	call	free
 	mov	rdi, rbx
-	jmp	.label_1358
+	jmp	.label_1326
 	nop	dword ptr [rax]
-.label_1289:
+.label_1156:
 	mov	rdi, qword ptr [rbp + 0x28]
-.label_1358:
+.label_1326:
 	call	free
-.label_1292:
+.label_1158:
 	mov	rax, qword ptr [rbp]
 	test	rax, rax
-	je	.label_1280
+	je	.label_1138
 	mov	rcx, qword ptr [rax + 0x10]
 	cmp	rcx, rbp
 	mov	rbp, rax
-	je	.label_1264
+	je	.label_1177
 	test	rcx, rcx
 	mov	rbp, rax
-	je	.label_1264
-	jmp	.label_1285
-.label_1235:
+	je	.label_1177
+	jmp	.label_1149
+.label_1260:
 	mov	dword ptr [r12], 0xd
-.label_1258:
+.label_1144:
 	xor	r15d, r15d
-	jmp	.label_1280
-.label_1365:
+	jmp	.label_1138
+.label_1192:
 	mov	r15, rbp
-	jmp	.label_1280
-.label_1325:
+	jmp	.label_1138
+.label_1301:
 	mov	r15, rbp
-.label_1280:
+.label_1138:
 	mov	rax, r15
 	add	rsp, 0xe8
 	pop	rbx
@@ -16138,7 +15251,7 @@ parse_expression:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1414:
+.label_1288:
 	mov	edi, OFFSET FLAT:.str.5_1
 	mov	esi, OFFSET FLAT:.str.6_1
 	mov	edx, 0xced
@@ -16147,7 +15260,7 @@ parse_expression:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x4101c0
+	#Procedure 0x40f510
 
 	.globl build_charclass_op
 	.type build_charclass_op, @function
@@ -16171,14 +15284,14 @@ build_charclass_op:
 	call	rpl_calloc
 	mov	rbx, rax
 	test	rbx, rbx
-	je	.label_1478
+	je	.label_1390
 	mov	qword ptr [rsp], r15
 	mov	edi, 0x50
 	mov	esi, 1
 	call	rpl_calloc
 	mov	r15, rax
 	test	r15, r15
-	je	.label_1465
+	je	.label_1392
 	mov	al, byte ptr [r15 + 0x20]
 	and	al, 0xfe
 	mov	ecx, dword ptr [rsp + 0xc]
@@ -16193,13 +15306,13 @@ build_charclass_op:
 	call	build_charclass
 	mov	r14d, eax
 	test	r14d, r14d
-	jne	.label_1474
+	jne	.label_1382
 	mov	al, byte ptr [rbp]
 	test	al, al
-	je	.label_1477
+	je	.label_1385
 	inc	rbp
 	nop	word ptr cs:[rax + rax]
-.label_1480:
+.label_1389:
 	movsx	rcx, al
 	mov	eax, 1
 	shl	rax, cl
@@ -16212,11 +15325,11 @@ build_charclass_op:
 	mov	al, byte ptr [rbp]
 	inc	rbp
 	test	al, al
-	jne	.label_1480
-.label_1477:
+	jne	.label_1389
+.label_1385:
 	mov	eax, dword ptr [rsp + 0xc]
 	test	al, al
-	je	.label_1466
+	je	.label_1393
 	movdqu	xmm0, xmmword ptr [rbx]
 	pcmpeqd	xmm1, xmm1
 	pxor	xmm0, xmm1
@@ -16224,9 +15337,9 @@ build_charclass_op:
 	movdqu	xmm0, xmmword ptr [rbx + 0x10]
 	pxor	xmm0, xmm1
 	movdqu	xmmword ptr [rbx + 0x10], xmm0
-.label_1466:
+.label_1393:
 	cmp	dword ptr [r12 + 0xb4], 2
-	jl	.label_1473
+	jl	.label_1381
 	mov	rax, qword ptr [r12 + 0x78]
 	mov	rcx, qword ptr [rax]
 	and	qword ptr [rbx], rcx
@@ -16236,12 +15349,12 @@ build_charclass_op:
 	and	qword ptr [rbx + 0x10], rcx
 	mov	rax, qword ptr [rax + 0x18]
 	and	qword ptr [rbx + 0x18], rax
-.label_1473:
+.label_1381:
 	mov	ecx, dword ptr [r12 + 0x80]
 	cmp	ecx, 0xf
-	je	.label_1468
+	je	.label_1377
 	mov	rax, qword ptr [r12 + 0x70]
-.label_1472:
+.label_1380:
 	lea	edx, [rcx + 1]
 	mov	dword ptr [r12 + 0x80], edx
 	movsxd	rcx, ecx
@@ -16255,13 +15368,13 @@ build_charclass_op:
 	movdqu	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
 	cmp	dword ptr [r12 + 0xb4], 2
-	jl	.label_1470
+	jl	.label_1391
 	or	byte ptr [r12 + 0xb0], 2
 	mov	eax, dword ptr [r12 + 0x80]
 	cmp	eax, 0xf
-	je	.label_1469
+	je	.label_1378
 	mov	rbp, qword ptr [r12 + 0x70]
-.label_1481:
+.label_1394:
 	lea	ecx, [rax + 1]
 	mov	dword ptr [r12 + 0x80], ecx
 	movsxd	rbx, eax
@@ -16275,9 +15388,9 @@ build_charclass_op:
 	mov	qword ptr [rbp + rbx + 0x40], -1
 	mov	eax, dword ptr [r12 + 0x80]
 	cmp	eax, 0xf
-	je	.label_1482
+	je	.label_1387
 	mov	rcx, qword ptr [r12 + 0x70]
-.label_1476:
+.label_1386:
 	lea	rdx, [rbp + rbx + 8]
 	lea	esi, [rax + 1]
 	mov	dword ptr [r12 + 0x80], esi
@@ -16293,8 +15406,8 @@ build_charclass_op:
 	mov	qword ptr [rcx + rsi + 0x40], -1
 	mov	qword ptr [r14], rax
 	mov	qword ptr [rdx], rax
-	jmp	.label_1475
-.label_1470:
+	jmp	.label_1383
+.label_1391:
 	mov	rdi, qword ptr [r15]
 	call	free
 	mov	rdi, qword ptr [r15 + 8]
@@ -16306,14 +15419,14 @@ build_charclass_op:
 	mov	rdi, r15
 	call	free
 	mov	rax, r14
-	jmp	.label_1475
-.label_1478:
+	jmp	.label_1383
+.label_1390:
 	mov	dword ptr [r15], 0xc
-	jmp	.label_1467
-.label_1465:
+	jmp	.label_1384
+.label_1392:
 	mov	rdi, rbx
-	jmp	.label_1479
-.label_1474:
+	jmp	.label_1388
+.label_1382:
 	mov	rdi, rbx
 	call	free
 	mov	rdi, qword ptr [r15]
@@ -16328,31 +15441,31 @@ build_charclass_op:
 	call	free
 	mov	rax, qword ptr [rsp]
 	mov	dword ptr [rax], r14d
-	jmp	.label_1467
-.label_1468:
+	jmp	.label_1384
+.label_1377:
 	mov	edi, 0x3c8
 	call	malloc
 	test	rax, rax
-	je	.label_1471
+	je	.label_1379
 	mov	rcx, qword ptr [r12 + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [r12 + 0x70], rax
 	mov	dword ptr [r12 + 0x80], 0
 	xor	ecx, ecx
-	jmp	.label_1472
-.label_1469:
+	jmp	.label_1380
+.label_1378:
 	mov	edi, 0x3c8
 	call	malloc
 	mov	rbp, rax
 	test	rbp, rbp
-	je	.label_1471
+	je	.label_1379
 	mov	rax, qword ptr [r12 + 0x70]
 	mov	qword ptr [rbp], rax
 	mov	qword ptr [r12 + 0x70], rbp
 	mov	dword ptr [r12 + 0x80], 0
 	xor	eax, eax
-	jmp	.label_1481
-.label_1471:
+	jmp	.label_1394
+.label_1379:
 	mov	rdi, rbx
 	call	free
 	mov	rdi, qword ptr [r15]
@@ -16364,13 +15477,13 @@ build_charclass_op:
 	mov	rdi, qword ptr [r15 + 0x18]
 	call	free
 	mov	rdi, r15
-.label_1479:
+.label_1388:
 	call	free
 	mov	rax, qword ptr [rsp]
 	mov	dword ptr [rax], 0xc
-.label_1467:
+.label_1384:
 	xor	eax, eax
-.label_1475:
+.label_1383:
 	add	rsp, 0x18
 	pop	rbx
 	pop	r12
@@ -16379,125 +15492,125 @@ build_charclass_op:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1482:
+.label_1387:
 	mov	edi, 0x3c8
 	call	malloc
 	mov	rcx, rax
 	xor	eax, eax
 	test	rcx, rcx
-	je	.label_1475
+	je	.label_1383
 	mov	rdx, qword ptr [r12 + 0x70]
 	mov	qword ptr [rcx], rdx
 	mov	qword ptr [r12 + 0x70], rcx
 	mov	dword ptr [r12 + 0x80], 0
-	jmp	.label_1476
+	jmp	.label_1386
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x410590
+	#Procedure 0x40f8e0
 
 	.globl peek_token_bracket
 	.type peek_token_bracket, @function
 peek_token_bracket:
 	mov	rax, qword ptr [rsi + 0x48]
 	cmp	qword ptr [rsi + 0x68], rax
-	jle	.label_1488
+	jle	.label_1403
 	mov	rcx, qword ptr [rsi + 8]
 	movzx	eax, byte ptr [rcx + rax]
 	mov	byte ptr [rdi], al
 	cmp	dword ptr [rsi + 0x90], 2
-	jl	.label_1491
+	jl	.label_1405
 	mov	r8, qword ptr [rsi + 0x48]
 	cmp	r8, qword ptr [rsi + 0x30]
-	je	.label_1491
+	je	.label_1405
 	mov	rcx, qword ptr [rsi + 0x10]
 	cmp	dword ptr [rcx + r8*4], -1
-	je	.label_1486
-.label_1491:
+	je	.label_1396
+.label_1405:
 	test	dl, 1
-	je	.label_1484
+	je	.label_1400
 	movzx	ecx, al
 	cmp	ecx, 0x5c
-	jne	.label_1484
+	jne	.label_1400
 	mov	rcx, qword ptr [rsi + 0x48]
 	inc	rcx
 	cmp	rcx, qword ptr [rsi + 0x58]
-	jge	.label_1484
+	jge	.label_1400
 	mov	qword ptr [rsi + 0x48], rcx
 	mov	rax, qword ptr [rsi + 8]
 	mov	al, byte ptr [rax + rcx]
 	mov	byte ptr [rdi], al
-	jmp	.label_1486
-.label_1488:
+	jmp	.label_1396
+.label_1403:
 	mov	byte ptr [rdi + 8], 2
 	xor	eax, eax
 	ret	
-.label_1484:
+.label_1400:
 	cmp	eax, 0x5b
-	jne	.label_1493
+	jne	.label_1395
 	mov	rax, qword ptr [rsi + 0x48]
 	inc	rax
 	cmp	rax, qword ptr [rsi + 0x58]
-	jge	.label_1494
+	jge	.label_1406
 	mov	rcx, qword ptr [rsi + 8]
 	mov	al, byte ptr [rcx + rax]
-	jmp	.label_1485
-.label_1493:
+	jmp	.label_1401
+.label_1395:
 	cmp	eax, 0x5e
-	je	.label_1487
+	je	.label_1402
 	cmp	eax, 0x5d
-	je	.label_1489
+	je	.label_1404
 	cmp	eax, 0x2d
-	jne	.label_1486
+	jne	.label_1396
 	mov	byte ptr [rdi + 8], 0x16
 	mov	eax, 1
 	ret	
-.label_1486:
+.label_1396:
 	mov	byte ptr [rdi + 8], 1
 	mov	eax, 1
 	ret	
-.label_1494:
+.label_1406:
 	xor	eax, eax
-.label_1485:
+.label_1401:
 	mov	byte ptr [rdi], al
 	movzx	eax, al
 	cmp	eax, 0x3d
-	je	.label_1490
+	je	.label_1398
 	cmp	eax, 0x3a
-	je	.label_1495
+	je	.label_1397
 	cmp	eax, 0x2e
-	jne	.label_1483
+	jne	.label_1399
 	mov	byte ptr [rdi + 8], 0x1a
 	mov	eax, 2
 	ret	
-.label_1489:
+.label_1404:
 	mov	byte ptr [rdi + 8], 0x15
 	mov	eax, 1
 	ret	
-.label_1495:
+.label_1397:
 	test	dl, 4
-	jne	.label_1492
-.label_1483:
+	jne	.label_1407
+.label_1399:
 	mov	byte ptr [rdi + 8], 1
 	mov	byte ptr [rdi], 0x5b
 	mov	eax, 1
 	ret	
-.label_1487:
+.label_1402:
 	mov	byte ptr [rdi + 8], 0x19
 	mov	eax, 1
 	ret	
-.label_1490:
+.label_1398:
 	mov	byte ptr [rdi + 8], 0x1c
 	mov	eax, 2
 	ret	
-.label_1492:
+.label_1407:
 	mov	byte ptr [rdi + 8], 0x1e
 	mov	eax, 2
 	ret	
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x410690
+	#Procedure 0x40f9e0
 
 	.globl parse_bracket_element
 	.type parse_bracket_element, @function
@@ -16511,141 +15624,141 @@ parse_bracket_element:
 	mov	r14, rdi
 	mov	rdx, qword ptr [rsi + 0x48]
 	cmp	dword ptr [rsi + 0x90], 1
-	je	.label_1500
+	je	.label_1419
 	lea	rax, [rdx + 1]
 	mov	rbx, qword ptr [rsi + 0x30]
 	cmp	rax, rbx
-	jge	.label_1500
+	jge	.label_1419
 	mov	r10, qword ptr [rsi + 0x10]
 	lea	r11, [r10 + rdx*4]
 	mov	edi, 1
 	nop	dword ptr [rax + rax]
-.label_1514:
+.label_1418:
 	cmp	dword ptr [r11 + rdi*4], -1
-	jne	.label_1512
+	jne	.label_1414
 	lea	rax, [rdx + rdi + 1]
 	inc	rdi
 	cmp	rax, rbx
-	jl	.label_1514
-.label_1512:
+	jl	.label_1418
+.label_1414:
 	cmp	edi, 2
-	jl	.label_1500
+	jl	.label_1419
 	mov	dword ptr [r14], 1
 	mov	eax, dword ptr [r10 + rdx*4]
 	mov	dword ptr [r14 + 8], eax
 	movsxd	rax, edi
 	add	rax, rdx
 	mov	qword ptr [rsi + 0x48], rax
-	jmp	.label_1515
-.label_1500:
+	jmp	.label_1420
+.label_1419:
 	movsxd	rax, ecx
 	add	rdx, rax
 	mov	qword ptr [rsi + 0x48], rdx
 	movzx	edi, byte ptr [r15 + 8]
 	lea	eax, [rdi - 0x16]
 	cmp	eax, 8
-	ja	.label_1501
-	jmp	qword ptr [word ptr [+ (rax * 8) + label_1503]]
-.label_2643:
+	ja	.label_1424
+	jmp	qword ptr [word ptr [+ (rax * 8) + label_1428]]
+.label_2397:
 	mov	eax, 7
 	cmp	qword ptr [rsi + 0x68], rdx
-	jle	.label_1496
+	jle	.label_1408
 	mov	r11b, byte ptr [r15]
 	xor	r12d, r12d
-	jmp	.label_1506
-.label_1517:
+	jmp	.label_1409
+.label_1429:
 	inc	r12
 	movzx	edi, byte ptr [r15 + 8]
-.label_1506:
+.label_1409:
 	movzx	edi, dil
 	cmp	edi, 0x1e
-	jne	.label_1510
+	jne	.label_1413
 	cmp	byte ptr [rsi + 0x8b], 0
-	jne	.label_1513
+	jne	.label_1415
 	mov	rbx, qword ptr [rsi + 0x48]
 	lea	rdi, [rbx + 1]
 	mov	qword ptr [rsi + 0x48], rdi
 	mov	rdx, qword ptr [rsi + 8]
 	mov	bl, byte ptr [rdx + rbx]
-	jmp	.label_1505
+	jmp	.label_1417
 	nop	
-.label_1510:
+.label_1413:
 	mov	rdx, qword ptr [rsi + 0x48]
 	lea	rdi, [rdx + 1]
 	mov	qword ptr [rsi + 0x48], rdi
 	mov	rbx, qword ptr [rsi + 8]
-.label_1508:
+.label_1411:
 	mov	bl, byte ptr [rbx + rdx]
-.label_1505:
+.label_1417:
 	cmp	qword ptr [rsi + 0x68], rdi
-	jle	.label_1496
+	jle	.label_1408
 	movzx	edx, r11b
 	movzx	ecx, bl
 	cmp	ecx, edx
-	jne	.label_1499
+	jne	.label_1426
 	mov	rcx, qword ptr [rsi + 8]
 	movzx	ecx, byte ptr [rcx + rdi]
 	cmp	ecx, 0x5d
-	je	.label_1502
-.label_1499:
+	je	.label_1427
+.label_1426:
 	mov	rcx, qword ptr [r14 + 8]
 	mov	byte ptr [rcx + r12], bl
 	cmp	r12, 0x1e
-	jle	.label_1517
-	jmp	.label_1496
-.label_1513:
+	jle	.label_1429
+	jmp	.label_1408
+.label_1415:
 	cmp	byte ptr [rsi + 0x8c], 0
-	je	.label_1507
+	je	.label_1410
 	mov	r9, qword ptr [rsi + 0x30]
 	mov	r8, qword ptr [rsi + 0x48]
 	cmp	r8, r9
-	je	.label_1509
+	je	.label_1412
 	mov	rdx, qword ptr [rsi + 0x10]
 	cmp	dword ptr [rdx + r8*4], -1
-	je	.label_1504
-.label_1509:
+	je	.label_1416
+.label_1412:
 	mov	rdx, qword ptr [rsi]
 	mov	rdi, qword ptr [rsi + 0x18]
 	mov	rbx, qword ptr [rsi + 0x28]
 	add	rbx, qword ptr [rdi + r8*8]
 	mov	bl, byte ptr [rdx + rbx]
 	test	bl, bl
-	js	.label_1504
+	js	.label_1416
 	mov	edi, 1
 	cmp	dword ptr [rsi + 0x90], 1
-	je	.label_1497
+	je	.label_1423
 	lea	rdx, [r8 + 1]
 	cmp	rdx, r9
-	jge	.label_1497
+	jge	.label_1423
 	lea	r10, [r8*4]
 	add	r10, qword ptr [rsi + 0x10]
 	mov	edi, 1
-.label_1511:
+.label_1422:
 	cmp	dword ptr [r10 + rdi*4], -1
-	jne	.label_1497
+	jne	.label_1423
 	lea	rdx, [r8 + rdi + 1]
 	inc	rdi
 	cmp	rdx, r9
-	jl	.label_1511
-.label_1497:
+	jl	.label_1422
+.label_1423:
 	movsxd	rdi, edi
 	add	rdi, r8
 	mov	qword ptr [rsi + 0x48], rdi
-	jmp	.label_1505
-.label_1507:
+	jmp	.label_1417
+.label_1410:
 	mov	rdx, qword ptr [rsi + 0x48]
 	lea	rdi, [rdx + 1]
 	add	rdx, qword ptr [rsi + 0x28]
 	mov	qword ptr [rsi + 0x48], rdi
 	mov	rbx, qword ptr [rsi]
-	jmp	.label_1508
-.label_1504:
+	jmp	.label_1411
+.label_1416:
 	lea	rdi, [r8 + 1]
 	mov	qword ptr [rsi + 0x48], rdi
 	mov	rdx, qword ptr [rsi + 8]
 	mov	bl, byte ptr [rdx + r8]
-	jmp	.label_1505
-.label_1502:
+	jmp	.label_1417
+.label_1427:
 	inc	rdi
 	mov	qword ptr [rsi + 0x48], rdi
 	movsxd	rax, r12d
@@ -16654,36 +15767,36 @@ parse_bracket_element:
 	movzx	ecx, byte ptr [r15 + 8]
 	xor	eax, eax
 	cmp	ecx, 0x1e
-	je	.label_1516
+	je	.label_1421
 	cmp	ecx, 0x1c
-	je	.label_1498
+	je	.label_1425
 	cmp	ecx, 0x1a
-	jne	.label_1496
+	jne	.label_1408
 	mov	dword ptr [r14], 3
-	jmp	.label_1496
-.label_1516:
+	jmp	.label_1408
+.label_1421:
 	mov	dword ptr [r14], 4
-	jmp	.label_1496
-.label_1498:
+	jmp	.label_1408
+.label_1425:
 	mov	dword ptr [r14], 2
-	jmp	.label_1496
-.label_2642:
+	jmp	.label_1408
+.label_2396:
 	test	r9b, r9b
-	jne	.label_1501
+	jne	.label_1424
 	lea	rdi, [rsp + 8]
 	mov	rdx, r8
 	call	peek_token_bracket
 	movzx	ecx, byte ptr [rsp + 0x10]
 	mov	eax, 0xb
 	cmp	ecx, 0x15
-	jne	.label_1496
-.label_1501:
+	jne	.label_1408
+.label_1424:
 	mov	dword ptr [r14], 0
 	mov	al, byte ptr [r15]
 	mov	byte ptr [r14 + 8], al
-.label_1515:
+.label_1420:
 	xor	eax, eax
-.label_1496:
+.label_1408:
 	add	rsp, 0x18
 	pop	rbx
 	pop	r12
@@ -16693,7 +15806,7 @@ parse_bracket_element:
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4108f0
+	#Procedure 0x40fc40
 
 	.globl build_charclass
 	.type build_charclass, @function
@@ -16711,24 +15824,24 @@ build_charclass:
 	mov	r15, rsi
 	mov	r14, rdi
 	test	r9d, 0x400000
-	je	.label_1534
+	je	.label_1447
 	mov	esi, OFFSET FLAT:.str.7_1
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1529
+	je	.label_1458
 	mov	esi, OFFSET FLAT:.str.8_1
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	jne	.label_1534
-.label_1529:
+	jne	.label_1447
+.label_1458:
 	mov	r12d, OFFSET FLAT:.str.9_1
-.label_1534:
+.label_1447:
 	mov	rbp, qword ptr [r13]
 	cmp	rbp, qword ptr [rbx + 0x48]
-	je	.label_1536
-.label_1574:
+	je	.label_1462
+.label_1443:
 	mov	rdi, r12
 	call	wctype
 	mov	rcx, qword ptr [rbx + 0x48]
@@ -16740,72 +15853,72 @@ build_charclass:
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1552
+	je	.label_1476
 	mov	esi, OFFSET FLAT:.str.10_2
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1556
+	je	.label_1481
 	mov	esi, OFFSET FLAT:.str.8_1
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1559
+	je	.label_1488
 	mov	esi, OFFSET FLAT:.str.3_2
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1562
+	je	.label_1431
 	mov	esi, OFFSET FLAT:.str.9_1
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1569
+	je	.label_1437
 	mov	esi, OFFSET FLAT:.str.11_2
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1573
+	je	.label_1442
 	mov	esi, OFFSET FLAT:.str.12_2
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1578
+	je	.label_1472
 	mov	esi, OFFSET FLAT:.str.7_1
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1528
+	je	.label_1493
 	mov	esi, OFFSET FLAT:.str.13_0
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1525
+	je	.label_1456
 	mov	esi, OFFSET FLAT:.str.14_2
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1526
+	je	.label_1491
 	mov	esi, OFFSET FLAT:.str.15_2
 	mov	rdi, r12
 	call	strcmp
 	test	eax, eax
-	je	.label_1572
+	je	.label_1473
 	mov	esi, OFFSET FLAT:.str.16_0
 	mov	rdi, r12
 	call	strcmp
 	mov	ecx, eax
 	mov	eax, 4
 	test	ecx, ecx
-	jne	.label_1518
+	jne	.label_1430
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1520
-.label_1560:
+	jne	.label_1438
+.label_1489:
 	test	byte ptr [rsi + rdx*2 + 1], 0x10
-	je	.label_1567
+	je	.label_1479
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -16815,22 +15928,22 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1567:
+.label_1479:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1560
-	jmp	.label_1518
-.label_1552:
+	jne	.label_1489
+	jmp	.label_1430
+.label_1476:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1532
+	jne	.label_1433
 	nop	word ptr cs:[rax + rax]
-.label_1568:
+.label_1449:
 	test	byte ptr [rsi + rdx*2], 8
-	je	.label_1571
+	je	.label_1475
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -16840,38 +15953,38 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1571:
+.label_1475:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1568
-	jmp	.label_1518
+	jne	.label_1449
+	jmp	.label_1430
 	nop	dword ptr [rax]
-.label_1532:
+.label_1433:
 	test	byte ptr [rsi + rdx*2], 8
-	je	.label_1524
+	je	.label_1448
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1524:
+.label_1448:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1532
-	jmp	.label_1518
-.label_1556:
+	jne	.label_1433
+	jmp	.label_1430
+.label_1481:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1539
+	jne	.label_1464
 	nop	
-.label_1553:
+.label_1478:
 	test	byte ptr [rsi + rdx*2], 2
-	je	.label_1565
+	je	.label_1469
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -16881,38 +15994,38 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1565:
+.label_1469:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1553
-	jmp	.label_1518
+	jne	.label_1478
+	jmp	.label_1430
 	nop	dword ptr [rax]
-.label_1539:
+.label_1464:
 	test	byte ptr [rsi + rdx*2], 2
-	je	.label_1558
+	je	.label_1483
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1558:
+.label_1483:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1539
-	jmp	.label_1518
-.label_1559:
+	jne	.label_1464
+	jmp	.label_1430
+.label_1488:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1533
+	jne	.label_1436
 	nop	
-.label_1580:
+.label_1450:
 	test	byte ptr [rsi + rdx*2 + 1], 2
-	je	.label_1579
+	je	.label_1474
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -16922,38 +16035,38 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1579:
+.label_1474:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1580
-	jmp	.label_1518
+	jne	.label_1450
+	jmp	.label_1430
 	nop	word ptr [rax + rax]
-.label_1533:
+.label_1436:
 	test	byte ptr [rsi + rdx*2 + 1], 2
-	je	.label_1548
+	je	.label_1455
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1548:
+.label_1455:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1533
-	jmp	.label_1518
-.label_1562:
+	jne	.label_1436
+	jmp	.label_1430
+.label_1431:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1540
+	jne	.label_1465
 	nop	
-.label_1554:
+.label_1470:
 	test	byte ptr [rsi + rdx*2 + 1], 0x20
-	je	.label_1544
+	je	.label_1477
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -16963,28 +16076,28 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1544:
+.label_1477:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1554
-	jmp	.label_1518
-.label_1540:
+	jne	.label_1470
+	jmp	.label_1430
+.label_1465:
 	test	byte ptr [rsi + rdx*2 + 1], 0x20
-	je	.label_1557
+	je	.label_1482
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1557:
+.label_1482:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1540
-	jmp	.label_1518
-.label_1536:
+	jne	.label_1465
+	jmp	.label_1430
+.label_1462:
 	lea	rax, [rbp + rbp]
 	mov	rdi, qword ptr [rbx + 0x18]
 	lea	rsi, [rax*8 + 8]
@@ -16992,21 +16105,21 @@ build_charclass:
 	mov	rcx, rax
 	mov	eax, 0xc
 	test	rcx, rcx
-	je	.label_1518
+	je	.label_1430
 	lea	rax, [rbp + rbp + 1]
 	mov	qword ptr [rbx + 0x18], rcx
 	mov	qword ptr [r13], rax
-	jmp	.label_1574
-.label_1569:
+	jmp	.label_1443
+.label_1437:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1549
+	jne	.label_1471
 	nop	word ptr cs:[rax + rax]
-.label_1535:
+.label_1460:
 	test	byte ptr [rsi + rdx*2 + 1], 4
-	je	.label_1519
+	je	.label_1451
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17016,37 +16129,37 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1519:
+.label_1451:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1535
-	jmp	.label_1518
-.label_1549:
+	jne	.label_1460
+	jmp	.label_1430
+.label_1471:
 	test	byte ptr [rsi + rdx*2 + 1], 4
-	je	.label_1542
+	je	.label_1467
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1542:
+.label_1467:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1549
-	jmp	.label_1518
-.label_1573:
+	jne	.label_1471
+	jmp	.label_1430
+.label_1442:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1550
+	jne	.label_1444
 	nop	dword ptr [rax]
-.label_1563:
+.label_1432:
 	test	byte ptr [rsi + rdx*2 + 1], 8
-	je	.label_1545
+	je	.label_1453
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17056,37 +16169,37 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1545:
+.label_1453:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1563
-	jmp	.label_1518
-.label_1550:
+	jne	.label_1432
+	jmp	.label_1430
+.label_1444:
 	test	byte ptr [rsi + rdx*2 + 1], 8
-	je	.label_1570
+	je	.label_1439
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1570:
+.label_1439:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1550
-	jmp	.label_1518
-.label_1578:
+	jne	.label_1444
+	jmp	.label_1430
+.label_1472:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1581
+	jne	.label_1452
 	nop	dword ptr [rax]
-.label_1543:
+.label_1485:
 	test	byte ptr [rsi + rdx*2 + 1], 0x40
-	je	.label_1538
+	je	.label_1454
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17096,37 +16209,37 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1538:
+.label_1454:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1543
-	jmp	.label_1518
-.label_1581:
+	jne	.label_1485
+	jmp	.label_1430
+.label_1452:
 	test	byte ptr [rsi + rdx*2 + 1], 0x40
-	je	.label_1564
+	je	.label_1468
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1564:
+.label_1468:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1581
-	jmp	.label_1518
-.label_1528:
+	jne	.label_1452
+	jmp	.label_1430
+.label_1493:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1523
+	jne	.label_1461
 	nop	dword ptr [rax]
-.label_1576:
+.label_1486:
 	test	byte ptr [rsi + rdx*2 + 1], 1
-	je	.label_1546
+	je	.label_1487
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17136,37 +16249,37 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1546:
+.label_1487:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1576
-	jmp	.label_1518
-.label_1523:
+	jne	.label_1486
+	jmp	.label_1430
+.label_1461:
 	test	byte ptr [rsi + rdx*2 + 1], 1
-	je	.label_1521
+	je	.label_1440
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1521:
+.label_1440:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1523
-	jmp	.label_1518
-.label_1525:
+	jne	.label_1461
+	jmp	.label_1430
+.label_1456:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1547
+	jne	.label_1446
 	nop	dword ptr [rax]
-.label_1537:
+.label_1441:
 	test	byte ptr [rsi + rdx*2], 1
-	je	.label_1527
+	je	.label_1492
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17176,36 +16289,36 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1527:
+.label_1492:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1537
-	jmp	.label_1518
-.label_1547:
+	jne	.label_1441
+	jmp	.label_1430
+.label_1446:
 	test	byte ptr [rsi + rdx*2], 1
-	je	.label_1522
+	je	.label_1466
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1522:
+.label_1466:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1547
-	jmp	.label_1518
-.label_1526:
+	jne	.label_1446
+	jmp	.label_1430
+.label_1491:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1555
-.label_1561:
+	jne	.label_1480
+.label_1490:
 	cmp	word ptr [rsi + rdx*2], 0
-	jns	.label_1531
+	jns	.label_1434
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17215,51 +16328,51 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1531:
+.label_1434:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1561
-	jmp	.label_1518
-.label_1555:
+	jne	.label_1490
+	jmp	.label_1430
+.label_1480:
 	cmp	word ptr [rsi + rdx*2], 0
-	jns	.label_1566
+	jns	.label_1435
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1566:
+.label_1435:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1555
-	jmp	.label_1518
-.label_1520:
+	jne	.label_1480
+	jmp	.label_1430
+.label_1438:
 	test	byte ptr [rsi + rdx*2 + 1], 0x10
-	je	.label_1577
+	je	.label_1445
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1577:
+.label_1445:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1520
-	jmp	.label_1518
-.label_1572:
+	jne	.label_1438
+	jmp	.label_1430
+.label_1473:
 	call	__ctype_b_loc
 	xor	edx, edx
 	test	r14, r14
 	mov	rsi, qword ptr [rax]
-	jne	.label_1541
-.label_1575:
+	jne	.label_1463
+.label_1484:
 	test	byte ptr [rsi + rdx*2], 4
-	je	.label_1530
+	je	.label_1459
 	mov	eax, 1
 	mov	cl, dl
 	shl	rax, cl
@@ -17269,12 +16382,12 @@ build_charclass:
 	add	rcx, rdx
 	sar	rcx, 6
 	or	qword ptr [r15 + rcx*8], rax
-.label_1530:
+.label_1459:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1575
-.label_1518:
+	jne	.label_1484
+.label_1430:
 	add	rsp, 8
 	pop	rbx
 	pop	r12
@@ -17283,25 +16396,76 @@ build_charclass:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1541:
+.label_1463:
 	test	byte ptr [rsi + rdx*2], 4
-	je	.label_1551
+	je	.label_1457
 	mov	cl, byte ptr [r14 + rdx]
 	mov	eax, 1
 	shl	rax, cl
 	shr	cl, 6
 	movzx	ecx, cl
 	or	qword ptr [r15 + rcx*8], rax
-.label_1551:
+.label_1457:
 	inc	rdx
 	xor	eax, eax
 	cmp	rdx, 0x100
-	jne	.label_1541
-	jmp	.label_1518
+	jne	.label_1463
+	jmp	.label_1430
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4110a0
+	#Procedure 0x4103f0
+
+	.globl optimize_subexps
+	.type optimize_subexps, @function
+optimize_subexps:
+	movzx	eax, byte ptr [rsi + 0x30]
+	cmp	eax, 0x11
+	je	.label_1494
+	cmp	eax, 4
+	jne	.label_1495
+	mov	rax, qword ptr [rdi + 0xe0]
+	test	rax, rax
+	je	.label_1495
+	movsxd	rcx, dword ptr [rsi + 0x28]
+	mov	rcx, qword ptr [rax + rcx*8]
+	mov	qword ptr [rsi + 0x28], rcx
+	mov	eax, 1
+	shl	eax, cl
+	cdqe	
+	or	qword ptr [rdi + 0xa0], rax
+	xor	eax, eax
+	ret	
+.label_1494:
+	mov	rax, qword ptr [rsi + 8]
+	test	rax, rax
+	je	.label_1495
+	movzx	ecx, byte ptr [rax + 0x30]
+	cmp	ecx, 0x11
+	jne	.label_1495
+	mov	rdx, qword ptr [rax + 8]
+	mov	rcx, qword ptr [rax + 0x28]
+	mov	qword ptr [rsi + 8], rdx
+	test	rdx, rdx
+	je	.label_1496
+	mov	qword ptr [rdx], rsi
+.label_1496:
+	mov	rax, qword ptr [rsi + 0x28]
+	mov	rdx, qword ptr [rdi + 0xe0]
+	mov	rax, qword ptr [rdx + rax*8]
+	mov	qword ptr [rdx + rcx*8], rax
+	cmp	rcx, 0x3f
+	jg	.label_1495
+	mov	rax, -2
+	rol	rax, cl
+	and	qword ptr [rdi + 0xa0], rax
+.label_1495:
+	xor	eax, eax
+	ret	
+	nop	dword ptr [rax]
+	.section	.text
+	.align	16
+	#Procedure 0x410480
 
 	.globl link_nfa_nodes
 	.type link_nfa_nodes, @function
@@ -17315,24 +16479,24 @@ link_nfa_nodes:
 	movzx	edx, byte ptr [rsi + 0x30]
 	lea	ebx, [rdx - 2]
 	cmp	ebx, 0xe
-	ja	.label_1589
+	ja	.label_1497
 	xor	eax, eax
-	jmp	qword ptr [word ptr [+ (rbx * 8) + label_1594]]
-.label_2604:
+	jmp	qword ptr [word ptr [+ (rbx * 8) + label_1503]]
+.label_2358:
 	mov	r14, qword ptr [rdi + 0x28]
 	lea	rbx, [rcx + rcx*2]
 	mov	rax, qword ptr [rsi + 0x20]
 	mov	r15, qword ptr [rax + 0x38]
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
 	movups	xmmword ptr [r14 + rbx*8], xmm0
 	mov	edi, 8
 	call	malloc
 	mov	qword ptr [r14 + rbx*8 + 0x10], rax
 	test	rax, rax
-	je	.label_1592
+	je	.label_1501
 	mov	qword ptr [rax], r15
-	jmp	.label_1582
-.label_2605:
+	jmp	.label_1500
+.label_2359:
 	or	byte ptr [rdi + 0xb0], 1
 	mov	rax, qword ptr [rsi + 8]
 	mov	rdx, qword ptr [rsi + 0x10]
@@ -17346,11 +16510,11 @@ link_nfa_nodes:
 	lea	rax, [rdx + 0x18]
 	cmove	rax, rsi
 	test	r14, r14
-	js	.label_1583
+	js	.label_1505
 	mov	rax, qword ptr [rax]
 	mov	r15, qword ptr [rax + 0x38]
 	test	r15, r15
-	js	.label_1588
+	js	.label_1504
 	mov	r12, qword ptr [rdi + 0x28]
 	lea	rbx, [rcx + rcx*2]
 	mov	qword ptr [r12 + rbx*8], 2
@@ -17360,90 +16524,90 @@ link_nfa_nodes:
 	mov	qword ptr [r12 + rbx*8 + 0x10], rcx
 	mov	eax, 0xc
 	test	rcx, rcx
-	je	.label_1586
+	je	.label_1499
 	lea	rax, [r12 + rbx*8 + 8]
 	cmp	r14, r15
-	jne	.label_1587
+	jne	.label_1509
 	mov	qword ptr [rax], 1
 	mov	qword ptr [rcx], r14
-	jmp	.label_1582
-.label_2602:
+	jmp	.label_1500
+.label_2356:
 	cmp	qword ptr [rsi + 0x20], 0
 	mov	eax, 0
-	je	.label_1586
+	je	.label_1499
 	mov	edi, OFFSET FLAT:.str.17_2
 	mov	esi, OFFSET FLAT:.str.6_1
 	mov	edx, 0x59f
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.link_nfa_nodes
 	call	__assert_fail
-.label_2603:
+.label_2357:
 	mov	rax, qword ptr [rsi + 0x20]
 	mov	rbx, qword ptr [rax + 0x38]
 	mov	rax, qword ptr [rdi + 0x18]
 	mov	qword ptr [rax + rcx*8], rbx
 	movzx	eax, byte ptr [rsi + 0x30]
 	cmp	eax, 4
-	jne	.label_1582
+	jne	.label_1500
 	mov	r14, qword ptr [rdi + 0x28]
 	lea	r15, [rcx + rcx*2]
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
 	movups	xmmword ptr [r14 + r15*8], xmm0
 	mov	edi, 8
 	call	malloc
 	mov	qword ptr [r14 + r15*8 + 0x10], rax
 	test	rax, rax
-	je	.label_1593
+	je	.label_1502
 	mov	qword ptr [rax], rbx
-	jmp	.label_1582
-.label_1589:
+	jmp	.label_1500
+.label_1497:
 	test	dl, 8
-	jne	.label_1585
+	jne	.label_1507
 	mov	rax, qword ptr [rsi + 0x20]
 	mov	rax, qword ptr [rax + 0x38]
 	mov	rdx, qword ptr [rdi + 0x18]
 	mov	qword ptr [rdx + rcx*8], rax
-	jmp	.label_1582
-.label_1587:
+	jmp	.label_1500
+.label_1509:
 	mov	qword ptr [rax], 2
-	jge	.label_1590
+	jge	.label_1498
 	mov	qword ptr [rcx], r14
 	mov	qword ptr [rcx + 8], r15
-	jmp	.label_1582
-.label_1590:
+	jmp	.label_1500
+.label_1498:
 	mov	qword ptr [rcx], r15
 	mov	qword ptr [rcx + 8], r14
-.label_1582:
+.label_1500:
 	xor	eax, eax
-.label_1586:
+.label_1499:
 	add	rsp, 8
 	pop	rbx
 	pop	r12
 	pop	r14
 	pop	r15
 	ret	
-.label_1592:
+.label_1501:
 	lea	rax, [r14 + rbx*8]
-.label_1591:
+.label_1508:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax], xmm0
 	mov	eax, 0xc
-	jmp	.label_1586
-.label_1593:
+	jmp	.label_1499
+.label_1502:
 	lea	rax, [r14 + r15*8]
-	jmp	.label_1591
-.label_1583:
+	jmp	.label_1508
+.label_1505:
 	mov	edi, OFFSET FLAT:.str.18_2
 	mov	esi, OFFSET FLAT:.str.6_1
 	mov	edx, 0x5af
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.link_nfa_nodes
 	call	__assert_fail
-.label_1588:
+.label_1504:
 	mov	edi, OFFSET FLAT:.str.19_1
 	mov	esi, OFFSET FLAT:.str.6_1
 	mov	edx, 0x5b0
 	mov	ecx, OFFSET FLAT:__PRETTY_FUNCTION__.link_nfa_nodes
 	call	__assert_fail
-.label_1585:
+.label_1507:
 	mov	edi, OFFSET FLAT:.str.20_0
 	mov	esi, OFFSET FLAT:.str.6_1
 	mov	edx, 0x5c2
@@ -17452,7 +16616,7 @@ link_nfa_nodes:
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4112b0
+	#Procedure 0x410690
 
 	.globl lower_subexp
 	.type lower_subexp, @function
@@ -17464,42 +16628,45 @@ lower_subexp:
 	push	r12
 	push	rbx
 	push	rax
-	mov	r14, rcx
-	mov	rbx, rsi
-	mov	r12, qword ptr [r14 + 8]
-	test	dl, 0x10
-	je	.label_1600
-	test	r12, r12
-	je	.label_1600
+	mov	r14, rdx
+	mov	rbp, rdi
+	mov	rbx, qword ptr [rsi]
+	mov	r13, qword ptr [r14 + 8]
+	test	r13, r13
+	je	.label_1517
+	mov	al, byte ptr [rsi + 0x38]
+	and	al, 0x10
+	je	.label_1517
 	mov	rax, qword ptr [r14 + 0x28]
 	cmp	rax, 0x3f
-	jg	.label_1601
+	jg	.label_1511
 	mov	rcx, qword ptr [rbx + 0xa0]
 	bt	rcx, rax
-	jae	.label_1601
-.label_1600:
-	mov	r13d, dword ptr [rbx + 0x80]
-	cmp	r13d, 0xf
-	je	.label_1604
-	mov	qword ptr [rsp], rdi
+	jae	.label_1511
+.label_1517:
+	mov	r12d, dword ptr [rbx + 0x80]
+	cmp	r12d, 0xf
+	je	.label_1523
 	mov	rax, qword ptr [rbx + 0x70]
-.label_1608:
-	lea	ecx, [r13 + 1]
+.label_1515:
+	lea	ecx, [r12 + 1]
 	mov	dword ptr [rbx + 0x80], ecx
-	movsxd	rcx, r13d
+	movsxd	rcx, r12d
 	shl	rcx, 6
-	lea	r13, [rax + rcx + 8]
+	lea	r12, [rax + rcx + 8]
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax + rcx + 8], xmm0
 	mov	qword ptr [rax + rcx + 0x18], 0
 	mov	dword ptr [rax + rcx + 0x38], 8
 	movups	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
+.label_1510:
+	mov	qword ptr [rsp], rbp
 	mov	r15d, dword ptr [rbx + 0x80]
 	cmp	r15d, 0xf
-	je	.label_1598
+	je	.label_1519
 	mov	rax, qword ptr [rbx + 0x70]
-.label_1603:
+.label_1520:
 	lea	ecx, [r15 + 1]
 	mov	dword ptr [rbx + 0x80], ecx
 	movsxd	rcx, r15d
@@ -17511,68 +16678,68 @@ lower_subexp:
 	mov	dword ptr [rax + rcx + 0x38], 9
 	movups	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
-.label_1599:
-	test	r12, r12
+.label_1522:
+	test	r13, r13
 	mov	rbp, r15
-	je	.label_1605
+	je	.label_1518
 	mov	ebp, dword ptr [rbx + 0x80]
 	cmp	ebp, 0xf
-	je	.label_1606
+	je	.label_1513
 	mov	rax, qword ptr [rbx + 0x70]
-.label_1597:
+.label_1516:
 	lea	ecx, [rbp + 1]
 	mov	dword ptr [rbx + 0x80], ecx
 	movsxd	rcx, ebp
 	shl	rcx, 6
 	lea	rbp, [rax + rcx + 8]
 	mov	qword ptr [rax + rcx + 8], 0
-	mov	qword ptr [rax + rcx + 0x10], r12
+	mov	qword ptr [rax + rcx + 0x10], r13
 	mov	qword ptr [rax + rcx + 0x18], r15
 	mov	dword ptr [rax + rcx + 0x38], 0x10
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
-	mov	qword ptr [r12], rbp
+	mov	qword ptr [r13], rbp
 	test	r15, r15
-	je	.label_1605
+	je	.label_1518
 	mov	qword ptr [r15], rbp
-.label_1605:
-	mov	r12d, dword ptr [rbx + 0x80]
-	cmp	r12d, 0xf
-	je	.label_1609
+.label_1518:
+	mov	r13d, dword ptr [rbx + 0x80]
+	cmp	r13d, 0xf
+	je	.label_1525
 	mov	rax, qword ptr [rbx + 0x70]
-.label_1596:
-	lea	ecx, [r12 + 1]
+.label_1521:
+	lea	ecx, [r13 + 1]
 	mov	dword ptr [rbx + 0x80], ecx
-	movsxd	rcx, r12d
+	movsxd	rcx, r13d
 	shl	rcx, 6
-	lea	r12, [rax + rcx + 8]
+	lea	r13, [rax + rcx + 8]
 	mov	qword ptr [rax + rcx + 8], 0
-	mov	qword ptr [rax + rcx + 0x10], r13
+	mov	qword ptr [rax + rcx + 0x10], r12
 	mov	qword ptr [rax + rcx + 0x18], rbp
 	mov	dword ptr [rax + rcx + 0x38], 0x10
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax + rcx + 0x20], xmm0
 	mov	qword ptr [rax + rcx + 0x40], -1
-	test	r13, r13
-	je	.label_1602
-	mov	qword ptr [r13], r12
-.label_1602:
-	test	rbp, rbp
-	je	.label_1607
-	mov	qword ptr [rbp], r12
-.label_1607:
-	test	r15, r15
-	je	.label_1595
-	test	r13, r13
-	je	.label_1595
-	test	rbp, rbp
-	je	.label_1595
 	test	r12, r12
-	je	.label_1595
+	je	.label_1524
+	mov	qword ptr [r12], r13
+.label_1524:
+	test	rbp, rbp
+	je	.label_1512
+	mov	qword ptr [rbp], r13
+.label_1512:
+	test	r15, r15
+	je	.label_1514
+	test	r12, r12
+	je	.label_1514
+	test	rbp, rbp
+	je	.label_1514
+	test	r13, r13
+	je	.label_1514
 	mov	rax, qword ptr [r14 + 0x28]
 	mov	qword ptr [r15 + 0x28], rax
-	mov	qword ptr [r13 + 0x28], rax
+	mov	qword ptr [r12 + 0x28], rax
 	mov	eax, 0x80000
 	and	eax, dword ptr [r14 + 0x30]
 	mov	ecx, 0xfff7ffff
@@ -17580,11 +16747,11 @@ lower_subexp:
 	and	edx, ecx
 	or	edx, eax
 	mov	dword ptr [r15 + 0x30], edx
-	and	ecx, dword ptr [r13 + 0x30]
+	and	ecx, dword ptr [r12 + 0x30]
 	or	ecx, eax
-	mov	dword ptr [r13 + 0x30], ecx
-.label_1601:
-	mov	rax, r12
+	mov	dword ptr [r12 + 0x30], ecx
+.label_1511:
+	mov	rax, r13
 	add	rsp, 8
 	pop	rbx
 	pop	r12
@@ -17593,60 +16760,59 @@ lower_subexp:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1604:
-	mov	qword ptr [rsp], rdi
+.label_1523:
 	mov	edi, 0x3c8
 	call	malloc
-	xor	r13d, r13d
+	xor	r12d, r12d
 	test	rax, rax
-	je	.label_1598
+	je	.label_1510
 	mov	rcx, qword ptr [rbx + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [rbx + 0x70], rax
 	mov	dword ptr [rbx + 0x80], 0
-	jmp	.label_1608
-.label_1598:
+	jmp	.label_1515
+.label_1519:
 	mov	edi, 0x3c8
 	call	malloc
 	xor	r15d, r15d
 	test	rax, rax
-	je	.label_1599
+	je	.label_1522
 	mov	rcx, qword ptr [rbx + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [rbx + 0x70], rax
 	mov	dword ptr [rbx + 0x80], 0
-	jmp	.label_1603
-.label_1609:
+	jmp	.label_1520
+.label_1525:
 	mov	edi, 0x3c8
 	call	malloc
-	xor	r12d, r12d
+	xor	r13d, r13d
 	test	rax, rax
-	je	.label_1607
+	je	.label_1512
 	mov	rcx, qword ptr [rbx + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [rbx + 0x70], rax
 	mov	dword ptr [rbx + 0x80], 0
-	jmp	.label_1596
-.label_1595:
+	jmp	.label_1521
+.label_1514:
 	mov	rax, qword ptr [rsp]
 	mov	dword ptr [rax], 0xc
-	xor	r12d, r12d
-	jmp	.label_1601
-.label_1606:
+	xor	r13d, r13d
+	jmp	.label_1511
+.label_1513:
 	mov	edi, 0x3c8
 	call	malloc
 	xor	ebp, ebp
 	test	rax, rax
-	je	.label_1605
+	je	.label_1518
 	mov	rcx, qword ptr [rbx + 0x70]
 	mov	qword ptr [rax], rcx
 	mov	qword ptr [rbx + 0x70], rax
 	mov	dword ptr [rbx + 0x80], 0
-	jmp	.label_1597
-	nop	
+	jmp	.label_1516
+	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4115a0
+	#Procedure 0x410990
 
 	.globl re_dfa_add_node
 	.type re_dfa_add_node, @function
@@ -17664,8 +16830,8 @@ re_dfa_add_node:
 	mov	r13, qword ptr [rbx + 8]
 	mov	rax, qword ptr [rbx + 0x10]
 	cmp	rax, r13
-	jae	.label_1612
-.label_1613:
+	jae	.label_1530
+.label_1528:
 	mov	rcx, qword ptr [rbx]
 	shl	rax, 4
 	mov	qword ptr [rcx + rax], r12
@@ -17676,14 +16842,14 @@ re_dfa_add_node:
 	and	dword ptr [rax + rcx + 8], 0xfffc00ff
 	movzx	eax, r14b
 	cmp	eax, 5
-	jne	.label_1614
+	jne	.label_1527
 	mov	cl, 1
 	cmp	dword ptr [rbx + 0xb4], 1
-	jg	.label_1615
-.label_1614:
+	jg	.label_1531
+.label_1527:
 	cmp	eax, 6
 	sete	cl
-.label_1615:
+.label_1531:
 	movzx	eax, cl
 	mov	rcx, qword ptr [rbx]
 	mov	rdx, qword ptr [rbx + 0x10]
@@ -17710,7 +16876,7 @@ re_dfa_add_node:
 	mov	r15, qword ptr [rbx + 0x10]
 	lea	rax, [r15 + 1]
 	mov	qword ptr [rbx + 0x10], rax
-.label_1611:
+.label_1529:
 	mov	rax, r15
 	add	rsp, 0x18
 	pop	rbx
@@ -17720,18 +16886,18 @@ re_dfa_add_node:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1612:
+.label_1530:
 	lea	rbp, [r13 + r13]
 	mov	r15, -1
 	movabs	rax, 0xaaaaaaaaaaaaaaa
 	cmp	rbp, rax
-	ja	.label_1611
+	ja	.label_1529
 	mov	rdi, qword ptr [rbx]
 	mov	rsi, r13
 	shl	rsi, 5
 	call	realloc
 	test	rax, rax
-	je	.label_1611
+	je	.label_1529
 	mov	qword ptr [rsp], rbp
 	mov	qword ptr [rbx], rax
 	mov	rdi, qword ptr [rbx + 0x18]
@@ -17755,13 +16921,13 @@ re_dfa_add_node:
 	mov	rax, qword ptr [rsp + 8]
 	mov	rdi, qword ptr [rsp + 0x10]
 	test	rdi, rdi
-	je	.label_1610
+	je	.label_1526
 	test	rax, rax
-	je	.label_1610
+	je	.label_1526
 	test	r13, r13
-	je	.label_1610
+	je	.label_1526
 	test	rbp, rbp
-	je	.label_1610
+	je	.label_1526
 	mov	qword ptr [rbx + 0x18], rdi
 	mov	qword ptr [rbx + 0x20], rax
 	mov	qword ptr [rbx + 0x28], r13
@@ -17769,8 +16935,8 @@ re_dfa_add_node:
 	mov	rax, qword ptr [rsp]
 	mov	qword ptr [rbx + 8], rax
 	mov	rax, qword ptr [rbx + 0x10]
-	jmp	.label_1613
-.label_1610:
+	jmp	.label_1528
+.label_1526:
 	mov	rbx, rax
 	call	free
 	mov	rdi, rbx
@@ -17779,11 +16945,11 @@ re_dfa_add_node:
 	call	free
 	mov	rdi, rbp
 	call	free
-	jmp	.label_1611
+	jmp	.label_1529
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x411770
+	#Procedure 0x410b60
 
 	.globl calc_eclosure_iter
 	.type calc_eclosure_iter, @function
@@ -17811,7 +16977,7 @@ calc_eclosure_iter:
 	mov	qword ptr [rsp + 0x40], rcx
 	mov	eax, 0xc
 	test	rcx, rcx
-	je	.label_1620
+	je	.label_1533
 	mov	qword ptr [rsp + 8], rbx
 	mov	rax, qword ptr [rbp + 0x30]
 	mov	qword ptr [rax + r14*8 + 8], -1
@@ -17822,109 +16988,109 @@ calc_eclosure_iter:
 	mov	r8d, eax
 	shr	r8d, 8
 	and	r8d, 0x3ff
-	je	.label_1618
+	je	.label_1541
 	lea	rdx, [r15 + r14*8 + 8]
 	cmp	qword ptr [rdx], 0
-	je	.label_1618
+	je	.label_1541
 	mov	rdx, qword ptr [r15 + r14*8 + 0x10]
 	mov	rdx, qword ptr [rdx]
 	shl	rdx, 4
 	test	byte ptr [rcx + rdx + 0xa], 4
-	jne	.label_1618
+	jne	.label_1541
 	mov	rdi, rbp
 	mov	rsi, r12
 	mov	rdx, r12
 	mov	rcx, r12
 	call	duplicate_node_closure
 	test	eax, eax
-	jne	.label_1620
+	jne	.label_1533
 	mov	rax, qword ptr [rbp]
 	mov	eax, dword ptr [rax + rbx + 8]
-.label_1618:
+.label_1541:
 	mov	rbx, r12
 	test	al, 8
-	jne	.label_1627
+	jne	.label_1540
 	xor	r15d, r15d
-	jmp	.label_1617
-.label_1627:
+	jmp	.label_1542
+.label_1540:
 	mov	rax, qword ptr [rbp + 0x28]
 	cmp	qword ptr [rax + r14*8 + 8], 0
-	jle	.label_1619
+	jle	.label_1539
 	xor	r15d, r15d
 	xor	r13d, r13d
 	nop	word ptr cs:[rax + rax]
-.label_1626:
+.label_1538:
 	mov	rax, qword ptr [rax + r14*8 + 0x10]
 	mov	rdx, qword ptr [rax + r13*8]
 	mov	rax, qword ptr [rbp + 0x30]
 	lea	r12, [rdx + rdx*2]
 	mov	rcx, qword ptr [rax + r12*8 + 8]
 	cmp	rcx, -1
-	je	.label_1623
+	je	.label_1532
 	test	rcx, rcx
-	jne	.label_1624
+	jne	.label_1543
 	xor	ecx, ecx
 	lea	rdi, [rsp + 0x10]
 	mov	rsi, rbp
 	call	calc_eclosure_iter
 	test	eax, eax
-	je	.label_1622
-	jmp	.label_1620
+	je	.label_1535
+	jmp	.label_1533
 	nop	dword ptr [rax]
-.label_1624:
+.label_1543:
 	mov	rcx, qword ptr [rax + r12*8 + 0x10]
 	mov	qword ptr [rsp + 0x20], rcx
 	movups	xmm0, xmmword ptr [rax + r12*8]
 	movaps	xmmword ptr [rsp + 0x10], xmm0
-.label_1622:
+.label_1535:
 	lea	rdi, [rsp + 0x30]
 	lea	rsi, [rsp + 0x10]
 	call	re_node_set_merge
 	test	eax, eax
-	jne	.label_1620
+	jne	.label_1533
 	mov	rax, qword ptr [rbp + 0x30]
 	cmp	qword ptr [rax + r12*8 + 8], 0
-	jne	.label_1621
+	jne	.label_1534
 	mov	rdi, qword ptr [rsp + 0x20]
 	call	free
-.label_1623:
+.label_1532:
 	mov	r15b, 1
-.label_1621:
+.label_1534:
 	inc	r13
 	mov	rax, qword ptr [rbp + 0x28]
 	cmp	r13, qword ptr [rax + r14*8 + 8]
-	jl	.label_1626
-	jmp	.label_1617
-.label_1619:
+	jl	.label_1538
+	jmp	.label_1542
+.label_1539:
 	xor	r15d, r15d
-.label_1617:
+.label_1542:
 	lea	rdi, [rsp + 0x30]
 	mov	rsi, rbx
 	call	re_node_set_insert
 	test	al, al
 	mov	eax, 0xc
-	je	.label_1620
+	je	.label_1533
 	test	r15b, 1
 	mov	rax, qword ptr [rbp + 0x30]
-	je	.label_1616
+	je	.label_1536
 	mov	ecx, dword ptr [rsp + 4]
 	test	cl, cl
-	jne	.label_1616
+	jne	.label_1536
 	mov	qword ptr [rax + r14*8 + 8], 0
-	jmp	.label_1625
-.label_1616:
+	jmp	.label_1537
+.label_1536:
 	mov	rcx, qword ptr [rsp + 0x40]
 	mov	qword ptr [rax + r14*8 + 0x10], rcx
 	movups	xmm0, xmmword ptr [rsp + 0x30]
 	movups	xmmword ptr [rax + r14*8], xmm0
-.label_1625:
+.label_1537:
 	mov	rcx, qword ptr [rsp + 8]
 	mov	rax, qword ptr [rsp + 0x40]
 	mov	qword ptr [rcx + 0x10], rax
 	movups	xmm0, xmmword ptr [rsp + 0x30]
 	movups	xmmword ptr [rcx], xmm0
 	xor	eax, eax
-.label_1620:
+.label_1533:
 	add	rsp, 0x48
 	pop	rbx
 	pop	r12
@@ -17936,7 +17102,7 @@ calc_eclosure_iter:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x411980
+	#Procedure 0x410d70
 
 	.globl duplicate_node_closure
 	.type duplicate_node_closure, @function
@@ -17953,7 +17119,7 @@ duplicate_node_closure:
 	mov	rbx, rdx
 	mov	r12, rsi
 	mov	r14, rdi
-.label_1644:
+.label_1557:
 	mov	dword ptr [rsp + 0x14], r13d
 	mov	eax, r13d
 	shl	eax, 8
@@ -17961,13 +17127,13 @@ duplicate_node_closure:
 	mov	dword ptr [rsp + 0x20], eax
 	mov	r15, r12
 	nop	word ptr cs:[rax + rax]
-.label_1630:
+.label_1548:
 	mov	rax, qword ptr [r14]
 	mov	rdx, r15
 	shl	rdx, 4
 	movzx	ecx, byte ptr [rax + rdx + 8]
 	cmp	ecx, 4
-	jne	.label_1639
+	jne	.label_1549
 	mov	rcx, qword ptr [r14 + 0x18]
 	mov	rdx, qword ptr [r14 + 0x28]
 	mov	r13, qword ptr [rcx + r15*8]
@@ -17982,7 +17148,7 @@ duplicate_node_closure:
 	call	re_dfa_add_node
 	mov	rbx, rax
 	cmp	rbx, -1
-	je	.label_1632
+	je	.label_1560
 	mov	dword ptr [rsp + 0x24], 0xc
 	mov	rax, qword ptr [r14]
 	mov	rcx, rbx
@@ -18012,66 +17178,66 @@ duplicate_node_closure:
 	test	al, al
 	mov	r15, r13
 	mov	r13d, dword ptr [rsp + 0x14]
-	jne	.label_1630
-	jmp	.label_1628
+	jne	.label_1548
+	jmp	.label_1545
 	nop	dword ptr [rax + rax]
-.label_1639:
+.label_1549:
 	mov	rcx, qword ptr [r14 + 0x28]
 	lea	rbp, [r15 + r15*2]
 	mov	rsi, qword ptr [rcx + rbp*8 + 8]
 	test	rsi, rsi
-	je	.label_1634
+	je	.label_1558
 	mov	rdi, qword ptr [rcx + rbp*8 + 0x10]
 	mov	r12, qword ptr [rdi]
 	lea	rdi, [rbx + rbx*2]
 	mov	qword ptr [rcx + rdi*8 + 8], 0
 	cmp	rsi, 1
-	je	.label_1637
+	je	.label_1551
 	mov	qword ptr [rsp + 0x18], rbp
 	mov	r15, rdi
 	mov	rdi, qword ptr [r14 + 0x10]
 	lea	rsi, [rdi - 1]
 	test	rsi, rsi
-	jle	.label_1635
+	jle	.label_1546
 	mov	rdx, rsi
 	shl	rdx, 4
 	mov	ebp, dword ptr [rax + rdx + 8]
 	mov	edx, ebp
 	and	edx, 0x40000
-	je	.label_1635
+	je	.label_1546
 	mov	rdx, qword ptr [r14 + 0x20]
 	shl	rdi, 4
 	lea	rdi, [rax + rdi - 0x18]
-.label_1636:
+.label_1547:
 	cmp	qword ptr [rdx + rsi*8], r12
-	jne	.label_1633
+	jne	.label_1544
 	shr	ebp, 8
 	and	ebp, 0x3ff
 	cmp	ebp, r13d
-	je	.label_1629
-.label_1633:
+	je	.label_1550
+.label_1544:
 	dec	rsi
 	test	rsi, rsi
-	jle	.label_1635
+	jle	.label_1546
 	mov	ebp, dword ptr [rdi]
 	mov	ebx, ebp
 	and	ebx, 0x40000
 	add	rdi, -0x10
 	test	ebx, ebx
-	jne	.label_1636
-	jmp	.label_1635
-.label_1629:
+	jne	.label_1547
+	jmp	.label_1546
+.label_1550:
 	cmp	rsi, -1
-	je	.label_1635
+	je	.label_1546
 	mov	rbp, r15
 	lea	rdi, [rcx + rbp*8]
 	call	re_node_set_insert
 	mov	dword ptr [rsp + 0x24], 0xc
 	test	al, al
-	jne	.label_1642
-	jmp	.label_1628
+	jne	.label_1555
+	jmp	.label_1545
 	nop	word ptr [rax + rax]
-.label_1635:
+.label_1546:
 	mov	rbp, r12
 	shl	rbp, 4
 	mov	rsi, qword ptr [rax + rbp]
@@ -18080,7 +17246,7 @@ duplicate_node_closure:
 	call	re_dfa_add_node
 	mov	rbx, rax
 	cmp	rbx, -1
-	je	.label_1631
+	je	.label_1559
 	mov	dword ptr [rsp + 0x24], 0xc
 	mov	rax, qword ptr [r14]
 	mov	rcx, rbx
@@ -18105,7 +17271,7 @@ duplicate_node_closure:
 	mov	rsi, rbx
 	call	re_node_set_insert
 	test	al, al
-	je	.label_1628
+	je	.label_1545
 	mov	rdi, r14
 	mov	rsi, r12
 	mov	rdx, rbx
@@ -18114,8 +17280,8 @@ duplicate_node_closure:
 	call	duplicate_node_closure
 	mov	dword ptr [rsp + 0x24], eax
 	test	eax, eax
-	jne	.label_1628
-.label_1642:
+	jne	.label_1545
+.label_1555:
 	mov	rax, qword ptr [r14]
 	mov	rcx, qword ptr [r14 + 0x28]
 	mov	rdx, qword ptr [rsp + 0x18]
@@ -18128,7 +17294,7 @@ duplicate_node_closure:
 	mov	rdi, r14
 	call	re_dfa_add_node
 	cmp	rax, -1
-	je	.label_1641
+	je	.label_1554
 	mov	dword ptr [rsp + 0x24], 0xc
 	mov	rdi, qword ptr [r14]
 	mov	rcx, rax
@@ -18153,14 +17319,14 @@ duplicate_node_closure:
 	mov	rbx, rax
 	call	re_node_set_insert
 	test	al, al
-	jne	.label_1630
-	jmp	.label_1628
-.label_1637:
+	jne	.label_1548
+	jmp	.label_1545
+.label_1551:
 	cmp	r15, qword ptr [rsp + 8]
-	jne	.label_1638
+	jne	.label_1552
 	cmp	rbx, r15
-	jne	.label_1640
-.label_1638:
+	jne	.label_1553
+.label_1552:
 	mov	r15, rdi
 	lea	rcx, [rax + rdx + 8]
 	mov	ebp, dword ptr [rcx]
@@ -18172,7 +17338,7 @@ duplicate_node_closure:
 	call	re_dfa_add_node
 	mov	dword ptr [rsp + 0x24], 0xc
 	cmp	rax, -1
-	je	.label_1628
+	je	.label_1545
 	shr	ebp, 8
 	and	ebp, 0x3ff
 	or	r13d, ebp
@@ -18202,24 +17368,24 @@ duplicate_node_closure:
 	mov	rbx, rax
 	call	re_node_set_insert
 	test	al, al
-	jne	.label_1644
-	jmp	.label_1628
-.label_1632:
+	jne	.label_1557
+	jmp	.label_1545
+.label_1560:
 	mov	dword ptr [rsp + 0x24], 0xc
-	jmp	.label_1628
-.label_1631:
+	jmp	.label_1545
+.label_1559:
 	mov	dword ptr [rsp + 0x24], 0xc
-	jmp	.label_1628
-.label_1641:
+	jmp	.label_1545
+.label_1554:
 	mov	dword ptr [rsp + 0x24], 0xc
-	jmp	.label_1628
-.label_1634:
+	jmp	.label_1545
+.label_1558:
 	mov	rax, qword ptr [r14 + 0x18]
 	mov	rcx, qword ptr [rax + r15*8]
 	mov	qword ptr [rax + rbx*8], rcx
-.label_1643:
+.label_1556:
 	mov	dword ptr [rsp + 0x24], 0
-.label_1628:
+.label_1545:
 	mov	eax, dword ptr [rsp + 0x24]
 	add	rsp, 0x28
 	pop	rbx
@@ -18229,18 +17395,18 @@ duplicate_node_closure:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1640:
+.label_1553:
 	lea	rdi, [rcx + rdi*8]
 	mov	rsi, r12
 	call	re_node_set_insert
 	mov	dword ptr [rsp + 0x24], 0xc
 	test	al, al
-	je	.label_1628
-	jmp	.label_1643
+	je	.label_1545
+	jmp	.label_1556
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x411de0
+	#Procedure 0x4111d0
 
 	.globl re_node_set_merge
 	.type re_node_set_merge, @function
@@ -18251,15 +17417,15 @@ re_node_set_merge:
 	mov	r15, rsi
 	mov	r14, rdi
 	test	r15, r15
-	je	.label_1648
+	je	.label_1562
 	mov	rax, qword ptr [r15 + 8]
 	test	rax, rax
-	je	.label_1648
+	je	.label_1562
 	mov	rbx, qword ptr [r14]
 	mov	rcx, qword ptr [r14 + 8]
 	lea	rdx, [rcx + rax*2]
 	cmp	rbx, rdx
-	jge	.label_1646
+	jge	.label_1569
 	add	rbx, rax
 	mov	rdi, qword ptr [r14 + 0x10]
 	mov	rsi, rbx
@@ -18268,45 +17434,45 @@ re_node_set_merge:
 	mov	rcx, rax
 	mov	eax, 0xc
 	test	rcx, rcx
-	je	.label_1654
+	je	.label_1565
 	add	rbx, rbx
 	mov	qword ptr [r14 + 0x10], rcx
 	mov	qword ptr [r14], rbx
 	mov	rcx, qword ptr [r14 + 8]
 	mov	rax, qword ptr [r15 + 8]
-.label_1646:
+.label_1569:
 	test	rcx, rcx
-	je	.label_1647
+	je	.label_1571
 	lea	rbx, [rcx + rax*2]
 	dec	rax
 	dec	rcx
 	mov	rdx, rax
 	or	rdx, rcx
-	js	.label_1651
+	js	.label_1561
 	mov	rdx, qword ptr [r14 + 0x10]
 	mov	rsi, qword ptr [r15 + 0x10]
-	jmp	.label_1650
-.label_1645:
+	jmp	.label_1564
+.label_1568:
 	dec	rax
-.label_1649:
+.label_1572:
 	dec	rcx
-	jmp	.label_1655
+	jmp	.label_1567
 	nop	word ptr cs:[rax + rax]
-.label_1650:
+.label_1564:
 	mov	rdi, qword ptr [rsi + rax*8]
 	cmp	qword ptr [rdx + rcx*8], rdi
-	je	.label_1645
-	jge	.label_1649
+	je	.label_1568
+	jge	.label_1572
 	dec	rax
 	mov	qword ptr [rdx + rbx*8 - 8], rdi
 	dec	rbx
-.label_1655:
+.label_1567:
 	mov	rdi, rax
 	or	rdi, rcx
-	jns	.label_1650
-.label_1651:
+	jns	.label_1564
+.label_1561:
 	test	rax, rax
-	js	.label_1653
+	js	.label_1563
 	lea	rcx, [rax + 1]
 	sub	rbx, rcx
 	lea	rdi, [rbx*8]
@@ -18314,54 +17480,54 @@ re_node_set_merge:
 	mov	rsi, qword ptr [r15 + 0x10]
 	lea	rdx, [rax*8 + 8]
 	call	memcpy
-.label_1653:
+.label_1563:
 	mov	r10, qword ptr [r14 + 8]
 	mov	rax, qword ptr [r15 + 8]
 	lea	rcx, [r10 + rax*2 - 1]
 	mov	rdx, rcx
 	sub	rdx, rbx
 	inc	rdx
-	je	.label_1648
+	je	.label_1562
 	lea	rax, [rdx + r10]
 	mov	qword ptr [r14 + 8], rax
 	lea	r9, [r10 - 1]
-.label_1658:
+.label_1573:
 	lea	r8, [r10 - 1]
 	mov	rdi, qword ptr [r14 + 0x10]
 	lea	r11, [rdi + r9*8]
 	nop	dword ptr [rax + rax]
-.label_1652:
+.label_1570:
 	mov	rax, qword ptr [rdi + rcx*8]
 	mov	rsi, qword ptr [rdi + r10*8 - 8]
 	cmp	rax, rsi
-	jle	.label_1656
+	jle	.label_1574
 	dec	rcx
 	mov	qword ptr [r11 + rdx*8], rax
 	dec	rdx
-	jne	.label_1652
-	jmp	.label_1648
+	jne	.label_1570
+	jmp	.label_1562
 	nop	dword ptr [rax]
-.label_1656:
+.label_1574:
 	lea	rax, [rdx + r8]
 	mov	qword ptr [rdi + rax*8], rsi
 	dec	r9
 	cmp	r10, 1
 	mov	r10, r8
-	jg	.label_1658
+	jg	.label_1573
 	mov	rdi, qword ptr [r14 + 0x10]
 	lea	rsi, [rdi + rbx*8]
-	jmp	.label_1657
-.label_1647:
+	jmp	.label_1566
+.label_1571:
 	mov	qword ptr [r14 + 8], rax
 	mov	rdi, qword ptr [r14 + 0x10]
 	mov	rdx, qword ptr [r15 + 8]
 	mov	rsi, qword ptr [r15 + 0x10]
-.label_1657:
+.label_1566:
 	shl	rdx, 3
 	call	memcpy
-.label_1648:
+.label_1562:
 	xor	eax, eax
-.label_1654:
+.label_1565:
 	pop	rbx
 	pop	r14
 	pop	r15
@@ -18369,7 +17535,7 @@ re_node_set_merge:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x411f60
+	#Procedure 0x411350
 
 	.globl re_node_set_insert
 	.type re_node_set_insert, @function
@@ -18381,86 +17547,86 @@ re_node_set_insert:
 	mov	r14, rdi
 	mov	rsi, qword ptr [r14]
 	test	rsi, rsi
-	je	.label_1668
+	je	.label_1580
 	mov	rcx, qword ptr [r14 + 8]
 	test	rcx, rcx
-	je	.label_1670
+	je	.label_1582
 	cmp	rsi, rcx
-	jne	.label_1671
+	jne	.label_1584
 	lea	rax, [rsi + rsi]
 	mov	qword ptr [r14], rax
 	mov	rdi, qword ptr [r14 + 0x10]
 	shl	rsi, 4
 	call	realloc
 	test	rax, rax
-	je	.label_1664
+	je	.label_1575
 	mov	qword ptr [r14 + 0x10], rax
 	mov	rcx, qword ptr [r14 + 8]
-	jmp	.label_1666
-.label_1668:
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
+	jmp	.label_1579
+.label_1580:
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
 	movups	xmmword ptr [r14], xmm0
 	mov	edi, 8
 	call	malloc
 	mov	qword ptr [r14 + 0x10], rax
 	test	rax, rax
-	je	.label_1672
+	je	.label_1585
 	mov	qword ptr [rax], rbx
-	jmp	.label_1661
-.label_1670:
+	jmp	.label_1586
+.label_1582:
 	mov	rax, qword ptr [r14 + 0x10]
 	mov	qword ptr [rax], rbx
-	jmp	.label_1662
-.label_1671:
+	jmp	.label_1587
+.label_1584:
 	mov	rax, qword ptr [r14 + 0x10]
-.label_1666:
+.label_1579:
 	cmp	qword ptr [rax], rbx
-	jle	.label_1665
+	jle	.label_1576
 	test	rcx, rcx
-	jle	.label_1660
+	jle	.label_1578
 	nop	word ptr cs:[rax + rax]
-.label_1669:
+.label_1581:
 	mov	rdx, qword ptr [rax + rcx*8 - 8]
 	mov	qword ptr [rax + rcx*8], rdx
 	cmp	rcx, 1
 	lea	rcx, [rcx - 1]
-	jg	.label_1669
-	jmp	.label_1660
-.label_1665:
+	jg	.label_1581
+	jmp	.label_1578
+.label_1576:
 	mov	rdx, qword ptr [rax + rcx*8 - 8]
-	jmp	.label_1667
+	jmp	.label_1588
 	nop	dword ptr [rax]
-.label_1663:
+.label_1577:
 	mov	qword ptr [rax + rcx*8], rdx
 	mov	rdx, qword ptr [rax + rcx*8 - 0x10]
 	dec	rcx
-.label_1667:
+.label_1588:
 	cmp	rdx, rbx
-	jg	.label_1663
-.label_1660:
+	jg	.label_1577
+.label_1578:
 	mov	rax, qword ptr [r14 + 0x10]
 	mov	qword ptr [rax + rcx*8], rbx
-.label_1662:
+.label_1587:
 	inc	qword ptr [r14 + 8]
-.label_1661:
+.label_1586:
 	mov	al, 1
-.label_1659:
+.label_1583:
 	add	rsp, 8
 	pop	rbx
 	pop	r14
 	ret	
-.label_1672:
+.label_1585:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [r14], xmm0
 	xor	eax, eax
-	jmp	.label_1659
-.label_1664:
+	jmp	.label_1583
+.label_1575:
 	xor	eax, eax
-	jmp	.label_1659
+	jmp	.label_1583
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x412050
+	#Procedure 0x411440
 
 	.globl re_acquire_state_context
 	.type re_acquire_state_context, @function
@@ -18471,41 +17637,31 @@ re_acquire_state_context:
 	push	r13
 	push	r12
 	push	rbx
-	sub	rsp, 0x28
+	sub	rsp, 0x38
 	mov	r13d, ecx
-	mov	r14, rsi
 	mov	r8, qword ptr [rdx + 8]
 	test	r8, r8
-	je	.label_1689
-	mov	r15d, r13d
-	add	r15, r8
+	je	.label_1612
+	mov	qword ptr [rsp + 0x10], rdi
+	mov	r14d, r13d
+	add	r14, r8
 	test	r8, r8
-	jle	.label_1693
+	jle	.label_1617
 	mov	rcx, qword ptr [rdx + 0x10]
 	xor	ebx, ebx
 	cmp	r8, 4
-	jae	.label_1695
-	mov	qword ptr [rsp], rdi
-	jmp	.label_1696
-.label_1689:
-	mov	dword ptr [rdi], 0
-	jmp	.label_1697
-.label_1693:
-	mov	qword ptr [rsp], rdi
-	jmp	.label_1702
-.label_1695:
-	mov	qword ptr [rsp], rdi
+	jb	.label_1623
 	mov	rbx, r8
 	and	rbx, 0xfffffffffffffffc
-	je	.label_1744
-	movq	xmm0, r15
-	lea	rsi, [r8 - 4]
-	mov	eax, esi
+	je	.label_1591
+	movq	xmm0, r14
+	lea	r9, [r8 - 4]
+	mov	eax, r9d
 	shr	eax, 2
 	inc	eax
 	xor	edi, edi
 	test	al, 3
-	je	.label_1709
+	je	.label_1613
 	lea	ebp, [r8 - 4]
 	shr	ebp, 2
 	inc	ebp
@@ -18513,30 +17669,33 @@ re_acquire_state_context:
 	neg	rbp
 	pxor	xmm1, xmm1
 	xor	edi, edi
-	nop	dword ptr [rax]
-.label_1714:
+	nop	word ptr [rax + rax]
+.label_1606:
 	movdqu	xmm2, xmmword ptr [rcx + rdi*8]
 	movdqu	xmm3, xmmword ptr [rcx + rdi*8 + 0x10]
 	paddq	xmm0, xmm2
 	paddq	xmm1, xmm3
 	add	rdi, 4
 	inc	rbp
-	jne	.label_1714
-	jmp	.label_1718
-.label_1744:
+	jne	.label_1606
+	jmp	.label_1618
+.label_1612:
+	mov	dword ptr [rdi], 0
+	jmp	.label_1608
+.label_1591:
 	xor	ebx, ebx
-	jmp	.label_1696
-.label_1709:
+	jmp	.label_1623
+.label_1613:
 	pxor	xmm1, xmm1
-.label_1718:
-	cmp	rsi, 0xc
-	jb	.label_1720
-	mov	rsi, r8
-	and	rsi, 0xfffffffffffffffc
-	sub	rsi, rdi
+.label_1618:
+	cmp	r9, 0xc
+	jb	.label_1624
+	mov	rax, r8
+	and	rax, 0xfffffffffffffffc
+	sub	rax, rdi
 	lea	rdi, [rcx + rdi*8 + 0x70]
-	nop	
-.label_1723:
+	nop	dword ptr [rax]
+.label_1596:
 	movdqu	xmm2, xmmword ptr [rdi - 0x70]
 	movdqu	xmm3, xmmword ptr [rdi - 0x60]
 	movdqu	xmm4, xmmword ptr [rdi - 0x50]
@@ -18554,709 +17713,288 @@ re_acquire_state_context:
 	paddq	xmm0, xmm4
 	paddq	xmm1, xmm5
 	add	rdi, 0x80
-	add	rsi, -0x10
-	jne	.label_1723
-.label_1720:
+	add	rax, -0x10
+	jne	.label_1596
+.label_1624:
 	paddq	xmm1, xmm0
 	pshufd	xmm0, xmm1, 0x4e
 	paddq	xmm0, xmm1
-	movq	r15, xmm0
+	movq	r14, xmm0
 	cmp	r8, rbx
-	je	.label_1702
-.label_1696:
-	mov	rsi, r8
-	sub	rsi, rbx
+	je	.label_1617
+.label_1623:
+	mov	rax, r8
+	sub	rax, rbx
 	lea	rcx, [rcx + rbx*8]
 	nop	word ptr cs:[rax + rax]
-.label_1739:
-	add	r15, qword ptr [rcx]
+.label_1619:
+	add	r14, qword ptr [rcx]
 	add	rcx, 8
-	dec	rsi
-	jne	.label_1739
-.label_1702:
-	mov	rsi, qword ptr [r14 + 0x40]
-	mov	rax, qword ptr [r14 + 0x88]
-	and	rax, r15
-	lea	rax, [rax + rax*2]
-	mov	r9, qword ptr [rsi + rax*8]
-	test	r9, r9
-	jle	.label_1687
+	dec	rax
+	jne	.label_1619
+.label_1617:
+	mov	rax, qword ptr [rsi + 0x40]
+	mov	rcx, qword ptr [rsi + 0x88]
+	and	rcx, r14
+	lea	rcx, [rcx + rcx*2]
+	mov	r10, qword ptr [rax + rcx*8]
+	test	r10, r10
+	jle	.label_1599
+	mov	r9, qword ptr [rax + rcx*8 + 0x10]
 	xor	ebx, ebx
-	test	rdx, rdx
-	je	.label_1746
-	mov	r10, qword ptr [rsi + rax*8 + 0x10]
-	nop	word ptr [rax + rax]
-.label_1686:
-	mov	rsi, qword ptr [r10 + rbx*8]
-	cmp	qword ptr [rsi], r15
-	jne	.label_1749
-	movzx	eax, byte ptr [rsi + 0x68]
+	nop	
+.label_1601:
+	mov	r15, qword ptr [r9 + rbx*8]
+	cmp	qword ptr [r15], r14
+	jne	.label_1590
+	movzx	eax, byte ptr [r15 + 0x68]
 	and	eax, 0xf
 	cmp	eax, r13d
-	jne	.label_1749
-	mov	rdi, qword ptr [rsi + 0x50]
+	jne	.label_1590
+	test	rdx, rdx
+	je	.label_1590
+	mov	rdi, qword ptr [r15 + 0x50]
 	test	rdi, rdi
-	je	.label_1749
+	je	.label_1590
 	cmp	qword ptr [rdi + 8], r8
-	jne	.label_1749
+	jne	.label_1590
 	mov	rax, r8
-	nop	word ptr [rax + rax]
-.label_1681:
+	nop	dword ptr [rax]
+.label_1625:
 	test	rax, rax
-	jle	.label_1677
-	mov	rbp, qword ptr [rdi + 0x10]
-	mov	rbp, qword ptr [rbp + rax*8 - 8]
+	jle	.label_1609
+	mov	rcx, qword ptr [rdi + 0x10]
+	mov	rbp, qword ptr [rcx + rax*8 - 8]
 	mov	rcx, qword ptr [rdx + 0x10]
 	cmp	rbp, qword ptr [rcx + rax*8 - 8]
 	lea	rax, [rax - 1]
-	je	.label_1681
+	je	.label_1625
 	nop	word ptr cs:[rax + rax]
-.label_1749:
+.label_1590:
 	inc	rbx
-	cmp	rbx, r9
-	jl	.label_1686
-	jmp	.label_1687
-.label_1746:
-	xor	ecx, ecx
-	cmp	r9, 0x10
-	jb	.label_1688
-	xor	ecx, ecx
-	mov	rax, r9
-	and	rax, 0xfffffffffffffff0
-	je	.label_1688
-	lea	rcx, [r9 - 0x10]
-	mov	edi, ecx
-	shr	edi, 4
-	inc	edi
-	xor	esi, esi
-	test	dil, 7
-	je	.label_1691
-	lea	edi, [r9 - 0x10]
-	shr	edi, 4
-	inc	edi
-	and	edi, 7
-	neg	rdi
-	xor	esi, esi
-	nop	word ptr cs:[rax + rax]
-.label_1699:
-	add	rsi, 0x10
-	inc	rdi
-	jne	.label_1699
-.label_1691:
-	cmp	rcx, 0x70
-	jb	.label_1703
-	mov	rcx, r9
-	and	rcx, 0xfffffffffffffff0
-	sub	rcx, rsi
-	nop	dword ptr [rax]
-.label_1710:
-	add	rcx, -0x80
-	jne	.label_1710
-.label_1703:
-	cmp	r9, rax
-	mov	rcx, rax
-	je	.label_1687
-	nop	
-.label_1688:
-	inc	rcx
-	cmp	rcx, r9
-	jl	.label_1688
-.label_1687:
-	mov	r12, rdx
+	cmp	rbx, r10
+	jl	.label_1601
+.label_1599:
+	mov	rbx, rdx
+	mov	r12, rsi
 	mov	edi, 0x70
 	mov	esi, 1
 	call	rpl_calloc
-	mov	r11, rax
-	test	r11, r11
-	je	.label_1706
-	mov	rbx, r14
-	mov	rax, r11
-	add	rax, 8
-	mov	r10, r12
-	mov	rdi, qword ptr [r10 + 8]
-	mov	qword ptr [r11 + 0x10], rdi
-	mov	r14, qword ptr [r10 + 8]
-	test	r14, r14
-	jle	.label_1716
-	mov	qword ptr [rsp + 0x20], rax
-	mov	r12, r10
-	mov	qword ptr [r11 + 8], rdi
+	mov	r15, rax
+	mov	qword ptr [rsp + 0x18], r15
+	test	r15, r15
+	je	.label_1611
+	mov	r10, r15
+	add	r10, 8
+	mov	qword ptr [rsp + 0x28], r10
+	mov	r9, rbx
+	mov	qword ptr [rsp + 0x30], r9
+	mov	rdi, qword ptr [r9 + 8]
+	mov	qword ptr [r15 + 0x10], rdi
+	mov	rbx, qword ptr [r9 + 8]
+	test	rbx, rbx
+	jle	.label_1615
+	mov	qword ptr [rsp + 0x28], r10
+	mov	rbp, r15
+	mov	r15, r9
+	mov	qword ptr [rbp + 8], rdi
 	shl	rdi, 3
-	mov	rbp, r11
 	call	malloc
-	mov	rcx, rbp
-	mov	qword ptr [rcx + 0x18], rax
+	mov	qword ptr [rbp + 0x18], rax
 	test	rax, rax
-	je	.label_1722
-	mov	rsi, qword ptr [r12 + 0x10]
-	shl	r14, 3
+	je	.label_1594
+	mov	rsi, qword ptr [r15 + 0x10]
+	shl	rbx, 3
 	mov	rdi, rax
-	mov	rdx, r14
-	mov	rbp, rcx
+	mov	rdx, rbx
 	call	memcpy
-	mov	r11, rbp
-	mov	r10, r12
-	mov	rdi, rbx
-	mov	r9d, r13d
-	mov	r14, qword ptr [rsp + 0x20]
-	jmp	.label_1730
-.label_1716:
+	mov	r9, r15
+	mov	rdi, r12
+	mov	r15, rbp
+	mov	r10, qword ptr [rsp + 0x28]
+	jmp	.label_1605
+.label_1615:
 	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [rax], xmm0
-	mov	qword ptr [rax + 0x10], 0
-	mov	rdi, rbx
-	mov	r9d, r13d
-	mov	r14, rax
-.label_1730:
-	mov	al, byte ptr [r11 + 0x68]
-	mov	cl, r9b
+	movdqu	xmmword ptr [r10], xmm0
+	mov	qword ptr [r10 + 0x10], 0
+	mov	rdi, r12
+.label_1605:
+	mov	al, byte ptr [r15 + 0x68]
+	mov	cl, r13b
 	and	cl, 0xf
 	and	al, 0xf0
 	or	al, cl
-	mov	byte ptr [r11 + 0x68], al
-	mov	qword ptr [r11 + 0x50], r14
-	cmp	qword ptr [r10 + 8], 0
-	jle	.label_1713
-	mov	cl, r9b
-	mov	eax, r9d
+	mov	byte ptr [r15 + 0x68], al
+	mov	qword ptr [r15 + 0x50], r10
+	cmp	qword ptr [r9 + 8], 0
+	jle	.label_1616
+	mov	ebp, r13d
+	and	ebp, 1
+	mov	eax, r13d
 	and	eax, 2
-	and	r9d, 4
-	test	cl, 1
-	jne	.label_1738
-	xor	ebp, ebp
-	xor	r8d, r8d
-	test	eax, eax
-	jne	.label_1719
-	nop	word ptr cs:[rax + rax]
-.label_1733:
-	mov	rax, qword ptr [rdi]
-	mov	rcx, qword ptr [r10 + 0x10]
-	mov	rcx, qword ptr [rcx + rbp*8]
-	shl	rcx, 4
-	mov	esi, dword ptr [rax + rcx + 8]
-	movzx	edx, sil
-	mov	r12d, esi
-	shr	r12d, 8
-	mov	ecx, r12d
-	and	ecx, 0x3ff
-	cmp	edx, 1
-	jne	.label_1742
-	test	ecx, ecx
-	je	.label_1684
-.label_1742:
-	shr	esi, 0x14
-	mov	bl, byte ptr [r11 + 0x68]
-	mov	al, bl
-	shr	al, 5
-	movzx	eax, al
-	or	eax, esi
-	shl	al, 5
-	and	al, 0x20
-	and	bl, 0xdf
-	or	bl, al
-	mov	byte ptr [r11 + 0x68], bl
-	cmp	edx, 2
-	je	.label_1753
-	cmp	edx, 4
-	jne	.label_1680
-	or	bl, 0x40
-	jmp	.label_1683
-.label_1753:
-	or	bl, 0x10
-.label_1683:
-	mov	byte ptr [r11 + 0x68], bl
-.label_1680:
-	test	ecx, ecx
-	je	.label_1684
-	mov	r13, r10
-	cmp	qword ptr [r11 + 0x50], r14
-	jne	.label_1685
-	mov	qword ptr [rsp + 0x20], r14
-	mov	dword ptr [rsp + 0x1c], r9d
-	mov	qword ptr [rsp + 0x10], rdi
-	mov	edi, 0x18
-	mov	rbx, r11
-	call	malloc
-	mov	r11, rbx
-	mov	r14, rax
-	mov	qword ptr [r11 + 0x50], r14
-	test	r14, r14
-	je	.label_1674
-	mov	rbx, qword ptr [r13 + 8]
-	mov	qword ptr [r14 + 8], rbx
-	test	rbx, rbx
-	jle	.label_1698
-	mov	qword ptr [rsp + 8], r11
-	mov	qword ptr [r14], rbx
-	shl	rbx, 3
-	mov	rdi, rbx
-	call	malloc
-	mov	qword ptr [r14 + 0x10], rax
-	test	rax, rax
-	je	.label_1678
-	mov	rsi, qword ptr [r13 + 0x10]
-	mov	rdi, rax
-	mov	rdx, rbx
-	call	memcpy
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-	mov	r11, qword ptr [rsp + 8]
-	jmp	.label_1708
-.label_1698:
-	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r14], xmm0
-	mov	qword ptr [r14 + 0x10], 0
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-.label_1708:
-	mov	r14, qword ptr [rsp + 0x20]
-	or	byte ptr [r11 + 0x68], 0x80
-	xor	r8d, r8d
-.label_1685:
-	test	r12b, 0x11
-	mov	r10, r13
-	jne	.label_1715
-	test	r9d, r9d
-	jne	.label_1684
-	and	r12d, 0x40
-	je	.label_1684
-.label_1715:
-	mov	rax, rbp
-	sub	rax, r8
-	js	.label_1717
-	mov	rcx, qword ptr [r11 + 0x10]
-	cmp	rcx, rax
-	jle	.label_1717
-	dec	rcx
-	mov	qword ptr [r11 + 0x10], rcx
-	cmp	rcx, rax
-	jle	.label_1717
-	lea	rax, [rbp*8]
-	add	rax, qword ptr [r11 + 0x18]
-	mov	rcx, r8
-	neg	rcx
-	nop	word ptr cs:[rax + rax]
-.label_1724:
-	mov	rdx, qword ptr [rax + rcx*8 + 8]
-	mov	qword ptr [rax + rcx*8], rdx
-	lea	rdx, [rbp + rcx + 1]
-	inc	rcx
-	cmp	rdx, qword ptr [r11 + 0x10]
-	jl	.label_1724
-	nop	word ptr [rax + rax]
-.label_1717:
-	inc	r8
-.label_1684:
-	inc	rbp
-	cmp	rbp, qword ptr [r10 + 8]
-	jl	.label_1733
-	jmp	.label_1713
-	nop	word ptr cs:[rax + rax]
-.label_1719:
-	mov	rax, qword ptr [rdi]
-	mov	rcx, qword ptr [r10 + 0x10]
-	mov	rcx, qword ptr [rcx + rbp*8]
-	shl	rcx, 4
-	mov	esi, dword ptr [rax + rcx + 8]
-	movzx	edx, sil
-	mov	r12d, esi
-	shr	r12d, 8
-	mov	ecx, r12d
-	and	ecx, 0x3ff
-	cmp	edx, 1
-	jne	.label_1735
-	test	ecx, ecx
-	je	.label_1704
-.label_1735:
-	shr	esi, 0x14
-	mov	bl, byte ptr [r11 + 0x68]
-	mov	al, bl
-	shr	al, 5
-	movzx	eax, al
-	or	eax, esi
-	shl	al, 5
-	and	al, 0x20
-	and	bl, 0xdf
-	or	bl, al
-	mov	byte ptr [r11 + 0x68], bl
-	cmp	edx, 2
-	je	.label_1741
-	cmp	edx, 4
-	jne	.label_1745
-	or	bl, 0x40
-	jmp	.label_1747
-.label_1741:
-	or	bl, 0x10
-.label_1747:
-	mov	byte ptr [r11 + 0x68], bl
-.label_1745:
-	test	ecx, ecx
-	je	.label_1704
-	mov	r13, r10
-	cmp	qword ptr [r11 + 0x50], r14
-	jne	.label_1750
-	mov	qword ptr [rsp + 0x20], r14
-	mov	dword ptr [rsp + 0x1c], r9d
-	mov	qword ptr [rsp + 0x10], rdi
-	mov	edi, 0x18
-	mov	rbx, r11
-	call	malloc
-	mov	r11, rbx
-	mov	r14, rax
-	mov	qword ptr [r11 + 0x50], r14
-	test	r14, r14
-	je	.label_1674
-	mov	rbx, qword ptr [r13 + 8]
-	mov	qword ptr [r14 + 8], rbx
-	test	rbx, rbx
-	jle	.label_1726
-	mov	qword ptr [rsp + 8], r11
-	mov	qword ptr [r14], rbx
-	shl	rbx, 3
-	mov	rdi, rbx
-	call	malloc
-	mov	qword ptr [r14 + 0x10], rax
-	test	rax, rax
-	je	.label_1678
-	mov	rsi, qword ptr [r13 + 0x10]
-	mov	rdi, rax
-	mov	rdx, rbx
-	call	memcpy
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-	mov	r11, qword ptr [rsp + 8]
-	jmp	.label_1743
-.label_1726:
-	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r14], xmm0
-	mov	qword ptr [r14 + 0x10], 0
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-.label_1743:
-	mov	r14, qword ptr [rsp + 0x20]
-	or	byte ptr [r11 + 0x68], 0x80
-	xor	r8d, r8d
-.label_1750:
-	test	r12b, 1
-	mov	r10, r13
-	jne	.label_1700
-	test	r9d, r9d
-	jne	.label_1704
-	and	r12d, 0x40
-	je	.label_1704
-.label_1700:
-	mov	rax, rbp
-	sub	rax, r8
-	js	.label_1707
-	mov	rcx, qword ptr [r11 + 0x10]
-	cmp	rcx, rax
-	jle	.label_1707
-	dec	rcx
-	mov	qword ptr [r11 + 0x10], rcx
-	cmp	rcx, rax
-	jle	.label_1707
-	lea	rax, [rbp*8]
-	add	rax, qword ptr [r11 + 0x18]
-	mov	rcx, r8
-	neg	rcx
-	nop	word ptr cs:[rax + rax]
-.label_1729:
-	mov	rdx, qword ptr [rax + rcx*8 + 8]
-	mov	qword ptr [rax + rcx*8], rdx
-	lea	rdx, [rbp + rcx + 1]
-	inc	rcx
-	cmp	rdx, qword ptr [r11 + 0x10]
-	jl	.label_1729
-	nop	word ptr [rax + rax]
-.label_1707:
-	inc	r8
-.label_1704:
-	inc	rbp
-	cmp	rbp, qword ptr [r10 + 8]
-	jl	.label_1719
-	jmp	.label_1713
-.label_1738:
+	mov	dword ptr [rsp + 0xc], eax
+	and	r13d, 4
+	mov	dword ptr [rsp + 8], r13d
 	xor	r12d, r12d
-	xor	esi, esi
-	test	eax, eax
-	jne	.label_1694
-	nop	word ptr cs:[rax + rax]
-.label_1712:
+	xor	r8d, r8d
+	nop	
+.label_1620:
 	mov	rax, qword ptr [rdi]
-	mov	rcx, qword ptr [r10 + 0x10]
+	mov	rcx, qword ptr [r9 + 0x10]
 	mov	rcx, qword ptr [rcx + r12*8]
 	shl	rcx, 4
-	mov	ebp, dword ptr [rax + rcx + 8]
-	movzx	edx, bpl
-	mov	r13d, ebp
+	mov	esi, dword ptr [rax + rcx + 8]
+	movzx	edx, sil
+	mov	r13d, esi
 	shr	r13d, 8
 	mov	ecx, r13d
 	and	ecx, 0x3ff
 	cmp	edx, 1
-	jne	.label_1725
+	jne	.label_1600
 	test	ecx, ecx
-	je	.label_1690
-.label_1725:
-	shr	ebp, 0x14
-	mov	bl, byte ptr [r11 + 0x68]
+	je	.label_1610
+.label_1600:
+	shr	esi, 0x14
+	mov	bl, byte ptr [r15 + 0x68]
 	mov	al, bl
 	shr	al, 5
 	movzx	eax, al
-	or	eax, ebp
+	or	eax, esi
 	shl	al, 5
 	and	al, 0x20
 	and	bl, 0xdf
 	or	bl, al
-	mov	byte ptr [r11 + 0x68], bl
-	cmp	edx, 2
-	je	.label_1734
+	mov	byte ptr [r15 + 0x68], bl
 	cmp	edx, 4
-	jne	.label_1736
-	or	bl, 0x40
-	jmp	.label_1737
-.label_1734:
-	or	bl, 0x10
-.label_1737:
-	mov	byte ptr [r11 + 0x68], bl
-.label_1736:
-	test	ecx, ecx
-	je	.label_1690
-	mov	rbp, r10
-	cmp	qword ptr [r11 + 0x50], r14
-	jne	.label_1740
-	mov	qword ptr [rsp + 0x20], r14
-	mov	dword ptr [rsp + 0x1c], r9d
-	mov	qword ptr [rsp + 0x10], rdi
-	mov	edi, 0x18
-	mov	rbx, r11
-	call	malloc
-	mov	r11, rbx
-	mov	r14, rax
-	mov	qword ptr [r11 + 0x50], r14
-	test	r14, r14
-	je	.label_1674
-	mov	rbx, qword ptr [rbp + 8]
-	mov	qword ptr [r14 + 8], rbx
-	test	rbx, rbx
-	jle	.label_1748
-	mov	qword ptr [rsp + 8], r11
-	mov	qword ptr [r14], rbx
-	shl	rbx, 3
-	mov	rdi, rbx
-	call	malloc
-	mov	qword ptr [r14 + 0x10], rax
-	test	rax, rax
-	je	.label_1678
-	mov	rsi, qword ptr [rbp + 0x10]
-	mov	rdi, rax
-	mov	rdx, rbx
-	call	memcpy
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-	mov	r11, qword ptr [rsp + 8]
-	jmp	.label_1682
-.label_1748:
-	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r14], xmm0
-	mov	qword ptr [r14 + 0x10], 0
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-.label_1682:
-	mov	r14, qword ptr [rsp + 0x20]
-	or	byte ptr [r11 + 0x68], 0x80
-	xor	esi, esi
-.label_1740:
-	test	r13b, 0x12
-	mov	r10, rbp
-	jne	.label_1752
-	test	r9d, r9d
-	jne	.label_1690
-	and	r13d, 0x40
-	je	.label_1690
-.label_1752:
-	mov	rax, r12
-	sub	rax, rsi
-	js	.label_1692
-	mov	rcx, qword ptr [r11 + 0x10]
-	cmp	rcx, rax
-	jle	.label_1692
-	dec	rcx
-	mov	qword ptr [r11 + 0x10], rcx
-	cmp	rcx, rax
-	jle	.label_1692
-	lea	rax, [r12*8]
-	add	rax, qword ptr [r11 + 0x18]
-	mov	rcx, rsi
-	neg	rcx
-	nop	word ptr cs:[rax + rax]
-.label_1705:
-	mov	rdx, qword ptr [rax + rcx*8 + 8]
-	mov	qword ptr [rax + rcx*8], rdx
-	lea	rdx, [r12 + rcx + 1]
-	inc	rcx
-	cmp	rdx, qword ptr [r11 + 0x10]
-	jl	.label_1705
-	nop	word ptr [rax + rax]
-.label_1692:
-	inc	rsi
-.label_1690:
-	inc	r12
-	cmp	r12, qword ptr [r10 + 8]
-	jl	.label_1712
-	jmp	.label_1713
-	nop	word ptr cs:[rax + rax]
-.label_1694:
-	mov	rax, qword ptr [rdi]
-	mov	rcx, qword ptr [r10 + 0x10]
-	mov	rcx, qword ptr [rcx + r12*8]
-	shl	rcx, 4
-	mov	ebp, dword ptr [rax + rcx + 8]
-	movzx	edx, bpl
-	mov	r13d, ebp
-	shr	r13d, 8
-	mov	ecx, r13d
-	and	ecx, 0x3ff
-	cmp	edx, 1
-	jne	.label_1676
-	test	ecx, ecx
-	je	.label_1675
-.label_1676:
-	shr	ebp, 0x14
-	mov	bl, byte ptr [r11 + 0x68]
-	mov	al, bl
-	shr	al, 5
-	movzx	eax, al
-	or	eax, ebp
-	shl	al, 5
-	and	al, 0x20
-	and	bl, 0xdf
-	or	bl, al
-	mov	byte ptr [r11 + 0x68], bl
-	cmp	edx, 4
-	je	.label_1721
+	je	.label_1614
 	cmp	edx, 2
-	jne	.label_1727
+	jne	.label_1621
 	or	bl, 0x10
-	jmp	.label_1728
-.label_1721:
+	jmp	.label_1622
+.label_1614:
 	or	bl, 0x40
-.label_1728:
-	mov	byte ptr [r11 + 0x68], bl
-.label_1727:
+.label_1622:
+	mov	byte ptr [r15 + 0x68], bl
+.label_1621:
 	test	ecx, ecx
-	je	.label_1675
-	mov	rbp, r10
-	cmp	qword ptr [r11 + 0x50], r14
-	jne	.label_1732
-	mov	qword ptr [rsp + 0x20], r14
-	mov	dword ptr [rsp + 0x1c], r9d
-	mov	qword ptr [rsp + 0x10], rdi
+	je	.label_1610
+	cmp	qword ptr [r15 + 0x50], r10
+	jne	.label_1592
+	mov	qword ptr [rsp + 0x20], rdi
 	mov	edi, 0x18
-	mov	rbx, r11
 	call	malloc
-	mov	r11, rbx
-	mov	r14, rax
-	mov	qword ptr [r11 + 0x50], r14
-	test	r14, r14
-	je	.label_1674
-	mov	rbx, qword ptr [rbp + 8]
-	mov	qword ptr [r14 + 8], rbx
+	mov	rbx, rax
+	mov	qword ptr [r15 + 0x50], rbx
 	test	rbx, rbx
-	jle	.label_1731
-	mov	qword ptr [rsp + 8], r11
-	mov	qword ptr [r14], rbx
-	shl	rbx, 3
-	mov	rdi, rbx
+	je	.label_1598
+	mov	rax, qword ptr [rsp + 0x30]
+	mov	r15, qword ptr [rax + 8]
+	mov	qword ptr [rbx + 8], r15
+	test	r15, r15
+	jle	.label_1626
+	mov	qword ptr [rbx], r15
+	shl	r15, 3
+	mov	rdi, r15
 	call	malloc
-	mov	qword ptr [r14 + 0x10], rax
+	mov	qword ptr [rbx + 0x10], rax
 	test	rax, rax
-	je	.label_1678
-	mov	rsi, qword ptr [rbp + 0x10]
+	je	.label_1595
+	mov	rcx, qword ptr [rsp + 0x30]
+	mov	rsi, qword ptr [rcx + 0x10]
 	mov	rdi, rax
-	mov	rdx, rbx
-	call	memcpy
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-	mov	r11, qword ptr [rsp + 8]
-	jmp	.label_1711
-.label_1731:
-	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r14], xmm0
-	mov	qword ptr [r14 + 0x10], 0
-	mov	rdi, qword ptr [rsp + 0x10]
-	mov	r9d, dword ptr [rsp + 0x1c]
-.label_1711:
-	mov	r14, qword ptr [rsp + 0x20]
-	or	byte ptr [r11 + 0x68], 0x80
-	xor	esi, esi
-.label_1732:
-	test	r13b, 2
-	mov	r10, rbp
-	jne	.label_1673
-	test	r9d, r9d
-	jne	.label_1675
-	and	r13d, 0x40
-	je	.label_1675
-.label_1673:
-	mov	rax, r12
-	sub	rax, rsi
-	js	.label_1679
-	mov	rcx, qword ptr [r11 + 0x10]
-	cmp	rcx, rax
-	jle	.label_1679
-	dec	rcx
-	mov	qword ptr [r11 + 0x10], rcx
-	cmp	rcx, rax
-	jle	.label_1679
-	lea	rax, [r12*8]
-	add	rax, qword ptr [r11 + 0x18]
-	mov	rcx, rsi
-	neg	rcx
-	nop	word ptr cs:[rax + rax]
-.label_1751:
-	mov	rdx, qword ptr [rax + rcx*8 + 8]
-	mov	qword ptr [rax + rcx*8], rdx
-	lea	rdx, [r12 + rcx + 1]
-	inc	rcx
-	cmp	rdx, qword ptr [r11 + 0x10]
-	jl	.label_1751
-	nop	word ptr [rax + rax]
-.label_1679:
-	inc	rsi
-.label_1675:
-	inc	r12
-	cmp	r12, qword ptr [r10 + 8]
-	jl	.label_1694
-.label_1713:
-	mov	rsi, r11
 	mov	rdx, r15
-	mov	rbx, r11
-	call	register_state
-	mov	rsi, rbx
-	test	eax, eax
-	je	.label_1677
-	mov	rdi, rsi
-	jmp	.label_1701
-.label_1674:
-	mov	rdi, r11
-.label_1701:
-	call	free_state
-	jmp	.label_1706
-.label_1678:
+	call	memcpy
+	jmp	.label_1593
+.label_1626:
 	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r14], xmm0
-	jmp	.label_1706
-.label_1722:
-	mov	rdi, rcx
+	movdqu	xmmword ptr [rbx], xmm0
+	mov	qword ptr [rbx + 0x10], 0
+.label_1593:
+	mov	r15, qword ptr [rsp + 0x18]
+	or	byte ptr [r15 + 0x68], 0x80
+	xor	r8d, r8d
+	mov	rdi, qword ptr [rsp + 0x20]
+	mov	r10, qword ptr [rsp + 0x28]
+.label_1592:
+	test	ebp, ebp
+	mov	r9, qword ptr [rsp + 0x30]
+	jne	.label_1597
+	mov	eax, r13d
+	and	eax, 1
+	jne	.label_1604
+.label_1597:
+	test	ebp, ebp
+	je	.label_1602
+	mov	eax, r13d
+	and	eax, 2
+	jne	.label_1604
+.label_1602:
+	cmp	dword ptr [rsp + 0xc], 0
+	jne	.label_1607
+	mov	eax, r13d
+	and	eax, 0x10
+	jne	.label_1604
+.label_1607:
+	cmp	dword ptr [rsp + 8], 0
+	jne	.label_1610
+	and	r13d, 0x40
+	je	.label_1610
+	nop	
+.label_1604:
+	mov	rax, r12
+	sub	rax, r8
+	js	.label_1603
+	mov	rcx, qword ptr [r15 + 0x10]
+	cmp	rcx, rax
+	jle	.label_1603
+	dec	rcx
+	mov	qword ptr [r15 + 0x10], rcx
+	cmp	rcx, rax
+	jle	.label_1603
+	lea	rax, [r12*8]
+	add	rax, qword ptr [r15 + 0x18]
+	mov	rcx, r8
+	neg	rcx
+	nop	
+.label_1589:
+	mov	rdx, qword ptr [rax + rcx*8 + 8]
+	mov	qword ptr [rax + rcx*8], rdx
+	lea	rdx, [r12 + rcx + 1]
+	inc	rcx
+	cmp	rdx, qword ptr [r15 + 0x10]
+	jl	.label_1589
+	nop	word ptr [rax + rax]
+.label_1603:
+	inc	r8
+.label_1610:
+	inc	r12
+	cmp	r12, qword ptr [r9 + 8]
+	jl	.label_1620
+.label_1616:
+	mov	rsi, r15
+	mov	rdx, r14
+	call	register_state
+	test	eax, eax
+	je	.label_1609
+.label_1598:
+	mov	rdi, r15
+	call	free_state
+	jmp	.label_1611
+.label_1595:
+	pxor	xmm0, xmm0
+	movdqu	xmmword ptr [rbx], xmm0
+	jmp	.label_1611
+.label_1594:
+	mov	rdi, rbp
 	call	free
-.label_1706:
-	mov	rax, qword ptr [rsp]
+.label_1611:
+	mov	rax, qword ptr [rsp + 0x10]
 	mov	dword ptr [rax], 0xc
-.label_1697:
-	xor	esi, esi
-.label_1677:
-	mov	rax, rsi
-	add	rsp, 0x28
+.label_1608:
+	xor	r15d, r15d
+.label_1609:
+	mov	rax, r15
+	add	rsp, 0x38
 	pop	rbx
 	pop	r12
 	pop	r13
@@ -19264,10 +18002,10 @@ re_acquire_state_context:
 	pop	r15
 	pop	rbp
 	ret	
-	nop	word ptr cs:[rax + rax]
+	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x412ae0
+	#Procedure 0x411900
 
 	.globl register_state
 	.type register_state, @function
@@ -19291,23 +18029,23 @@ register_state:
 	mov	qword ptr [rbx + 0x30], rax
 	mov	ecx, 0xc
 	test	rax, rax
-	je	.label_1754
+	je	.label_1627
 	test	r13, r13
-	jle	.label_1755
+	jle	.label_1628
 	xor	ebp, ebp
 	nop	dword ptr [rax]
-.label_1759:
+.label_1631:
 	mov	rcx, qword ptr [rbx + 0x18]
 	mov	r14, qword ptr [rcx + rbp*8]
 	mov	rcx, qword ptr [r12]
 	mov	rdx, r14
 	shl	rdx, 4
 	test	byte ptr [rcx + rdx + 8], 8
-	jne	.label_1758
+	jne	.label_1630
 	mov	rdx, qword ptr [rbx + 0x20]
 	mov	rcx, qword ptr [rbx + 0x28]
 	cmp	rdx, rcx
-	jne	.label_1757
+	jne	.label_1629
 	lea	rcx, [rdx + rdx + 2]
 	lea	rdx, [rdx + rdx]
 	mov	qword ptr [rbx + 0x20], rcx
@@ -19315,36 +18053,36 @@ register_state:
 	mov	rdi, rax
 	call	realloc
 	test	rax, rax
-	je	.label_1756
+	je	.label_1633
 	mov	qword ptr [rbx + 0x30], rax
 	mov	rcx, qword ptr [rbx + 0x28]
-.label_1757:
+.label_1629:
 	lea	rdx, [rcx + 1]
 	mov	qword ptr [rbx + 0x28], rdx
 	mov	qword ptr [rax + rcx*8], r14
 	mov	r13, qword ptr [rbx + 0x10]
-.label_1758:
+.label_1630:
 	inc	rbp
 	cmp	rbp, r13
-	jl	.label_1759
-.label_1755:
+	jl	.label_1631
+.label_1628:
 	mov	r13, qword ptr [r12 + 0x40]
 	and	r15, qword ptr [r12 + 0x88]
 	lea	rbp, [r15 + r15*2]
 	lea	r14, [r13 + rbp*8]
 	mov	r15, qword ptr [r13 + rbp*8]
 	cmp	qword ptr [r13 + rbp*8 + 8], r15
-	jle	.label_1760
+	jle	.label_1632
 	mov	rax, qword ptr [r13 + rbp*8 + 0x10]
-.label_1761:
+.label_1634:
 	lea	rcx, [r15 + 1]
 	mov	qword ptr [r14], rcx
 	mov	qword ptr [rax + r15*8], rbx
 	xor	ecx, ecx
-	jmp	.label_1754
-.label_1756:
+	jmp	.label_1627
+.label_1633:
 	mov	ecx, 0xc
-.label_1754:
+.label_1627:
 	mov	eax, ecx
 	add	rsp, 8
 	pop	rbx
@@ -19354,25 +18092,25 @@ register_state:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1760:
+.label_1632:
 	lea	rax, [r15 + r15]
 	mov	rdi, qword ptr [r13 + rbp*8 + 0x10]
 	lea	rsi, [rax*8 + 0x10]
 	call	realloc
 	test	rax, rax
 	mov	ecx, 0xc
-	je	.label_1754
+	je	.label_1627
 	lea	rcx, [r13 + rbp*8 + 8]
 	lea	rdx, [r15 + r15 + 2]
 	lea	rsi, [r13 + rbp*8 + 0x10]
 	mov	qword ptr [rsi], rax
 	mov	qword ptr [rcx], rdx
 	mov	r15, qword ptr [r14]
-	jmp	.label_1761
+	jmp	.label_1634
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x412c20
+	#Procedure 0x411a40
 
 	.globl re_string_reconstruct
 	.type re_string_reconstruct, @function
@@ -19385,16 +18123,16 @@ re_string_reconstruct:
 	push	rbx
 	sub	rsp, 0x38
 	mov	r15d, edx
-	mov	r10, rsi
+	mov	r13, rsi
 	mov	rbx, rdi
-	lea	r13, [rbx + 0x28]
+	lea	rbp, [rbx + 0x28]
 	mov	rax, qword ptr [rbx + 0x28]
-	cmp	rax, r10
-	jle	.label_1769
+	cmp	rax, r13
+	jle	.label_1655
 	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1779
+	jl	.label_1662
 	mov	qword ptr [rbx + 0x20], 0
-.label_1779:
+.label_1662:
 	mov	rax, qword ptr [rbx + 0x50]
 	mov	qword ptr [rbx + 0x58], rax
 	mov	rax, qword ptr [rbx + 0x60]
@@ -19404,249 +18142,75 @@ re_string_reconstruct:
 	and	eax, 2
 	xor	eax, 6
 	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r13], xmm0
-	mov	qword ptr [r13 + 0x10], 0
+	movdqu	xmmword ptr [rbp], xmm0
+	mov	qword ptr [rbp + 0x10], 0
 	mov	dword ptr [rbx + 0x70], eax
 	xor	eax, eax
 	cmp	byte ptr [rbx + 0x8b], 0
-	mov	r14, r10
-	jne	.label_1781
+	mov	r14, r13
+	jne	.label_1667
 	mov	rax, qword ptr [rbx]
 	mov	qword ptr [rbx + 8], rax
 	xor	eax, eax
-	mov	r14, r10
-.label_1781:
+	mov	r14, r13
+.label_1667:
 	test	r14, r14
-	je	.label_1825
+	je	.label_1651
 	mov	r12, qword ptr [rbx + 0x38]
 	cmp	r14, r12
-	jge	.label_1798
-	mov	ecx, dword ptr [rbx + 0x8c]
-	mov	r9d, ecx
-	shr	r9d, 0x10
-	test	cl, cl
-	jne	.label_1799
-	test	r14, r14
-	jle	.label_1804
-	lea	rcx, [r14 - 1]
-	cmp	qword ptr [rbx + 0x58], rcx
-	je	.label_1807
+	jge	.label_1691
+	cmp	byte ptr [rbx + 0x8c], 0
+	jne	.label_1646
+	lea	rsi, [r14 - 1]
+	mov	rdi, rbx
+	mov	edx, r15d
+	call	re_string_context_at
+	mov	dword ptr [rbx + 0x70], eax
 	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1814
-	mov	rcx, qword ptr [rbx + 0x10]
-	mov	rdx, r14
-	nop	dword ptr [rax + rax]
-.label_1819:
-	mov	ebp, dword ptr [rcx + rdx*4 - 4]
-	cmp	ebp, -1
-	jne	.label_1818
-	dec	rdx
-	jg	.label_1819
-	mov	r15d, dword ptr [rbx + 0x70]
-	jmp	.label_1820
-.label_1814:
-	mov	rax, qword ptr [rbx + 8]
-	mov	rdx, qword ptr [rbx + 0x80]
-	movzx	eax, byte ptr [rax + rcx]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rcx, qword ptr [rdx + rcx*8]
-	mov	r15d, 1
-	bt	rcx, rax
-	jb	.label_1820
-	xor	r15d, r15d
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_1820
-	movzx	eax, word ptr [rbx + 0x8c]
-	movzx	eax, ax
-	mov	r15d, 2
-	cmp	eax, 0xff
-	ja	.label_1820
-	jmp	.label_1833
-.label_1818:
-	test	r9b, r9b
-	jne	.label_1835
-.label_1842:
-	xor	r15d, r15d
-	cmp	ebp, 0xa
-	jne	.label_1820
-	mov	r15d, 2
-	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_1820
-.label_1833:
-	xor	r15d, r15d
-	jmp	.label_1820
-.label_1769:
-	mov	r14, r10
-	sub	r14, rax
-	jmp	.label_1781
-.label_1798:
-	mov	r11, qword ptr [rbx + 0x30]
-	mov	cx, word ptr [rbx + 0x8c]
-	test	cl, cl
-	jne	.label_1843
-.label_1770:
-	mov	qword ptr [rbx + 0x30], 0
-	movsxd	rsi, dword ptr [rbx + 0x90]
-	cmp	rsi, 2
-	jl	.label_1844
-	cmp	byte ptr [rbx + 0x89], 0
-	je	.label_1764
-	mov	rdi, qword ptr [rbx]
-	lea	r8, [rdi + rax]
-	mov	rdx, r14
-	sub	rdx, rsi
-	add	rdx, r8
-	cmp	rdx, rdi
-	cmovb	rdx, rdi
-	lea	r9, [r8 + r14]
-	lea	rsi, [r14 + rax]
-	lea	rsi, [rdi + rsi - 1]
-	nop	word ptr cs:[rax + rax]
-.label_1767:
-	mov	rbp, rsi
-	cmp	rbp, rdx
-	jb	.label_1764
-	mov	cl, byte ptr [rbp]
-	and	cl, 0xc0
-	movzx	ecx, cl
-	lea	rsi, [rbp - 1]
-	cmp	ecx, 0x80
-	je	.label_1767
-	mov	qword ptr [rsp + 0x10], r9
-	add	r8, qword ptr [rbx + 0x58]
-	mov	rdx, r8
-	sub	rdx, rbp
-	mov	r9, qword ptr [rbx + 0x78]
-	test	r9, r9
-	jne	.label_1774
-	mov	r12, r11
-	mov	qword ptr [rsp + 0x18], r10
-	mov	rsi, rbp
-.label_1791:
-	mov	qword ptr [rsp + 0x30], 0
-	lea	rdi, [rsp + 0x2c]
-	lea	rcx, [rsp + 0x30]
-	call	rpl_mbrtowc
-	mov	rdx, qword ptr [rsp + 0x10]
-	sub	rdx, rbp
-	mov	esi, 0xffffffff
-	mov	rcx, rax
-	sub	rcx, rdx
-	jb	.label_1793
-	cmp	rax, -3
-	mov	r10, qword ptr [rsp + 0x18]
-	mov	r11, r12
-	ja	.label_1789
-	mov	qword ptr [rbx + 0x20], 0
-	mov	qword ptr [rbx + 0x30], rcx
-	mov	esi, dword ptr [rsp + 0x2c]
-	jmp	.label_1789
-.label_1799:
-	mov	r8, qword ptr [rbx + 0x18]
-	mov	rax, qword ptr [rbx + 0x30]
-	xor	ebp, ebp
-	nop	word ptr [rax + rax]
-.label_1811:
-	lea	rsi, [rbp + rax]
-	mov	rdx, rsi
-	shr	rdx, 0x3f
-	add	rdx, rsi
-	sar	rdx, 1
-	mov	rsi, qword ptr [r8 + rdx*8]
-	cmp	rsi, r14
-	mov	rdi, rdx
-	jg	.label_1800
-	jge	.label_1808
-	lea	rbp, [rdx + 1]
-	mov	rdi, rax
-.label_1800:
-	cmp	rbp, rdi
-	mov	rax, rdi
-	jl	.label_1811
-.label_1808:
-	cmp	rsi, r14
-	setl	al
-	movzx	eax, al
-	lea	r12, [rax + rdx]
-	test	r12, r12
-	jle	.label_1815
-	lea	rdi, [rax + rdx - 1]
-	cmp	qword ptr [rbx + 0x58], rdi
-	je	.label_1768
-	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1821
-	cmp	rsi, r14
-	setl	al
-	mov	rcx, qword ptr [rbx + 0x10]
-	movzx	eax, al
-	add	rdx, rax
-	nop	word ptr cs:[rax + rax]
-.label_1829:
-	mov	ebp, dword ptr [rcx + rdx*4 - 4]
-	cmp	ebp, -1
-	jne	.label_1836
-	dec	rdx
-	jg	.label_1829
-	mov	r15d, dword ptr [rbx + 0x70]
-	jmp	.label_1776
-.label_1804:
-	mov	r15d, dword ptr [rbx + 0x70]
-	jmp	.label_1820
-.label_1807:
-	and	r15d, 2
-	xor	r15d, 0xa
-.label_1820:
-	mov	dword ptr [rbx + 0x70], r15d
-	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1785
+	jl	.label_1698
 	mov	rdi, qword ptr [rbx + 0x10]
 	mov	rdx, qword ptr [rbx + 0x30]
 	lea	rsi, [rdi + r14*4]
 	sub	rdx, r14
 	shl	rdx, 2
-	mov	rbp, r10
 	call	memmove
-	mov	r10, rbp
-.label_1785:
+.label_1698:
 	cmp	byte ptr [rbx + 0x8b], 0
-	jne	.label_1841
-.label_1772:
+	jne	.label_1643
+.label_1685:
 	sub	qword ptr [rbx + 0x30], r14
 	sub	qword ptr [rbx + 0x38], r14
-.label_1787:
+.label_1635:
 	cmp	byte ptr [rbx + 0x8b], 0
-	jne	.label_1825
+	jne	.label_1651
 	add	qword ptr [rbx + 8], r14
-.label_1825:
-	mov	qword ptr [rbx + 0x28], r10
+.label_1651:
+	mov	qword ptr [rbx + 0x28], r13
 	mov	rdx, qword ptr [rbx + 0x58]
 	sub	rdx, r14
 	mov	qword ptr [rbx + 0x58], rdx
 	sub	qword ptr [rbx + 0x68], r14
 	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1773
+	jl	.label_1654
 	cmp	byte ptr [rbx + 0x88], 0
-	je	.label_1849
+	je	.label_1659
 	mov	rdi, rbx
 	call	build_wcs_upper_buffer
 	test	eax, eax
-	jne	.label_1852
-	jmp	.label_1763
-.label_1773:
+	jne	.label_1663
+	jmp	.label_1661
+.label_1654:
 	cmp	byte ptr [rbx + 0x8b], 0
-	jne	.label_1853
+	jne	.label_1677
 	mov	qword ptr [rbx + 0x30], rdx
-	jmp	.label_1763
-.label_1849:
+	jmp	.label_1661
+.label_1659:
 	mov	rdi, rbx
 	call	build_wcs_buffer
-.label_1763:
+.label_1661:
 	mov	qword ptr [rbx + 0x48], 0
 	xor	eax, eax
-.label_1852:
+.label_1663:
 	add	rsp, 0x38
 	pop	rbx
 	pop	r12
@@ -19655,203 +18219,121 @@ re_string_reconstruct:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1841:
-	mov	rdi, qword ptr [rbx + 8]
-	mov	rdx, qword ptr [rbx + 0x30]
-	sub	rdx, r14
-	lea	rsi, [rdi + r14]
-	mov	rbp, r10
-	call	memmove
-	mov	r10, rbp
-	jmp	.label_1772
-.label_1853:
-	cmp	byte ptr [rbx + 0x88], 0
-	je	.label_1775
-	mov	r15, qword ptr [rbx + 0x30]
-	mov	r14, qword ptr [rbx + 0x40]
-	cmp	r14, rdx
-	cmovg	r14, rdx
-	cmp	r15, r14
-	jge	.label_1778
-	jmp	.label_1766
-	nop	dword ptr [rax + rax]
-.label_1838:
-	mov	r10, qword ptr [r13]
-.label_1766:
-	inc	r15
-	add	r10, qword ptr [rbx]
-	mov	al, byte ptr [r15 + r10 - 1]
-	movzx	ecx, al
-	mov	rdx, qword ptr [rbx + 0x78]
-	test	rdx, rdx
-	jne	.label_1783
-.label_1796:
-	movzx	ebp, al
-	lea	eax, [rbp + 0x80]
-	cmp	eax, 0x17f
-	ja	.label_1810
-	call	__ctype_toupper_loc
-	mov	rax, qword ptr [rax]
-	mov	ebp, dword ptr [rax + rbp*4]
-.label_1810:
-	mov	rax, qword ptr [rbx + 8]
-	mov	byte ptr [rax + r15 - 1], bpl
-	cmp	r15, r14
-	jl	.label_1838
-	jmp	.label_1795
-.label_1783:
-	mov	al, byte ptr [rdx + rcx]
-	jmp	.label_1796
-.label_1844:
-	add	rax, r14
-	mov	rdx, qword ptr [rbx]
-	mov	al, byte ptr [rdx + rax - 1]
-	movzx	edx, al
-	mov	qword ptr [rbx + 0x38], 0
-	mov	rsi, qword ptr [rbx + 0x78]
-	test	rsi, rsi
-	je	.label_1797
-	mov	al, byte ptr [rsi + rdx]
-.label_1797:
-	mov	rsi, qword ptr [rbx + 0x80]
-	movzx	edx, al
-	shr	al, 6
-	movzx	eax, al
-	mov	rsi, qword ptr [rsi + rax*8]
-	mov	eax, 1
-	bt	rsi, rdx
-	jb	.label_1802
-	xor	eax, eax
-	cmp	edx, 0xa
-	jne	.label_1802
-	movzx	eax, cx
-	cmp	eax, 0xff
-	seta	al
-	movzx	eax, al
-	add	eax, eax
-.label_1802:
-	mov	dword ptr [rbx + 0x70], eax
-	jmp	.label_1787
-.label_1821:
-	mov	rax, qword ptr [rbx + 8]
-	mov	rsi, qword ptr [rbx + 0x80]
-	movzx	eax, byte ptr [rax + rdi]
-	mov	dl, al
-	shr	dl, 6
-	movzx	edx, dl
-	mov	rdx, qword ptr [rsi + rdx*8]
-	mov	r15d, 1
-	bt	rdx, rax
-	jb	.label_1776
-	xor	r15d, r15d
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_1776
-	test	ch, 0xff
-	setne	al
-	movzx	r15d, al
-	add	r15d, r15d
-	jmp	.label_1776
-.label_1836:
-	test	r9b, r9b
-	jne	.label_1831
-.label_1771:
-	xor	r15d, r15d
-	cmp	ebp, 0xa
-	jne	.label_1776
-	mov	r15d, 2
-	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_1776
-	xor	r15d, r15d
-	jmp	.label_1776
-.label_1835:
-	mov	r12, r10
-	mov	edi, ebp
-	call	iswalnum
-	cmp	ebp, 0x5f
-	mov	r15d, 1
-	je	.label_1840
-	test	eax, eax
-	mov	r10, r12
-	je	.label_1842
-	jmp	.label_1820
-.label_1775:
-	mov	rsi, qword ptr [rbx + 0x78]
-	test	rsi, rsi
-	je	.label_1763
-	mov	rax, qword ptr [rbx + 0x30]
-	mov	rcx, qword ptr [rbx + 0x40]
-	cmp	rcx, rdx
-	cmovg	rcx, rdx
-	cmp	rax, rcx
-	jge	.label_1845
-	add	r10, rax
-	mov	rdx, qword ptr [rbx]
-	mov	rdi, qword ptr [rbx + 8]
-	movzx	edx, byte ptr [rdx + r10]
-	mov	dl, byte ptr [rsi + rdx]
-	jmp	.label_1850
-.label_1856:
-	mov	rdx, qword ptr [rbx + 0x78]
-	mov	rsi, qword ptr [rbx]
-	mov	rdi, qword ptr [rbx + 8]
-	add	rsi, qword ptr [rbx + 0x28]
-	movzx	esi, byte ptr [rax + rsi]
-	mov	dl, byte ptr [rdx + rsi]
-.label_1850:
-	mov	byte ptr [rdi + rax], dl
-	inc	rax
-	cmp	rax, rcx
-	jl	.label_1856
-	mov	rax, rcx
-.label_1845:
-	mov	qword ptr [rbx + 0x30], rax
-	mov	qword ptr [rbx + 0x38], rax
-	jmp	.label_1763
-.label_1795:
-	mov	r15, r14
-.label_1778:
-	mov	qword ptr [rbx + 0x30], r15
-	mov	qword ptr [rbx + 0x38], r15
-	jmp	.label_1763
-.label_1843:
+.label_1655:
+	mov	r14, r13
+	sub	r14, rax
+	jmp	.label_1667
+.label_1691:
+	mov	r10, qword ptr [rbx + 0x30]
+	mov	cx, word ptr [rbx + 0x8c]
+	test	cl, cl
+	jne	.label_1680
+.label_1695:
+	mov	qword ptr [rbx + 0x30], 0
+	movsxd	rsi, dword ptr [rbx + 0x90]
+	cmp	rsi, 2
+	jl	.label_1687
+	mov	qword ptr [rsp + 8], rbp
+	cmp	byte ptr [rbx + 0x89], 0
+	je	.label_1639
+	mov	rdi, qword ptr [rbx]
+	lea	r8, [rdi + rax]
 	mov	rdx, r14
-	sub	rdx, r10
-	mov	rsi, qword ptr [rbx + 0x50]
-	add	rsi, rdx
-	mov	qword ptr [rbx + 0x58], rsi
-	add	rdx, qword ptr [rbx + 0x60]
-	mov	qword ptr [rbx + 0x68], rdx
-	mov	byte ptr [rbx + 0x8c], 0
-	jmp	.label_1770
-.label_1815:
-	mov	r15d, dword ptr [rbx + 0x70]
-	jmp	.label_1776
-.label_1768:
-	and	r15d, 2
-	xor	r15d, 0xa
-.label_1776:
-	mov	dword ptr [rbx + 0x70], r15d
-	mov	rax, qword ptr [rbx + 0x30]
-	cmp	r12, r14
-	jne	.label_1782
-	mov	rdx, rax
+	sub	rdx, rsi
+	add	rdx, r8
+	cmp	rdx, rdi
+	cmovb	rdx, rdi
+	lea	r11, [r8 + r14]
+	lea	rsi, [r14 + rax]
+	lea	rsi, [rdi + rsi - 1]
+.label_1645:
+	mov	rbp, rsi
+	cmp	rbp, rdx
+	jb	.label_1639
+	mov	cl, byte ptr [rbp]
+	and	cl, 0xc0
+	movzx	ecx, cl
+	lea	rsi, [rbp - 1]
+	cmp	ecx, 0x80
+	je	.label_1645
+	add	r8, qword ptr [rbx + 0x58]
+	mov	rdx, r8
+	sub	rdx, rbp
+	mov	r9, qword ptr [rbx + 0x78]
+	test	r9, r9
+	jne	.label_1652
+	mov	qword ptr [rsp + 0x18], r11
+	mov	r12, r10
+	mov	rsi, rbp
+.label_1692:
+	mov	qword ptr [rsp + 0x30], 0
+	lea	rdi, [rsp + 0x2c]
+	lea	rcx, [rsp + 0x30]
+	call	rpl_mbrtowc
+	mov	rdx, qword ptr [rsp + 0x18]
+	sub	rdx, rbp
+	mov	esi, 0xffffffff
+	mov	rcx, rax
+	sub	rcx, rdx
+	jb	.label_1670
+	cmp	rax, -3
+	mov	r10, r12
+	ja	.label_1671
+	mov	qword ptr [rbx + 0x20], 0
+	mov	qword ptr [rbx + 0x30], rcx
+	mov	esi, dword ptr [rsp + 0x2c]
+	jmp	.label_1671
+.label_1646:
+	mov	qword ptr [rsp + 8], rbp
+	mov	rbp, qword ptr [rbx + 0x18]
+	mov	rdx, qword ptr [rbx + 0x30]
+	mov	qword ptr [rsp + 0x18], rdx
+	xor	ecx, ecx
+	nop	word ptr [rax + rax]
+.label_1701:
+	lea	rsi, [rcx + rdx]
+	mov	rax, rsi
+	shr	rax, 0x3f
+	add	rax, rsi
+	sar	rax, 1
+	mov	rsi, qword ptr [rbp + rax*8]
+	cmp	rsi, r14
+	mov	rdi, rax
+	jg	.label_1686
+	jge	.label_1696
+	lea	rcx, [rax + 1]
+	mov	rdi, rdx
+.label_1686:
+	cmp	rcx, rdi
+	mov	rdx, rdi
+	jl	.label_1701
+.label_1696:
+	cmp	rsi, r14
+	setl	cl
+	movzx	ecx, cl
+	lea	r12, [rcx + rax]
+	lea	rsi, [rcx + rax - 1]
+	mov	rdi, rbx
+	mov	edx, r15d
+	call	re_string_context_at
+	mov	dword ptr [rbx + 0x70], eax
+	mov	rsi, qword ptr [rsp + 0x18]
+	mov	rdx, rsi
 	sub	rdx, r14
-	jle	.label_1782
-	mov	rcx, qword ptr [rbx + 0x18]
-	cmp	qword ptr [rcx + r14*8], r14
-	jne	.label_1782
+	jle	.label_1637
+	cmp	r12, r14
+	jne	.label_1637
+	cmp	qword ptr [rbp + r14*8], r14
+	jne	.label_1637
 	mov	rdi, qword ptr [rbx + 0x10]
 	lea	rsi, [rdi + r14*4]
 	shl	rdx, 2
-	mov	rbp, r10
 	call	memmove
 	mov	rdi, qword ptr [rbx + 8]
 	mov	rdx, qword ptr [rbx + 0x30]
 	sub	rdx, r14
 	lea	rsi, [rdi + r14]
 	call	memmove
-	mov	r10, rbp
 	movdqu	xmm0, xmmword ptr [rbx + 0x30]
 	movq	xmm1, r14
 	pshufd	xmm1, xmm1, 0x44
@@ -19859,126 +18341,241 @@ re_string_reconstruct:
 	movdqu	xmmword ptr [rbx + 0x30], xmm0
 	movq	rax, xmm0
 	test	rax, rax
-	jle	.label_1787
+	mov	rbp, qword ptr [rsp + 8]
+	jle	.label_1635
 	mov	rax, qword ptr [rbx + 0x18]
 	lea	rcx, [rax + r14*8]
 	xor	edx, edx
-	nop	dword ptr [rax]
-.label_1827:
+	nop	
+.label_1675:
 	mov	rsi, qword ptr [rcx + rdx*8]
 	sub	rsi, r14
 	mov	qword ptr [rax + rdx*8], rsi
 	inc	rdx
 	cmp	rdx, qword ptr [rbx + 0x30]
-	jl	.label_1827
-	jmp	.label_1787
-.label_1782:
-	mov	rcx, r14
-	sub	rcx, r10
-	mov	rdx, qword ptr [rbx + 0x50]
-	add	rdx, rcx
-	mov	qword ptr [rbx + 0x58], rdx
-	add	rcx, qword ptr [rbx + 0x60]
-	mov	qword ptr [rbx + 0x68], rcx
+	jl	.label_1675
+	jmp	.label_1635
+.label_1643:
+	mov	rdi, qword ptr [rbx + 8]
+	mov	rdx, qword ptr [rbx + 0x30]
+	sub	rdx, r14
+	lea	rsi, [rdi + r14]
+	call	memmove
+	jmp	.label_1685
+.label_1637:
+	mov	rax, r14
+	sub	rax, r13
+	mov	rcx, qword ptr [rbx + 0x50]
+	add	rcx, rax
+	mov	qword ptr [rbx + 0x58], rcx
+	add	rax, qword ptr [rbx + 0x60]
+	mov	qword ptr [rbx + 0x68], rax
 	mov	byte ptr [rbx + 0x8c], 0
+	nop	word ptr cs:[rax + rax]
+.label_1693:
+	mov	rax, r12
+	test	rax, rax
+	jle	.label_1697
+	lea	r12, [rax - 1]
+	cmp	qword ptr [rbp + rax*8 - 8], r14
+	je	.label_1693
+.label_1697:
+	cmp	rax, rsi
+	jge	.label_1636
+	mov	rcx, qword ptr [rbx + 0x10]
 	nop	dword ptr [rax]
-.label_1823:
-	mov	rcx, r12
-	test	rcx, rcx
-	jle	.label_1822
-	lea	r12, [rcx - 1]
-	mov	rdx, qword ptr [rbx + 0x18]
-	cmp	qword ptr [rdx + rcx*8 - 8], r14
-	je	.label_1823
-.label_1822:
-	cmp	rcx, rax
-	jge	.label_1824
-	mov	rdx, qword ptr [rbx + 0x10]
-.label_1828:
-	cmp	dword ptr [rdx + rcx*4], -1
-	jne	.label_1824
-	inc	rcx
-	cmp	rcx, rax
-	jl	.label_1828
-.label_1824:
-	cmp	rcx, rax
-	jne	.label_1830
+.label_1642:
+	cmp	dword ptr [rcx + rax*4], -1
+	jne	.label_1636
+	inc	rax
+	cmp	rax, rsi
+	jl	.label_1642
+.label_1636:
+	cmp	rax, rsi
+	jne	.label_1647
 	mov	qword ptr [rbx + 0x30], 0
 	xor	ebp, ebp
-	mov	qword ptr [rbx + 0x38], rbp
-	jmp	.label_1787
-.label_1830:
-	mov	rax, qword ptr [rbx + 0x18]
-	mov	rbp, qword ptr [rax + rcx*8]
+	jmp	.label_1665
+.label_1677:
+	cmp	byte ptr [rbx + 0x88], 0
+	je	.label_1653
+	mov	r15, qword ptr [rbx + 0x30]
+	mov	r14, qword ptr [rbx + 0x40]
+	cmp	r14, rdx
+	cmovg	r14, rdx
+	cmp	r15, r14
+	jge	.label_1657
+	jmp	.label_1660
+	nop	dword ptr [rax]
+.label_1678:
+	mov	rbp, r12
+	mov	r13, qword ptr [rbp]
+.label_1660:
+	inc	r15
+	mov	r12, rbp
+	add	r13, qword ptr [rbx]
+	mov	al, byte ptr [r15 + r13 - 1]
+	movzx	ecx, al
+	mov	rdx, qword ptr [rbx + 0x78]
+	test	rdx, rdx
+	jne	.label_1668
+.label_1644:
+	movzx	ebp, al
+	lea	eax, [rbp + 0x80]
+	cmp	eax, 0x17f
+	ja	.label_1669
+	call	__ctype_toupper_loc
+	mov	rax, qword ptr [rax]
+	mov	ebp, dword ptr [rax + rbp*4]
+.label_1669:
+	mov	rax, qword ptr [rbx + 8]
+	mov	byte ptr [rax + r15 - 1], bpl
+	cmp	r15, r14
+	jl	.label_1678
+	jmp	.label_1679
+.label_1668:
+	mov	al, byte ptr [rdx + rcx]
+	jmp	.label_1644
+.label_1687:
+	add	rax, r14
+	mov	rdx, qword ptr [rbx]
+	mov	al, byte ptr [rdx + rax - 1]
+	movzx	edx, al
+	mov	qword ptr [rbx + 0x38], 0
+	mov	rsi, qword ptr [rbx + 0x78]
+	test	rsi, rsi
+	je	.label_1683
+	mov	al, byte ptr [rsi + rdx]
+.label_1683:
+	mov	rsi, qword ptr [rbx + 0x80]
+	movzx	edx, al
+	shr	al, 6
+	movzx	eax, al
+	mov	rsi, qword ptr [rsi + rax*8]
+	mov	eax, 1
+	bt	rsi, rdx
+	jb	.label_1694
+	xor	eax, eax
+	cmp	edx, 0xa
+	jne	.label_1694
+	movzx	eax, cx
+	cmp	eax, 0xff
+	seta	al
+	movzx	eax, al
+	add	eax, eax
+.label_1694:
+	mov	dword ptr [rbx + 0x70], eax
+	jmp	.label_1635
+.label_1647:
+	mov	rbp, qword ptr [rbp + rax*8]
 	sub	rbp, r14
 	mov	qword ptr [rbx + 0x30], rbp
-	je	.label_1832
-	mov	r15, r10
+	je	.label_1665
 	test	rbp, rbp
-	jle	.label_1801
+	jle	.label_1689
 	mov	rdi, qword ptr [rbx + 0x10]
 	mov	edx, 1
 	cmovg	rdx, rbp
 	shl	rdx, 2
 	mov	esi, 0xff
 	call	memset
-.label_1801:
+.label_1689:
 	mov	rdi, qword ptr [rbx + 8]
 	mov	esi, 0xff
 	mov	rdx, rbp
 	call	memset
 	mov	rbp, qword ptr [rbx + 0x30]
-	mov	r10, r15
-.label_1832:
+.label_1665:
 	mov	qword ptr [rbx + 0x38], rbp
-	jmp	.label_1787
-.label_1840:
+	mov	rbp, qword ptr [rsp + 8]
+	jmp	.label_1635
+.label_1653:
+	mov	rsi, qword ptr [rbx + 0x78]
+	test	rsi, rsi
+	je	.label_1661
+	mov	rax, qword ptr [rbx + 0x30]
+	mov	rcx, qword ptr [rbx + 0x40]
+	cmp	rcx, rdx
+	cmovg	rcx, rdx
+	cmp	rax, rcx
+	jge	.label_1664
+	add	r13, rax
+	mov	rdx, qword ptr [rbx]
+	mov	rdi, qword ptr [rbx + 8]
+	movzx	edx, byte ptr [rdx + r13]
+	mov	dl, byte ptr [rsi + rdx]
+	jmp	.label_1672
+.label_1681:
+	mov	rdx, qword ptr [rbx + 0x78]
+	mov	rsi, qword ptr [rbx]
+	mov	rdi, qword ptr [rbx + 8]
+	add	rsi, qword ptr [rbx + 0x28]
+	movzx	esi, byte ptr [rax + rsi]
+	mov	dl, byte ptr [rdx + rsi]
+.label_1672:
+	mov	byte ptr [rdi + rax], dl
+	inc	rax
+	cmp	rax, rcx
+	jl	.label_1681
+	mov	rax, rcx
+.label_1664:
+	mov	qword ptr [rbx + 0x30], rax
+	mov	qword ptr [rbx + 0x38], rax
+	jmp	.label_1661
+.label_1679:
+	mov	r15, r14
+.label_1657:
+	mov	qword ptr [rbx + 0x30], r15
+	mov	qword ptr [rbx + 0x38], r15
+	jmp	.label_1661
+.label_1680:
+	mov	rdx, r14
+	sub	rdx, r13
+	mov	rsi, qword ptr [rbx + 0x50]
+	add	rsi, rdx
+	mov	qword ptr [rbx + 0x58], rsi
+	add	rdx, qword ptr [rbx + 0x60]
+	mov	qword ptr [rbx + 0x68], rdx
+	mov	byte ptr [rbx + 0x8c], 0
+	jmp	.label_1695
+.label_1670:
 	mov	r10, r12
-	jmp	.label_1820
-.label_1793:
-	mov	r10, qword ptr [rsp + 0x18]
-	mov	r11, r12
-.label_1789:
+.label_1671:
 	cmp	esi, -1
-	jne	.label_1848
+	jne	.label_1638
 	mov	rax, qword ptr [rbx + 0x28]
 	mov	r12, qword ptr [rbx + 0x38]
-.label_1764:
+.label_1639:
 	add	r12, rax
-	mov	rax, r12
-	sub	rax, r10
-	jge	.label_1851
-	mov	qword ptr [rsp], r11
-	mov	qword ptr [rsp + 8], r13
+	mov	rbp, r12
+	sub	rbp, r13
+	jge	.label_1641
+	mov	qword ptr [rsp], r10
 	lea	rax, [rbx + 0x20]
 	mov	qword ptr [rsp + 0x18], rax
-	jmp	.label_1788
-.label_1784:
+	jmp	.label_1649
+.label_1674:
 	xor	esi, esi
-	cmp	r13, r12
-	je	.label_1857
+	cmp	rbp, r12
+	je	.label_1688
 	test	rax, rax
-	mov	r10, rbp
 	mov	rcx, qword ptr [rsp + 0x10]
-	je	.label_1765
+	je	.label_1656
 	mov	rax, qword ptr [rbx]
 	movzx	esi, byte ptr [rax + r12]
-	jmp	.label_1765
-.label_1857:
-	mov	r10, rbp
+	jmp	.label_1656
+.label_1688:
 	mov	rcx, qword ptr [rsp + 0x10]
-.label_1765:
+.label_1656:
 	mov	rax, qword ptr [rsp + 0x18]
 	mov	qword ptr [rax], rcx
 	mov	eax, 1
-	jmp	.label_1809
-	nop	word ptr cs:[rax + rax]
-.label_1788:
-	mov	rbp, r10
+	jmp	.label_1673
+.label_1649:
 	mov	rax, qword ptr [rbx + 0x20]
 	mov	qword ptr [rsp + 0x10], rax
-	mov	r13, qword ptr [rbx + 0x50]
-	mov	rdx, r13
+	mov	rbp, qword ptr [rbx + 0x50]
+	mov	rdx, rbp
 	sub	rdx, r12
 	mov	rsi, qword ptr [rbx]
 	add	rsi, r12
@@ -19986,157 +18583,89 @@ re_string_reconstruct:
 	mov	rcx, qword ptr [rsp + 0x18]
 	call	rpl_mbrtowc
 	test	rax, rax
-	je	.label_1784
+	je	.label_1674
 	mov	rcx, rax
 	or	rcx, 1
 	cmp	rcx, -1
-	je	.label_1784
+	je	.label_1674
 	mov	esi, dword ptr [rsp + 0x30]
-	mov	r10, rbp
-.label_1809:
+.label_1673:
 	add	r12, rax
-	mov	rax, r12
-	sub	rax, r10
-	jl	.label_1788
-	mov	qword ptr [rbx + 0x30], rax
+	mov	rbp, r12
+	sub	rbp, r13
+	jl	.label_1649
+	mov	qword ptr [rbx + 0x30], rbp
 	cmp	esi, -1
-	mov	r13, qword ptr [rsp + 8]
-	mov	r11, qword ptr [rsp]
-	je	.label_1790
-.label_1848:
+	mov	r10, qword ptr [rsp]
+	je	.label_1699
+.label_1638:
 	cmp	byte ptr [rbx + 0x8e], 0
-	jne	.label_1847
-.label_1855:
+	jne	.label_1684
+.label_1650:
 	xor	ecx, ecx
 	cmp	esi, 0xa
-	jne	.label_1762
+	jne	.label_1658
 	mov	ecx, 2
 	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_1762
+	jne	.label_1658
 	xor	ecx, ecx
-.label_1762:
+.label_1658:
 	mov	dword ptr [rbx + 0x70], ecx
-	jmp	.label_1792
-.label_1851:
-	mov	qword ptr [rbx + 0x30], rax
-.label_1790:
-	test	r11, r11
-	jle	.label_1803
-	lea	rax, [r11 - 1]
-	cmp	qword ptr [rbx + 0x58], rax
-	je	.label_1806
-	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1812
-	mov	rax, qword ptr [rbx + 0x10]
-.label_1817:
-	mov	ebp, dword ptr [rax + r11*4 - 4]
-	cmp	ebp, -1
-	jne	.label_1816
-	dec	r11
-	jg	.label_1817
-	mov	r15d, dword ptr [rbx + 0x70]
-	mov	dword ptr [rbx + 0x70], r15d
-	jmp	.label_1792
-.label_1812:
-	mov	rcx, qword ptr [rbx + 8]
-	mov	rdx, qword ptr [rbx + 0x80]
-	movzx	eax, byte ptr [rcx + rax]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rcx, qword ptr [rdx + rcx*8]
-	mov	r15d, 1
-	bt	rcx, rax
-	jb	.label_1780
-	xor	r15d, r15d
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_1780
-	jmp	.label_1826
-.label_1816:
-	cmp	byte ptr [rbx + 0x8e], 0
-	jne	.label_1839
-.label_1813:
-	xor	r15d, r15d
-	cmp	ebp, 0xa
-	jne	.label_1780
-.label_1826:
-	mov	r15d, 2
-	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_1780
-	xor	r15d, r15d
-.label_1780:
-	mov	dword ptr [rbx + 0x70], r15d
-.label_1792:
 	mov	rbp, qword ptr [rbx + 0x30]
+	jmp	.label_1676
+.label_1641:
+	mov	qword ptr [rbx + 0x30], rbp
+.label_1699:
+	dec	r10
+	mov	rdi, rbx
+	mov	rsi, r10
+	mov	edx, r15d
+	call	re_string_context_at
+	mov	dword ptr [rbx + 0x70], eax
+.label_1676:
 	test	rbp, rbp
-	jne	.label_1834
-.label_1846:
+	jne	.label_1700
+.label_1648:
 	mov	rax, qword ptr [rbx + 0x30]
 	mov	qword ptr [rbx + 0x38], rax
-	jmp	.label_1787
-.label_1834:
-	jle	.label_1837
+	mov	rbp, qword ptr [rsp + 8]
+	jmp	.label_1635
+.label_1700:
+	jle	.label_1640
 	mov	rdi, qword ptr [rbx + 0x10]
 	test	rbp, rbp
 	mov	edx, 1
 	cmovg	rdx, rbp
 	shl	rdx, 2
 	mov	esi, 0xff
-	mov	r15, r10
 	call	memset
-	mov	r10, r15
-.label_1837:
+.label_1640:
 	cmp	byte ptr [rbx + 0x8b], 0
-	je	.label_1846
+	je	.label_1648
 	mov	rdi, qword ptr [rbx + 8]
 	mov	esi, 0xff
 	mov	rdx, rbp
-	mov	rbp, r10
 	call	memset
-	mov	r10, rbp
-	jmp	.label_1846
-.label_1803:
-	mov	r15d, dword ptr [rbx + 0x70]
-	mov	dword ptr [rbx + 0x70], r15d
-	jmp	.label_1792
-.label_1806:
-	and	r15d, 2
-	xor	r15d, 0xa
-	mov	dword ptr [rbx + 0x70], r15d
-	jmp	.label_1792
-.label_1847:
-	mov	r15, r10
+	jmp	.label_1648
+.label_1684:
 	mov	ebp, esi
 	mov	edi, ebp
 	call	iswalnum
 	mov	esi, ebp
 	cmp	esi, 0x5f
 	mov	ecx, 1
-	je	.label_1854
+	je	.label_1658
 	test	eax, eax
-	mov	r10, r15
-	je	.label_1855
-	jmp	.label_1762
-.label_1831:
-	mov	qword ptr [rsp + 0x18], r10
-	mov	edi, ebp
-	call	iswalnum
-	cmp	ebp, 0x5f
-	mov	r15d, 1
-	je	.label_1794
-	test	eax, eax
-	mov	r10, qword ptr [rsp + 0x18]
-	je	.label_1771
-	jmp	.label_1776
-.label_1774:
+	je	.label_1650
+	jmp	.label_1658
+.label_1652:
 	lea	rsi, [rsp + 0x26]
 	cmp	rdx, 6
 	mov	ecx, 6
 	cmovl	ecx, edx
 	test	ecx, ecx
-	jle	.label_1777
-	mov	qword ptr [rsp + 0x18], r10
+	jle	.label_1666
+	mov	qword ptr [rsp + 0x18], r11
 	lea	rdi, [rbp - 1]
 	sub	rdi, r8
 	cmp	rdi, -8
@@ -20146,242 +18675,99 @@ re_string_reconstruct:
 	shl	rcx, 0x20
 	sar	rcx, 0x20
 	inc	rcx
-.label_1786:
+.label_1682:
 	movzx	edi, byte ptr [rbp + rcx - 2]
 	mov	al, byte ptr [r9 + rdi]
 	mov	byte ptr [rsp + rcx + 0x24], al
 	dec	rcx
 	cmp	rcx, 1
-	jg	.label_1786
-	mov	r12, r11
-	jmp	.label_1791
-.label_1839:
+	jg	.label_1682
+	jmp	.label_1690
+.label_1666:
+	mov	qword ptr [rsp + 0x18], r11
+.label_1690:
 	mov	r12, r10
-	mov	edi, ebp
-	call	iswalnum
-	cmp	ebp, 0x5f
-	mov	r15d, 1
-	je	.label_1805
-	test	eax, eax
-	mov	r10, r12
-	je	.label_1813
-	jmp	.label_1780
-.label_1777:
-	mov	r12, r11
-	mov	qword ptr [rsp + 0x18], r10
-	jmp	.label_1791
-.label_1854:
-	mov	r10, r15
-	jmp	.label_1762
-.label_1794:
-	mov	r10, qword ptr [rsp + 0x18]
-	jmp	.label_1776
-.label_1805:
-	mov	r10, r12
-	mov	dword ptr [rbx + 0x70], r15d
-	jmp	.label_1792
-	nop	dword ptr [rax]
+	jmp	.label_1692
+	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4136f0
+	#Procedure 0x4121e0
 
 	.globl check_halt_state_context
 	.type check_halt_state_context, @function
 check_halt_state_context:
-	push	rbp
 	push	r14
 	push	rbx
+	push	rax
 	mov	r14, rsi
 	mov	rbx, rdi
-	test	rdx, rdx
-	js	.label_1875
-	cmp	qword ptr [rbx + 0x58], rdx
-	je	.label_1858
-	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_1862
-	mov	rax, qword ptr [rbx + 0x10]
-	inc	rdx
+	mov	eax, dword ptr [rbx + 0xa0]
+	mov	rsi, rdx
+	mov	edx, eax
+	call	re_string_context_at
+	mov	r10, qword ptr [r14 + 0x10]
+	xor	ecx, ecx
+	test	r10, r10
+	jle	.label_1704
+	mov	rcx, qword ptr [rbx + 0x98]
+	mov	r11, qword ptr [r14 + 0x18]
+	mov	rdi, qword ptr [rcx]
+	mov	r9d, eax
+	and	r9d, 1
+	mov	r8d, eax
+	and	r8d, 2
+	and	eax, 8
+	xor	ebx, ebx
+	nop	word ptr [rax + rax]
+.label_1702:
+	mov	rcx, qword ptr [r11 + rbx*8]
+	mov	rdx, rcx
+	shl	rdx, 4
+	mov	edx, dword ptr [rdi + rdx + 8]
+	movzx	esi, dl
+	cmp	esi, 2
+	jne	.label_1703
+	shr	edx, 8
+	test	dx, 0x3ff
+	je	.label_1704
+	test	r9d, r9d
+	jne	.label_1705
+	mov	esi, edx
+	and	esi, 4
+	jne	.label_1703
+.label_1705:
+	test	r9d, r9d
+	je	.label_1707
+	mov	esi, edx
+	and	esi, 8
+	jne	.label_1703
+.label_1707:
+	test	r8d, r8d
+	jne	.label_1706
+	mov	esi, edx
+	and	esi, 0x20
+	jne	.label_1703
+.label_1706:
+	test	eax, eax
+	jne	.label_1704
+	test	dl, dl
+	jns	.label_1704
 	nop	dword ptr [rax]
-.label_1866:
-	mov	ebp, dword ptr [rax + rdx*4 - 4]
-	cmp	ebp, -1
-	jne	.label_1876
-	dec	rdx
-	test	rdx, rdx
-	jg	.label_1866
-	mov	edi, dword ptr [rbx + 0x70]
-	jmp	.label_1861
-.label_1862:
-	mov	rax, qword ptr [rbx + 8]
-	mov	rcx, qword ptr [rbx + 0x80]
-	movzx	eax, byte ptr [rax + rdx]
-	mov	dl, al
-	shr	dl, 6
-	movzx	edx, dl
-	mov	rcx, qword ptr [rcx + rdx*8]
-	mov	edi, 1
-	bt	rcx, rax
-	jb	.label_1861
-	xor	edi, edi
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_1861
-	jmp	.label_1873
-.label_1876:
-	cmp	byte ptr [rbx + 0x8e], 0
-	jne	.label_1874
-.label_1870:
-	xor	edi, edi
-	cmp	ebp, 0xa
-	jne	.label_1861
-.label_1873:
-	mov	edi, 2
-	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_1861
-	xor	edi, edi
-	jmp	.label_1861
-.label_1875:
-	mov	edi, dword ptr [rbx + 0x70]
-	jmp	.label_1861
-.label_1858:
-	mov	edi, dword ptr [rbx + 0xa0]
-	and	edi, 2
-	xor	edi, 0xa
-.label_1861:
-	mov	rcx, qword ptr [r14 + 0x10]
-	xor	eax, eax
-	test	rcx, rcx
-	jle	.label_1860
-	mov	rax, qword ptr [rbx + 0x98]
-	mov	rdx, qword ptr [r14 + 0x18]
-	mov	rsi, qword ptr [rax]
-	mov	eax, edi
-	and	eax, 2
-	mov	r8d, edi
-	and	r8d, 8
-	xor	ebp, ebp
-	test	dil, 1
-	jne	.label_1867
-	test	eax, eax
-	jne	.label_1872
-	nop	dword ptr [rax + rax]
-.label_1869:
-	mov	rax, qword ptr [rdx + rbp*8]
-	mov	rdi, rax
-	shl	rdi, 4
-	mov	edi, dword ptr [rsi + rdi + 8]
-	movzx	ebx, dil
-	cmp	ebx, 2
-	jne	.label_1859
-	shr	edi, 8
-	test	di, 0x3ff
-	je	.label_1860
-	test	dil, 0x24
-	jne	.label_1859
-	test	r8d, r8d
-	jne	.label_1860
-	test	dil, dil
-	jns	.label_1860
-	nop	
-.label_1859:
-	inc	rbp
-	cmp	rbp, rcx
-	mov	eax, 0
-	jl	.label_1869
-	jmp	.label_1860
-	nop	word ptr cs:[rax + rax]
-.label_1872:
-	mov	rax, qword ptr [rdx + rbp*8]
-	mov	rdi, rax
-	shl	rdi, 4
-	mov	edi, dword ptr [rsi + rdi + 8]
-	movzx	ebx, dil
-	cmp	ebx, 2
-	jne	.label_1868
-	shr	edi, 8
-	test	di, 0x3ff
-	je	.label_1860
-	test	dil, 4
-	jne	.label_1868
-	test	r8d, r8d
-	jne	.label_1860
-	test	dil, dil
-	jns	.label_1860
-.label_1868:
-	inc	rbp
-	cmp	rbp, rcx
-	mov	eax, 0
-	jl	.label_1872
-	jmp	.label_1860
-.label_1867:
-	test	eax, eax
-	jne	.label_1863
-	nop	word ptr cs:[rax + rax]
-.label_1871:
-	mov	rax, qword ptr [rdx + rbp*8]
-	mov	rdi, rax
-	shl	rdi, 4
-	mov	edi, dword ptr [rsi + rdi + 8]
-	movzx	ebx, dil
-	cmp	ebx, 2
-	jne	.label_1865
-	shr	edi, 8
-	test	di, 0x3ff
-	je	.label_1860
-	test	dil, 0x28
-	jne	.label_1865
-	test	r8d, r8d
-	jne	.label_1860
-	test	dil, dil
-	jns	.label_1860
-	nop	word ptr cs:[rax + rax]
-.label_1865:
-	inc	rbp
-	cmp	rbp, rcx
-	mov	eax, 0
-	jl	.label_1871
-	jmp	.label_1860
-	nop	
-.label_1863:
-	mov	rax, qword ptr [rdx + rbp*8]
-	mov	rdi, rax
-	shl	rdi, 4
-	mov	edi, dword ptr [rsi + rdi + 8]
-	movzx	ebx, dil
-	cmp	ebx, 2
-	jne	.label_1864
-	shr	edi, 8
-	test	di, 0x3ff
-	je	.label_1860
-	test	dil, 8
-	jne	.label_1864
-	test	r8d, r8d
-	jne	.label_1860
-	test	dil, dil
-	jns	.label_1860
-.label_1864:
-	inc	rbp
-	cmp	rbp, rcx
-	mov	eax, 0
-	jl	.label_1863
-.label_1860:
+.label_1703:
+	inc	rbx
+	cmp	rbx, r10
+	mov	ecx, 0
+	jl	.label_1702
+.label_1704:
+	mov	rax, rcx
+	add	rsp, 8
 	pop	rbx
 	pop	r14
-	pop	rbp
 	ret	
-.label_1874:
-	mov	edi, ebp
-	call	iswalnum
-	cmp	ebp, 0x5f
-	mov	edi, 1
-	je	.label_1861
-	test	eax, eax
-	jne	.label_1861
-	jmp	.label_1870
-	nop	word ptr cs:[rax + rax]
+	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x413960
+	#Procedure 0x4122a0
 
 	.globl match_ctx_clean
 	.type match_ctx_clean, @function
@@ -20393,17 +18779,17 @@ match_ctx_clean:
 	push	rbx
 	mov	r14, rdi
 	cmp	qword ptr [r14 + 0xe8], 0
-	jle	.label_1877
+	jle	.label_1708
 	xor	r12d, r12d
 	nop	dword ptr [rax]
-.label_1880:
+.label_1711:
 	mov	rax, qword ptr [r14 + 0xf8]
 	mov	r15, qword ptr [rax + r12*8]
 	cmp	qword ptr [r15 + 0x20], 0
 	mov	ebx, 0
-	jle	.label_1878
+	jle	.label_1709
 	nop	word ptr [rax + rax]
-.label_1881:
+.label_1712:
 	mov	rax, qword ptr [r15 + 0x28]
 	mov	r13, qword ptr [rax + rbx*8]
 	mov	rdi, qword ptr [r13 + 0x20]
@@ -20412,24 +18798,24 @@ match_ctx_clean:
 	call	free
 	inc	rbx
 	cmp	rbx, qword ptr [r15 + 0x20]
-	jl	.label_1881
-.label_1878:
+	jl	.label_1712
+.label_1709:
 	mov	rdi, qword ptr [r15 + 0x28]
 	call	free
 	mov	rax, qword ptr [r15 + 0x10]
 	test	rax, rax
-	je	.label_1879
+	je	.label_1710
 	mov	rdi, qword ptr [rax + 0x10]
 	call	free
 	mov	rdi, qword ptr [r15 + 0x10]
 	call	free
-.label_1879:
+.label_1710:
 	mov	rdi, r15
 	call	free
 	inc	r12
 	cmp	r12, qword ptr [r14 + 0xe8]
-	jl	.label_1880
-.label_1877:
+	jl	.label_1711
+.label_1708:
 	mov	qword ptr [r14 + 0xe8], 0
 	mov	qword ptr [r14 + 0xc8], 0
 	pop	rbx
@@ -20441,7 +18827,7 @@ match_ctx_clean:
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x413a20
+	#Procedure 0x412360
 
 	.globl set_regs
 	.type set_regs, @function
@@ -20454,72 +18840,99 @@ set_regs:
 	push	r12
 	push	rbx
 	sub	rsp, 0x98
-	mov	r14, rcx
-	mov	qword ptr [rbp - 0x90], r14
-	mov	rbx, rdx
-	mov	qword ptr [rbp - 0x98], rbx
-	mov	r13, rsi
-	mov	qword ptr [rbp - 0x78], r13
-	mov	rax,  qword ptr [word ptr [rip + label_1890]]
+	mov	rbx, rcx
+	mov	qword ptr [rbp - 0x78], rbx
+	mov	r14, rdx
+	mov	qword ptr [rbp - 0x98], r14
+	mov	r12, rsi
+	mov	qword ptr [rbp - 0x80], r12
+	mov	rcx, qword ptr [rdi]
+	mov	rax,  qword ptr [word ptr [rip + label_1743]]
 	mov	qword ptr [rbp - 0x50], rax
-	movups	xmm0,  xmmword ptr [word ptr [rip + label_1891]]
+	movups	xmm0,  xmmword ptr [word ptr [rip + label_1744]]
 	movaps	xmmword ptr [rbp - 0x60], xmm0
-	xor	r12d, r12d
+	xor	r13d, r13d
 	test	r8b, r8b
-	je	.label_1892
-	mov	qword ptr [rbp - 0x80], rdi
+	je	.label_1745
+	mov	qword ptr [rbp - 0x88], rcx
 	mov	r15, r14
 	mov	edi, 0x60
 	call	malloc
 	mov	qword ptr [rbp - 0x50], rax
 	mov	r14d, 0xc
 	test	rax, rax
-	je	.label_1908
-	lea	r12, [rbp - 0x60]
+	je	.label_1737
+	lea	r13, [rbp - 0x60]
 	mov	r14, r15
-	mov	rdi, qword ptr [rbp - 0x80]
-.label_1892:
-	mov	qword ptr [rbp - 0x80], rdi
-	mov	r15, qword ptr [rdi + 0x90]
+	mov	rcx, qword ptr [rbp - 0x88]
+.label_1745:
+	mov	qword ptr [rbp - 0x88], rcx
+	mov	qword ptr [rbp - 0x70], r13
+	mov	r15, qword ptr [rcx + 0x90]
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rbp - 0x40], xmm0
 	mov	qword ptr [rbp - 0x30], 0
-	mov	rdx, rbx
+	mov	rdx, r14
 	shl	rdx, 4
 	cmp	rdx, 0xfbf
-	ja	.label_1912
+	ja	.label_1740
 	mov	rax, rsp
 	lea	rcx, [rdx + 0xf]
 	and	rcx, 0xfffffffffffffff0
 	sub	rax, rcx
 	mov	rsp, rax
 	mov	dword ptr [rbp - 0xa4], 0
-	jmp	.label_1916
-.label_1912:
+	jmp	.label_1722
+.label_1740:
 	mov	rdi, rdx
-	mov	qword ptr [rbp - 0x88], rdx
+	mov	qword ptr [rbp - 0x90], rdx
 	call	malloc
 	test	rax, rax
-	je	.label_1921
+	je	.label_1754
 	mov	cl, 1
 	mov	dword ptr [rbp - 0xa4], ecx
-	mov	rdx, qword ptr [rbp - 0x88]
-.label_1916:
-	mov	qword ptr [rbp - 0x88], rdx
+	mov	rdx, qword ptr [rbp - 0x90]
+.label_1722:
+	mov	qword ptr [rbp - 0x90], rdx
 	mov	qword ptr [rbp - 0xa0], rax
 	mov	rdi, rax
-	mov	rsi, r14
+	mov	rsi, rbx
 	call	memcpy
-	mov	rsi, qword ptr [r14]
+	mov	rsi, qword ptr [rbx]
 	xor	edi, edi
-	cmp	rsi, qword ptr [r14 + 8]
-	jg	.label_1927
-	mov	qword ptr [rbp - 0x68], r12
-	lea	rax, [r14 + 8]
+	cmp	rsi, qword ptr [rbx + 8]
+	jg	.label_1750
+	lea	rax, [rbx + 8]
 	mov	qword ptr [rbp - 0xb0], rax
-	nop	word ptr cs:[rax + rax]
-.label_1901:
-	mov	rax, qword ptr [rbp - 0x80]
+	jmp	.label_1748
+.label_1754:
+	mov	r14d, 0xc
+	test	r13, r13
+	je	.label_1737
+	xor	ebx, ebx
+	cmp	qword ptr [r13], 0
+	jle	.label_1730
+	xor	r15d, r15d
+	nop	word ptr [rax + rax]
+.label_1770:
+	mov	rax, qword ptr [r13 + 0x10]
+	mov	rdi, qword ptr [rax + rbx + 0x28]
+	call	free
+	mov	rax, qword ptr [r13 + 0x10]
+	mov	rdi, qword ptr [rax + rbx + 0x10]
+	call	free
+	inc	r15
+	add	rbx, 0x30
+	cmp	r15, qword ptr [r13]
+	jl	.label_1770
+	jmp	.label_1730
+.label_1752:
+	mov	rdx, qword ptr [rbp - 0x68]
+	mov	r14, rax
+	jmp	.label_1719
+	nop	word ptr [rax + rax]
+.label_1748:
+	mov	rax, qword ptr [rbp - 0x88]
 	mov	rcx, qword ptr [rax]
 	mov	rdx, r15
 	shl	rdx, 4
@@ -20527,89 +18940,89 @@ set_regs:
 	mov	ecx, dword ptr [rcx + rdx + 8]
 	movzx	edx, cl
 	cmp	edx, 9
-	je	.label_1910
+	je	.label_1762
 	cmp	edx, 8
-	mov	r12, qword ptr [rbp - 0x68]
-	jne	.label_1931
+	jne	.label_1721
 	mov	rax, qword ptr [rax]
 	inc	rax
-	cmp	rax, rbx
-	jge	.label_1931
+	cmp	rax, r14
+	jge	.label_1721
 	shl	rax, 4
-	mov	qword ptr [r14 + rax], rsi
-	mov	qword ptr [r14 + rax + 8], -1
-	jmp	.label_1931
+	mov	qword ptr [rbx + rax], rsi
+	mov	qword ptr [rbx + rax + 8], -1
+	jmp	.label_1721
 	nop	dword ptr [rax]
-.label_1910:
+.label_1762:
 	mov	rax, qword ptr [rax]
 	inc	rax
-	cmp	rax, rbx
-	mov	r12, qword ptr [rbp - 0x68]
-	jge	.label_1931
+	cmp	rax, r14
+	jge	.label_1721
 	shl	rax, 4
-	cmp	qword ptr [r14 + rax], rsi
-	jge	.label_1888
-	mov	qword ptr [r14 + rax + 8], rsi
+	cmp	qword ptr [rbx + rax], rsi
+	jge	.label_1739
+	mov	qword ptr [rbx + rax + 8], rsi
 	mov	rdi, qword ptr [rbp - 0xa0]
-	mov	qword ptr [rbp - 0x70], rsi
-	mov	rsi, r14
-	jmp	.label_1941
-.label_1888:
+	mov	r13, rsi
+	mov	rsi, rbx
+	jmp	.label_1742
+.label_1739:
 	test	ecx, 0x80000
-	je	.label_1922
+	je	.label_1749
 	mov	rcx, qword ptr [rbp - 0xa0]
 	cmp	qword ptr [rcx + rax], -1
-	je	.label_1922
-	mov	rdi, r14
-	mov	qword ptr [rbp - 0x70], rsi
+	je	.label_1749
+	mov	rdi, rbx
+	mov	r13, rsi
 	mov	rsi, qword ptr [rbp - 0xa0]
-.label_1941:
-	mov	rdx, qword ptr [rbp - 0x88]
+.label_1742:
+	mov	rdx, qword ptr [rbp - 0x90]
 	call	memcpy
-	mov	rsi, qword ptr [rbp - 0x70]
-	jmp	.label_1931
-.label_1922:
-	mov	qword ptr [r14 + rax + 8], rsi
-	nop	dword ptr [rax]
-.label_1931:
-	mov	qword ptr [rbp - 0x70], rsi
-	cmp	rsi, qword ptr [r14 + 8]
-	jne	.label_1887
-	cmp	r15, qword ptr [r13 + 0xb0]
-	jne	.label_1887
+	mov	rsi, r13
+	jmp	.label_1721
+.label_1749:
+	mov	qword ptr [rbx + rax + 8], rsi
+	nop	word ptr cs:[rax + rax]
+.label_1721:
+	mov	qword ptr [rbp - 0x68], rsi
+	cmp	rsi, qword ptr [rbx + 8]
+	jne	.label_1765
+	cmp	r15, qword ptr [r12 + 0xb0]
+	jne	.label_1765
+	mov	r13, r12
+	mov	r12, qword ptr [rbp - 0x70]
 	test	r12, r12
-	je	.label_1895
-	test	rbx, rbx
+	je	.label_1727
+	test	r14, r14
 	mov	rcx, qword ptr [rbp - 0xb0]
 	mov	eax, 0
-	mov	rdx, qword ptr [rbp - 0x88]
-	je	.label_1897
-	nop	dword ptr [rax]
-.label_1902:
+	mov	rdx, qword ptr [rbp - 0x90]
+	je	.label_1715
+	nop	word ptr cs:[rax + rax]
+.label_1718:
 	cmp	qword ptr [rcx - 8], 0
-	js	.label_1900
+	js	.label_1713
 	cmp	qword ptr [rcx], -1
-	je	.label_1897
-.label_1900:
+	je	.label_1715
+.label_1713:
 	inc	rax
 	add	rcx, 0x10
-	cmp	rax, rbx
-	jb	.label_1902
-.label_1897:
-	cmp	rax, rbx
-	je	.label_1904
+	cmp	rax, r14
+	jb	.label_1718
+.label_1715:
+	cmp	rax, r14
+	je	.label_1731
 	mov	rcx, qword ptr [r12]
 	lea	rax, [rcx - 1]
 	mov	qword ptr [r12], rax
 	test	rcx, rcx
-	jle	.label_1906
+	jle	.label_1726
 	mov	rcx, qword ptr [r12 + 0x10]
 	shl	rax, 4
 	lea	rbx, [rax + rax*2]
 	mov	rax, qword ptr [rcx + rbx]
-	mov	qword ptr [rbp - 0x70], rax
+	mov	qword ptr [rbp - 0x68], rax
 	mov	rsi, qword ptr [rcx + rbx + 0x10]
-	mov	rdi, r14
+	mov	rdi, qword ptr [rbp - 0x78]
 	call	memcpy
 	mov	rdi, qword ptr [rbp - 0x30]
 	call	free
@@ -20622,462 +19035,414 @@ set_regs:
 	movups	xmm0, xmmword ptr [rax + rbx + 0x18]
 	movaps	xmmword ptr [rbp - 0x40], xmm0
 	mov	r15, qword ptr [rax + rbx + 8]
-.label_1887:
-	mov	rbx, qword ptr [r13 + 0x98]
+	mov	r12, r13
+.label_1765:
+	mov	rbx, qword ptr [r12 + 0x98]
 	mov	rsi, qword ptr [rbx]
-	mov	r14, r15
-	shl	r14, 4
-	mov	eax, dword ptr [rsi + r14 + 8]
+	mov	r13, r15
+	shl	r13, 4
+	mov	eax, dword ptr [rsi + r13 + 8]
 	test	al, 8
-	jne	.label_1918
-	mov	qword ptr [rbp - 0x68], r12
+	jne	.label_1759
 	test	eax, 0x100000
-	jne	.label_1937
+	jne	.label_1774
 	movzx	eax, al
 	cmp	eax, 4
-	jne	.label_1899
-	mov	rax, qword ptr [rsi + r14]
+	jne	.label_1768
+	mov	rax, qword ptr [rsi + r13]
 	shl	rax, 4
-	mov	rcx, qword ptr [rbp - 0x90]
-	mov	rdx, qword ptr [rax + rcx + 0x10]
-	mov	r13, qword ptr [rax + rcx + 0x18]
-	mov	r12, r13
-	sub	r12, rdx
-	cmp	qword ptr [rbp - 0x68], 0
-	je	.label_1924
-	cmp	r13, -1
-	je	.label_1930
-	cmp	rdx, -1
-	je	.label_1930
-	cmp	r13, rdx
-	je	.label_1924
-	mov	rax, qword ptr [rbp - 0x78]
-	mov	rax, qword ptr [rax + 0x30]
-	sub	rax, qword ptr [rbp - 0x70]
-	cmp	rax, r12
-	jl	.label_1930
-	mov	rax, qword ptr [rbp - 0x78]
-	mov	rsi, qword ptr [rax + 8]
-	lea	rdi, [rsi + rdx]
-	add	rsi, qword ptr [rbp - 0x70]
+	mov	rcx, qword ptr [rbp - 0x78]
+	mov	rdi, qword ptr [rax + rcx + 0x10]
+	mov	r14, qword ptr [rax + rcx + 0x18]
+	mov	rdx, r14
+	sub	rdx, rdi
+	cmp	qword ptr [rbp - 0x70], 0
+	je	.label_1769
+	cmp	r14, -1
+	je	.label_1735
+	cmp	rdi, -1
+	je	.label_1735
+	cmp	r14, rdi
+	je	.label_1769
+	mov	rax, qword ptr [r12 + 0x30]
+	sub	rax, qword ptr [rbp - 0x68]
+	cmp	rax, rdx
+	jl	.label_1735
+	mov	rsi, qword ptr [r12 + 8]
+	mov	r12, rdi
+	lea	rdi, [rsi + r12]
+	add	rsi, qword ptr [rbp - 0x68]
 	mov	qword ptr [rbp - 0xb8], rdx
-	mov	rdx, r12
 	call	memcmp
+	mov	rdi, r12
 	mov	rdx, qword ptr [rbp - 0xb8]
 	test	eax, eax
-	jne	.label_1930
-.label_1924:
-	cmp	r13, rdx
-	jne	.label_1889
+	jne	.label_1735
+.label_1769:
+	cmp	r14, rdi
+	jne	.label_1733
 	lea	rdi, [rbp - 0x40]
 	mov	rsi, r15
+	mov	r14, rdx
 	call	re_node_set_insert
+	mov	rdx, r14
 	test	al, al
-	je	.label_1903
-	mov	rax, qword ptr [rbp - 0x78]
+	je	.label_1720
+	mov	rax, qword ptr [rbp - 0x80]
 	mov	rax, qword ptr [rax + 0xb8]
-	mov	rcx, qword ptr [rbp - 0x70]
+	mov	rcx, qword ptr [rbp - 0x68]
 	mov	rcx, qword ptr [rax + rcx*8]
 	mov	rax, qword ptr [rcx + 0x10]
 	test	rax, rax
-	jle	.label_1889
-	mov	rdx, qword ptr [rbx + 0x28]
+	jle	.label_1733
+	mov	rdi, qword ptr [rbx + 0x28]
 	lea	rsi, [r15 + r15*2]
-	mov	rdx, qword ptr [rdx + rsi*8 + 0x10]
-	mov	r13, qword ptr [rdx]
+	mov	rsi, qword ptr [rdi + rsi*8 + 0x10]
+	mov	r14, qword ptr [rsi]
 	dec	rax
-	mov	rcx, qword ptr [rcx + 0x18]
-	mov	edx, 0
-	je	.label_1944
+	mov	r8, qword ptr [rcx + 0x18]
+	mov	ecx, 0
+	je	.label_1732
 	nop	word ptr cs:[rax + rax]
-.label_1948:
-	lea	rsi, [rdx + rax]
+.label_1729:
+	lea	rsi, [rcx + rax]
 	shr	rsi, 1
-	cmp	qword ptr [rcx + rsi*8], r13
+	cmp	qword ptr [r8 + rsi*8], r14
 	lea	rdi, [rsi + 1]
-	cmovl	rdx, rdi
+	cmovl	rcx, rdi
 	cmovge	rax, rsi
-	cmp	rdx, rax
-	jb	.label_1948
-.label_1944:
-	cmp	rdx, -1
-	je	.label_1889
-	cmp	qword ptr [rcx + rdx*8], r13
-	je	.label_1894
-	jmp	.label_1889
+	cmp	rcx, rax
+	jb	.label_1729
+.label_1732:
+	cmp	rcx, -1
+	je	.label_1733
+	cmp	qword ptr [r8 + rcx*8], r14
+	je	.label_1714
+	jmp	.label_1733
 	nop	word ptr cs:[rax + rax]
-.label_1918:
-	mov	qword ptr [rbp - 0x68], r12
-	mov	rax, qword ptr [r13 + 0xb8]
-	mov	rcx, qword ptr [rbp - 0x70]
-	mov	r14, qword ptr [rax + rcx*8]
+.label_1759:
+	mov	rax, qword ptr [r12 + 0xb8]
+	mov	rcx, qword ptr [rbp - 0x68]
+	mov	r12, qword ptr [rax + rcx*8]
 	mov	rbx, qword ptr [rbx + 0x28]
 	lea	rdi, [rbp - 0x40]
 	mov	rsi, r15
 	call	re_node_set_insert
 	test	al, al
-	je	.label_1903
+	je	.label_1720
 	lea	rax, [r15 + r15*2]
-	mov	r10, qword ptr [rbx + rax*8 + 8]
-	test	r10, r10
-	jle	.label_1905
-	mov	r9, qword ptr [r14 + 0x10]
+	mov	r9, qword ptr [rbx + rax*8 + 8]
 	test	r9, r9
-	jle	.label_1905
+	jle	.label_1724
 	mov	r8, qword ptr [rbx + rax*8 + 0x10]
-	dec	r9
-	mov	rsi, qword ptr [r14 + 0x18]
-	mov	r11, -1
-	mov	r14d, 0
-	je	.label_1909
-	nop	dword ptr [rax]
-.label_1947:
-	mov	rbx, qword ptr [r8 + r14*8]
-	mov	rdx, r9
-	xor	eax, eax
-	nop	dword ptr [rax]
-.label_1915:
-	mov	rdi, rax
-	lea	rcx, [rdi + rdx]
-	shr	rcx, 1
-	cmp	qword ptr [rsi + rcx*8], rbx
-	lea	rax, [rcx + 1]
-	cmovge	rax, rdi
-	cmovge	rdx, rcx
-	cmp	rax, rdx
-	jb	.label_1915
+	mov	r10, qword ptr [r12 + 0x10]
+	lea	r11, [r10 - 1]
+	mov	r14, -1
+	xor	r15d, r15d
+	mov	r13, qword ptr [rbp - 0x70]
+	nop	word ptr cs:[rax + rax]
+.label_1763:
+	test	r10, r10
+	jle	.label_1738
+	mov	rbx, qword ptr [r8 + r15*8]
+	test	r11, r11
+	mov	rcx, qword ptr [r12 + 0x18]
+	mov	rsi, r11
+	mov	eax, 0
+	je	.label_1778
+	nop	dword ptr [rax + rax]
+.label_1751:
+	lea	rdx, [rax + rsi]
+	shr	rdx, 1
+	cmp	qword ptr [rcx + rdx*8], rbx
+	lea	rdi, [rdx + 1]
+	cmovl	rax, rdi
+	cmovge	rsi, rdx
+	cmp	rax, rsi
+	jb	.label_1751
+.label_1778:
 	cmp	rax, -1
-	je	.label_1919
-	cmp	qword ptr [rsi + rax*8], rbx
-	jne	.label_1919
-	cmp	r11, -1
-	mov	r13, r11
-	mov	r11, rbx
-	jne	.label_1886
-.label_1919:
-	inc	r14
-	cmp	r14, r10
-	jl	.label_1947
-	mov	r12, qword ptr [rbp - 0x70]
-	mov	r13, r11
-	jmp	.label_1911
-	nop	
-.label_1937:
+	je	.label_1738
+	cmp	qword ptr [rcx + rax*8], rbx
+	jne	.label_1738
+	cmp	r14, -1
+	jne	.label_1757
+	mov	r14, rbx
+.label_1738:
+	inc	r15
+	cmp	r15, r9
+	jl	.label_1763
+	mov	rdx, qword ptr [rbp - 0x68]
+	jmp	.label_1719
+	nop	word ptr cs:[rax + rax]
+.label_1774:
 	mov	rdi, rbx
 	mov	rsi, r15
-	mov	rdx, r13
-	mov	rcx, qword ptr [rbp - 0x70]
+	mov	rdx, r12
+	mov	rcx, qword ptr [rbp - 0x68]
 	call	check_node_accept_bytes
-	movsxd	r12, eax
-.label_1889:
-	test	r12, r12
-	jne	.label_1928
+	movsxd	rdx, eax
+.label_1733:
+	test	rdx, rdx
+	jne	.label_1772
 	mov	rsi, qword ptr [rbx]
-	mov	r13, qword ptr [rbp - 0x78]
-.label_1899:
-	add	rsi, r14
-	mov	rdi, r13
-	mov	rdx, qword ptr [rbp - 0x70]
+	mov	r12, qword ptr [rbp - 0x80]
+.label_1768:
+	add	rsi, r13
+	mov	rdi, r12
+	mov	rdx, qword ptr [rbp - 0x68]
 	call	check_node_accept
 	test	al, al
-	mov	r12d, 1
-	je	.label_1905
-.label_1928:
-	add	r12, qword ptr [rbp - 0x70]
-	cmp	qword ptr [rbp - 0x68], 0
+	mov	edx, 1
+	je	.label_1724
+.label_1772:
+	add	rdx, qword ptr [rbp - 0x68]
+	cmp	qword ptr [rbp - 0x70], 0
 	mov	rax, qword ptr [rbx + 0x18]
-	mov	r13, qword ptr [rax + r15*8]
-	je	.label_1932
-	mov	rax, qword ptr [rbp - 0x78]
-	cmp	r12, qword ptr [rax + 0xa8]
-	jg	.label_1930
-	mov	rax, qword ptr [rbp - 0x78]
+	mov	r14, qword ptr [rax + r15*8]
+	je	.label_1777
+	mov	rax, qword ptr [rbp - 0x80]
+	cmp	rdx, qword ptr [rax + 0xa8]
+	jg	.label_1735
 	mov	rax, qword ptr [rax + 0xb8]
-	mov	rcx, qword ptr [rax + r12*8]
+	mov	rcx, qword ptr [rax + rdx*8]
 	test	rcx, rcx
-	je	.label_1930
+	je	.label_1735
 	mov	rax, qword ptr [rcx + 0x10]
 	test	rax, rax
-	jle	.label_1930
+	jle	.label_1735
 	dec	rax
 	mov	rcx, qword ptr [rcx + 0x18]
-	mov	edx, 0
-	je	.label_1938
-	nop	word ptr cs:[rax + rax]
-.label_1940:
-	lea	rsi, [rdx + rax]
+	mov	ebx, 0
+	je	.label_1758
+.label_1773:
+	lea	rsi, [rbx + rax]
 	shr	rsi, 1
-	cmp	qword ptr [rcx + rsi*8], r13
+	cmp	qword ptr [rcx + rsi*8], r14
 	lea	rdi, [rsi + 1]
-	cmovl	rdx, rdi
+	cmovl	rbx, rdi
 	cmovge	rax, rsi
-	cmp	rdx, rax
-	jb	.label_1940
-.label_1938:
-	cmp	rdx, -1
-	je	.label_1905
-	cmp	qword ptr [rcx + rdx*8], r13
-	jne	.label_1905
-.label_1932:
+	cmp	rbx, rax
+	jb	.label_1773
+.label_1758:
+	cmp	rbx, -1
+	je	.label_1724
+	cmp	qword ptr [rcx + rbx*8], r14
+	jne	.label_1724
+.label_1777:
 	mov	qword ptr [rbp - 0x38], 0
-	jmp	.label_1911
-.label_1909:
-	mov	rbx, qword ptr [rsi]
-	mov	r13, -1
-	xor	ecx, ecx
-	nop	dword ptr [rax]
-.label_1893:
-	cmp	rbx, qword ptr [r8 + rcx*8]
-	jne	.label_1882
-	cmp	r13, -1
-	mov	rax, rbx
-	je	.label_1885
-	jmp	.label_1886
-	nop	word ptr cs:[rax + rax]
-.label_1882:
-	mov	rax, r13
-.label_1885:
-	inc	rcx
-	cmp	rcx, r10
-	mov	r13, rax
-	jl	.label_1893
-	jmp	.label_1896
-.label_1886:
-	mov	r14, qword ptr [rbp - 0x38]
-	test	r14, r14
-	jle	.label_1926
-	mov	rcx, r14
+	jmp	.label_1755
+.label_1757:
+	mov	r15, qword ptr [rbp - 0x38]
+	test	r15, r15
+	jle	.label_1741
+	mov	rcx, r15
 	dec	rcx
 	mov	rax, qword ptr [rbp - 0x30]
 	mov	edx, 0
-	je	.label_1898
+	je	.label_1760
 	nop	word ptr [rax + rax]
-.label_1946:
+.label_1776:
 	lea	rsi, [rdx + rcx]
 	shr	rsi, 1
-	cmp	qword ptr [rax + rsi*8], r13
+	cmp	qword ptr [rax + rsi*8], r14
 	lea	rdi, [rsi + 1]
 	cmovl	rdx, rdi
 	cmovge	rcx, rsi
 	cmp	rdx, rcx
-	jb	.label_1946
-.label_1898:
+	jb	.label_1776
+.label_1760:
 	cmp	rdx, -1
 	setne	cl
-	cmp	qword ptr [rax + rdx*8], r13
+	cmp	qword ptr [rax + rdx*8], r14
 	sete	dl
 	and	dl, cl
-	mov	rax, r13
+	mov	rax, r14
 	cmovne	rax, rbx
 	test	dl, dl
-	jne	.label_1896
-	mov	rcx, qword ptr [rbp - 0x68]
-	test	rcx, rcx
-	mov	rdx, qword ptr [rbp - 0x70]
-	jne	.label_1939
-	mov	r12, rdx
-	mov	r13, rax
-	jmp	.label_1911
-.label_1896:
-	mov	r12, qword ptr [rbp - 0x70]
-	mov	r13, rax
-	jmp	.label_1911
-.label_1926:
-	mov	rcx, qword ptr [rbp - 0x68]
-	test	rcx, rcx
-	mov	rdx, qword ptr [rbp - 0x70]
-	je	.label_1884
-.label_1939:
-	mov	r12, qword ptr [rcx]
-	lea	rax, [r12 + 1]
+	jne	.label_1752
+	test	r13, r13
+	mov	rdx, qword ptr [rbp - 0x68]
+	jne	.label_1756
+	mov	r14, rax
+	jmp	.label_1719
+.label_1741:
+	test	r13, r13
+	mov	rdx, qword ptr [rbp - 0x68]
+	je	.label_1719
+.label_1756:
+	mov	rcx, r13
+	mov	r13, qword ptr [rcx]
+	lea	rax, [r13 + 1]
 	mov	qword ptr [rcx], rax
 	cmp	rax, qword ptr [rcx + 8]
-	jne	.label_1914
+	jne	.label_1716
 	mov	rdi, qword ptr [rcx + 0x10]
-	mov	qword ptr [rbp - 0x68], rcx
 	shl	rax, 5
 	lea	rsi, [rax + rax*2]
 	call	realloc
-	mov	r15, rax
-	test	r15, r15
-	je	.label_1903
-	mov	rax, qword ptr [rbp - 0x68]
+	mov	r12, rax
+	test	r12, r12
+	je	.label_1720
+	mov	rax, qword ptr [rbp - 0x70]
 	shl	qword ptr [rax + 8], 1
-	mov	qword ptr [rax + 0x10], r15
-	mov	rdi, qword ptr [rbp - 0x88]
-	mov	rdx, qword ptr [rbp - 0x70]
-	jmp	.label_1920
-.label_1914:
-	mov	r15, qword ptr [rcx + 0x10]
-	mov	qword ptr [rbp - 0x68], rcx
-	mov	rdi, qword ptr [rbp - 0x88]
-.label_1920:
-	mov	qword ptr [rbp - 0x88], rdi
-	lea	r12, [r12 + r12*2]
-	shl	r12, 4
-	mov	qword ptr [r15 + r12], rdx
-	mov	qword ptr [r15 + r12 + 8], rbx
+	mov	qword ptr [rax + 0x10], r12
+	mov	rdi, qword ptr [rbp - 0x90]
+	mov	rdx, qword ptr [rbp - 0x68]
+	jmp	.label_1736
+.label_1716:
+	mov	r12, qword ptr [rcx + 0x10]
+	mov	rdi, qword ptr [rbp - 0x90]
+.label_1736:
+	mov	qword ptr [rbp - 0x90], rdi
+	lea	r13, [r13 + r13*2]
+	shl	r13, 4
+	mov	qword ptr [r12 + r13], rdx
+	mov	qword ptr [r12 + r13 + 8], rbx
 	call	malloc
-	mov	qword ptr [r15 + r12 + 0x10], rax
+	mov	qword ptr [r12 + r13 + 0x10], rax
 	test	rax, rax
-	je	.label_1903
+	je	.label_1720
 	mov	rdi, rax
-	mov	rsi, qword ptr [rbp - 0x90]
-	mov	rdx, qword ptr [rbp - 0x88]
+	mov	rsi, qword ptr [rbp - 0x78]
+	mov	rdx, qword ptr [rbp - 0x90]
 	call	memcpy
-	lea	rbx, [r15 + r12 + 0x18]
-	mov	qword ptr [r15 + r12 + 0x20], r14
-	test	r14, r14
-	jle	.label_1933
-	mov	qword ptr [rbx], r14
-	shl	r14, 3
-	mov	rdi, r14
+	lea	rbx, [r12 + r13 + 0x18]
+	mov	qword ptr [r12 + r13 + 0x20], r15
+	test	r15, r15
+	jle	.label_1761
+	mov	qword ptr [rbx], r15
+	shl	r15, 3
+	mov	rdi, r15
 	call	malloc
-	mov	qword ptr [r15 + r12 + 0x28], rax
+	mov	qword ptr [r12 + r13 + 0x28], rax
 	test	rax, rax
-	je	.label_1936
+	je	.label_1767
 	mov	rsi, qword ptr [rbp - 0x30]
 	mov	rdi, rax
-	mov	rdx, r14
+	mov	rdx, r15
 	call	memcpy
-	jmp	.label_1894
-.label_1933:
+	jmp	.label_1714
+.label_1761:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rbx], xmm0
 	mov	qword ptr [rbx + 0x10], 0
-.label_1894:
-	mov	r12, qword ptr [rbp - 0x70]
-	jmp	.label_1911
-.label_1884:
-	mov	r12, rdx
+.label_1714:
+	mov	rdx, qword ptr [rbp - 0x68]
+.label_1755:
+	mov	r13, qword ptr [rbp - 0x70]
+.label_1719:
+	test	r14, r14
+	js	.label_1775
+	mov	r12, qword ptr [rbp - 0x78]
+	jmp	.label_1723
+.label_1775:
+	mov	qword ptr [rbp - 0x70], r13
+	cmp	r14, -2
+	je	.label_1720
 	nop	dword ptr [rax + rax]
-.label_1911:
-	test	r13, r13
-	mov	r14, qword ptr [rbp - 0x90]
-	jns	.label_1913
-	cmp	r13, -2
-	je	.label_1903
-	nop	word ptr [rax + rax]
-.label_1905:
-	cmp	qword ptr [rbp - 0x68], 0
-	je	.label_1943
-.label_1930:
-	mov	rbx, qword ptr [rbp - 0x68]
-	mov	rcx, qword ptr [rbx]
+.label_1724:
+	cmp	qword ptr [rbp - 0x70], 0
+	je	.label_1746
+.label_1735:
+	mov	r13, qword ptr [rbp - 0x70]
+	mov	rcx, qword ptr [r13]
 	lea	rax, [rcx - 1]
-	mov	qword ptr [rbx], rax
+	mov	qword ptr [r13], rax
 	test	rcx, rcx
-	jle	.label_1906
-	mov	rcx, qword ptr [rbx + 0x10]
+	jle	.label_1726
+	mov	rcx, qword ptr [r13 + 0x10]
 	shl	rax, 4
-	lea	r14, [rax + rax*2]
-	mov	r12, qword ptr [rcx + r14]
-	mov	rsi, qword ptr [rcx + r14 + 0x10]
-	mov	r15, qword ptr [rbp - 0x90]
-	mov	rdi, r15
-	mov	rdx, qword ptr [rbp - 0x88]
+	lea	rbx, [rax + rax*2]
+	mov	r14, qword ptr [rcx + rbx]
+	mov	rsi, qword ptr [rcx + rbx + 0x10]
+	mov	r12, qword ptr [rbp - 0x78]
+	mov	rdi, r12
+	mov	rdx, qword ptr [rbp - 0x90]
 	call	memcpy
 	mov	rdi, qword ptr [rbp - 0x30]
 	call	free
-	mov	rax, qword ptr [rbx + 0x10]
-	mov	rdi, qword ptr [rax + r14 + 0x10]
+	mov	rax, qword ptr [r13 + 0x10]
+	mov	rdi, qword ptr [rax + rbx + 0x10]
 	call	free
-	mov	rax, qword ptr [rbx + 0x10]
-	mov	rcx, qword ptr [rax + r14 + 0x28]
+	mov	rdx, r14
+	mov	rax, qword ptr [r13 + 0x10]
+	mov	rcx, qword ptr [rax + rbx + 0x28]
 	mov	qword ptr [rbp - 0x30], rcx
-	movups	xmm0, xmmword ptr [rax + r14 + 0x18]
+	movups	xmm0, xmmword ptr [rax + rbx + 0x18]
 	movaps	xmmword ptr [rbp - 0x40], xmm0
-	mov	r13, qword ptr [rax + r14 + 8]
-	mov	r14, r15
-.label_1913:
-	cmp	r12, qword ptr [r14 + 8]
-	mov	r15, r13
-	mov	rsi, r12
-	mov	rbx, qword ptr [rbp - 0x98]
-	mov	r13, qword ptr [rbp - 0x78]
-	jle	.label_1901
+	mov	r14, qword ptr [rax + rbx + 8]
+.label_1723:
+	cmp	rdx, qword ptr [r12 + 8]
+	mov	r15, r14
+	mov	rsi, rdx
+	mov	rbx, r12
+	mov	r14, qword ptr [rbp - 0x98]
+	mov	r12, qword ptr [rbp - 0x80]
+	jle	.label_1748
 	mov	rdi, qword ptr [rbp - 0x30]
-	mov	r12, qword ptr [rbp - 0x68]
-.label_1927:
+.label_1750:
 	call	free
 	mov	eax, dword ptr [rbp - 0xa4]
 	test	al, al
-	je	.label_1907
+	je	.label_1766
 	mov	rdi, qword ptr [rbp - 0xa0]
 	call	free
-.label_1907:
+.label_1766:
 	xor	r14d, r14d
-	test	r12, r12
-	je	.label_1908
+	test	r13, r13
+	je	.label_1737
 	xor	r14d, r14d
-	cmp	qword ptr [r12], 0
-	jle	.label_1883
+	cmp	qword ptr [r13], 0
+	jle	.label_1730
 	xor	ebx, ebx
 	xor	r15d, r15d
-.label_1917:
-	mov	rax, qword ptr [r12 + 0x10]
+	nop	word ptr [rax + rax]
+.label_1717:
+	mov	rax, qword ptr [r13 + 0x10]
 	mov	rdi, qword ptr [rax + rbx + 0x28]
 	call	free
-	mov	rax, qword ptr [r12 + 0x10]
+	mov	rax, qword ptr [r13 + 0x10]
 	mov	rdi, qword ptr [rax + rbx + 0x10]
 	call	free
 	inc	r15
 	add	rbx, 0x30
-	cmp	r15, qword ptr [r12]
-	jl	.label_1917
-	jmp	.label_1883
-.label_1921:
-	mov	r14d, 0xc
-	test	r12, r12
-	je	.label_1908
-	xor	ebx, ebx
-	cmp	qword ptr [r12], 0
-	jle	.label_1883
-	xor	r15d, r15d
-	nop	
-.label_1925:
-	mov	rax, qword ptr [r12 + 0x10]
-	mov	rdi, qword ptr [rax + rbx + 0x28]
-	call	free
-	mov	rax, qword ptr [r12 + 0x10]
-	mov	rdi, qword ptr [rax + rbx + 0x10]
-	call	free
-	inc	r15
-	add	rbx, 0x30
-	cmp	r15, qword ptr [r12]
-	jl	.label_1925
-	jmp	.label_1883
-.label_1943:
+	cmp	r15, qword ptr [r13]
+	jl	.label_1717
+.label_1730:
+	mov	rdi, qword ptr [r13 + 0x10]
+	jmp	.label_1725
+.label_1746:
 	mov	rdi, qword ptr [rbp - 0x30]
 	call	free
 	mov	r14d, 1
-	jmp	.label_1929
-.label_1895:
+	jmp	.label_1734
+.label_1727:
 	mov	rdi, qword ptr [rbp - 0x30]
 	call	free
 	xor	r14d, r14d
-.label_1929:
+.label_1734:
 	mov	eax, dword ptr [rbp - 0xa4]
 	test	al, al
-	je	.label_1908
+	je	.label_1737
 	mov	rdi, qword ptr [rbp - 0xa0]
-	jmp	.label_1934
-.label_1904:
+	jmp	.label_1725
+.label_1731:
 	mov	rdi, qword ptr [rbp - 0x30]
 	call	free
 	mov	eax, dword ptr [rbp - 0xa4]
 	test	al, al
-	je	.label_1935
+	je	.label_1747
 	mov	rdi, qword ptr [rbp - 0xa0]
 	call	free
-.label_1935:
+.label_1747:
 	xor	r14d, r14d
 	cmp	qword ptr [r12], 0
-	jle	.label_1883
+	jle	.label_1753
 	xor	ebx, ebx
 	xor	r15d, r15d
-	nop	dword ptr [rax]
-.label_1942:
+	nop	dword ptr [rax + rax]
+.label_1764:
 	mov	rax, qword ptr [r12 + 0x10]
 	mov	rdi, qword ptr [rax + rbx + 0x28]
 	call	free
@@ -21087,30 +19452,30 @@ set_regs:
 	inc	r15
 	add	rbx, 0x30
 	cmp	r15, qword ptr [r12]
-	jl	.label_1942
-	jmp	.label_1883
-.label_1936:
+	jl	.label_1764
+	jmp	.label_1753
+.label_1767:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rbx], xmm0
-.label_1903:
+.label_1720:
 	mov	rdi, qword ptr [rbp - 0x30]
 	call	free
 	mov	eax, dword ptr [rbp - 0xa4]
 	test	al, al
-	je	.label_1945
+	je	.label_1771
 	mov	rdi, qword ptr [rbp - 0xa0]
 	call	free
-.label_1945:
+.label_1771:
 	mov	r14d, 0xc
-	mov	r12, qword ptr [rbp - 0x68]
+	mov	r12, qword ptr [rbp - 0x70]
 	test	r12, r12
-	je	.label_1908
+	je	.label_1737
 	xor	ebx, ebx
 	cmp	qword ptr [r12], 0
-	jle	.label_1883
+	jle	.label_1753
 	xor	r15d, r15d
 	nop	dword ptr [rax]
-.label_1923:
+.label_1728:
 	mov	rax, qword ptr [r12 + 0x10]
 	mov	rdi, qword ptr [rax + rbx + 0x28]
 	call	free
@@ -21120,12 +19485,12 @@ set_regs:
 	inc	r15
 	add	rbx, 0x30
 	cmp	r15, qword ptr [r12]
-	jl	.label_1923
-.label_1883:
+	jl	.label_1728
+.label_1753:
 	mov	rdi, qword ptr [r12 + 0x10]
-.label_1934:
+.label_1725:
 	call	free
-.label_1908:
+.label_1737:
 	mov	eax, r14d
 	lea	rsp, [rbp - 0x28]
 	pop	rbx
@@ -21135,7 +19500,7 @@ set_regs:
 	pop	r15
 	pop	rbp
 	ret	
-.label_1906:
+.label_1726:
 	mov	edi, OFFSET FLAT:.str.26
 	mov	esi, OFFSET FLAT:.str.22_0
 	mov	edx, 0x555
@@ -21143,7 +19508,87 @@ set_regs:
 	call	__assert_fail
 	.section	.text
 	.align	16
-	#Procedure 0x414470
+	#Procedure 0x412d60
+
+	.globl re_string_context_at
+	.type re_string_context_at, @function
+re_string_context_at:
+	push	rbp
+	push	rbx
+	push	rax
+	mov	rbx, rdi
+	test	rsi, rsi
+	js	.label_1779
+	cmp	qword ptr [rbx + 0x58], rsi
+	je	.label_1782
+	cmp	dword ptr [rbx + 0x90], 2
+	jl	.label_1787
+	mov	rax, qword ptr [rbx + 0x10]
+	inc	rsi
+	nop	dword ptr [rax]
+.label_1785:
+	mov	ebp, dword ptr [rax + rsi*4 - 4]
+	cmp	ebp, -1
+	jne	.label_1783
+	dec	rsi
+	test	rsi, rsi
+	jg	.label_1785
+	mov	edx, dword ptr [rbx + 0x70]
+	jmp	.label_1780
+.label_1787:
+	mov	rax, qword ptr [rbx + 8]
+	mov	rcx, qword ptr [rbx + 0x80]
+	movzx	eax, byte ptr [rax + rsi]
+	mov	dl, al
+	shr	dl, 6
+	movzx	edx, dl
+	mov	rcx, qword ptr [rcx + rdx*8]
+	mov	edx, 1
+	bt	rcx, rax
+	jb	.label_1780
+	xor	edx, edx
+	movzx	eax, al
+	cmp	eax, 0xa
+	jne	.label_1780
+	jmp	.label_1784
+.label_1783:
+	cmp	byte ptr [rbx + 0x8e], 0
+	jne	.label_1786
+.label_1781:
+	xor	edx, edx
+	cmp	ebp, 0xa
+	jne	.label_1780
+.label_1784:
+	mov	edx, 2
+	cmp	byte ptr [rbx + 0x8d], 0
+	jne	.label_1780
+	xor	edx, edx
+	jmp	.label_1780
+.label_1779:
+	mov	edx, dword ptr [rbx + 0x70]
+	jmp	.label_1780
+.label_1782:
+	and	edx, 2
+	xor	edx, 0xa
+.label_1780:
+	mov	eax, edx
+	add	rsp, 8
+	pop	rbx
+	pop	rbp
+	ret	
+.label_1786:
+	mov	edi, ebp
+	call	iswalnum
+	cmp	ebp, 0x5f
+	mov	edx, 1
+	je	.label_1780
+	test	eax, eax
+	jne	.label_1780
+	jmp	.label_1781
+	nop	word ptr cs:[rax + rax]
+	.section	.text
+	.align	16
+	#Procedure 0x412e30
 
 	.globl check_subexp_matching_top
 	.type check_subexp_matching_top, @function
@@ -21161,11 +19606,11 @@ check_subexp_matching_top:
 	mov	rcx, qword ptr [r12 + 8]
 	xor	eax, eax
 	test	rcx, rcx
-	jle	.label_1951
+	jle	.label_1790
 	mov	r13, qword ptr [r15 + 0x98]
 	xor	ebx, ebx
-	jmp	.label_1952
-.label_1953:
+	jmp	.label_1791
+.label_1792:
 	mov	rdi, qword ptr [r15 + 0xf8]
 	mov	rsi, r14
 	shl	rsi, 4
@@ -21173,13 +19618,13 @@ check_subexp_matching_top:
 	mov	rcx, rax
 	mov	eax, 0xc
 	test	rcx, rcx
-	je	.label_1951
+	je	.label_1790
 	add	r14, r14
 	mov	qword ptr [r15 + 0xf8], rcx
 	mov	qword ptr [r15 + 0xf0], r14
-	jmp	.label_1950
+	jmp	.label_1789
 	nop	word ptr [rax + rax]
-.label_1952:
+.label_1791:
 	mov	rax, qword ptr [r12 + 0x10]
 	mov	rbp, qword ptr [rax + rbx*8]
 	mov	rax, qword ptr [r13]
@@ -21187,17 +19632,17 @@ check_subexp_matching_top:
 	shl	rdx, 4
 	movzx	esi, byte ptr [rax + rdx + 8]
 	cmp	esi, 8
-	jne	.label_1949
+	jne	.label_1788
 	mov	rax, qword ptr [rax + rdx]
 	cmp	rax, 0x3f
-	jg	.label_1949
+	jg	.label_1788
 	mov	rdx, qword ptr [r13 + 0xa0]
 	bt	rdx, rax
-	jae	.label_1949
+	jae	.label_1788
 	mov	r14, qword ptr [r15 + 0xe8]
 	cmp	r14, qword ptr [r15 + 0xf0]
-	je	.label_1953
-.label_1950:
+	je	.label_1792
+.label_1789:
 	mov	edi, 1
 	mov	esi, 0x30
 	call	rpl_calloc
@@ -21208,7 +19653,7 @@ check_subexp_matching_top:
 	mov	rdx, qword ptr [rax + rcx*8]
 	mov	eax, 0xc
 	test	rdx, rdx
-	je	.label_1951
+	je	.label_1790
 	mov	qword ptr [rdx + 8], rbp
 	inc	rcx
 	mov	qword ptr [r15 + 0xe8], rcx
@@ -21216,12 +19661,12 @@ check_subexp_matching_top:
 	mov	qword ptr [rdx], rax
 	mov	rcx, qword ptr [r12 + 8]
 	nop	dword ptr [rax]
-.label_1949:
+.label_1788:
 	inc	rbx
 	xor	eax, eax
 	cmp	rbx, rcx
-	jl	.label_1952
-.label_1951:
+	jl	.label_1791
+.label_1790:
 	add	rsp, 8
 	pop	rbx
 	pop	r12
@@ -21233,7 +19678,7 @@ check_subexp_matching_top:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4145a0
+	#Procedure 0x412f60
 
 	.globl transit_state_bkref
 	.type transit_state_bkref, @function
@@ -21245,162 +19690,76 @@ transit_state_bkref:
 	push	r12
 	push	rbx
 	sub	rsp, 0xa8
-	mov	r10, rsi
-	mov	qword ptr [rsp + 0x30], r10
-	mov	r9, rdi
-	mov	qword ptr [rsp + 0x20], r9
-	cmp	qword ptr [r10 + 8], 0
-	jle	.label_2000
-	mov	rax, qword ptr [r9 + 0x98]
-	mov	qword ptr [rsp + 0x48], rax
-	mov	r8, qword ptr [r9 + 0x48]
+	mov	qword ptr [rsp + 0x50], rsi
+	mov	r13, rdi
+	cmp	qword ptr [rsi + 8], 0
+	jle	.label_1816
+	mov	r15, qword ptr [r13 + 0x98]
+	mov	qword ptr [rsp + 0x20], r15
+	mov	r8, qword ptr [r13 + 0x48]
 	mov	qword ptr [rsp + 0x58], r8
-	lea	rax, [r8 + 1]
-	mov	qword ptr [rsp + 0x18], rax
-	xor	r11d, r11d
-	nop	dword ptr [rax]
-.label_2026:
-	mov	qword ptr [rsp + 0x50], r11
-	mov	rax, qword ptr [r10 + 0x10]
-	mov	r15, qword ptr [rax + r11*8]
-	mov	qword ptr [rsp + 0x80], r15
-	mov	rax, qword ptr [rsp + 0x48]
-	mov	r14, qword ptr [rax]
-	shl	r15, 4
-	mov	ebp, dword ptr [r14 + r15 + 8]
-	movzx	eax, bpl
+	xor	ecx, ecx
+	nop	dword ptr [rax + rax]
+.label_1824:
+	mov	qword ptr [rsp + 0x48], rcx
+	mov	rax, qword ptr [rsp + 0x50]
+	mov	rax, qword ptr [rax + 0x10]
+	mov	r14, qword ptr [rax + rcx*8]
+	mov	qword ptr [rsp + 0x80], r14
+	mov	rax, qword ptr [r15]
+	shl	r14, 4
+	mov	ebx, dword ptr [rax + r14 + 8]
+	movzx	eax, bl
 	cmp	eax, 4
-	jne	.label_2001
+	jne	.label_1793
+	mov	ebp, ebx
 	shr	ebp, 8
 	test	bp, 0x3ff
-	je	.label_1960
-	test	r8, r8
-	js	.label_1962
-	cmp	qword ptr [r9 + 0x58], r8
-	je	.label_1964
-	cmp	dword ptr [r9 + 0x90], 2
-	jl	.label_1967
-	mov	rax, qword ptr [r9 + 0x10]
-	mov	rcx, qword ptr [rsp + 0x18]
-	nop	word ptr [rax + rax]
-.label_1974:
-	mov	ebx, dword ptr [rax + rcx*4 - 4]
-	cmp	ebx, -1
-	jne	.label_1972
-	dec	rcx
-	test	rcx, rcx
-	jg	.label_1974
-	mov	ecx, dword ptr [r9 + 0x70]
-	jmp	.label_1976
-.label_1967:
-	mov	rax, qword ptr [r9 + 8]
-	mov	rcx, qword ptr [r9 + 0x80]
-	movzx	eax, byte ptr [rax + r8]
-	mov	dl, al
-	shr	dl, 6
-	movzx	edx, dl
-	mov	rdx, qword ptr [rcx + rdx*8]
-	xor	ecx, ecx
-	bt	rdx, rax
-	jae	.label_1979
-	mov	ecx, 1
-	xor	edx, edx
-	jmp	.label_1983
-.label_1972:
-	cmp	byte ptr [r9 + 0x8e], 0
-	jne	.label_1986
-.label_2011:
-	xor	ecx, ecx
-	cmp	ebx, 0xa
-	je	.label_1990
-	jmp	.label_1976
-.label_1979:
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_1976
-.label_1990:
-	mov	ecx, 2
-	cmp	byte ptr [r9 + 0x8d], 0
-	jne	.label_1976
-	xor	ecx, ecx
-	jmp	.label_1976
-.label_1962:
-	mov	ecx, dword ptr [r9 + 0x70]
-	jmp	.label_1976
-.label_1964:
-	mov	ecx, dword ptr [r9 + 0xa0]
-	and	ecx, 2
-	xor	ecx, 0xa
-	nop	dword ptr [rax + rax]
-.label_1976:
-	mov	eax, ecx
-	and	eax, 1
-	sete	dl
+	je	.label_1801
+	mov	edx, dword ptr [r13 + 0xa0]
+	mov	rdi, r13
+	mov	rsi, r8
+	mov	r12, r8
+	call	re_string_context_at
+	mov	r8, r12
+	mov	ecx, eax
+	and	ecx, 1
 	test	bpl, 4
-	je	.label_1983
-	test	eax, eax
-	je	.label_2001
-	jmp	.label_1983
-.label_1986:
-	mov	qword ptr [rsp + 0x50], r11
-	mov	qword ptr [rsp + 0x58], r8
-	mov	r13, r9
-	mov	r12, r10
-	mov	edi, ebx
-	call	iswalnum
-	xor	edx, edx
-	cmp	ebx, 0x5f
-	mov	ecx, 1
-	je	.label_2009
-	test	eax, eax
-	mov	r10, r12
-	mov	r9, r13
-	mov	r8, qword ptr [rsp + 0x58]
-	mov	r11, qword ptr [rsp + 0x50]
-	je	.label_2011
-	jmp	.label_1983
-.label_2009:
-	mov	r10, r12
-	mov	r9, r13
-	mov	r8, qword ptr [rsp + 0x58]
-	mov	r11, qword ptr [rsp + 0x50]
+	je	.label_1845
+	test	ecx, ecx
+	je	.label_1793
+.label_1845:
+	test	bh, 8
+	je	.label_1795
+	test	ecx, ecx
+	jne	.label_1793
+.label_1795:
+	test	bh, 0x20
+	je	.label_1797
+	mov	ecx, eax
+	and	ecx, 2
+	je	.label_1793
+.label_1797:
+	test	bpl, bpl
+	jns	.label_1801
+	and	eax, 8
+	je	.label_1793
 	nop	word ptr cs:[rax + rax]
-.label_1983:
-	lea	rax, [r14 + r15 + 8]
-	mov	eax, dword ptr [rax]
-	test	dl, dl
-	jne	.label_1966
-	mov	edx, eax
-	and	edx, 0x800
-	jne	.label_2001
-.label_1966:
-	test	cl, 2
-	jne	.label_2017
-	mov	edx, eax
-	and	edx, 0x2000
-	jne	.label_2001
-.label_2017:
-	test	cl, 8
-	jne	.label_1960
-	shr	eax, 8
-	test	al, al
-	js	.label_2001
-	nop	dword ptr [rax]
-.label_1960:
-	mov	rbp, qword ptr [r9 + 0xc8]
-	mov	qword ptr [rsp + 0x10], rbp
-	mov	rax, qword ptr [r9 + 8]
+.label_1801:
+	mov	r12, qword ptr [r13 + 0xc8]
+	mov	qword ptr [rsp + 0x40], r12
+	mov	rax, qword ptr [r13 + 8]
 	mov	qword ptr [rsp + 0x70], rax
-	mov	rax, qword ptr [r9 + 0x98]
-	mov	qword ptr [rsp + 0x40], rax
-	test	rbp, rbp
+	mov	r9, qword ptr [r13 + 0x98]
+	mov	qword ptr [rsp + 0x30], r9
+	test	r12, r12
 	mov	eax, 0
-	jle	.label_2015
-	mov	rcx, qword ptr [r9 + 0xd8]
+	jle	.label_1807
+	mov	rcx, qword ptr [r13 + 0xd8]
 	xor	eax, eax
-	mov	rdx, rbp
+	mov	rdx, r12
 	nop	word ptr [rax + rax]
-.label_2028:
+.label_1825:
 	lea	rsi, [rdx + rax]
 	mov	rdi, rsi
 	shr	rdi, 0x3f
@@ -21412,251 +19771,235 @@ transit_state_bkref:
 	lea	rsi, [rdi + 1]
 	cmovl	rax, rsi
 	cmp	rax, rdx
-	jl	.label_2028
-.label_2015:
-	cmp	rax, rbp
-	jge	.label_1954
+	jl	.label_1825
+.label_1807:
+	cmp	rax, r12
+	jge	.label_1830
 	cmp	rax, -1
-	je	.label_1954
-	mov	rcx, qword ptr [r9 + 0xd8]
+	je	.label_1830
+	mov	rcx, qword ptr [r13 + 0xd8]
 	lea	rax, [rax + rax*4]
 	cmp	qword ptr [rcx + rax*8 + 8], r8
-	jne	.label_1954
+	jne	.label_1830
 	lea	rax, [rcx + rax*8]
 	nop	dword ptr [rax]
-.label_2019:
+.label_1841:
 	mov	rcx, qword ptr [rsp + 0x80]
 	cmp	qword ptr [rax], rcx
-	je	.label_2010
+	je	.label_1837
 	cmp	byte ptr [rax + 0x20], 0
 	lea	rax, [rax + 0x28]
-	jne	.label_2019
-.label_1954:
-	cmp	qword ptr [r9 + 0xe8], 0
-	mov	rax, rbp
-	jle	.label_1970
-	mov	rax, qword ptr [rsp + 0x40]
-	mov	rax, qword ptr [rax]
-	mov	r15, qword ptr [rax + r15]
-	mov	qword ptr [rsp + 0x28], r15
-	xor	edx, edx
-	jmp	.label_1971
+	jne	.label_1841
+.label_1830:
+	cmp	qword ptr [r13 + 0xe8], 0
+	mov	rax, r12
+	jle	.label_1842
+	mov	qword ptr [rsp + 0x20], r15
+	mov	rax, qword ptr [r9]
+	mov	r10, qword ptr [rax + r14]
+	mov	qword ptr [rsp + 0x18], r10
+	xor	r11d, r11d
+	jmp	.label_1846
 	nop	word ptr cs:[rax + rax]
-.label_2021:
-	mov	rax, qword ptr [rsp + 0x40]
-	mov	rax, qword ptr [rax]
-.label_1971:
-	mov	rcx, qword ptr [r9 + 0xf8]
-	mov	r13, qword ptr [rcx + rdx*8]
-	mov	qword ptr [rsp + 0x60], r13
-	mov	rcx, qword ptr [r13 + 8]
+.label_1808:
+	mov	rax, qword ptr [r9]
+.label_1846:
+	mov	rcx, qword ptr [r13 + 0xf8]
+	mov	r14, qword ptr [rcx + r11*8]
+	mov	qword ptr [rsp + 0x28], r14
+	mov	rcx, qword ptr [r14 + 8]
 	shl	rcx, 4
-	cmp	qword ptr [rax + rcx], r15
-	jne	.label_1981
-	mov	r15, qword ptr [r13]
-	mov	rax, qword ptr [r13 + 0x20]
+	cmp	qword ptr [rax + rcx], r10
+	jne	.label_1799
+	mov	qword ptr [rsp + 0x38], r11
+	mov	r15, qword ptr [r14]
+	mov	rax, qword ptr [r14 + 0x20]
 	test	rax, rax
-	jle	.label_1985
-	mov	qword ptr [rsp + 0x38], rdx
-	mov	r12, r8
-	xor	r14d, r14d
-	jmp	.label_1963
-	nop	word ptr cs:[rax + rax]
-.label_1981:
-	mov	qword ptr [rsp + 0x38], rdx
-	jmp	.label_1977
-.label_1985:
-	mov	qword ptr [rsp + 0x38], rdx
+	jle	.label_1810
+	mov	rbx, r8
+	xor	r12d, r12d
+	jmp	.label_1814
+.label_1810:
 	mov	rdx, r8
-	mov	rsi, r15
-	xor	r14d, r14d
-	jmp	.label_1973
-.label_2022:
-	mov	rdx, qword ptr [r9 + 0x58]
-	cmp	rsi, rdx
-	jg	.label_1999
-	mov	rax, qword ptr [r9 + 0x40]
-	mov	rdi, qword ptr [r9 + 0xc0]
-	cmp	rax, rsi
-	mov	qword ptr [rsp + 0x68], rsi
-	mov	rsi, r13
-	jg	.label_2002
-	cmp	rax, rdx
-	jl	.label_2004
-.label_2002:
+	mov	rdi, r15
+	xor	r12d, r12d
+	jmp	.label_1817
+.label_1809:
+	mov	r9, qword ptr [r13 + 0x58]
+	cmp	rdi, r9
+	jg	.label_1821
+	mov	qword ptr [rsp + 0x60], rdx
+	mov	rax, qword ptr [r13 + 0x40]
+	mov	r8, qword ptr [r13 + 0xc0]
+	cmp	rax, rdi
+	mov	qword ptr [rsp + 0x68], rdi
+	mov	rdi, r13
+	mov	rdx, r14
+	jg	.label_1823
+	cmp	rax, r9
+	jl	.label_1828
+.label_1823:
 	cmp	rcx, qword ptr [rsp + 0x68]
-	jg	.label_2008
-	cmp	rcx, rdx
-	jge	.label_2008
-.label_2004:
+	jg	.label_1829
+	cmp	rcx, r9
+	jge	.label_1829
+.label_1828:
 	mov	rax, qword ptr [rsp + 0x68]
-	mov	qword ptr [rsp + 0x60], rsi
 	lea	esi, [rax + 1]
-	mov	qword ptr [rsp + 0x70], rdi
-	mov	rdi, r9
-	mov	r13, r9
+	mov	r14, rdi
+	mov	r13, r8
 	call	extend_buffers
-	mov	rsi, qword ptr [rsp + 0x60]
-	mov	rdi, qword ptr [rsp + 0x70]
-	mov	r9, r13
+	mov	rdx, qword ptr [rsp + 0x28]
+	mov	rdi, r14
+	mov	r8, r13
 	mov	r13d, eax
 	test	r13d, r13d
-	jne	.label_1959
-.label_2008:
-	mov	qword ptr [rsp + 0x60], rsi
+	jne	.label_1806
+.label_1829:
+	mov	r14, rdx
 	mov	rdx, qword ptr [rsp + 0x68]
-	sub	rdx, rdi
-	jle	.label_2013
-	mov	rax, qword ptr [r9 + 0xb8]
-	lea	rdi, [rax + rdi*8 + 8]
+	sub	rdx, r8
+	mov	r13, rdi
+	jle	.label_1839
+	mov	rax, qword ptr [r13 + 0xb8]
+	lea	rdi, [rax + r8*8 + 8]
 	shl	rdx, 3
 	xor	esi, esi
-	mov	r13, r9
 	call	memset
-	mov	r9, r13
 	mov	rax, qword ptr [rsp + 0x68]
-	mov	qword ptr [r9 + 0xc0], rax
-.label_2013:
-	mov	rax, qword ptr [r9 + 8]
+	mov	qword ptr [r13 + 0xc0], rax
+.label_1839:
+	mov	rax, qword ptr [r13 + 8]
 	mov	qword ptr [rsp + 0x70], rax
-	jmp	.label_2016
-	nop	dword ptr [rax]
-.label_1963:
-	mov	rcx, qword ptr [r13 + 0x28]
-	mov	rbx, qword ptr [rcx + r14*8]
-	mov	rcx, qword ptr [rbx + 8]
+	jmp	.label_1796
+	nop	word ptr cs:[rax + rax]
+.label_1814:
+	mov	rcx, qword ptr [r14 + 0x28]
+	mov	rdx, qword ptr [rcx + r12*8]
+	mov	rcx, qword ptr [rdx + 8]
 	mov	qword ptr [rsp + 0x78], rcx
-	mov	rsi, rcx
-	sub	rsi, r15
-	add	rsi, r12
+	mov	rdi, rcx
+	sub	rdi, r15
+	add	rdi, rbx
 	mov	rbp, rcx
 	sub	rbp, r15
-	jle	.label_2020
-	mov	rcx, qword ptr [r9 + 0x30]
-	cmp	rsi, rcx
-	jg	.label_2022
-	mov	qword ptr [rsp + 0x68], rsi
-.label_2016:
-	mov	r13, r9
+	jle	.label_1833
+	mov	rcx, qword ptr [r13 + 0x30]
+	cmp	rdi, rcx
+	jg	.label_1809
+	mov	qword ptr [rsp + 0x60], rdx
+	mov	qword ptr [rsp + 0x68], rdi
+.label_1796:
 	mov	rax, qword ptr [rsp + 0x70]
-	lea	rdi, [rax + r12]
+	lea	rdi, [rax + rbx]
 	lea	rsi, [rax + r15]
 	mov	rdx, rbp
 	call	memcmp
 	test	eax, eax
-	mov	r9, r13
 	mov	r8, qword ptr [rsp + 0x58]
-	mov	r13, qword ptr [rsp + 0x60]
-	mov	rsi, qword ptr [rsp + 0x68]
-	jne	.label_2030
-.label_2020:
-	mov	rbp, rsi
-	mov	rdi, r9
-	mov	rsi, r13
-	mov	rdx, rbx
+	mov	rdi, qword ptr [rsp + 0x68]
+	mov	rdx, qword ptr [rsp + 0x60]
+	jne	.label_1820
+.label_1833:
+	mov	rbx, rdi
+	mov	rdi, r13
+	mov	rsi, r14
 	mov	rcx, qword ptr [rsp + 0x80]
-	mov	rbx, r8
-	mov	r15, r9
+	mov	rbp, r8
 	call	get_subexp_sub
-	mov	r9, r15
 	mov	rcx, r13
 	mov	r13d, eax
 	cmp	r13d, 1
-	ja	.label_1959
-	mov	rax, qword ptr [r9 + 8]
+	ja	.label_1806
+	mov	rax, qword ptr [rcx + 8]
 	mov	qword ptr [rsp + 0x70], rax
-	inc	r14
-	mov	rax, qword ptr [rcx + 0x20]
-	cmp	r14, rax
-	mov	rdx, rbp
-	mov	r12, rdx
-	mov	rsi, qword ptr [rsp + 0x78]
-	mov	r15, rsi
-	mov	r8, rbx
+	inc	r12
+	mov	rax, qword ptr [r14 + 0x20]
+	cmp	r12, rax
+	mov	rdx, rbx
+	mov	rdi, qword ptr [rsp + 0x78]
+	mov	r15, rdi
 	mov	r13, rcx
-	jl	.label_1963
-	jmp	.label_1973
-.label_2030:
-	mov	rax, qword ptr [r13 + 0x20]
-.label_1999:
-	mov	rdx, r12
-	mov	rsi, r15
-.label_1973:
-	cmp	r14, rax
-	jge	.label_1975
-	mov	r10, qword ptr [rsp + 0x30]
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	r15, qword ptr [rsp + 0x28]
-	jmp	.label_1977
-.label_1975:
-	test	r14, r14
+	mov	r8, rbp
+	jl	.label_1814
+	jmp	.label_1817
+.label_1820:
+	mov	rax, qword ptr [r14 + 0x20]
+.label_1821:
+	mov	rdx, rbx
+	mov	rdi, r15
+.label_1817:
+	cmp	r12, rax
+	jge	.label_1840
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	r9, qword ptr [rsp + 0x30]
+	mov	r10, qword ptr [rsp + 0x18]
+	mov	r11, qword ptr [rsp + 0x38]
+	jmp	.label_1799
+.label_1840:
+	test	r12, r12
 	setg	al
 	movzx	ebp, al
-	add	rbp, rsi
+	add	rbp, rdi
 	cmp	rbp, r8
-	mov	r10, qword ptr [rsp + 0x30]
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	r15, qword ptr [rsp + 0x28]
-	jg	.label_1977
-	jmp	.label_1988
-.label_2006:
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	r9, qword ptr [rsp + 0x30]
+	mov	r10, qword ptr [rsp + 0x18]
+	mov	r11, qword ptr [rsp + 0x38]
+	jg	.label_1799
+	jmp	.label_1802
+.label_1826:
 	cmp	r14, -1
-	je	.label_1989
-	mov	qword ptr [rsp + 0x50], r11
+	je	.label_1804
+	mov	qword ptr [rsp + 0x38], r11
+	mov	qword ptr [rsp + 0x30], r9
+	mov	qword ptr [rsp + 0x40], r12
 	mov	qword ptr [rsp + 0x58], r8
-	mov	r15, r10
-	mov	rax, qword ptr [r13 + 0x10]
+	mov	rax, qword ptr [r15 + 0x10]
 	test	rax, rax
 	mov	rbx, r13
-	jne	.label_1992
+	jne	.label_1805
 	lea	rsi, [rbp + 1]
-	sub	rsi, qword ptr [rbx]
+	sub	rsi, qword ptr [r15]
 	mov	edi, 0x18
-	mov	r12, r9
 	call	rpl_calloc
-	mov	r9, r12
-	mov	qword ptr [rbx + 0x10], rax
+	mov	qword ptr [r15 + 0x10], rax
 	test	rax, rax
 	mov	r13d, 0xc
-	je	.label_1959
-.label_1992:
-	mov	rcx, qword ptr [rbx]
-	mov	rdx, qword ptr [rbx + 8]
-	mov	r12, rbx
+	je	.label_1806
+.label_1805:
+	mov	rcx, qword ptr [r15]
+	mov	rdx, qword ptr [r15 + 8]
 	mov	dword ptr [rsp], 9
-	mov	rdi, r9
-	mov	rbx, r9
+	mov	rdi, rbx
 	mov	rsi, rax
 	mov	r8, r14
 	mov	r9, rbp
 	call	check_arrival
 	mov	r13d, eax
 	cmp	r13d, 1
-	mov	r10, r15
 	mov	r8, qword ptr [rsp + 0x58]
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	r15, qword ptr [rsp + 0x28]
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	r9, qword ptr [rsp + 0x30]
+	mov	r10, qword ptr [rsp + 0x18]
+	mov	r11, qword ptr [rsp + 0x38]
 	mov	rdx, qword ptr [rsp + 0x68]
-	je	.label_1994
-	mov	r15, r8
-	mov	qword ptr [rsp + 0x30], r10
+	je	.label_1827
 	test	r13d, r13d
-	mov	rax, r12
-	jne	.label_1959
-	mov	qword ptr [rsp + 0x20], rbx
-	mov	r12, qword ptr [rax + 0x20]
-	cmp	r12, qword ptr [rax + 0x18]
-	mov	rbx, rax
-	je	.label_1956
-.label_1980:
+	jne	.label_1806
+	mov	qword ptr [rsp + 0x78], rbx
+	mov	rbx, qword ptr [r15 + 0x20]
+	cmp	rbx, qword ptr [r15 + 0x18]
+	mov	r12, r15
+	je	.label_1835
+.label_1836:
 	mov	edi, 1
 	mov	esi, 0x28
 	call	rpl_calloc
-	mov	r12, rbx
 	mov	r13d, 0xc
 	test	rax, rax
-	mov	rdi, qword ptr [rsp + 0x20]
-	je	.label_1959
+	mov	rbx, qword ptr [rsp + 0x78]
+	je	.label_1806
 	mov	rcx, qword ptr [r12 + 0x20]
 	mov	rdx, qword ptr [r12 + 0x28]
 	mov	qword ptr [rdx + rcx*8], rax
@@ -21664,389 +20007,287 @@ transit_state_bkref:
 	mov	qword ptr [rax + 8], rbp
 	inc	rcx
 	mov	qword ptr [r12 + 0x20], rcx
+	mov	rdi, rbx
 	mov	rsi, r12
 	mov	rdx, rax
 	mov	rcx, qword ptr [rsp + 0x80]
-	mov	r8, r15
-	mov	rbx, rdi
+	mov	r8, qword ptr [rsp + 0x58]
 	call	get_subexp_sub
-	mov	rcx, rbx
 	mov	r13d, eax
 	cmp	r13d, 1
-	ja	.label_1959
-	mov	rax, qword ptr [rcx + 8]
+	ja	.label_1806
+	mov	r15, r12
+	mov	rax, qword ptr [rbx + 8]
 	mov	qword ptr [rsp + 0x70], rax
-	mov	rbx, rcx
-	mov	r10, qword ptr [rsp + 0x30]
-	mov	r8, r15
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	r15, qword ptr [rsp + 0x28]
-	jmp	.label_2027
-.label_2029:
-	cmp	rdx, qword ptr [r9 + 0x58]
-	jge	.label_1977
-	mov	qword ptr [rsp + 0x28], r15
-	mov	qword ptr [rsp + 0x50], r11
+	mov	r8, qword ptr [rsp + 0x58]
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	r9, qword ptr [rsp + 0x30]
+	mov	r10, qword ptr [rsp + 0x18]
+	mov	r11, qword ptr [rsp + 0x38]
+	jmp	.label_1834
+.label_1800:
+	cmp	rdx, qword ptr [r13 + 0x58]
+	jge	.label_1799
+	mov	qword ptr [rsp + 0x38], r11
+	mov	qword ptr [rsp + 0x18], r10
+	mov	qword ptr [rsp + 0x30], r9
+	mov	qword ptr [rsp + 0x40], r12
 	mov	qword ptr [rsp + 0x58], r8
-	mov	r15, r10
 	lea	rbx, [rdx + 1]
-	mov	r14, rdx
-	mov	rdi, r9
+	mov	r15, rdx
+	mov	rdi, r13
 	mov	esi, ebx
-	mov	r12, r13
-	mov	r13, r9
 	call	extend_buffers
-	mov	r9, r13
+	mov	rcx, r13
 	mov	r13d, eax
 	test	r13d, r13d
-	jne	.label_1959
-	mov	rax, qword ptr [r9 + 8]
+	jne	.label_1806
+	mov	rax, qword ptr [rcx + 8]
 	mov	qword ptr [rsp + 0x70], rax
-	mov	r10, r15
+	mov	r13, rcx
 	mov	r8, qword ptr [rsp + 0x58]
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	r15, qword ptr [rsp + 0x28]
-	mov	r13, r12
-	mov	rdx, r14
-	jmp	.label_1965
-.label_1956:
-	lea	rax, [r12 + r12]
-	mov	rdi, qword ptr [rbx + 0x28]
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	r9, qword ptr [rsp + 0x30]
+	mov	r10, qword ptr [rsp + 0x18]
+	mov	r11, qword ptr [rsp + 0x38]
+	mov	rdx, r15
+	jmp	.label_1812
+.label_1835:
+	lea	rax, [rbx + rbx]
+	mov	rdi, qword ptr [r12 + 0x28]
 	lea	rsi, [rax*8 + 8]
 	call	realloc
 	mov	r13d, 0xc
 	test	rax, rax
-	je	.label_1959
-	lea	rcx, [r12 + r12 + 1]
-	mov	qword ptr [rbx + 0x28], rax
-	mov	qword ptr [rbx + 0x18], rcx
-	jmp	.label_1980
-	nop	dword ptr [rax]
-.label_1988:
-	cmp	rbp, qword ptr [r13]
-	jle	.label_1984
-	cmp	rdx, qword ptr [r9 + 0x30]
-	jge	.label_2029
+	je	.label_1806
+	lea	rcx, [rbx + rbx + 1]
+	mov	qword ptr [r12 + 0x28], rax
+	mov	qword ptr [r12 + 0x18], rcx
+	jmp	.label_1836
+	nop	dword ptr [rax + rax]
+.label_1802:
+	cmp	rbp, qword ptr [r14]
+	jle	.label_1822
+	cmp	rdx, qword ptr [r13 + 0x30]
+	jge	.label_1800
 	lea	rbx, [rdx + 1]
-.label_1965:
+.label_1812:
 	mov	rcx, qword ptr [rsp + 0x70]
 	movzx	eax, byte ptr [rbp + rcx - 1]
 	movzx	ecx, byte ptr [rcx + rdx]
 	cmp	ecx, eax
 	mov	rdx, rbx
-	jne	.label_1977
-.label_1984:
-	mov	rax, qword ptr [r9 + 0xb8]
+	jne	.label_1799
+.label_1822:
+	mov	rax, qword ptr [r13 + 0xb8]
 	mov	rcx, qword ptr [rax + rbp*8]
 	test	rcx, rcx
-	je	.label_1995
+	je	.label_1811
 	mov	rax, qword ptr [rcx + 0x10]
 	test	rax, rax
-	jle	.label_1995
+	jle	.label_1811
 	mov	qword ptr [rsp + 0x68], rdx
+	mov	r15, r14
 	mov	rcx, qword ptr [rcx + 0x18]
-	mov	rdx, qword ptr [rsp + 0x40]
-	mov	rdx, qword ptr [rdx]
+	mov	rdx, qword ptr [r9]
 	xor	esi, esi
-	nop	dword ptr [rax]
-.label_1993:
+	nop	word ptr cs:[rax + rax]
+.label_1813:
 	mov	r14, qword ptr [rcx + rsi*8]
 	mov	rdi, r14
 	shl	rdi, 4
 	movzx	ebx, byte ptr [rdx + rdi + 8]
 	cmp	ebx, 9
-	jne	.label_2003
-	cmp	qword ptr [rdx + rdi], r15
-	je	.label_2006
-.label_2003:
+	jne	.label_1831
+	cmp	qword ptr [rdx + rdi], r10
+	je	.label_1826
+.label_1831:
 	inc	rsi
 	cmp	rsi, rax
-	jl	.label_1993
-.label_1989:
-	mov	r12, r13
-	mov	rbx, r9
-.label_2027:
+	jl	.label_1813
+.label_1804:
+	mov	rbx, r13
+.label_1834:
 	mov	rdx, qword ptr [rsp + 0x68]
-	jmp	.label_1994
+	jmp	.label_1827
 	nop	word ptr cs:[rax + rax]
-.label_1995:
-	mov	r12, r13
-	mov	rbx, r9
-.label_1994:
+.label_1811:
+	mov	r15, r14
+	mov	rbx, r13
+.label_1827:
 	cmp	rbp, r8
 	lea	rbp, [rbp + 1]
-	mov	r9, rbx
-	mov	r13, r12
-	jl	.label_1988
+	mov	r13, rbx
+	mov	r14, r15
+	jl	.label_1802
 	nop	dword ptr [rax]
-.label_1977:
-	mov	rdx, qword ptr [rsp + 0x38]
-	inc	rdx
-	cmp	rdx, qword ptr [r9 + 0xe8]
-	jl	.label_2021
-	mov	rax, qword ptr [r9 + 0xc8]
-	mov	rbp, qword ptr [rsp + 0x10]
-	jmp	.label_1970
-.label_2010:
-	mov	rax, rbp
-.label_1970:
+.label_1799:
+	inc	r11
+	cmp	r11, qword ptr [r13 + 0xe8]
+	jl	.label_1808
+	mov	rax, qword ptr [r13 + 0xc8]
+	mov	r15, qword ptr [rsp + 0x20]
+	jmp	.label_1842
+.label_1837:
+	mov	rax, r12
+.label_1842:
 	mov	dword ptr [rsp + 0xa4], 0
-	cmp	rbp, rax
-	jge	.label_2001
-	jmp	.label_2012
-.label_2007:
-	mov	qword ptr [rsp + 0x78], rsi
-	mov	qword ptr [rsp + 0x60], r14
-	mov	r14, r12
-	mov	r12, rbp
-	mov	rbp, r11
-	mov	qword ptr [rsp + 0x58], r8
-	mov	qword ptr [rsp + 0x20], r9
-	mov	edi, ebx
-	call	iswalnum
-	cmp	ebx, 0x5f
-	mov	edx, 1
-	je	.label_2023
-	test	eax, eax
-	mov	r9, qword ptr [rsp + 0x20]
-	mov	r8, qword ptr [rsp + 0x58]
-	mov	r11, rbp
-	mov	rbp, r12
-	mov	r12, r14
-	mov	r14, qword ptr [rsp + 0x60]
-	mov	rsi, qword ptr [rsp + 0x78]
-	je	.label_2025
-	jmp	.label_1998
-.label_2023:
-	mov	r9, qword ptr [rsp + 0x20]
-	mov	r8, qword ptr [rsp + 0x58]
-	mov	r11, rbp
-	mov	rbp, r12
-	mov	r12, r14
-	mov	r14, qword ptr [rsp + 0x60]
-	mov	rsi, qword ptr [rsp + 0x78]
-	jmp	.label_1998
-	nop	dword ptr [rax]
-.label_2012:
-	mov	rax, qword ptr [r9 + 0xd8]
-	lea	rcx, [rbp + rbp*4]
-	mov	rdx, qword ptr [rsp + 0x80]
-	cmp	qword ptr [rax + rcx*8], rdx
-	jne	.label_1958
-	cmp	qword ptr [rax + rcx*8 + 8], r8
-	jne	.label_1958
-	mov	r12, qword ptr [rax + rcx*8 + 0x18]
-	mov	r14, qword ptr [rax + rcx*8 + 0x10]
-	mov	rax, qword ptr [rsp + 0x48]
-	mov	rsi, qword ptr [rax + 0x30]
-	cmp	r12, r14
-	jne	.label_1969
-	mov	rax, qword ptr [rsp + 0x48]
-	mov	rax, qword ptr [rax + 0x28]
+	cmp	r12, rax
+	jge	.label_1793
+	lea	rax, [r12 + r12*4]
+	lea	rbp, [rax*8 + 0x18]
+	nop	word ptr cs:[rax + rax]
+.label_1843:
+	mov	rax, qword ptr [r13 + 0xd8]
+	mov	rbx, r13
+	mov	rcx, qword ptr [rsp + 0x80]
+	cmp	qword ptr [rax + rbp - 0x18], rcx
+	jne	.label_1794
+	cmp	qword ptr [rax + rbp - 0x10], r8
+	jne	.label_1794
+	mov	rdx, qword ptr [rax + rbp - 8]
+	mov	rsi, qword ptr [rax + rbp]
+	mov	r13, qword ptr [r15 + 0x30]
+	cmp	rsi, rdx
+	jne	.label_1815
+	mov	qword ptr [rsp + 0x40], r12
+	mov	rax, qword ptr [r15 + 0x28]
 	mov	rcx, qword ptr [rsp + 0x80]
 	lea	rcx, [rcx + rcx*2]
 	mov	rax, qword ptr [rax + rcx*8 + 0x10]
-	jmp	.label_1968
-.label_1969:
+	jmp	.label_1819
+.label_1815:
+	mov	qword ptr [rsp + 0x40], r12
 	mov	rax, qword ptr [rsp + 0x80]
 	lea	rax, [rax*8]
-	mov	rcx, qword ptr [rsp + 0x48]
-	add	rax, qword ptr [rcx + 0x18]
-.label_1968:
-	mov	r13, qword ptr [rax]
-	lea	r15, [r12 + r8]
-	sub	r15, r14
-	test	r15, r15
-	jle	.label_1982
-	lea	rax, [r15 - 1]
-	cmp	qword ptr [r9 + 0x58], rax
-	je	.label_1987
-	cmp	dword ptr [r9 + 0x90], 2
-	jl	.label_1991
-	mov	rax, qword ptr [r9 + 0x10]
-	mov	rcx, r15
-	nop	dword ptr [rax + rax]
-.label_1996:
-	mov	ebx, dword ptr [rax + rcx*4 - 4]
-	cmp	ebx, -1
-	jne	.label_1997
-	dec	rcx
-	jg	.label_1996
-	mov	edx, dword ptr [r9 + 0x70]
-	jmp	.label_1998
-.label_1991:
-	mov	rcx, qword ptr [r9 + 8]
-	mov	rdx, qword ptr [r9 + 0x80]
-	movzx	eax, byte ptr [rcx + rax]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rcx, qword ptr [rdx + rcx*8]
-	mov	edx, 1
-	bt	rcx, rax
-	jb	.label_1998
-	xor	edx, edx
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_1998
-	jmp	.label_2005
-.label_1997:
-	cmp	byte ptr [r9 + 0x8e], 0
-	jne	.label_2007
-.label_2025:
-	xor	edx, edx
-	cmp	ebx, 0xa
-	jne	.label_1998
-.label_2005:
-	mov	edx, 2
-	cmp	byte ptr [r9 + 0x8d], 0
-	jne	.label_1998
-	xor	edx, edx
-	jmp	.label_1998
-.label_1982:
-	mov	edx, dword ptr [r9 + 0x70]
-	jmp	.label_1998
-.label_1987:
-	mov	edx, dword ptr [r9 + 0xa0]
-	and	edx, 2
-	xor	edx, 0xa
-	nop	word ptr cs:[rax + rax]
-.label_1998:
-	mov	dword ptr [rsp + 0x78], edx
-	lea	rcx, [r13 + r13*2]
-	mov	rdx, qword ptr [r9 + 0xb8]
-	mov	rax, qword ptr [rdx + r15*8]
-	mov	rdx, qword ptr [rdx + r8*8]
-	test	rdx, rdx
-	mov	ebx, 0
-	je	.label_2014
-	mov	rbx, qword ptr [rdx + 0x10]
-.label_2014:
-	mov	qword ptr [rsp + 0x50], r11
-	lea	rdx, [rsi + rcx*8]
-	test	rax, rax
-	lea	rdi, [rsp + 0x88]
-	je	.label_2018
-	mov	qword ptr [rsp + 0x70], rbx
-	mov	qword ptr [rsp + 0x60], r14
-	mov	r14, r12
-	mov	r12, rbp
-	mov	rbp, r8
-	mov	rsi, qword ptr [rax + 0x50]
+	add	rax, qword ptr [r15 + 0x18]
+.label_1819:
+	mov	rax, qword ptr [rax]
+	lea	r15, [rax + rax*2]
+	lea	r14, [rsi + r8]
+	mov	qword ptr [rsp + 0x70], rsi
+	sub	r14, rdx
+	mov	qword ptr [rsp + 0x78], rdx
+	lea	rsi, [r14 - 1]
+	mov	r12, rbx
+	mov	edx, dword ptr [r12 + 0xa0]
+	mov	rdi, r12
+	mov	rbx, r8
+	call	re_string_context_at
+	mov	rdx, rbx
+	mov	rcx, qword ptr [r12 + 0xb8]
+	mov	rsi, qword ptr [rcx + r14*8]
+	mov	rcx, qword ptr [rcx + rdx*8]
+	test	rcx, rcx
+	mov	edx, 0
+	je	.label_1838
+	mov	rdx, qword ptr [rcx + 0x10]
+.label_1838:
 	mov	qword ptr [rsp + 0x68], rdx
+	lea	rdx, [r13 + r15*8]
+	test	rsi, rsi
+	lea	rdi, [rsp + 0x88]
+	je	.label_1844
+	mov	r15d, eax
+	mov	rsi, qword ptr [rsi + 0x50]
+	mov	qword ptr [rsp + 0x60], rdx
 	mov	rbx, rdi
 	call	re_node_set_init_union
 	mov	r13d, eax
 	mov	dword ptr [rsp + 0xa4], r13d
 	test	r13d, r13d
-	jne	.label_2024
+	jne	.label_1798
 	lea	rdi, [rsp + 0xa4]
-	mov	rsi, qword ptr [rsp + 0x48]
+	mov	rsi, qword ptr [rsp + 0x20]
 	mov	rdx, rbx
-	mov	ecx, dword ptr [rsp + 0x78]
+	mov	ecx, r15d
 	call	re_acquire_state_context
-	mov	rbx, qword ptr [rsp + 0x20]
-	mov	rcx, qword ptr [rbx + 0xb8]
-	mov	qword ptr [rcx + r15*8], rax
+	mov	rcx, qword ptr [r12 + 0xb8]
+	mov	qword ptr [rcx + r14*8], rax
 	mov	rdi, qword ptr [rsp + 0x98]
 	call	free
-	mov	r9, rbx
-	mov	rax, qword ptr [r9 + 0xb8]
-	cmp	qword ptr [rax + r15*8], 0
-	jne	.label_1955
+	mov	rax, qword ptr [r12 + 0xb8]
+	mov	rbx, r12
+	cmp	qword ptr [rax + r14*8], 0
+	jne	.label_1818
 	mov	r13d, dword ptr [rsp + 0xa4]
 	test	r13d, r13d
-	jne	.label_1957
-.label_1955:
-	mov	r10, qword ptr [rsp + 0x30]
-	mov	r8, rbp
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	rbp, r12
-	mov	r12, r14
-	mov	r14, qword ptr [rsp + 0x60]
-	jmp	.label_1961
-.label_2018:
-	mov	qword ptr [rsp + 0x70], rbx
-	mov	rbx, rbp
-	mov	rbp, r8
+	je	.label_1818
+	jmp	.label_1803
+.label_1844:
 	lea	rdi, [rsp + 0xa4]
-	mov	rsi, qword ptr [rsp + 0x48]
-	mov	qword ptr [rsp + 0x68], rdx
-	mov	ecx, dword ptr [rsp + 0x78]
+	mov	rsi, qword ptr [rsp + 0x20]
+	mov	qword ptr [rsp + 0x60], rdx
+	mov	ecx, eax
 	call	re_acquire_state_context
-	mov	r9, qword ptr [rsp + 0x20]
-	mov	rcx, qword ptr [r9 + 0xb8]
-	mov	qword ptr [rcx + r15*8], rax
-	mov	rax, qword ptr [r9 + 0xb8]
-	cmp	qword ptr [rax + r15*8], 0
-	jne	.label_1978
+	mov	rcx, qword ptr [r12 + 0xb8]
+	mov	qword ptr [rcx + r14*8], rax
+	mov	rax, qword ptr [r12 + 0xb8]
+	mov	rbx, r12
+	cmp	qword ptr [rax + r14*8], 0
+	jne	.label_1818
 	mov	r13d, dword ptr [rsp + 0xa4]
 	test	r13d, r13d
-	mov	r10, qword ptr [rsp + 0x30]
-	mov	r8, rbp
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	rbp, rbx
-	je	.label_1961
-	jmp	.label_1957
-.label_1978:
-	mov	r10, qword ptr [rsp + 0x30]
-	mov	r8, rbp
-	mov	r11, qword ptr [rsp + 0x50]
-	mov	rbp, rbx
-	nop	word ptr cs:[rax + rax]
-.label_1961:
-	cmp	r12, r14
-	jne	.label_1958
+	mov	r15, qword ptr [rsp + 0x20]
+	mov	r8, qword ptr [rsp + 0x58]
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	rcx, qword ptr [rsp + 0x78]
+	mov	rdx, qword ptr [rsp + 0x70]
+	je	.label_1832
+	jmp	.label_1803
+.label_1818:
+	mov	r15, qword ptr [rsp + 0x20]
+	mov	r8, qword ptr [rsp + 0x58]
+	mov	r12, qword ptr [rsp + 0x40]
+	mov	rcx, qword ptr [rsp + 0x78]
+	mov	rdx, qword ptr [rsp + 0x70]
+.label_1832:
+	cmp	rdx, rcx
+	jne	.label_1794
 	mov	rax, qword ptr [rax + r8*8]
-	mov	rcx, qword ptr [rsp + 0x70]
+	mov	rcx, qword ptr [rsp + 0x68]
 	cmp	qword ptr [rax + 0x10], rcx
-	jle	.label_1958
-	mov	rdi, r9
-	mov	rsi, qword ptr [rsp + 0x68]
+	jle	.label_1794
+	mov	rdi, rbx
+	mov	rsi, qword ptr [rsp + 0x60]
 	mov	rdx, r8
-	mov	r15, r10
-	mov	r12, rbp
-	mov	rbp, r9
 	mov	r14, r8
-	mov	rbx, r11
 	call	check_subexp_matching_top
-	mov	rdx, r14
-	mov	rdi, rbp
-	mov	rbp, r12
+	mov	rcx, r14
 	mov	r13d, eax
 	mov	dword ptr [rsp + 0xa4], r13d
 	test	r13d, r13d
-	jne	.label_1957
-	mov	rsi, qword ptr [rsp + 0x68]
-	mov	r12, rbp
-	mov	rbp, rdi
-	mov	r14, rdx
+	jne	.label_1803
+	mov	rdi, rbx
+	mov	rsi, qword ptr [rsp + 0x60]
+	mov	r14, rcx
 	call	transit_state_bkref
-	mov	r11, rbx
 	mov	r8, r14
-	mov	r9, rbp
-	mov	rbp, r12
-	mov	r10, r15
 	mov	r13d, eax
 	mov	dword ptr [rsp + 0xa4], r13d
 	test	r13d, r13d
-	jne	.label_1957
+	jne	.label_1803
 	nop	
-.label_1958:
-	inc	rbp
-	cmp	rbp, qword ptr [r9 + 0xc8]
-	jl	.label_2012
-.label_2001:
-	inc	r11
-	cmp	r11, qword ptr [r10 + 8]
-	jl	.label_2026
-.label_2000:
+.label_1794:
+	inc	r12
+	add	rbp, 0x28
+	mov	r13, rbx
+	cmp	r12, qword ptr [r13 + 0xc8]
+	jl	.label_1843
+	nop	word ptr [rax + rax]
+.label_1793:
+	mov	rcx, qword ptr [rsp + 0x48]
+	inc	rcx
+	mov	rax, qword ptr [rsp + 0x50]
+	cmp	rcx, qword ptr [rax + 8]
+	jl	.label_1824
+.label_1816:
 	mov	dword ptr [rsp + 0xa4], 0
 	xor	r13d, r13d
-	jmp	.label_1957
-.label_1959:
+	jmp	.label_1803
+.label_1806:
 	mov	dword ptr [rsp + 0xa4], r13d
-.label_1957:
+.label_1803:
 	mov	eax, r13d
 	add	rsp, 0xa8
 	pop	rbx
@@ -22056,182 +20297,158 @@ transit_state_bkref:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2024:
+.label_1798:
 	mov	rdi, qword ptr [rsp + 0x98]
 	call	free
-	jmp	.label_1957
-	nop	dword ptr [rax]
+	jmp	.label_1803
+	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4151b0
+	#Procedure 0x4138e0
 
 	.globl extend_buffers
 	.type extend_buffers, @function
 extend_buffers:
-	push	rbp
 	push	r15
 	push	r14
+	push	r12
 	push	rbx
 	push	rax
-	mov	r15, rdi
-	mov	rbp, qword ptr [r15 + 0x40]
-	mov	r14d, 0xc
-	movabs	rax, 0xffffffffffffffe
-	cmp	rbp, rax
-	ja	.label_2032
-	movsxd	rax, esi
-	mov	rcx, qword ptr [r15 + 0x58]
-	add	rbp, rbp
-	cmp	rcx, rbp
-	cmovle	rbp, rcx
-	cmp	rax, rbp
-	cmovge	rbp, rax
-	cmp	dword ptr [r15 + 0x90], 2
-	jl	.label_2034
-	mov	rax, rbp
-	shr	rax, 0x3d
-	jne	.label_2032
-	mov	rdi, qword ptr [r15 + 0x10]
-	lea	rsi, [rbp*4]
-	call	realloc
-	test	rax, rax
-	je	.label_2032
-	mov	qword ptr [r15 + 0x10], rax
-	mov	rdi, qword ptr [r15 + 0x18]
+	mov	ecx, esi
+	mov	r14, rdi
+	mov	rsi, qword ptr [r14 + 0x40]
+	mov	eax, 0xc
+	movabs	rdx, 0xffffffffffffffe
+	cmp	rsi, rdx
+	ja	.label_1851
+	movsxd	rax, ecx
+	mov	rcx, qword ptr [r14 + 0x58]
+	add	rsi, rsi
+	cmp	rcx, rsi
+	cmovle	rsi, rcx
+	cmp	rax, rsi
+	cmovge	rsi, rax
+	mov	rdi, r14
+	call	re_string_realloc_buffers
+	test	eax, eax
+	jne	.label_1851
+	mov	rdi, qword ptr [r14 + 0xb8]
 	test	rdi, rdi
-	je	.label_2034
-	lea	rsi, [rbp*8]
+	je	.label_1858
+	mov	rax, qword ptr [r14 + 0x40]
+	lea	rsi, [rax*8 + 8]
 	call	realloc
-	test	rax, rax
-	je	.label_2032
-	mov	qword ptr [r15 + 0x18], rax
-.label_2034:
-	cmp	byte ptr [r15 + 0x8b], 0
-	je	.label_2040
-	mov	rdi, qword ptr [r15 + 8]
-	mov	rsi, rbp
-	call	realloc
-	test	rax, rax
-	je	.label_2032
-	mov	qword ptr [r15 + 8], rax
-.label_2040:
-	mov	qword ptr [r15 + 0x40], rbp
-	mov	rdi, qword ptr [r15 + 0xb8]
-	test	rdi, rdi
-	je	.label_2044
-	lea	rsi, [rbp*8 + 8]
-	call	realloc
-	test	rax, rax
-	je	.label_2032
-	mov	qword ptr [r15 + 0xb8], rax
-.label_2044:
-	cmp	byte ptr [r15 + 0x88], 0
-	mov	eax, dword ptr [r15 + 0x90]
-	je	.label_2033
+	mov	rcx, rax
+	test	rcx, rcx
+	mov	eax, 0xc
+	je	.label_1851
+	mov	qword ptr [r14 + 0xb8], rcx
+.label_1858:
+	cmp	byte ptr [r14 + 0x88], 0
+	mov	eax, dword ptr [r14 + 0x90]
+	je	.label_1855
 	cmp	eax, 2
-	jl	.label_2035
-	mov	rdi, r15
+	jl	.label_1859
+	mov	rdi, r14
 	call	build_wcs_upper_buffer
-	mov	r14d, eax
-	test	r14d, r14d
-	je	.label_2038
-	jmp	.label_2032
-.label_2033:
+	test	eax, eax
+	je	.label_1849
+	jmp	.label_1851
+.label_1855:
 	cmp	eax, 2
-	jl	.label_2039
-	mov	rdi, r15
+	jl	.label_1853
+	mov	rdi, r14
 	call	build_wcs_buffer
-	jmp	.label_2038
-.label_2035:
-	mov	rbp, qword ptr [r15 + 0x30]
-	mov	r14, qword ptr [r15 + 0x40]
-	mov	rax, qword ptr [r15 + 0x58]
-	cmp	r14, rax
-	cmovg	r14, rax
-	cmp	rbp, r14
-	jge	.label_2043
-	jmp	.label_2037
-.label_2031:
+	jmp	.label_1849
+.label_1859:
+	mov	rbx, qword ptr [r14 + 0x30]
+	mov	r15, qword ptr [r14 + 0x40]
+	mov	rax, qword ptr [r14 + 0x58]
+	cmp	r15, rax
+	cmovg	r15, rax
+	cmp	rbx, r15
+	jge	.label_1856
+	jmp	.label_1850
+.label_1852:
 	mov	cl, byte ptr [rax + rdx]
-	jmp	.label_2046
-	nop	dword ptr [rax + rax]
-.label_2037:
-	mov	rcx, qword ptr [r15]
-	mov	rax, qword ptr [r15 + 0x78]
-	add	rcx, qword ptr [r15 + 0x28]
-	mov	cl, byte ptr [rbp + rcx]
+	jmp	.label_1847
+	nop	word ptr cs:[rax + rax]
+.label_1850:
+	mov	rcx, qword ptr [r14]
+	mov	rax, qword ptr [r14 + 0x78]
+	add	rcx, qword ptr [r14 + 0x28]
+	mov	cl, byte ptr [rbx + rcx]
 	movzx	edx, cl
 	test	rax, rax
-	jne	.label_2031
-.label_2046:
-	movzx	ebx, cl
-	lea	eax, [rbx + 0x80]
+	jne	.label_1852
+.label_1847:
+	movzx	r12d, cl
+	lea	eax, [r12 + 0x80]
 	cmp	eax, 0x17f
-	ja	.label_2041
+	ja	.label_1854
 	call	__ctype_toupper_loc
 	mov	rax, qword ptr [rax]
-	mov	ebx, dword ptr [rax + rbx*4]
-.label_2041:
-	mov	rax, qword ptr [r15 + 8]
-	mov	byte ptr [rax + rbp], bl
-	inc	rbp
-	cmp	rbp, r14
-	jl	.label_2037
-	mov	rbp, r14
-.label_2043:
-	mov	qword ptr [r15 + 0x30], rbp
-	mov	qword ptr [r15 + 0x38], rbp
-	jmp	.label_2038
-.label_2039:
-	mov	rdx, qword ptr [r15 + 0x78]
+	mov	r12d, dword ptr [rax + r12*4]
+.label_1854:
+	mov	rax, qword ptr [r14 + 8]
+	mov	byte ptr [rax + rbx], r12b
+	inc	rbx
+	cmp	rbx, r15
+	jl	.label_1850
+	mov	rbx, r15
+.label_1856:
+	mov	qword ptr [r14 + 0x30], rbx
+	mov	qword ptr [r14 + 0x38], rbx
+	jmp	.label_1849
+.label_1853:
+	mov	rdx, qword ptr [r14 + 0x78]
 	test	rdx, rdx
-	je	.label_2038
-	mov	rax, qword ptr [r15 + 0x30]
-	mov	rcx, qword ptr [r15 + 0x40]
-	mov	rsi, qword ptr [r15 + 0x58]
+	je	.label_1849
+	mov	rax, qword ptr [r14 + 0x30]
+	mov	rcx, qword ptr [r14 + 0x40]
+	mov	rsi, qword ptr [r14 + 0x58]
 	cmp	rcx, rsi
 	cmovg	rcx, rsi
 	cmp	rax, rcx
-	jge	.label_2042
-	mov	rsi, qword ptr [r15 + 0x28]
+	jge	.label_1857
+	mov	rsi, qword ptr [r14 + 0x28]
 	add	rsi, rax
-	mov	rdi, qword ptr [r15]
-	mov	rbp, qword ptr [r15 + 8]
+	mov	rdi, qword ptr [r14]
+	mov	rbx, qword ptr [r14 + 8]
 	movzx	esi, byte ptr [rdi + rsi]
 	mov	dl, byte ptr [rdx + rsi]
-	mov	byte ptr [rbp + rax], dl
-	jmp	.label_2045
-	nop	word ptr [rax + rax]
-.label_2036:
-	mov	rdx, qword ptr [r15 + 0x78]
-	mov	rsi, qword ptr [r15]
-	mov	rdi, qword ptr [r15 + 8]
-	add	rsi, qword ptr [r15 + 0x28]
+	mov	byte ptr [rbx + rax], dl
+	jmp	.label_1848
+	nop	dword ptr [rax]
+.label_1860:
+	mov	rdx, qword ptr [r14 + 0x78]
+	mov	rsi, qword ptr [r14]
+	mov	rdi, qword ptr [r14 + 8]
+	add	rsi, qword ptr [r14 + 0x28]
 	movzx	esi, byte ptr [rax + rsi]
 	mov	dl, byte ptr [rdx + rsi]
 	mov	byte ptr [rdi + rax], dl
-.label_2045:
+.label_1848:
 	inc	rax
 	cmp	rax, rcx
-	jl	.label_2036
+	jl	.label_1860
 	mov	rax, rcx
-.label_2042:
-	mov	qword ptr [r15 + 0x30], rax
-	mov	qword ptr [r15 + 0x38], rax
-.label_2038:
-	xor	r14d, r14d
-.label_2032:
-	mov	eax, r14d
+.label_1857:
+	mov	qword ptr [r14 + 0x30], rax
+	mov	qword ptr [r14 + 0x38], rax
+.label_1849:
+	xor	eax, eax
+.label_1851:
 	add	rsp, 8
 	pop	rbx
+	pop	r12
 	pop	r14
 	pop	r15
-	pop	rbp
 	ret	
-	nop	dword ptr [rax]
+	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4153d0
+	#Procedure 0x413aa0
 
 	.globl merge_state_with_log
 	.type merge_state_with_log, @function
@@ -22243,117 +20460,70 @@ merge_state_with_log:
 	push	r12
 	push	rbx
 	sub	rsp, 0x18
-	mov	rbp, rdx
-	mov	rbx, rsi
+	mov	rbx, rdx
+	mov	r13, rsi
 	mov	r15, rdi
-	mov	r14, qword ptr [rbx + 0x48]
-	mov	r12, qword ptr [rbx + 0x98]
-	mov	rax, qword ptr [rbx + 0xb8]
-	cmp	r14, qword ptr [rbx + 0xc0]
-	jle	.label_2058
-	mov	qword ptr [rax + r14*8], rbp
-	mov	qword ptr [rbx + 0xc0], r14
-	jmp	.label_2047
-.label_2058:
+	mov	r14, qword ptr [r13 + 0x48]
+	mov	r12, qword ptr [r13 + 0x98]
+	mov	rax, qword ptr [r13 + 0xb8]
+	cmp	r14, qword ptr [r13 + 0xc0]
+	jle	.label_1866
+	mov	qword ptr [rax + r14*8], rbx
+	mov	qword ptr [r13 + 0xc0], r14
+	jmp	.label_1865
+.label_1866:
 	mov	rcx, qword ptr [rax + r14*8]
 	test	rcx, rcx
-	je	.label_2050
+	je	.label_1867
 	mov	rdx, qword ptr [rcx + 0x50]
-	test	rbp, rbp
-	je	.label_2062
-	mov	r13, qword ptr [rbp + 0x50]
+	test	rbx, rbx
+	je	.label_1868
+	mov	rbx, qword ptr [rbx + 0x50]
 	lea	rdi, [rsp]
-	mov	rsi, r13
+	mov	rsi, rbx
 	call	re_node_set_init_union
 	mov	dword ptr [r15], eax
 	test	eax, eax
-	jne	.label_2053
-	mov	rax, qword ptr [rbx + 0x48]
-	jmp	.label_2056
-.label_2050:
-	mov	qword ptr [rax + r14*8], rbp
-	jmp	.label_2047
-.label_2062:
+	jne	.label_1861
+	mov	rsi, qword ptr [r13 + 0x48]
+	test	rbx, rbx
+	sete	bpl
+	jmp	.label_1863
+.label_1867:
+	mov	qword ptr [rax + r14*8], rbx
+	jmp	.label_1865
+.label_1868:
 	mov	rax, qword ptr [rdx + 0x10]
 	mov	qword ptr [rsp + 0x10], rax
 	movups	xmm0, xmmword ptr [rdx]
 	movaps	xmmword ptr [rsp], xmm0
-	xor	r13d, r13d
-	mov	rax, r14
-.label_2056:
-	test	rax, rax
-	jle	.label_2061
-	lea	rcx, [rax - 1]
-	cmp	qword ptr [rbx + 0x58], rcx
-	je	.label_2063
-	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_2060
-	mov	rcx, qword ptr [rbx + 0x10]
-	nop	dword ptr [rax + rax]
-.label_2052:
-	mov	ebp, dword ptr [rcx + rax*4 - 4]
-	cmp	ebp, -1
-	jne	.label_2049
-	dec	rax
-	jg	.label_2052
-	mov	ecx, dword ptr [rbx + 0x70]
-	jmp	.label_2051
-.label_2060:
-	mov	rax, qword ptr [rbx + 8]
-	mov	rdx, qword ptr [rbx + 0x80]
-	movzx	eax, byte ptr [rax + rcx]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rdx, qword ptr [rdx + rcx*8]
-	mov	ecx, 1
-	bt	rdx, rax
-	jb	.label_2051
-	xor	ecx, ecx
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_2051
-	jmp	.label_2064
-.label_2049:
-	cmp	byte ptr [rbx + 0x8e], 0
-	jne	.label_2059
-.label_2057:
-	xor	ecx, ecx
-	cmp	ebp, 0xa
-	jne	.label_2051
-.label_2064:
-	mov	ecx, 2
-	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_2051
-	xor	ecx, ecx
-	jmp	.label_2051
-.label_2061:
-	mov	ecx, dword ptr [rbx + 0x70]
-	jmp	.label_2051
-.label_2063:
-	mov	ecx, dword ptr [rbx + 0xa0]
-	and	ecx, 2
-	xor	ecx, 0xa
-.label_2051:
+	mov	bpl, 1
+	mov	rsi, r14
+.label_1863:
+	dec	rsi
+	mov	edx, dword ptr [r13 + 0xa0]
+	mov	rdi, r13
+	call	re_string_context_at
 	lea	rdx, [rsp]
 	mov	rdi, r15
 	mov	rsi, r12
+	mov	ecx, eax
 	call	re_acquire_state_context
-	mov	rbp, rax
-	mov	rax, qword ptr [rbx + 0xb8]
-	mov	qword ptr [rax + r14*8], rbp
-	test	r13, r13
-	je	.label_2047
+	mov	rbx, rax
+	mov	rax, qword ptr [r13 + 0xb8]
+	mov	qword ptr [rax + r14*8], rbx
+	test	bpl, bpl
+	jne	.label_1865
 	mov	rdi, qword ptr [rsp + 0x10]
 	call	free
-.label_2047:
-	test	rbp, rbp
-	je	.label_2054
+.label_1865:
+	test	rbx, rbx
+	je	.label_1864
 	mov	rax, qword ptr [r12 + 0x98]
 	test	rax, rax
-	je	.label_2055
-	lea	r12, [rbp + 8]
-	mov	rdi, rbx
+	je	.label_1869
+	lea	r12, [rbx + 8]
+	mov	rdi, r13
 	mov	rsi, r12
 	mov	rdx, r14
 	call	check_subexp_matching_top
@@ -22361,27 +20531,27 @@ merge_state_with_log:
 	mov	dword ptr [r15], ecx
 	xor	eax, eax
 	test	ecx, ecx
-	jne	.label_2048
-	test	byte ptr [rbp + 0x68], 0x40
-	mov	rax, rbp
-	je	.label_2048
-	mov	rdi, rbx
+	jne	.label_1862
+	test	byte ptr [rbx + 0x68], 0x40
+	mov	rax, rbx
+	je	.label_1862
+	mov	rdi, r13
 	mov	rsi, r12
 	call	transit_state_bkref
 	mov	ecx, eax
 	mov	dword ptr [r15], ecx
 	xor	eax, eax
 	test	ecx, ecx
-	jne	.label_2048
-	mov	rax, qword ptr [rbx + 0xb8]
+	jne	.label_1862
+	mov	rax, qword ptr [r13 + 0xb8]
 	mov	rax, qword ptr [rax + r14*8]
-	jmp	.label_2048
-.label_2054:
-	mov	rax, rbp
-	jmp	.label_2048
-.label_2055:
-	mov	rax, rbp
-.label_2048:
+	jmp	.label_1862
+.label_1864:
+	mov	rax, rbx
+	jmp	.label_1862
+.label_1869:
+	mov	rax, rbx
+.label_1862:
 	add	rsp, 0x18
 	pop	rbx
 	pop	r12
@@ -22390,21 +20560,13 @@ merge_state_with_log:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2053:
+.label_1861:
 	xor	eax, eax
-	jmp	.label_2048
-.label_2059:
-	mov	edi, ebp
-	call	iswalnum
-	cmp	ebp, 0x5f
-	mov	ecx, 1
-	je	.label_2051
-	test	eax, eax
-	jne	.label_2051
-	jmp	.label_2057
+	jmp	.label_1862
+	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x4155d0
+	#Procedure 0x413bf0
 
 	.globl re_node_set_init_union
 	.type re_node_set_init_union, @function
@@ -22420,15 +20582,15 @@ re_node_set_init_union:
 	mov	r12, rsi
 	mov	rbp, rdi
 	test	r12, r12
-	je	.label_2070
+	je	.label_1877
 	mov	r13, qword ptr [r12 + 8]
 	test	r15, r15
-	je	.label_2075
+	je	.label_1874
 	test	r13, r13
-	jle	.label_2075
+	jle	.label_1874
 	mov	rdi, qword ptr [r15 + 8]
 	test	rdi, rdi
-	jle	.label_2075
+	jle	.label_1874
 	add	rdi, r13
 	mov	qword ptr [rbp], rdi
 	shl	rdi, 3
@@ -22436,80 +20598,80 @@ re_node_set_init_union:
 	mov	qword ptr [rbp + 0x10], rax
 	test	rax, rax
 	mov	ecx, 0xc
-	je	.label_2071
+	je	.label_1873
 	mov	qword ptr [rsp], rbp
 	xor	r14d, r14d
 	xor	ebx, ebx
 	xor	ebp, ebp
 	mov	rcx, rbx
-	jmp	.label_2068
-.label_2075:
+	jmp	.label_1872
+.label_1874:
 	test	r13, r13
-	jle	.label_2070
+	jle	.label_1877
 	mov	qword ptr [rbp + 8], r13
 	mov	r15, qword ptr [r12 + 8]
 	test	r15, r15
-	jle	.label_2067
+	jle	.label_1879
 	mov	qword ptr [rbp], r13
 	shl	r13, 3
 	mov	rdi, r13
 	call	malloc
 	mov	qword ptr [rbp + 0x10], rax
 	test	rax, rax
-	je	.label_2073
+	je	.label_1871
 	mov	rsi, qword ptr [r12 + 0x10]
 	shl	r15, 3
 	mov	rdi, rax
 	mov	rdx, r15
 	call	memcpy
-	jmp	.label_2065
-.label_2070:
+	jmp	.label_1881
+.label_1877:
 	test	r15, r15
-	je	.label_2067
+	je	.label_1879
 	mov	rdi, qword ptr [r15 + 8]
 	test	rdi, rdi
-	jle	.label_2067
+	jle	.label_1879
 	mov	qword ptr [rbp + 8], rdi
 	mov	rbx, qword ptr [r15 + 8]
 	test	rbx, rbx
-	jle	.label_2067
+	jle	.label_1879
 	mov	qword ptr [rbp], rdi
 	shl	rdi, 3
 	call	malloc
 	mov	qword ptr [rbp + 0x10], rax
 	test	rax, rax
-	je	.label_2073
+	je	.label_1871
 	mov	rsi, qword ptr [r15 + 0x10]
 	shl	rbx, 3
 	mov	rdi, rax
 	mov	rdx, rbx
 	call	memcpy
-	jmp	.label_2065
-.label_2067:
+	jmp	.label_1881
+.label_1879:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rbp], xmm0
 	mov	qword ptr [rbp + 0x10], 0
-	jmp	.label_2065
-.label_2069:
+	jmp	.label_1881
+.label_1880:
 	mov	rcx, rbx
 	nop	dword ptr [rax + rax]
-.label_2068:
+.label_1872:
 	cmp	rcx, qword ptr [r15 + 8]
-	jge	.label_2072
+	jge	.label_1870
 	mov	rdx, qword ptr [r12 + 0x10]
 	mov	rdx, qword ptr [rdx + rbp*8]
 	mov	rsi, qword ptr [r15 + 0x10]
 	mov	rsi, qword ptr [rsi + rcx*8]
 	cmp	rdx, rsi
-	jle	.label_2077
+	jle	.label_1876
 	inc	rcx
 	mov	qword ptr [rax + r14*8], rsi
 	inc	r14
 	mov	r13, qword ptr [r12 + 8]
 	cmp	rbp, r13
-	jl	.label_2068
-	jmp	.label_2072
-.label_2077:
+	jl	.label_1872
+	jmp	.label_1870
+.label_1876:
 	sete	bl
 	movzx	ebx, bl
 	add	rbx, rcx
@@ -22518,13 +20680,13 @@ re_node_set_init_union:
 	inc	r14
 	mov	r13, qword ptr [r12 + 8]
 	cmp	rbp, r13
-	jl	.label_2069
-	jmp	.label_2076
-.label_2072:
+	jl	.label_1880
+	jmp	.label_1875
+.label_1870:
 	mov	rbx, rcx
-.label_2076:
+.label_1875:
 	sub	r13, rbp
-	jle	.label_2066
+	jle	.label_1882
 	lea	rdi, [rax + r14*8]
 	mov	rax, qword ptr [r12 + 0x10]
 	lea	rsi, [rax + rbp*8]
@@ -22533,11 +20695,11 @@ re_node_set_init_union:
 	call	memcpy
 	sub	r14, rbp
 	add	r14, qword ptr [r12 + 8]
-	jmp	.label_2074
-.label_2066:
+	jmp	.label_1878
+.label_1882:
 	mov	rdx, qword ptr [r15 + 8]
 	sub	rdx, rbx
-	jle	.label_2074
+	jle	.label_1878
 	lea	rdi, [rax + r14*8]
 	mov	rax, qword ptr [r15 + 0x10]
 	lea	rsi, [rax + rbx*8]
@@ -22545,12 +20707,12 @@ re_node_set_init_union:
 	call	memcpy
 	sub	r14, rbx
 	add	r14, qword ptr [r15 + 8]
-.label_2074:
+.label_1878:
 	mov	rax, qword ptr [rsp]
 	mov	qword ptr [rax + 8], r14
-.label_2065:
+.label_1881:
 	xor	ecx, ecx
-.label_2071:
+.label_1873:
 	mov	eax, ecx
 	add	rsp, 8
 	pop	rbx
@@ -22560,55 +20722,15 @@ re_node_set_init_union:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2073:
+.label_1871:
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rbp], xmm0
 	mov	ecx, 0xc
-	jmp	.label_2071
+	jmp	.label_1873
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4157c0
-
-	.globl search_cur_bkref_entry
-	.type search_cur_bkref_entry, @function
-search_cur_bkref_entry:
-	mov	r8, qword ptr [rdi + 0xc8]
-	xor	eax, eax
-	test	r8, r8
-	jle	.label_2078
-	mov	r9, qword ptr [rdi + 0xd8]
-	xor	eax, eax
-	mov	r11, r8
-	nop	word ptr [rax + rax]
-.label_2080:
-	lea	r10, [rax + r11]
-	mov	rdx, r10
-	shr	rdx, 0x3f
-	add	rdx, r10
-	sar	rdx, 1
-	lea	rcx, [rdx + rdx*4]
-	cmp	qword ptr [r9 + rcx*8 + 8], rsi
-	cmovge	r11, rdx
-	lea	rcx, [rdx + 1]
-	cmovl	rax, rcx
-	cmp	rax, r11
-	jl	.label_2080
-.label_2078:
-	cmp	rax, r8
-	jge	.label_2081
-	mov	rcx, qword ptr [rdi + 0xd8]
-	lea	rdx, [rax + rax*4]
-	cmp	qword ptr [rcx + rdx*8 + 8], rsi
-	je	.label_2079
-.label_2081:
-	mov	rax, -1
-.label_2079:
-	ret	
-	nop	word ptr [rax + rax]
-	.section	.text
-	.align	16
-	#Procedure 0x415830
+	#Procedure 0x413de0
 
 	.globl get_subexp_sub
 	.type get_subexp_sub, @function
@@ -22634,14 +20756,14 @@ get_subexp_sub:
 	call	check_arrival
 	mov	ebp, eax
 	test	ebp, ebp
-	jne	.label_2082
+	jne	.label_1887
 	mov	rsi, qword ptr [r15]
 	mov	qword ptr [rsp + 0x20], r15
 	mov	rdi, qword ptr [r12 + 8]
 	mov	r15, qword ptr [r13 + 0xc8]
 	mov	rax, qword ptr [r13 + 0xd0]
 	cmp	r15, rax
-	jl	.label_2090
+	jl	.label_1890
 	mov	qword ptr [rsp + 0x10], rsi
 	mov	qword ptr [rsp + 0x18], rdi
 	mov	rdi, qword ptr [r13 + 0xd8]
@@ -22649,7 +20771,7 @@ get_subexp_sub:
 	lea	rsi, [rax + rax*4]
 	call	realloc
 	test	rax, rax
-	je	.label_2088
+	je	.label_1888
 	mov	qword ptr [r13 + 0xd8], rax
 	mov	r15, qword ptr [r13 + 0xc8]
 	mov	rbp, qword ptr [r13 + 0xd0]
@@ -22663,19 +20785,19 @@ get_subexp_sub:
 	mov	qword ptr [r13 + 0xd0], rbp
 	mov	rdi, qword ptr [rsp + 0x18]
 	mov	rsi, qword ptr [rsp + 0x10]
-.label_2090:
+.label_1890:
 	test	r15, r15
-	jle	.label_2083
+	jle	.label_1891
 	lea	rcx, [r15 - 1]
 	mov	rax, qword ptr [r13 + 0xd8]
 	lea	rcx, [rcx + rcx*4]
 	cmp	qword ptr [rax + rcx*8 + 8], r14
-	jne	.label_2084
+	jne	.label_1885
 	mov	byte ptr [rax + rcx*8 + 0x20], 1
-	jmp	.label_2084
-.label_2083:
+	jmp	.label_1885
+.label_1891:
 	mov	rax, qword ptr [r13 + 0xd8]
-.label_2084:
+.label_1885:
 	lea	rcx, [r15 + r15*4]
 	mov	qword ptr [rax + rcx*8], rbx
 	mov	qword ptr [rax + rcx*8 + 8], r14
@@ -22691,36 +20813,36 @@ get_subexp_sub:
 	mov	byte ptr [rax + rcx*8 + 0x20], 0
 	movsxd	rax, dword ptr [r13 + 0xe0]
 	cmp	rax, rdi
-	jge	.label_2087
+	jge	.label_1886
 	mov	dword ptr [r13 + 0xe0], edi
-.label_2087:
+.label_1886:
 	add	r14, qword ptr [r12 + 8]
 	mov	rax, qword ptr [rsp + 0x20]
 	sub	r14, qword ptr [rax]
 	mov	rax, qword ptr [r13 + 0x40]
 	mov	r15, qword ptr [r13 + 0xc0]
 	cmp	rax, r14
-	jg	.label_2089
+	jg	.label_1889
 	cmp	rax, qword ptr [r13 + 0x58]
-	jl	.label_2085
-.label_2089:
+	jl	.label_1883
+.label_1889:
 	mov	rax, qword ptr [r13 + 0x30]
 	cmp	rax, r14
-	jg	.label_2086
+	jg	.label_1884
 	cmp	rax, qword ptr [r13 + 0x58]
-	jge	.label_2086
-.label_2085:
+	jge	.label_1884
+.label_1883:
 	lea	esi, [r14 + 1]
 	mov	rdi, r13
 	call	extend_buffers
 	mov	ebp, eax
 	test	ebp, ebp
-	jne	.label_2082
-.label_2086:
+	jne	.label_1887
+.label_1884:
 	xor	ebp, ebp
 	mov	rdx, r14
 	sub	rdx, r15
-	jle	.label_2082
+	jle	.label_1887
 	mov	rax, qword ptr [r13 + 0xb8]
 	lea	rdi, [rax + r15*8 + 8]
 	shl	rdx, 3
@@ -22728,7 +20850,7 @@ get_subexp_sub:
 	xor	esi, esi
 	call	memset
 	mov	qword ptr [r13 + 0xc0], r14
-.label_2082:
+.label_1887:
 	mov	eax, ebp
 	add	rsp, 0x28
 	pop	rbx
@@ -22738,15 +20860,15 @@ get_subexp_sub:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2088:
+.label_1888:
 	mov	rdi, qword ptr [r13 + 0xd8]
 	call	free
 	mov	ebp, 0xc
-	jmp	.label_2082
+	jmp	.label_1887
 	nop	dword ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x415a10
+	#Procedure 0x413fc0
 
 	.globl check_arrival
 	.type check_arrival, @function
@@ -22757,539 +20879,419 @@ check_arrival:
 	push	r13
 	push	r12
 	push	rbx
-	sub	rsp, 0xc8
-	mov	qword ptr [rsp + 0x68], r9
-	mov	r13, rcx
-	mov	r15, rdx
-	mov	r12, qword ptr [rdi + 0x98]
-	mov	dword ptr [rsp + 0x9c], 0
-	mov	rax, qword ptr [r12]
-	mov	rcx, r15
+	sub	rsp, 0xb8
+	mov	qword ptr [rsp + 0x48], r9
+	mov	rbp, rcx
+	mov	r15, rsi
+	mov	rax, qword ptr [rdi + 0x98]
+	mov	qword ptr [rsp + 0x58], rax
+	mov	dword ptr [rsp + 0x8c], 0
+	mov	rax, qword ptr [rax]
+	mov	rcx, rdx
 	shl	rcx, 4
 	mov	rax, qword ptr [rax + rcx]
-	mov	qword ptr [rsp + 0x60], rax
-	mov	rbp, qword ptr [rsi + 8]
+	mov	qword ptr [rsp + 0x40], rax
+	mov	rbx, qword ptr [r15 + 8]
 	movsxd	rax, dword ptr [rdi + 0xe0]
 	lea	rcx, [rax + r9]
-	cmp	rbp, rcx
-	jle	.label_2095
-	mov	qword ptr [rsp + 0x20], r8
-	mov	rbx, qword ptr [rsi + 0x10]
-.label_2140:
-	mov	rax, qword ptr [rsi]
-	test	rax, rax
-	cmove	rax, r13
-	mov	rcx, qword ptr [rdi + 0x48]
-	mov	rdx, qword ptr [rdi + 0xb8]
-	mov	qword ptr [rdi + 0xb8], rbx
-	mov	rbx, rax
-	mov	qword ptr [rdi + 0x48], rbx
-	test	rbx, rbx
-	jle	.label_2115
-	lea	rax, [rbx - 1]
-	cmp	qword ptr [rdi + 0x58], rax
-	je	.label_2121
-	mov	qword ptr [rsp + 0x40], rdx
-	mov	qword ptr [rsp + 0x48], rcx
-	cmp	dword ptr [rdi + 0x90], 2
-	jl	.label_2124
-	mov	rax, qword ptr [rdi + 0x10]
-	mov	rcx, rbx
-	nop	word ptr [rax + rax]
-.label_2137:
-	mov	ebp, dword ptr [rax + rcx*4 - 4]
-	cmp	ebp, -1
-	jne	.label_2139
-	dec	rcx
-	jg	.label_2137
-	jmp	.label_2138
-.label_2124:
-	mov	rcx, qword ptr [rdi + 8]
-	mov	rdx, qword ptr [rdi + 0x80]
-	mov	r14, rdi
-	movzx	eax, byte ptr [rcx + rax]
-	mov	cl, al
-	shr	cl, 6
-	movzx	ecx, cl
-	mov	rcx, qword ptr [rdx + rcx*8]
-	mov	edx, 1
-	bt	rcx, rax
-	jb	.label_2091
-	xor	edx, edx
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_2091
-	jmp	.label_2097
-.label_2139:
-	cmp	byte ptr [rdi + 0x8e], 0
-	mov	r14, rdi
-	jne	.label_2099
-.label_2135:
-	xor	edx, edx
-	cmp	ebp, 0xa
-	jne	.label_2091
-.label_2097:
-	mov	edx, 2
-	cmp	byte ptr [r14 + 0x8d], 0
-	jne	.label_2091
-	xor	edx, edx
-	jmp	.label_2091
-.label_2095:
-	mov	qword ptr [rsp + 0x58], r12
-	movabs	rdx, 0x7fffffffffffffff
-	sub	rdx, rbp
-	mov	r12d, 0xc
-	cmp	rdx, rcx
-	jle	.label_2106
-	mov	qword ptr [rsp + 0x38], rdi
-	mov	qword ptr [rsp + 0x20], r8
-	mov	rcx, qword ptr [rsp + 0x68]
-	lea	r14, [rax + rcx + 1]
-	lea	rcx, [r14 + rbp]
-	mov	rax, rcx
-	shr	rax, 0x3d
-	jne	.label_2106
-	mov	rdi, qword ptr [rsi + 0x10]
-	mov	qword ptr [rsp + 0x50], rsi
-	lea	rsi, [rcx*8]
-	mov	qword ptr [rsp + 0x78], rcx
-	call	realloc
-	mov	rbx, rax
-	test	rbx, rbx
-	je	.label_2106
-	mov	r12, qword ptr [rsp + 0x50]
-	mov	qword ptr [r12 + 0x10], rbx
-	mov	rax, qword ptr [rsp + 0x78]
-	mov	qword ptr [r12 + 8], rax
-	lea	rdi, [rbx + rbp*8]
-	shl	r14, 3
-	xor	esi, esi
-	mov	rdx, r14
-	call	memset
-	mov	rdi, qword ptr [rsp + 0x38]
-	mov	rsi, r12
-	mov	r12, qword ptr [rsp + 0x58]
-	jmp	.label_2140
-.label_2115:
-	mov	qword ptr [rsp + 0x40], rdx
-	mov	qword ptr [rsp + 0x48], rcx
-.label_2138:
-	mov	r14, rdi
-	mov	edx, dword ptr [r14 + 0x70]
-	jmp	.label_2091
-.label_2121:
-	mov	qword ptr [rsp + 0x40], rdx
-	mov	qword ptr [rsp + 0x48], rcx
-	mov	r14, rdi
-	mov	edx, dword ptr [r14 + 0xa0]
-	and	edx, 2
-	xor	edx, 0xa
-.label_2091:
-	cmp	rbx, r13
-	jne	.label_2100
-	mov	dword ptr [rsp + 0x70], edx
-	mov	qword ptr [rsp + 0x50], rsi
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
-	movaps	xmmword ptr [rsp + 0x80], xmm0
+	cmp	rbx, rcx
+	jle	.label_1920
+	mov	qword ptr [rsp + 0x68], rdx
+	mov	qword ptr [rsp + 0x18], r8
+	mov	r12, rdi
+	mov	r13, qword ptr [r15 + 0x10]
+.label_1897:
+	mov	qword ptr [rsp + 0x50], r12
+	mov	r14, qword ptr [r15]
+	test	r14, r14
+	cmove	r14, rbp
+	mov	rdi, r12
+	mov	r12, qword ptr [rdi + 0x48]
+	mov	rbx, qword ptr [rdi + 0xb8]
+	mov	qword ptr [rdi + 0xb8], r13
+	mov	qword ptr [rdi + 0x48], r14
+	lea	rsi, [r14 - 1]
+	mov	edx, dword ptr [rdi + 0xa0]
+	call	re_string_context_at
+	cmp	r14, rbp
+	jne	.label_1907
+	mov	dword ptr [rsp + 0x60], eax
+	mov	rbp, r14
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
+	movaps	xmmword ptr [rsp + 0x70], xmm0
 	mov	edi, 8
 	call	malloc
-	mov	qword ptr [rsp + 0x90], rax
+	mov	qword ptr [rsp + 0x80], rax
 	test	rax, rax
-	je	.label_2108
-	mov	r13, rbx
-	mov	qword ptr [rax], r15
-	mov	dword ptr [rsp + 0x9c], 0
-	lea	rsi, [rsp + 0x80]
-	mov	rdi, r12
-	mov	r15, r12
-	mov	rdx, qword ptr [rsp + 0x60]
-	mov	ebp, dword ptr [rsp + 0x100]
-	mov	ecx, ebp
+	je	.label_1913
+	mov	qword ptr [rsp + 0x28], rbx
+	mov	qword ptr [rsp + 0x30], r15
+	mov	rcx, qword ptr [rsp + 0x68]
+	mov	qword ptr [rax], rcx
+	mov	dword ptr [rsp + 0x8c], 0
+	lea	rsi, [rsp + 0x70]
+	mov	r15, qword ptr [rsp + 0x58]
+	mov	rdi, r15
+	mov	rdx, qword ptr [rsp + 0x40]
+	mov	ecx, dword ptr [rsp + 0xf0]
 	call	check_arrival_expand_ecl
-	mov	r12d, eax
-	mov	dword ptr [rsp + 0x9c], r12d
-	test	r12d, r12d
-	jne	.label_2119
-	mov	rbx, qword ptr [rsp + 0x88]
-	jmp	.label_2123
-.label_2100:
-	mov	rax, qword ptr [r14 + 0xb8]
-	mov	rcx, qword ptr [rax + rbx*8]
-	mov	r13, rbx
-	test	rcx, rcx
-	je	.label_2105
-	test	byte ptr [rcx + 0x68], 0x40
-	jne	.label_2134
-	mov	dword ptr [rsp + 0x70], edx
-	mov	r15, r12
-	mov	qword ptr [rsp + 0x50], rsi
-	xorps	xmm0, xmm0
-	movaps	xmmword ptr [rsp + 0x80], xmm0
-	mov	qword ptr [rsp + 0x90], 0
-	xor	ebx, ebx
-	jmp	.label_2117
-.label_2105:
-	mov	r15, r12
-	mov	qword ptr [rsp + 0x50], rsi
-	xorps	xmm0, xmm0
-	movaps	xmmword ptr [rsp + 0x80], xmm0
-	mov	qword ptr [rsp + 0x90], 0
-	xor	ecx, ecx
-	jmp	.label_2131
-.label_2134:
-	mov	rbx, qword ptr [rcx + 0x10]
-	mov	qword ptr [rsp + 0x88], rbx
-	mov	rbp, qword ptr [rcx + 0x10]
+	mov	r14d, eax
+	mov	dword ptr [rsp + 0x8c], r14d
+	test	r14d, r14d
+	jne	.label_1922
+	mov	qword ptr [rsp + 0x20], r12
+	mov	rbx, qword ptr [rsp + 0x78]
+	mov	r13, qword ptr [rsp + 0x50]
+	mov	r8, rbp
+	jmp	.label_1924
+.label_1907:
+	mov	rbp, qword ptr [r13 + r14*8]
+	mov	rcx, r14
 	test	rbp, rbp
-	jle	.label_2098
-	mov	dword ptr [rsp + 0x70], edx
-	mov	qword ptr [rsp + 0x78], rcx
-	mov	qword ptr [rsp + 0x50], rsi
-	mov	qword ptr [rsp + 0x80], rbx
+	je	.label_1892
+	mov	qword ptr [rsp + 0x28], rbx
+	mov	qword ptr [rsp + 0x20], r12
+	mov	qword ptr [rsp + 0x30], r15
+	test	byte ptr [rbp + 0x68], 0x40
+	jne	.label_1895
+	mov	dword ptr [rsp + 0x60], eax
+	xorps	xmm0, xmm0
+	movaps	xmmword ptr [rsp + 0x70], xmm0
+	mov	qword ptr [rsp + 0x80], 0
+	xor	ebx, ebx
+	mov	r13, qword ptr [rsp + 0x50]
+	mov	r15, qword ptr [rsp + 0x58]
+	mov	r8, rcx
+	jmp	.label_1900
+.label_1892:
+	mov	qword ptr [rsp + 0x28], rbx
+	mov	qword ptr [rsp + 0x20], r12
+	mov	qword ptr [rsp + 0x30], r15
+	xorps	xmm0, xmm0
+	movaps	xmmword ptr [rsp + 0x70], xmm0
+	mov	qword ptr [rsp + 0x80], 0
+	xor	ebp, ebp
+	mov	r13, qword ptr [rsp + 0x50]
+	mov	r8, rcx
+	jmp	.label_1918
+.label_1895:
+	mov	rbx, qword ptr [rbp + 0x10]
+	mov	qword ptr [rsp + 0x78], rbx
+	mov	r14, qword ptr [rbp + 0x10]
+	test	r14, r14
+	mov	r15, qword ptr [rsp + 0x58]
+	mov	r8, rcx
+	jle	.label_1911
+	mov	r12, r8
+	mov	dword ptr [rsp + 0x60], eax
+	mov	qword ptr [rsp + 0x70], rbx
 	lea	rdi, [rbx*8]
 	call	malloc
-	mov	qword ptr [rsp + 0x90], rax
+	mov	qword ptr [rsp + 0x80], rax
 	test	rax, rax
-	je	.label_2108
-	mov	r15, r12
-	mov	r12, qword ptr [rsp + 0x78]
-	mov	rsi, qword ptr [r12 + 0x18]
-	shl	rbp, 3
+	je	.label_1913
+	mov	rsi, qword ptr [rbp + 0x18]
+	shl	r14, 3
 	mov	rdi, rax
-	mov	rdx, rbp
-	call	memcpy
-	mov	rcx, r12
-	mov	dword ptr [rsp + 0x9c], 0
-	jmp	.label_2117
-.label_2098:
-	mov	dword ptr [rsp + 0x70], edx
-	mov	r15, r12
-	mov	qword ptr [rsp + 0x50], rsi
-	xorps	xmm0, xmm0
-	movaps	xmmword ptr [rsp + 0x80], xmm0
-	mov	qword ptr [rsp + 0x90], 0
-	xor	ebx, ebx
-	mov	dword ptr [rsp + 0x9c], 0
-.label_2117:
-	mov	ebp, dword ptr [rsp + 0x100]
-	test	byte ptr [rcx + 0x68], 0x40
-	je	.label_2131
-.label_2123:
-	test	rbx, rbx
-	je	.label_2136
-	lea	rsi, [rsp + 0x80]
-	mov	rdi, r14
-	mov	rdx, r13
-	mov	rcx, qword ptr [rsp + 0x60]
-	mov	r8d, ebp
-	call	expand_bkref_cache
-	mov	r12d, eax
-	mov	dword ptr [rsp + 0x9c], r12d
-	test	r12d, r12d
-	jne	.label_2119
-.label_2136:
-	lea	rdi, [rsp + 0x9c]
-	lea	rdx, [rsp + 0x80]
-	mov	rsi, r15
-	mov	ecx, dword ptr [rsp + 0x70]
-	call	re_acquire_state_context
-	mov	rcx, rax
-	test	rcx, rcx
-	jne	.label_2133
-	mov	eax, dword ptr [rsp + 0x9c]
-	test	eax, eax
-	jne	.label_2096
-.label_2133:
-	mov	rax, qword ptr [r14 + 0xb8]
-	mov	qword ptr [rax + r13*8], rcx
-.label_2131:
-	cmp	r13, qword ptr [rsp + 0x68]
-	jge	.label_2104
-	lea	rax, [r13 + 1]
-	mov	qword ptr [rsp + 0x30], rax
-	xor	ebp, ebp
-	mov	qword ptr [rsp + 0x38], r14
-	mov	qword ptr [rsp + 0x58], r15
-	mov	r12, qword ptr [rsp + 0x60]
-	jmp	.label_2107
-	nop	word ptr [rax + rax]
-.label_2110:
-	inc	rbp
-	test	rcx, rcx
-	mov	rax, qword ptr [r14 + 0xb8]
-	mov	qword ptr [rax + r13*8 + 8], rcx
-	mov	eax, 0
-	cmovne	rbp, rax
-	inc	qword ptr [rsp + 0x30]
-	mov	rbx, qword ptr [rsp + 0x78]
-	cmp	rbx, qword ptr [rsp + 0x68]
-	mov	r13, rbx
-	jl	.label_2107
-	jmp	.label_2125
-.label_2143:
-	mov	edi, ebx
-	call	iswalnum
-	cmp	ebx, 0x5f
-	mov	ecx, 1
-	je	.label_2094
-	test	eax, eax
-	je	.label_2128
-	jmp	.label_2094
-	nop	word ptr cs:[rax + rax]
-.label_2107:
-	movsxd	rax, dword ptr [r14 + 0xe0]
-	cmp	rbp, rax
-	jg	.label_2112
-	mov	r15, rcx
-	mov	qword ptr [rsp + 0x88], 0
-	mov	rax, qword ptr [r14 + 0xb8]
-	mov	rsi, qword ptr [rax + r13*8 + 8]
-	test	rsi, rsi
-	je	.label_2103
-	add	rsi, 8
-	lea	rdi, [rsp + 0x80]
-	call	re_node_set_merge
-	mov	dword ptr [rsp + 0x9c], eax
-	test	eax, eax
-	jne	.label_2096
-.label_2103:
-	mov	rax, r15
-	mov	qword ptr [rsp + 0x78], rax
-	test	rax, rax
-	je	.label_2130
-	mov	r15, qword ptr [r14 + 0x98]
-	mov	dword ptr [rsp + 0xc4], 0
-	xorps	xmm0, xmm0
-	movaps	xmmword ptr [rsp + 0xa0], xmm0
-	mov	qword ptr [rsp + 0xb0], 0
-	cmp	qword ptr [rax + 0x28], 0
-	mov	edi, 0
-	jle	.label_2101
-	mov	qword ptr [rsp + 0x28], rbp
-	mov	qword ptr [rsp + 0x70], r13
-	xor	r12d, r12d
-	nop	word ptr [rax + rax]
-.label_2126:
-	mov	rax, qword ptr [rax + 0x30]
-	mov	r13, qword ptr [rax + r12*8]
-	mov	rsi, qword ptr [r15]
-	mov	rbx, r13
-	shl	rbx, 4
-	test	byte ptr [rsi + rbx + 0xa], 0x10
-	je	.label_2116
-	mov	rdi, r15
-	mov	rsi, r13
 	mov	rdx, r14
-	mov	rbp, qword ptr [rsp + 0x70]
-	mov	rcx, rbp
+	call	memcpy
+	mov	dword ptr [rsp + 0x8c], 0
+	mov	r13, qword ptr [rsp + 0x50]
+	mov	r8, r12
+	jmp	.label_1900
+.label_1920:
+	movabs	rsi, 0x7fffffffffffffff
+	sub	rsi, rbx
+	mov	r14d, 0xc
+	cmp	rsi, rcx
+	jle	.label_1894
+	mov	qword ptr [rsp + 0x18], r8
+	mov	rcx, qword ptr [rsp + 0x48]
+	lea	rcx, [rax + rcx + 1]
+	lea	rsi, [rcx + rbx]
+	mov	rax, rsi
+	shr	rax, 0x3d
+	jne	.label_1894
+	mov	qword ptr [rsp + 0x60], rcx
+	mov	qword ptr [rsp + 0x68], rdx
+	mov	r12, rdi
+	mov	rdi, qword ptr [r15 + 0x10]
+	mov	qword ptr [rsp + 0x38], rsi
+	lea	rsi, [rsi*8]
+	call	realloc
+	mov	r13, rax
+	test	r13, r13
+	je	.label_1894
+	mov	qword ptr [r15 + 0x10], r13
+	mov	rax, qword ptr [rsp + 0x38]
+	mov	qword ptr [r15 + 8], rax
+	lea	rdi, [r13 + rbx*8]
+	mov	rdx, qword ptr [rsp + 0x60]
+	shl	rdx, 3
+	xor	esi, esi
+	call	memset
+	jmp	.label_1897
+.label_1911:
+	mov	dword ptr [rsp + 0x60], eax
+	xorps	xmm0, xmm0
+	movaps	xmmword ptr [rsp + 0x70], xmm0
+	mov	qword ptr [rsp + 0x80], 0
+	xor	ebx, ebx
+	mov	dword ptr [rsp + 0x8c], 0
+	mov	r13, qword ptr [rsp + 0x50]
+.label_1900:
+	test	byte ptr [rbp + 0x68], 0x40
+	je	.label_1918
+.label_1924:
+	test	rbx, rbx
+	mov	rcx, qword ptr [rsp + 0x40]
+	je	.label_1919
+	lea	rsi, [rsp + 0x70]
+	mov	rdi, r13
+	mov	rdx, r8
+	mov	rbx, r8
+	mov	r8d, dword ptr [rsp + 0xf0]
+	call	expand_bkref_cache
+	mov	r8, rbx
+	mov	r14d, eax
+	mov	dword ptr [rsp + 0x8c], r14d
+	test	r14d, r14d
+	jne	.label_1922
+.label_1919:
+	mov	rbx, r8
+	lea	rdi, [rsp + 0x8c]
+	lea	rdx, [rsp + 0x70]
+	mov	rsi, r15
+	mov	ecx, dword ptr [rsp + 0x60]
+	call	re_acquire_state_context
+	mov	rbp, rax
+	test	rbp, rbp
+	jne	.label_1927
+	mov	eax, dword ptr [rsp + 0x8c]
+	test	eax, eax
+	jne	.label_1893
+.label_1927:
+	mov	rax, qword ptr [r13 + 0xb8]
+	mov	r8, rbx
+	mov	qword ptr [rax + r8*8], rbp
+.label_1918:
+	mov	r15, qword ptr [rsp + 0x48]
+	cmp	r8, r15
+	jge	.label_1903
+	lea	rbx, [rsp + 0x70]
+	xor	ecx, ecx
+.label_1910:
+	mov	qword ptr [rsp + 0x68], r8
+	mov	qword ptr [rsp + 0x60], rbp
+	movsxd	rax, dword ptr [r13 + 0xe0]
+	cmp	rcx, rax
+	jg	.label_1905
+	mov	qword ptr [rsp + 0x38], rcx
+	mov	qword ptr [rsp + 0x78], 0
+	mov	rax, qword ptr [r13 + 0xb8]
+	mov	rsi, qword ptr [rax + r8*8 + 8]
+	test	rsi, rsi
+	mov	r15, rbx
+	je	.label_1906
+	add	rsi, 8
+	mov	rdi, r15
+	mov	rbx, r8
+	call	re_node_set_merge
+	mov	r8, rbx
+	mov	dword ptr [rsp + 0x8c], eax
+	test	eax, eax
+	jne	.label_1893
+.label_1906:
+	test	rbp, rbp
+	je	.label_1914
+	mov	rbx, qword ptr [r13 + 0x98]
+	mov	dword ptr [rsp + 0xb4], 0
+	xorps	xmm0, xmm0
+	movaps	xmmword ptr [rsp + 0x90], xmm0
+	mov	qword ptr [rsp + 0xa0], 0
+	cmp	qword ptr [rbp + 0x28], 0
+	mov	edi, 0
+	jle	.label_1917
+	xor	r12d, r12d
+	nop	dword ptr [rax]
+.label_1902:
+	mov	rax, qword ptr [rbp + 0x30]
+	mov	r15, qword ptr [rax + r12*8]
+	mov	rsi, qword ptr [rbx]
+	mov	rbp, r15
+	shl	rbp, 4
+	test	byte ptr [rsi + rbp + 0xa], 0x10
+	je	.label_1925
+	mov	rdi, rbx
+	mov	rsi, r15
+	mov	rdx, r13
+	mov	rcx, r8
+	mov	r14, r8
 	call	check_node_accept_bytes
 	cmp	eax, 2
-	jl	.label_2127
-	mov	rcx, qword ptr [r15 + 0x18]
-	mov	rdx, qword ptr [rcx + r13*8]
-	mov	rcx, r14
-	movsxd	r14, eax
-	add	r14, rbp
-	mov	rax, qword ptr [rcx + 0xb8]
-	mov	rsi, qword ptr [rax + r14*8]
-	mov	qword ptr [rsp + 0xa8], 0
+	jl	.label_1899
+	mov	rcx, qword ptr [rbx + 0x18]
+	mov	rdx, r14
+	mov	r14, rbx
+	mov	rcx, qword ptr [rcx + r15*8]
+	movsxd	rbp, eax
+	add	rbp, rdx
+	mov	rax, qword ptr [r13 + 0xb8]
+	mov	rsi, qword ptr [rax + rbp*8]
+	mov	qword ptr [rsp + 0x98], 0
 	test	rsi, rsi
-	lea	rbx, [rsp + 0xa0]
-	je	.label_2129
+	lea	r13, [rsp + 0x90]
+	je	.label_1901
 	add	rsi, 8
-	mov	rdi, rbx
-	mov	rbp, rdx
+	mov	rdi, r13
+	mov	rbx, rcx
 	call	re_node_set_merge
-	mov	rdx, rbp
-	mov	ebp, eax
-	mov	dword ptr [rsp + 0xc4], ebp
-	test	ebp, ebp
-	jne	.label_2092
-.label_2129:
-	mov	rdi, rbx
-	mov	rsi, rdx
+	mov	rcx, rbx
+	mov	ebx, eax
+	mov	dword ptr [rsp + 0xb4], ebx
+	test	ebx, ebx
+	jne	.label_1909
+.label_1901:
+	mov	rdi, r13
+	mov	rsi, rcx
 	call	re_node_set_insert
 	test	al, al
-	je	.label_2122
-	lea	rdi, [rsp + 0xc4]
-	mov	rsi, r15
-	mov	rdx, rbx
+	je	.label_1912
+	lea	rdi, [rsp + 0xb4]
+	mov	rsi, r14
+	mov	rdx, r13
 	call	re_acquire_state
-	mov	rbx, qword ptr [rsp + 0x38]
-	mov	rcx, qword ptr [rbx + 0xb8]
-	mov	qword ptr [rcx + r14*8], rax
-	mov	rax, qword ptr [rbx + 0xb8]
-	cmp	qword ptr [rax + r14*8], 0
+	mov	r13, qword ptr [rsp + 0x50]
+	mov	rcx, qword ptr [r13 + 0xb8]
+	mov	qword ptr [rcx + rbp*8], rax
+	mov	rax, qword ptr [r13 + 0xb8]
+	cmp	qword ptr [rax + rbp*8], 0
+	jne	.label_1915
+	mov	ebx, dword ptr [rsp + 0xb4]
+	test	ebx, ebx
+	je	.label_1915
+	jmp	.label_1909
+	nop	dword ptr [rax]
+.label_1899:
 	mov	r14, rbx
-	jne	.label_2102
-	mov	ebp, dword ptr [rsp + 0xc4]
-	test	ebp, ebp
-	je	.label_2102
-	jmp	.label_2092
-	nop	dword ptr [rax + rax]
-.label_2127:
 	test	eax, eax
-	jne	.label_2102
-	mov	rsi, qword ptr [r15]
-	nop	word ptr [rax + rax]
-.label_2116:
-	add	rsi, rbx
-	mov	rdi, r14
-	mov	rdx, qword ptr [rsp + 0x70]
+	jne	.label_1915
+	mov	rsi, qword ptr [r14]
+	mov	r8, qword ptr [rsp + 0x68]
+	mov	rbx, r14
+	nop	word ptr cs:[rax + rax]
+.label_1925:
+	mov	r14, rbx
+	add	rsi, rbp
+	mov	rdi, r13
+	mov	rdx, r8
 	call	check_node_accept
 	test	al, al
-	je	.label_2118
-.label_2102:
-	mov	rax, qword ptr [r15 + 0x18]
-	mov	rsi, qword ptr [rax + r13*8]
-	lea	rdi, [rsp + 0x80]
+	je	.label_1896
+.label_1915:
+	mov	rax, qword ptr [r14 + 0x18]
+	mov	rsi, qword ptr [rax + r15*8]
+	lea	rdi, [rsp + 0x70]
 	call	re_node_set_insert
 	test	al, al
-	je	.label_2122
-.label_2118:
+	je	.label_1912
+.label_1896:
 	inc	r12
-	mov	rax, qword ptr [rsp + 0x78]
-	cmp	r12, qword ptr [rax + 0x28]
-	jl	.label_2126
-	mov	rdi, qword ptr [rsp + 0xb0]
-	mov	r12, qword ptr [rsp + 0x60]
-	mov	r13, qword ptr [rsp + 0x70]
-	mov	rbp, qword ptr [rsp + 0x28]
-.label_2101:
+	mov	rbp, qword ptr [rsp + 0x60]
+	cmp	r12, qword ptr [rbp + 0x28]
+	mov	r8, qword ptr [rsp + 0x68]
+	mov	rbx, r14
+	jl	.label_1902
+	mov	rdi, qword ptr [rsp + 0xa0]
+	lea	r15, [rsp + 0x70]
+.label_1917:
+	mov	rbx, r8
 	call	free
-	mov	dword ptr [rsp + 0x9c], 0
-.label_2130:
-	mov	r15, r12
-	lea	rbx, [r13 + 1]
-	cmp	qword ptr [rsp + 0x88], 0
-	je	.label_2142
-	mov	qword ptr [rsp + 0x28], rbp
+	mov	r8, rbx
+	mov	dword ptr [rsp + 0x8c], 0
+.label_1914:
+	lea	r14, [r8 + 1]
+	cmp	qword ptr [rsp + 0x78], 0
+	je	.label_1908
+	mov	r12, r8
 	mov	rdi, qword ptr [rsp + 0x58]
-	lea	r12, [rsp + 0x80]
-	mov	rsi, r12
-	mov	rdx, r15
-	mov	ebp, dword ptr [rsp + 0x100]
+	mov	rsi, r15
+	mov	rbx, qword ptr [rsp + 0x40]
+	mov	rdx, rbx
+	mov	ebp, dword ptr [rsp + 0xf0]
 	mov	ecx, ebp
 	call	check_arrival_expand_ecl
-	mov	dword ptr [rsp + 0x9c], eax
+	mov	dword ptr [rsp + 0x8c], eax
 	test	eax, eax
-	jne	.label_2096
-	mov	rdi, r14
-	mov	rsi, r12
-	mov	rdx, rbx
-	mov	rcx, r15
+	jne	.label_1893
+	mov	rdi, r13
+	mov	rsi, r15
+	mov	rdx, r14
+	mov	rcx, rbx
 	mov	r8d, ebp
 	call	expand_bkref_cache
-	mov	dword ptr [rsp + 0x9c], eax
+	mov	dword ptr [rsp + 0x8c], eax
 	test	eax, eax
-	mov	rbp, qword ptr [rsp + 0x28]
-	jne	.label_2096
-.label_2142:
-	test	r13, r13
-	js	.label_2109
-	cmp	qword ptr [r14 + 0x58], r13
-	je	.label_2113
-	cmp	dword ptr [r14 + 0x90], 2
-	jl	.label_2114
-	mov	qword ptr [rsp + 0x78], rbx
-	mov	rax, qword ptr [r14 + 0x10]
-	mov	rcx, qword ptr [rsp + 0x30]
-	mov	r12, r15
-	nop	word ptr [rax + rax]
-.label_2120:
-	mov	ebx, dword ptr [rax + rcx*4 - 4]
-	cmp	ebx, -1
-	jne	.label_2145
-	dec	rcx
-	test	rcx, rcx
-	jg	.label_2120
-	mov	ecx, dword ptr [r14 + 0x70]
-	jmp	.label_2094
-	nop	word ptr [rax + rax]
-.label_2114:
-	mov	qword ptr [rsp + 0x78], rbx
-	mov	rax, qword ptr [r14 + 8]
-	mov	rcx, qword ptr [r14 + 0x80]
-	movzx	eax, byte ptr [rax + r13]
-	mov	dl, al
-	shr	dl, 6
-	movzx	edx, dl
-	mov	rdx, qword ptr [rcx + rdx*8]
-	mov	ecx, 1
-	bt	rdx, rax
-	mov	r12, r15
-	jb	.label_2094
-	xor	ecx, ecx
-	movzx	eax, al
-	cmp	eax, 0xa
-	jne	.label_2094
-	jmp	.label_2141
-.label_2145:
-	cmp	byte ptr [r14 + 0x8e], 0
-	jne	.label_2143
-.label_2128:
-	xor	ecx, ecx
-	cmp	ebx, 0xa
-	jne	.label_2094
-.label_2141:
-	mov	ecx, 2
-	cmp	byte ptr [r14 + 0x8d], 0
-	jne	.label_2094
-	xor	ecx, ecx
-	jmp	.label_2094
-.label_2109:
-	mov	qword ptr [rsp + 0x78], rbx
-	mov	ecx, dword ptr [r14 + 0x70]
-	mov	r12, r15
-	jmp	.label_2094
-.label_2113:
-	mov	qword ptr [rsp + 0x78], rbx
-	mov	ecx, dword ptr [r14 + 0xa0]
-	and	ecx, 2
-	xor	ecx, 0xa
-	mov	r12, r15
-	nop	word ptr cs:[rax + rax]
-.label_2094:
-	lea	rdi, [rsp + 0x9c]
+	mov	r8, r12
+	jne	.label_1893
+.label_1908:
+	mov	edx, dword ptr [r13 + 0xa0]
+	mov	rdi, r13
+	mov	rsi, r8
+	mov	r12, r8
+	call	re_string_context_at
+	lea	rdi, [rsp + 0x8c]
 	mov	rsi, qword ptr [rsp + 0x58]
-	lea	rdx, [rsp + 0x80]
+	mov	rdx, r15
+	mov	rbx, r15
+	mov	ecx, eax
 	call	re_acquire_state_context
-	mov	rcx, rax
-	test	rcx, rcx
-	jne	.label_2110
-	mov	eax, dword ptr [rsp + 0x9c]
+	mov	rbp, rax
+	test	rbp, rbp
+	jne	.label_1926
+	mov	eax, dword ptr [rsp + 0x8c]
 	test	eax, eax
-	je	.label_2110
-	jmp	.label_2096
-.label_2104:
-	mov	rbx, r13
-.label_2125:
-	mov	rdi, qword ptr [rsp + 0x90]
+	jne	.label_1893
+.label_1926:
+	mov	rcx, qword ptr [rsp + 0x38]
+	inc	rcx
+	test	rbp, rbp
+	mov	rax, qword ptr [r13 + 0xb8]
+	mov	qword ptr [rax + r12*8 + 8], rbp
+	mov	eax, 0
+	cmovne	rcx, rax
+	mov	r15, qword ptr [rsp + 0x48]
+	cmp	r14, r15
+	mov	r8, r14
+	jl	.label_1910
+	jmp	.label_1904
+.label_1903:
+	mov	r14, r8
+.label_1904:
+	mov	rdi, qword ptr [rsp + 0x80]
 	call	free
-	mov	rax, qword ptr [r14 + 0xb8]
-	mov	rcx, qword ptr [rsp + 0x68]
-	mov	rcx, qword ptr [rax + rcx*8]
+	mov	rax, qword ptr [r13 + 0xb8]
+	mov	rcx, qword ptr [rax + r15*8]
 	lea	rax, [rcx + 8]
 	test	rcx, rcx
 	cmove	rax, rcx
-	mov	rcx, qword ptr [rsp + 0x50]
-	mov	qword ptr [rcx], rbx
-	mov	rcx, qword ptr [rsp + 0x40]
-	mov	qword ptr [r14 + 0xb8], rcx
-	mov	rcx, qword ptr [rsp + 0x48]
-	mov	qword ptr [r14 + 0x48], rcx
-	je	.label_2111
+	mov	rcx, qword ptr [rsp + 0x30]
+	mov	qword ptr [rcx], r14
+	mov	rcx, qword ptr [rsp + 0x28]
+	mov	qword ptr [r13 + 0xb8], rcx
+	mov	rcx, qword ptr [rsp + 0x20]
+	mov	qword ptr [r13 + 0x48], rcx
+	je	.label_1898
 	mov	rcx, qword ptr [rax + 8]
 	test	rcx, rcx
-	jle	.label_2111
-	xor	r12d, r12d
+	jle	.label_1898
+	xor	r14d, r14d
 	dec	rcx
 	mov	rax, qword ptr [rax + 0x10]
-	je	.label_2146
+	je	.label_1916
 	xor	edx, edx
-	mov	rbp, qword ptr [rsp + 0x20]
-	nop	dword ptr [rax + rax]
-.label_2144:
+	mov	rbp, qword ptr [rsp + 0x18]
+.label_1923:
 	lea	rsi, [rdx + rcx]
 	shr	rsi, 1
 	cmp	qword ptr [rax + rsi*8], rbp
@@ -23297,36 +21299,36 @@ check_arrival:
 	cmovl	rdx, rdi
 	cmovge	rcx, rsi
 	cmp	rdx, rcx
-	jb	.label_2144
-	jmp	.label_2093
-.label_2122:
-	mov	rdi, qword ptr [rsp + 0xb0]
+	jb	.label_1923
+	jmp	.label_1921
+.label_1912:
+	mov	rdi, qword ptr [rsp + 0xa0]
 	call	free
-	mov	ebp, 0xc
-	mov	dword ptr [rsp + 0x9c], ebp
-	jmp	.label_2096
-.label_2092:
-	mov	rdi, qword ptr [rsp + 0xb0]
+	mov	ebx, 0xc
+	mov	dword ptr [rsp + 0x8c], ebx
+	jmp	.label_1893
+.label_1909:
+	mov	rdi, qword ptr [rsp + 0xa0]
 	call	free
-	mov	dword ptr [rsp + 0x9c], ebp
-.label_2096:
-	mov	rdi, qword ptr [rsp + 0x90]
+	mov	dword ptr [rsp + 0x8c], ebx
+.label_1893:
+	mov	rdi, qword ptr [rsp + 0x80]
 	call	free
-	mov	r12d, dword ptr [rsp + 0x9c]
-	jmp	.label_2106
-.label_2146:
+	mov	r14d, dword ptr [rsp + 0x8c]
+	jmp	.label_1894
+.label_1916:
 	xor	edx, edx
-	mov	rbp, qword ptr [rsp + 0x20]
-.label_2093:
+	mov	rbp, qword ptr [rsp + 0x18]
+.label_1921:
 	cmp	rdx, -1
-	je	.label_2111
+	je	.label_1898
 	cmp	qword ptr [rax + rdx*8], rbp
-	je	.label_2106
-.label_2111:
-	mov	r12d, 1
-.label_2106:
-	mov	eax, r12d
-	add	rsp, 0xc8
+	je	.label_1894
+.label_1898:
+	mov	r14d, 1
+.label_1894:
+	mov	eax, r14d
+	add	rsp, 0xb8
 	pop	rbx
 	pop	r12
 	pop	r13
@@ -23334,40 +21336,23 @@ check_arrival:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2119:
-	mov	rdi, qword ptr [rsp + 0x90]
+.label_1922:
+	mov	rdi, qword ptr [rsp + 0x80]
 	call	free
-	jmp	.label_2106
-.label_2108:
+	jmp	.label_1894
+.label_1913:
 	xorps	xmm0, xmm0
-	movaps	xmmword ptr [rsp + 0x80], xmm0
-	mov	dword ptr [rsp + 0x9c], 0xc
-	mov	r12d, 0xc
-	jmp	.label_2106
-.label_2112:
-	mov	rbx, r13
-	jmp	.label_2125
-.label_2099:
-	mov	qword ptr [rsp + 0x70], rbx
-	mov	rbx, rsi
-	mov	edi, ebp
-	call	iswalnum
-	cmp	ebp, 0x5f
-	mov	edx, 1
-	je	.label_2132
-	test	eax, eax
-	mov	rsi, rbx
-	mov	rbx, qword ptr [rsp + 0x70]
-	je	.label_2135
-	jmp	.label_2091
-.label_2132:
-	mov	rsi, rbx
-	mov	rbx, qword ptr [rsp + 0x70]
-	jmp	.label_2091
+	movaps	xmmword ptr [rsp + 0x70], xmm0
+	mov	dword ptr [rsp + 0x8c], 0xc
+	mov	r14d, 0xc
+	jmp	.label_1894
+.label_1905:
+	mov	r14, r8
+	jmp	.label_1904
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x416400
+	#Procedure 0x414780
 
 	.globl check_arrival_expand_ecl
 	.type check_arrival_expand_ecl, @function
@@ -23391,29 +21376,29 @@ check_arrival_expand_ecl:
 	mov	qword ptr [rsp + 0x20], rax
 	mov	ebx, 0xc
 	test	rax, rax
-	je	.label_2147
+	je	.label_1935
 	test	r12, r12
-	jle	.label_2152
+	jle	.label_1931
 	xor	r12d, r12d
-	jmp	.label_2149
+	jmp	.label_1929
 	nop	dword ptr [rax]
-.label_2153:
+.label_1932:
 	inc	r12
 	cmp	r12, qword ptr [r14 + 8]
-	jl	.label_2149
-	jmp	.label_2152
+	jl	.label_1929
+	jmp	.label_1931
 	nop	
-.label_2154:
+.label_1934:
 	cmp	rbp, -1
-	je	.label_2148
+	je	.label_1928
 	mov	rdi, qword ptr [rsp + 8]
 	lea	rsi, [rsp + 0x10]
 	mov	rcx, r13
 	mov	r8d, r15d
 	call	check_arrival_expand_ecl_sub
-	jmp	.label_2150
+	jmp	.label_1936
 	nop	dword ptr [rax]
-.label_2149:
+.label_1929:
 	mov	rax, qword ptr [r14 + 0x10]
 	mov	rdx, qword ptr [rax + r12*8]
 	mov	rax, qword ptr [rsp + 8]
@@ -23421,37 +21406,37 @@ check_arrival_expand_ecl:
 	lea	r9, [rdx + rdx*2]
 	mov	r10, qword ptr [r8 + r9*8 + 8]
 	test	r10, r10
-	jle	.label_2148
+	jle	.label_1928
 	mov	rdi, qword ptr [r8 + r9*8 + 0x10]
 	mov	rax, qword ptr [rsp + 8]
 	mov	rbx, qword ptr [rax]
 	xor	eax, eax
 	nop	
-.label_2155:
+.label_1933:
 	mov	rbp, qword ptr [rdi + rax*8]
 	mov	rcx, rbp
 	shl	rcx, 4
 	movzx	esi, byte ptr [rbx + rcx + 8]
 	cmp	esi, r15d
-	jne	.label_2151
+	jne	.label_1930
 	cmp	qword ptr [rbx + rcx], r13
-	je	.label_2154
-.label_2151:
+	je	.label_1934
+.label_1930:
 	inc	rax
 	cmp	rax, r10
-	jl	.label_2155
-.label_2148:
+	jl	.label_1933
+.label_1928:
 	lea	rsi, [r8 + r9*8]
 	lea	rdi, [rsp + 0x10]
 	call	re_node_set_merge
-.label_2150:
+.label_1936:
 	mov	ebx, eax
 	test	ebx, ebx
-	je	.label_2153
+	je	.label_1932
 	mov	rdi, qword ptr [rsp + 0x20]
 	call	free
-	jmp	.label_2147
-.label_2152:
+	jmp	.label_1935
+.label_1931:
 	mov	rdi, qword ptr [r14 + 0x10]
 	call	free
 	mov	rax, qword ptr [rsp + 0x20]
@@ -23459,7 +21444,7 @@ check_arrival_expand_ecl:
 	movups	xmm0, xmmword ptr [rsp + 0x10]
 	movups	xmmword ptr [r14], xmm0
 	xor	ebx, ebx
-.label_2147:
+.label_1935:
 	mov	eax, ebx
 	add	rsp, 0x28
 	pop	rbx
@@ -23472,7 +21457,7 @@ check_arrival_expand_ecl:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x416540
+	#Procedure 0x4148c0
 
 	.globl expand_bkref_cache
 	.type expand_bkref_cache, @function
@@ -23495,12 +21480,12 @@ expand_bkref_cache:
 	xor	eax, eax
 	test	r9, r9
 	mov	edx, 0
-	jle	.label_2174
+	jle	.label_1952
 	mov	rsi, qword ptr [r10 + 0xd8]
 	xor	edx, edx
 	mov	rdi, r9
 	nop	dword ptr [rax]
-.label_2183:
+.label_1963:
 	lea	rbp, [rdi + rdx]
 	mov	rbx, rbp
 	shr	rbx, 0x3f
@@ -23512,39 +21497,39 @@ expand_bkref_cache:
 	lea	rbp, [rbx + 1]
 	cmovl	rdx, rbp
 	cmp	rdx, rdi
-	jl	.label_2183
-.label_2174:
+	jl	.label_1963
+.label_1952:
 	cmp	rdx, r9
-	jge	.label_2162
+	jge	.label_1942
 	cmp	rdx, -1
-	je	.label_2162
+	je	.label_1942
 	mov	qword ptr [rsp + 0x10], rcx
 	mov	dword ptr [rsp + 0x1c], r8d
 	mov	rcx, qword ptr [r10 + 0xd8]
 	lea	rdx, [rdx + rdx*4]
 	mov	qword ptr [rsp + 8], rdx
 	cmp	qword ptr [rcx + rdx*8 + 8], r15
-	jne	.label_2162
+	jne	.label_1942
 	mov	dword ptr [rsp + 0x24], eax
-	jmp	.label_2187
-.label_2168:
+	jmp	.label_1968
+.label_1948:
 	mov	rcx, qword ptr [r10 + 0xd8]
-.label_2187:
+.label_1968:
 	mov	rax, qword ptr [rsp + 8]
 	lea	r13, [rcx + rax*8]
 	nop	dword ptr [rax]
-.label_2156:
+.label_1964:
 	mov	rcx, qword ptr [r14 + 8]
 	test	rcx, rcx
-	jle	.label_2161
+	jle	.label_1937
 	mov	rdx, qword ptr [r13]
 	dec	rcx
 	mov	rax, qword ptr [r14 + 0x10]
 	mov	rdi, rcx
 	mov	esi, 0
-	je	.label_2165
+	je	.label_1946
 	nop	word ptr cs:[rax + rax]
-.label_2170:
+.label_1959:
 	lea	rbp, [rsi + rdi]
 	shr	rbp, 1
 	cmp	qword ptr [rax + rbp*8], rdx
@@ -23552,17 +21537,17 @@ expand_bkref_cache:
 	cmovl	rsi, rbx
 	cmovge	rdi, rbp
 	cmp	rsi, rdi
-	jb	.label_2170
-.label_2165:
+	jb	.label_1959
+.label_1946:
 	cmp	rsi, -1
-	je	.label_2161
+	je	.label_1937
 	cmp	qword ptr [rax + rsi*8], rdx
-	jne	.label_2161
+	jne	.label_1937
 	mov	r12, qword ptr [r13 + 0x18]
 	add	r12, r15
 	sub	r12, qword ptr [r13 + 0x10]
 	cmp	r12, r15
-	jne	.label_2185
+	jne	.label_1966
 	test	rcx, rcx
 	mov	rsi, qword ptr [rsp + 0x38]
 	mov	rsi, qword ptr [rsi + 0x28]
@@ -23570,9 +21555,9 @@ expand_bkref_cache:
 	mov	rdx, qword ptr [rsi + rdx*8 + 0x10]
 	mov	rbx, qword ptr [rdx]
 	mov	edx, 0
-	je	.label_2171
+	je	.label_1960
 	nop	
-.label_2166:
+.label_1953:
 	lea	rsi, [rdx + rcx]
 	shr	rsi, 1
 	cmp	qword ptr [rax + rsi*8], rbx
@@ -23580,33 +21565,33 @@ expand_bkref_cache:
 	cmovl	rdx, rdi
 	cmovge	rcx, rsi
 	cmp	rdx, rcx
-	jb	.label_2166
-.label_2171:
+	jb	.label_1953
+.label_1960:
 	cmp	rdx, -1
-	je	.label_2177
+	je	.label_1955
 	mov	ecx, 4
 	cmp	qword ptr [rax + rdx*8], rbx
-	jne	.label_2177
+	jne	.label_1955
 	mov	rbp, r14
-	jmp	.label_2159
-.label_2185:
+	jmp	.label_1940
+.label_1966:
 	mov	rax, qword ptr [rsp + 0x38]
 	mov	rax, qword ptr [rax + 0x18]
 	mov	r14, qword ptr [rax + rdx*8]
 	mov	rax, qword ptr [r10 + 0xb8]
 	mov	rbx, qword ptr [rax + r12*8]
 	test	rbx, rbx
-	je	.label_2182
+	je	.label_1962
 	mov	rdi, qword ptr [rbx + 0x10]
 	test	rdi, rdi
-	jle	.label_2172
+	jle	.label_1950
 	mov	rcx, rdi
 	dec	rcx
 	mov	rax, qword ptr [rbx + 0x18]
 	mov	edx, 0
-	je	.label_2158
+	je	.label_1939
 	nop	dword ptr [rax + rax]
-.label_2175:
+.label_1947:
 	lea	rsi, [rdx + rcx]
 	shr	rsi, 1
 	cmp	qword ptr [rax + rsi*8], r14
@@ -23614,42 +21599,42 @@ expand_bkref_cache:
 	cmovl	rdx, rbp
 	cmovge	rcx, rsi
 	cmp	rdx, rcx
-	jb	.label_2175
-.label_2158:
+	jb	.label_1947
+.label_1939:
 	cmp	rdx, -1
-	je	.label_2172
+	je	.label_1950
 	mov	ecx, 4
 	cmp	qword ptr [rax + rdx*8], r14
-	je	.label_2176
-.label_2172:
+	je	.label_1954
+.label_1950:
 	mov	qword ptr [rsp + 0x48], rdi
 	mov	rbp, qword ptr [rbx + 0x10]
 	test	rbp, rbp
-	jle	.label_2179
+	jle	.label_1957
 	mov	qword ptr [rsp + 0x40], rdi
 	shl	rdi, 3
 	call	malloc
 	mov	qword ptr [rsp + 0x50], rax
 	test	rax, rax
-	je	.label_2186
+	je	.label_1967
 	mov	rsi, qword ptr [rbx + 0x18]
 	shl	rbp, 3
 	mov	rdi, rax
 	mov	rdx, rbp
 	call	memcpy
-	jmp	.label_2163
-.label_2177:
+	jmp	.label_1943
+.label_1955:
 	mov	qword ptr [rsp + 0x30], r10
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	edi, 8
 	call	malloc
 	mov	qword ptr [rsp + 0x50], rax
 	test	rax, rax
-	je	.label_2169
+	je	.label_1949
 	mov	qword ptr [rax], rbx
 	xor	eax, eax
-.label_2164:
+.label_1944:
 	mov	dword ptr [rsp + 0x20], eax
 	mov	dword ptr [rsp + 0x64], eax
 	mov	rdi, qword ptr [rsp + 0x38]
@@ -23672,37 +21657,37 @@ expand_bkref_cache:
 	mov	ecx, 2
 	or	eax, r14d
 	mov	r10, qword ptr [rsp + 0x30]
-	jne	.label_2167
-.label_2181:
+	jne	.label_1961
+.label_1945:
 	mov	r14, rbp
-	jmp	.label_2159
-.label_2182:
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
+	jmp	.label_1940
+.label_1962:
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	edi, 8
 	call	malloc
 	mov	qword ptr [rsp + 0x50], rax
 	test	rax, rax
-	je	.label_2173
+	je	.label_1951
 	mov	qword ptr [rax], r14
 	mov	dword ptr [rsp + 0x64], 0
-	jmp	.label_2178
-.label_2179:
+	jmp	.label_1956
+.label_1957:
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	qword ptr [rsp + 0x50], 0
-.label_2163:
+.label_1943:
 	xor	ebx, ebx
-.label_2160:
+.label_1941:
 	mov	dword ptr [rsp + 0x64], ebx
 	lea	rdi, [rsp + 0x40]
 	mov	rsi, r14
 	call	re_node_set_insert
 	test	ebx, ebx
-	jne	.label_2157
+	jne	.label_1938
 	xor	al, 1
-	jne	.label_2157
-.label_2178:
+	jne	.label_1938
+.label_1956:
 	lea	rdi, [rsp + 0x64]
 	mov	rsi, qword ptr [rsp + 0x38]
 	lea	rdx, [rsp + 0x40]
@@ -23724,26 +21709,26 @@ expand_bkref_cache:
 	mov	eax, dword ptr [rsp + 0x24]
 	cmovne	eax, edx
 	mov	dword ptr [rsp + 0x24], eax
-.label_2176:
+.label_1954:
 	mov	r14, qword ptr [rsp + 0x28]
-.label_2159:
+.label_1940:
 	test	ecx, ecx
-	je	.label_2161
+	je	.label_1937
 	cmp	ecx, 4
-	jne	.label_2184
+	jne	.label_1965
 	nop	dword ptr [rax + rax]
-.label_2161:
+.label_1937:
 	xor	eax, eax
 	cmp	byte ptr [r13 + 0x20], 0
 	lea	r13, [r13 + 0x28]
-	jne	.label_2156
-	jmp	.label_2162
-.label_2169:
+	jne	.label_1964
+	jmp	.label_1942
+.label_1949:
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	eax, 0xc
-	jmp	.label_2164
-.label_2167:
+	jmp	.label_1944
+.label_1961:
 	test	ebx, ebx
 	cmovne	r14d, ebx
 	test	edx, edx
@@ -23751,8 +21736,8 @@ expand_bkref_cache:
 	mov	dword ptr [rsp + 0x64], r14d
 	mov	ecx, 1
 	mov	dword ptr [rsp + 0x24], r14d
-	jmp	.label_2181
-.label_2157:
+	jmp	.label_1945
+.label_1938:
 	mov	rdi, qword ptr [rsp + 0x50]
 	call	free
 	test	ebx, ebx
@@ -23761,27 +21746,27 @@ expand_bkref_cache:
 	mov	dword ptr [rsp + 0x64], ebx
 	mov	ecx, 1
 	mov	dword ptr [rsp + 0x24], ebx
-	jmp	.label_2180
-.label_2173:
+	jmp	.label_1958
+.label_1951:
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	dword ptr [rsp + 0x64], 0xc
 	mov	dword ptr [rsp + 0x24], 0xc
 	mov	ecx, 1
-.label_2180:
+.label_1958:
 	mov	r14, qword ptr [rsp + 0x28]
 	mov	r10, qword ptr [rsp + 0x30]
-	jmp	.label_2159
-.label_2186:
+	jmp	.label_1940
+.label_1967:
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	ebx, 0xc
-	jmp	.label_2160
-.label_2184:
+	jmp	.label_1941
+.label_1965:
 	cmp	ecx, 2
-	je	.label_2168
+	je	.label_1948
 	mov	eax, dword ptr [rsp + 0x24]
-.label_2162:
+.label_1942:
 	add	rsp, 0x68
 	pop	rbx
 	pop	r12
@@ -23793,7 +21778,7 @@ expand_bkref_cache:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x4169d0
+	#Procedure 0x414d50
 
 	.globl check_arrival_expand_ecl_sub
 	.type check_arrival_expand_ecl_sub, @function
@@ -23808,21 +21793,21 @@ check_arrival_expand_ecl_sub:
 	mov	rbp, rdx
 	mov	rbx, rsi
 	mov	r12, rdi
-	jmp	.label_2192
+	jmp	.label_1976
 	nop	dword ptr [rax]
-.label_2189:
+.label_1970:
 	mov	rax, qword ptr [rax + rbp*8 + 0x10]
 	mov	rbp, qword ptr [rax]
-.label_2192:
+.label_1976:
 	mov	rax, qword ptr [rbx + 8]
 	test	rax, rax
-	jle	.label_2195
+	jle	.label_1975
 	dec	rax
 	mov	rcx, qword ptr [rbx + 0x10]
 	mov	edx, 0
-	je	.label_2188
+	je	.label_1969
 	nop	
-.label_2194:
+.label_1974:
 	lea	rsi, [rdx + rax]
 	shr	rsi, 1
 	cmp	qword ptr [rcx + rsi*8], rbp
@@ -23830,39 +21815,39 @@ check_arrival_expand_ecl_sub:
 	cmovl	rdx, rdi
 	cmovge	rax, rsi
 	cmp	rdx, rax
-	jb	.label_2194
-.label_2188:
+	jb	.label_1974
+.label_1969:
 	cmp	rdx, -1
-	je	.label_2195
+	je	.label_1975
 	cmp	qword ptr [rcx + rdx*8], rbp
-	je	.label_2191
-.label_2195:
+	je	.label_1972
+.label_1975:
 	mov	rax, qword ptr [r12]
 	mov	rcx, rbp
 	shl	rcx, 4
 	movzx	edx, byte ptr [rax + rcx + 8]
 	cmp	edx, r15d
-	jne	.label_2197
+	jne	.label_1978
 	cmp	qword ptr [rax + rcx], r14
-	je	.label_2193
-.label_2197:
+	je	.label_1973
+.label_1978:
 	mov	rdi, rbx
 	mov	rsi, rbp
 	call	re_node_set_insert
 	mov	cl, al
 	mov	eax, 0xc
 	test	cl, cl
-	je	.label_2190
+	je	.label_1971
 	mov	rax, qword ptr [r12 + 0x28]
 	lea	rbp, [rbp + rbp*2]
 	mov	rcx, qword ptr [rax + rbp*8 + 8]
 	cmp	rcx, 2
-	je	.label_2196
+	je	.label_1977
 	test	rcx, rcx
-	jne	.label_2189
-	jmp	.label_2191
+	jne	.label_1970
+	jmp	.label_1972
 	nop	dword ptr [rax]
-.label_2196:
+.label_1977:
 	mov	rax, qword ptr [rax + rbp*8 + 0x10]
 	mov	rdx, qword ptr [rax + 8]
 	mov	rdi, r12
@@ -23871,22 +21856,22 @@ check_arrival_expand_ecl_sub:
 	mov	r8d, r15d
 	call	check_arrival_expand_ecl_sub
 	test	eax, eax
-	jne	.label_2190
+	jne	.label_1971
 	mov	rax, qword ptr [r12 + 0x28]
-	jmp	.label_2189
-.label_2193:
+	jmp	.label_1970
+.label_1973:
 	cmp	r15d, 9
-	jne	.label_2191
+	jne	.label_1972
 	mov	rdi, rbx
 	mov	rsi, rbp
 	call	re_node_set_insert
 	mov	cl, al
 	mov	eax, 0xc
 	test	cl, cl
-	je	.label_2190
-.label_2191:
+	je	.label_1971
+.label_1972:
 	xor	eax, eax
-.label_2190:
+.label_1971:
 	pop	rbx
 	pop	r12
 	pop	r14
@@ -23896,7 +21881,7 @@ check_arrival_expand_ecl_sub:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x416ae0
+	#Procedure 0x414e60
 
 	.globl re_acquire_state
 	.type re_acquire_state, @function
@@ -23912,19 +21897,19 @@ re_acquire_state:
 	mov	r14, rdi
 	mov	r8, qword ptr [r12 + 8]
 	test	r8, r8
-	je	.label_2225
+	je	.label_1993
 	mov	r15, r8
-	jle	.label_2200
+	jle	.label_1980
 	mov	rcx, qword ptr [r12 + 0x10]
 	xor	eax, eax
 	cmp	r8, 4
 	mov	r15, r8
-	jb	.label_2203
+	jb	.label_1982
 	xor	eax, eax
 	mov	rdx, r8
 	and	rdx, 0xfffffffffffffffc
 	mov	r15, r8
-	je	.label_2203
+	je	.label_1982
 	movq	xmm0, r8
 	lea	rbx, [r8 - 4]
 	mov	eax, ebx
@@ -23932,7 +21917,7 @@ re_acquire_state:
 	inc	eax
 	xor	edi, edi
 	test	al, 3
-	je	.label_2216
+	je	.label_1990
 	lea	ebp, [r8 - 4]
 	shr	ebp, 2
 	inc	ebp
@@ -23941,26 +21926,26 @@ re_acquire_state:
 	pxor	xmm1, xmm1
 	xor	edi, edi
 	nop	dword ptr [rax]
-.label_2219:
+.label_1995:
 	movdqu	xmm2, xmmword ptr [rcx + rdi*8]
 	movdqu	xmm3, xmmword ptr [rcx + rdi*8 + 0x10]
 	paddq	xmm0, xmm2
 	paddq	xmm1, xmm3
 	add	rdi, 4
 	inc	rbp
-	jne	.label_2219
-	jmp	.label_2229
-.label_2216:
+	jne	.label_1995
+	jmp	.label_2004
+.label_1990:
 	pxor	xmm1, xmm1
-.label_2229:
+.label_2004:
 	cmp	rbx, 0xc
-	jb	.label_2204
+	jb	.label_1983
 	mov	rax, r8
 	and	rax, 0xfffffffffffffffc
 	sub	rax, rdi
 	lea	rdi, [rcx + rdi*8 + 0x70]
 	nop	word ptr [rax + rax]
-.label_2210:
+.label_1996:
 	movdqu	xmm2, xmmword ptr [rdi - 0x70]
 	movdqu	xmm3, xmmword ptr [rdi - 0x60]
 	movdqu	xmm4, xmmword ptr [rdi - 0x50]
@@ -23979,215 +21964,170 @@ re_acquire_state:
 	paddq	xmm1, xmm5
 	add	rdi, 0x80
 	add	rax, -0x10
-	jne	.label_2210
-.label_2204:
+	jne	.label_1996
+.label_1983:
 	paddq	xmm1, xmm0
 	pshufd	xmm0, xmm1, 0x4e
 	paddq	xmm0, xmm1
 	movq	r15, xmm0
 	cmp	r8, rdx
 	mov	rax, rdx
-	je	.label_2200
-.label_2203:
+	je	.label_1980
+.label_1982:
 	mov	rdx, r8
 	sub	rdx, rax
 	lea	rcx, [rcx + rax*8]
 	nop	dword ptr [rax + rax]
-.label_2208:
+.label_1985:
 	add	r15, qword ptr [rcx]
 	add	rcx, 8
 	dec	rdx
-	jne	.label_2208
-.label_2200:
-	mov	rax, qword ptr [rsi + 0x40]
+	jne	.label_1985
+.label_1980:
+	mov	rdx, qword ptr [rsi + 0x40]
 	mov	rcx, qword ptr [rsi + 0x88]
 	and	rcx, r15
-	lea	rdi, [rcx + rcx*2]
-	mov	rcx, qword ptr [rax + rdi*8]
+	lea	rax, [rcx + rcx*2]
+	mov	rcx, qword ptr [rdx + rax*8]
 	test	rcx, rcx
-	jle	.label_2206
-	xor	edx, edx
+	jle	.label_1988
+	mov	rdx, qword ptr [rdx + rax*8 + 0x10]
+	xor	ebx, ebx
+	nop	
+.label_1992:
 	test	r12, r12
-	je	.label_2221
-	mov	rax, qword ptr [rax + rdi*8 + 0x10]
-	nop	word ptr [rax + rax]
-.label_2215:
-	mov	r13, qword ptr [rax + rdx*8]
+	je	.label_1998
+	mov	r13, qword ptr [rdx + rbx*8]
 	cmp	r15, qword ptr [r13]
-	jne	.label_2212
+	jne	.label_1998
 	cmp	qword ptr [r13 + 0x10], r8
-	jne	.label_2212
+	jne	.label_1998
 	mov	rdi, r8
-	nop	word ptr cs:[rax + rax]
-.label_2202:
+	nop	dword ptr [rax + rax]
+.label_2003:
 	test	rdi, rdi
-	jle	.label_2198
+	jle	.label_2001
 	mov	rbp, qword ptr [r13 + 0x18]
 	mov	rbp, qword ptr [rbp + rdi*8 - 8]
-	mov	rbx, qword ptr [r12 + 0x10]
-	cmp	rbp, qword ptr [rbx + rdi*8 - 8]
+	mov	rax, qword ptr [r12 + 0x10]
+	cmp	rbp, qword ptr [rax + rdi*8 - 8]
 	lea	rdi, [rdi - 1]
-	je	.label_2202
+	je	.label_2003
 	nop	word ptr cs:[rax + rax]
-.label_2212:
-	inc	rdx
-	cmp	rdx, rcx
-	jl	.label_2215
-	jmp	.label_2206
-.label_2221:
-	xor	edx, edx
-	cmp	rcx, 0x10
-	jb	.label_2214
-	xor	edx, edx
-	mov	rax, rcx
-	and	rax, 0xfffffffffffffff0
-	je	.label_2214
-	lea	rdx, [rcx - 0x10]
-	mov	edi, edx
-	shr	edi, 4
-	inc	edi
-	xor	ebp, ebp
-	test	dil, 7
-	je	.label_2222
-	lea	edi, [rcx - 0x10]
-	shr	edi, 4
-	inc	edi
-	and	edi, 7
-	neg	rdi
-	xor	ebp, ebp
-.label_2209:
-	add	rbp, 0x10
-	inc	rdi
-	jne	.label_2209
-.label_2222:
-	cmp	rdx, 0x70
-	jb	.label_2228
-	mov	rdx, rcx
-	and	rdx, 0xfffffffffffffff0
-	sub	rdx, rbp
-	nop	dword ptr [rax]
-.label_2205:
-	add	rdx, -0x80
-	jne	.label_2205
-.label_2228:
-	cmp	rcx, rax
-	mov	rdx, rax
-	je	.label_2206
-	nop	
-.label_2214:
-	inc	rdx
-	cmp	rdx, rcx
-	jl	.label_2214
-.label_2206:
+.label_1998:
+	inc	rbx
+	cmp	rbx, rcx
+	jl	.label_1992
+.label_1988:
 	mov	qword ptr [rsp + 0x10], rsi
 	mov	edi, 0x70
 	mov	esi, 1
 	call	rpl_calloc
 	mov	r13, rax
 	test	r13, r13
-	je	.label_2218
-	mov	rbx, r13
-	add	rbx, 8
+	je	.label_1994
+	mov	rbp, r13
+	add	rbp, 8
 	mov	rdi, qword ptr [r12 + 8]
 	mov	qword ptr [r13 + 0x10], rdi
-	mov	rbp, qword ptr [r12 + 8]
-	test	rbp, rbp
-	jle	.label_2220
+	mov	rbx, qword ptr [r12 + 8]
+	test	rbx, rbx
+	jle	.label_1997
 	mov	qword ptr [r13 + 8], rdi
 	shl	rdi, 3
 	call	malloc
 	mov	qword ptr [r13 + 0x18], rax
 	test	rax, rax
-	je	.label_2226
+	je	.label_2002
 	mov	qword ptr [rsp + 8], r14
 	lea	r14, [r12 + 0x10]
 	mov	rsi, qword ptr [r12 + 0x10]
-	shl	rbp, 3
+	shl	rbx, 3
 	mov	rdi, rax
-	mov	rdx, rbp
+	mov	rdx, rbx
 	call	memcpy
-	mov	qword ptr [r13 + 0x50], rbx
+	mov	qword ptr [r13 + 0x50], rbp
 	mov	rdi, qword ptr [rsp + 0x10]
-	jmp	.label_2207
-.label_2220:
+	jmp	.label_1984
+.label_1997:
 	mov	qword ptr [rsp + 8], r14
 	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [rbx], xmm0
-	mov	qword ptr [rbx + 0x10], 0
+	movdqu	xmmword ptr [rbp], xmm0
+	mov	qword ptr [rbp + 0x10], 0
 	cmp	qword ptr [r12 + 8], 0
-	mov	qword ptr [r13 + 0x50], rbx
+	mov	qword ptr [r13 + 0x50], rbp
 	mov	rdi, qword ptr [rsp + 0x10]
-	jle	.label_2211
+	jle	.label_1986
 	lea	r14, [r12 + 0x10]
-.label_2207:
+.label_1984:
 	xor	eax, eax
-	nop	word ptr cs:[rax + rax]
-.label_2223:
+	nop	word ptr [rax + rax]
+.label_1999:
 	mov	r8, qword ptr [rdi]
-	mov	rdx, qword ptr [r14]
-	mov	rdx, qword ptr [rdx + rax*8]
+	mov	rcx, qword ptr [r14]
+	mov	rdx, qword ptr [rcx + rax*8]
 	shl	rdx, 4
 	mov	ebp, dword ptr [r8 + rdx + 8]
-	mov	esi, ebp
-	and	esi, 0x3ffff
-	cmp	esi, 1
-	je	.label_2217
+	mov	ecx, ebp
+	and	ecx, 0x3ffff
+	cmp	ecx, 1
+	je	.label_1991
 	movzx	esi, bpl
 	shr	ebp, 0x14
-	mov	cl, byte ptr [r13 + 0x68]
-	mov	bl, cl
-	shr	bl, 5
-	movzx	ebx, bl
-	or	ebx, ebp
-	shl	bl, 5
-	and	bl, 0x20
-	and	cl, 0xdf
-	or	cl, bl
-	mov	byte ptr [r13 + 0x68], cl
+	mov	bl, byte ptr [r13 + 0x68]
+	mov	cl, bl
+	shr	cl, 5
+	movzx	ecx, cl
+	or	ecx, ebp
+	shl	cl, 5
+	and	cl, 0x20
+	and	bl, 0xdf
+	or	bl, cl
+	mov	byte ptr [r13 + 0x68], bl
 	cmp	esi, 0xc
-	je	.label_2199
+	je	.label_1979
 	cmp	esi, 4
-	je	.label_2227
+	je	.label_1987
 	cmp	esi, 2
-	jne	.label_2213
-	or	cl, 0x10
-	jmp	.label_2201
-.label_2227:
-	or	cl, 0x40
-	jmp	.label_2201
-.label_2213:
-	lea	rdx, [r8 + rdx + 8]
-	test	dword ptr [rdx], 0x3ff00
-	je	.label_2217
-.label_2199:
-	or	cl, 0x80
-.label_2201:
-	mov	byte ptr [r13 + 0x68], cl
-.label_2217:
+	jne	.label_1989
+	or	bl, 0x10
+	jmp	.label_1981
+.label_1987:
+	or	bl, 0x40
+	jmp	.label_1981
+.label_1989:
+	lea	rcx, [r8 + rdx + 8]
+	test	dword ptr [rcx], 0x3ff00
+	je	.label_1991
+.label_1979:
+	or	bl, 0x80
+.label_1981:
+	mov	byte ptr [r13 + 0x68], bl
+.label_1991:
 	inc	rax
 	cmp	rax, qword ptr [r12 + 8]
-	jl	.label_2223
-.label_2211:
+	jl	.label_1999
+.label_1986:
 	mov	rsi, r13
 	mov	rdx, r15
 	call	register_state
 	test	eax, eax
-	je	.label_2198
+	je	.label_2001
 	mov	rdi, r13
 	call	free_state
 	mov	r14, qword ptr [rsp + 8]
-	jmp	.label_2218
-.label_2225:
+	jmp	.label_1994
+.label_1993:
 	mov	dword ptr [r14], 0
-	jmp	.label_2224
-.label_2226:
+	jmp	.label_2000
+.label_2002:
 	mov	rdi, r13
 	call	free
-.label_2218:
+.label_1994:
 	mov	dword ptr [r14], 0xc
-.label_2224:
+.label_2000:
 	xor	r13d, r13d
-.label_2198:
+.label_2001:
 	mov	rax, r13
 	add	rsp, 0x18
 	pop	rbx
@@ -24200,7 +22140,7 @@ re_acquire_state:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x416eb0
+	#Procedure 0x4151b0
 
 	.globl check_node_accept_bytes
 	.type check_node_accept_bytes, @function
@@ -24214,145 +22154,145 @@ check_node_accept_bytes:
 	shl	rsi, 4
 	movzx	r10d, byte ptr [r9 + rsi + 8]
 	cmp	r10d, 7
-	je	.label_2240
+	je	.label_2017
 	mov	r8d, dword ptr [rdx + 0x90]
 	mov	ebx, 1
 	cmp	r8d, 1
-	je	.label_2230
+	je	.label_2005
 	lea	rax, [rcx + 1]
 	mov	r11, qword ptr [rdx + 0x30]
 	cmp	rax, r11
-	jge	.label_2230
+	jge	.label_2005
 	lea	rax, [rcx*4]
 	add	rax, qword ptr [rdx + 0x10]
 	mov	ebx, 1
 	nop	
-.label_2232:
+.label_2007:
 	cmp	dword ptr [rax + rbx*4], -1
-	jne	.label_2230
+	jne	.label_2005
 	lea	rbp, [rcx + rbx + 1]
 	inc	rbx
 	cmp	rbp, r11
-	jl	.label_2232
-.label_2230:
+	jl	.label_2007
+.label_2005:
 	cmp	r10d, 5
-	jne	.label_2236
+	jne	.label_2012
 	xor	r14d, r14d
 	cmp	ebx, 2
-	jl	.label_2237
+	jl	.label_2011
 	mov	rax, qword ptr [rdi + 0xd8]
 	test	al, 0x40
-	jne	.label_2252
+	jne	.label_2028
 	mov	rsi, qword ptr [rdx + 8]
 	movzx	esi, byte ptr [rsi + rcx]
 	cmp	esi, 0xa
-	je	.label_2237
-.label_2252:
+	je	.label_2011
+.label_2028:
 	test	al, al
-	js	.label_2247
+	js	.label_2021
 	mov	r14d, ebx
-	jmp	.label_2237
-.label_2236:
+	jmp	.label_2011
+.label_2012:
 	cmp	ebx, 1
 	setg	al
 	xor	r14d, r14d
 	cmp	r10d, 6
-	jne	.label_2237
+	jne	.label_2011
 	test	al, al
-	je	.label_2237
+	je	.label_2011
 	mov	r15, qword ptr [r9 + rsi]
 	mov	rsi, qword ptr [r15 + 0x40]
 	test	rsi, rsi
-	jne	.label_2254
+	jne	.label_2019
 	cmp	qword ptr [r15 + 0x48], 0
-	jne	.label_2254
+	jne	.label_2019
 	xor	r12d, r12d
 	cmp	qword ptr [r15 + 0x28], 0
-	je	.label_2231
-.label_2254:
+	je	.label_2006
+.label_2019:
 	cmp	r8d, 1
-	jne	.label_2234
+	jne	.label_2009
 	mov	rax, qword ptr [rdx + 8]
 	movzx	r12d, byte ptr [rax + rcx]
-	jmp	.label_2231
-.label_2234:
+	jmp	.label_2006
+.label_2009:
 	mov	rax, qword ptr [rdx + 0x10]
 	mov	r12d, dword ptr [rax + rcx*4]
-.label_2231:
+.label_2006:
 	mov	rax, qword ptr [r15 + 0x28]
 	test	rax, rax
-	jle	.label_2249
+	jle	.label_2025
 	mov	rcx, qword ptr [r15]
 	xor	edx, edx
 	nop	word ptr cs:[rax + rax]
-.label_2244:
+.label_2022:
 	cmp	r12d, dword ptr [rcx + rdx*4]
-	je	.label_2246
+	je	.label_2020
 	inc	rdx
 	cmp	rdx, rax
-	jl	.label_2244
-.label_2249:
+	jl	.label_2022
+.label_2025:
 	cmp	qword ptr [r15 + 0x48], 0
-	jle	.label_2248
+	jle	.label_2024
 	xor	ebp, ebp
 	nop	word ptr [rax + rax]
-.label_2245:
+.label_2029:
 	mov	rax, qword ptr [r15 + 0x18]
 	mov	rsi, qword ptr [rax + rbp*8]
 	mov	edi, r12d
 	call	iswctype
 	test	eax, eax
-	jne	.label_2246
+	jne	.label_2020
 	inc	rbp
 	cmp	rbp, qword ptr [r15 + 0x48]
-	jl	.label_2245
+	jl	.label_2029
 	mov	rsi, qword ptr [r15 + 0x40]
-.label_2248:
+.label_2024:
 	xor	ecx, ecx
 	test	rsi, rsi
-	jle	.label_2241
+	jle	.label_2015
 	mov	rax, qword ptr [r15 + 8]
 	xor	edx, edx
 	nop	
-.label_2239:
+.label_2014:
 	cmp	dword ptr [rax + rdx*4], r12d
-	jg	.label_2253
+	jg	.label_2023
 	mov	rcx, qword ptr [r15 + 0x10]
 	cmp	r12d, dword ptr [rcx + rdx*4]
-	jle	.label_2238
-.label_2253:
+	jle	.label_2013
+.label_2023:
 	inc	rdx
 	xor	ecx, ecx
 	cmp	rdx, rsi
-	jl	.label_2239
-	jmp	.label_2241
-.label_2246:
+	jl	.label_2014
+	jmp	.label_2015
+.label_2020:
 	mov	ecx, ebx
-.label_2241:
+.label_2015:
 	test	byte ptr [r15 + 0x20], 1
-	jne	.label_2242
+	jne	.label_2016
 	mov	r14d, ecx
-	jmp	.label_2237
-.label_2242:
+	jmp	.label_2011
+.label_2016:
 	test	ecx, ecx
-	jg	.label_2237
+	jg	.label_2011
 	test	ebx, ebx
 	mov	r14d, 1
 	cmovg	r14d, ebx
-	jmp	.label_2237
-.label_2247:
+	jmp	.label_2011
+.label_2021:
 	mov	rax, qword ptr [rdx + 8]
 	cmp	byte ptr [rax + rcx], 0
-	je	.label_2237
+	je	.label_2011
 	mov	r14d, ebx
-	jmp	.label_2237
-.label_2240:
+	jmp	.label_2011
+.label_2017:
 	mov	rax, qword ptr [rdx + 8]
 	movzx	esi, byte ptr [rax + rcx]
 	xor	r14d, r14d
 	cmp	esi, 0xc2
-	jae	.label_2251
-.label_2237:
+	jae	.label_2027
+.label_2011:
 	mov	eax, r14d
 	pop	rbx
 	pop	r12
@@ -24360,18 +22300,18 @@ check_node_accept_bytes:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2238:
+.label_2013:
 	mov	ecx, ebx
-	jmp	.label_2241
-.label_2251:
+	jmp	.label_2015
+.label_2027:
 	lea	rdi, [rcx + 2]
 	mov	rdx, qword ptr [rdx + 0x58]
 	cmp	rdi, rdx
-	jg	.label_2237
+	jg	.label_2011
 	mov	bl, byte ptr [rcx + rax + 1]
 	movzx	edi, sil
 	cmp	edi, 0xdf
-	ja	.label_2235
+	ja	.label_2010
 	movzx	eax, bl
 	cmp	eax, 0xc0
 	sbb	eax, eax
@@ -24379,242 +22319,173 @@ check_node_accept_bytes:
 	xor	r14d, r14d
 	test	bl, bl
 	cmovs	r14d, eax
-	jmp	.label_2237
-.label_2235:
+	jmp	.label_2011
+.label_2010:
 	cmp	edi, 0xef
-	ja	.label_2243
+	ja	.label_2018
 	mov	esi, 3
 	cmp	edi, 0xe0
-	jne	.label_2233
+	jne	.label_2008
 	movzx	edi, bl
 	cmp	edi, 0xa0
-	jb	.label_2237
-	jmp	.label_2233
-.label_2243:
+	jb	.label_2011
+	jmp	.label_2008
+.label_2018:
 	cmp	edi, 0xf7
-	ja	.label_2250
+	ja	.label_2026
 	mov	esi, 4
 	cmp	edi, 0xf0
-	jne	.label_2233
+	jne	.label_2008
 	movzx	edi, bl
 	cmp	edi, 0x90
-	jb	.label_2237
-	jmp	.label_2233
-.label_2250:
+	jb	.label_2011
+	jmp	.label_2008
+.label_2026:
 	cmp	edi, 0xfb
-	ja	.label_2256
+	ja	.label_2031
 	mov	esi, 5
 	cmp	edi, 0xf8
-	jne	.label_2233
+	jne	.label_2008
 	movzx	edi, bl
 	cmp	edi, 0x88
-	jb	.label_2237
-	jmp	.label_2233
-.label_2256:
+	jb	.label_2011
+	jmp	.label_2008
+.label_2031:
 	cmp	edi, 0xfd
-	ja	.label_2237
+	ja	.label_2011
 	mov	esi, 6
 	cmp	edi, 0xfc
-	jne	.label_2233
+	jne	.label_2008
 	movzx	edi, bl
 	cmp	edi, 0x84
-	jb	.label_2237
-.label_2233:
+	jb	.label_2011
+.label_2008:
 	mov	edi, esi
 	lea	rbp, [rdi + rcx]
 	cmp	rbp, rdx
-	jg	.label_2237
+	jg	.label_2011
 	add	rax, rcx
 	mov	ecx, 1
-.label_2255:
+.label_2030:
 	mov	dl, byte ptr [rax + rcx]
 	test	dl, dl
-	jns	.label_2237
+	jns	.label_2011
 	movzx	edx, dl
 	cmp	edx, 0xbf
-	ja	.label_2237
+	ja	.label_2011
 	inc	rcx
 	cmp	rcx, rdi
-	jl	.label_2255
+	jl	.label_2030
 	mov	r14d, esi
-	jmp	.label_2237
+	jmp	.label_2011
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x417190
+	#Procedure 0x415490
 
 	.globl check_node_accept
 	.type check_node_accept, @function
 check_node_accept:
 	push	rbp
-	push	r15
-	push	r14
 	push	rbx
 	push	rax
-	mov	r14, rsi
-	mov	rbx, rdi
-	mov	rax, qword ptr [rbx + 8]
+	mov	rax, qword ptr [rdi + 8]
 	movzx	ecx, byte ptr [rax + rdx]
-	mov	r15d, dword ptr [r14 + 8]
-	movzx	esi, r15b
+	mov	ebx, dword ptr [rsi + 8]
+	movzx	ebp, bl
 	xor	eax, eax
-	dec	esi
-	cmp	esi, 6
-	ja	.label_2260
-	jmp	qword ptr [word ptr [+ (rsi * 8) + label_2267]]
-.label_2564:
-	movzx	eax, byte ptr [r14]
+	dec	ebp
+	cmp	ebp, 6
+	ja	.label_2032
+	jmp	qword ptr [word ptr [+ (rbp * 8) + label_2039]]
+.label_2399:
+	movzx	eax, byte ptr [rsi]
 	cmp	eax, ecx
-	je	.label_2257
+	je	.label_2033
 	xor	eax, eax
-	jmp	.label_2260
-.label_2565:
-	mov	rsi, qword ptr [r14]
+	jmp	.label_2032
+.label_2400:
+	mov	rsi, qword ptr [rsi]
 	mov	al, cl
 	shr	al, 6
 	movzx	eax, al
 	mov	rax, qword ptr [rsi + rax*8]
 	bt	rax, rcx
-	jb	.label_2257
+	jb	.label_2033
 	xor	eax, eax
-	jmp	.label_2260
-.label_2567:
+	jmp	.label_2032
+.label_2402:
 	test	cl, cl
-	js	.label_2273
-.label_2566:
+	js	.label_2037
+.label_2401:
 	test	cl, cl
-	je	.label_2274
+	je	.label_2038
 	movzx	eax, cl
 	cmp	eax, 0xa
-	jne	.label_2257
-	mov	rax, qword ptr [rbx + 0x98]
+	jne	.label_2033
+	mov	rax, qword ptr [rdi + 0x98]
 	test	byte ptr [rax + 0xd8], 0x40
-	jne	.label_2257
+	jne	.label_2033
 	xor	eax, eax
-	jmp	.label_2260
-.label_2274:
-	mov	rax, qword ptr [rbx + 0x98]
+	jmp	.label_2032
+.label_2038:
+	mov	rax, qword ptr [rdi + 0x98]
 	cmp	byte ptr [rax + 0xd8], 0
-	js	.label_2262
-.label_2257:
-	shr	r15d, 8
+	js	.label_2035
+.label_2033:
+	mov	ebp, ebx
+	shr	ebp, 8
 	mov	al, 1
-	test	r15w, 0x3ff
-	je	.label_2260
-	test	rdx, rdx
-	js	.label_2268
-	cmp	qword ptr [rbx + 0x58], rdx
-	je	.label_2269
-	cmp	dword ptr [rbx + 0x90], 2
-	jl	.label_2271
-	mov	rax, qword ptr [rbx + 0x10]
-	inc	rdx
-.label_2272:
-	mov	ebp, dword ptr [rax + rdx*4 - 4]
-	cmp	ebp, -1
-	jne	.label_2270
-	dec	rdx
-	test	rdx, rdx
-	jg	.label_2272
-	mov	eax, dword ptr [rbx + 0x70]
-	jmp	.label_2266
-.label_2271:
-	mov	rax, qword ptr [rbx + 0x80]
-	mov	dl, cl
-	shr	dl, 6
-	movzx	edx, dl
-	mov	rdx, qword ptr [rax + rdx*8]
-	xor	eax, eax
-	bt	rdx, rcx
-	jae	.label_2275
-	mov	eax, 1
-	xor	edx, edx
-	jmp	.label_2261
-.label_2273:
-	xor	eax, eax
-	jmp	.label_2260
-.label_2270:
-	cmp	byte ptr [rbx + 0x8e], 0
-	jne	.label_2263
-.label_2258:
-	xor	eax, eax
-	cmp	ebp, 0xa
-	je	.label_2265
-	jmp	.label_2266
-.label_2275:
-	cmp	ecx, 0xa
-	jne	.label_2266
-.label_2265:
-	mov	eax, 2
-	cmp	byte ptr [rbx + 0x8d], 0
-	jne	.label_2266
-	xor	eax, eax
-	jmp	.label_2266
-.label_2262:
-	xor	eax, eax
-	jmp	.label_2260
-.label_2268:
-	mov	eax, dword ptr [rbx + 0x70]
-	jmp	.label_2266
-.label_2269:
-	mov	eax, dword ptr [rbx + 0xa0]
-	and	eax, 2
-	xor	eax, 0xa
-.label_2266:
+	test	bp, 0x3ff
+	je	.label_2032
+	mov	eax, dword ptr [rdi + 0xa0]
+	mov	rsi, rdx
+	mov	edx, eax
+	call	re_string_context_at
 	mov	ecx, eax
 	and	ecx, 1
-	sete	dl
-	test	r15b, 4
-	je	.label_2261
+	test	bpl, 4
+	je	.label_2040
 	test	ecx, ecx
-	jne	.label_2261
+	jne	.label_2040
 	xor	eax, eax
-	jmp	.label_2260
-.label_2263:
-	mov	edi, ebp
-	call	iswalnum
+	jmp	.label_2032
+.label_2040:
+	test	bh, 8
+	je	.label_2034
+	test	ecx, ecx
+	je	.label_2034
+	xor	eax, eax
+	jmp	.label_2032
+.label_2037:
+	xor	eax, eax
+	jmp	.label_2032
+.label_2034:
+	test	bh, 0x20
+	je	.label_2036
 	mov	ecx, eax
-	xor	edx, edx
-	cmp	ebp, 0x5f
-	mov	eax, 1
-	je	.label_2261
-	test	ecx, ecx
-	je	.label_2258
-.label_2261:
-	mov	ecx, dword ptr [r14 + 8]
-	test	dl, dl
-	jne	.label_2259
-	mov	edx, ecx
-	and	edx, 0x800
-	je	.label_2259
+	and	ecx, 2
+	jne	.label_2036
 	xor	eax, eax
-	jmp	.label_2260
-.label_2259:
-	test	al, 2
-	jne	.label_2264
-	mov	edx, ecx
-	and	edx, 0x2000
-	je	.label_2264
+	jmp	.label_2032
+.label_2035:
 	xor	eax, eax
-	jmp	.label_2260
-.label_2264:
-	shr	ecx, 8
+	jmp	.label_2032
+.label_2036:
 	and	eax, 8
-	test	cl, cl
+	test	bpl, bpl
 	setns	cl
 	shr	eax, 3
 	or	al, cl
-.label_2260:
+.label_2032:
 	add	rsp, 8
 	pop	rbx
-	pop	r14
-	pop	r15
 	pop	rbp
 	ret	
-	nop	word ptr cs:[rax + rax]
+	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x417360
+	#Procedure 0x415580
 
 	.globl build_trtable
 	.type build_trtable, @function
@@ -24628,623 +22499,440 @@ build_trtable:
 	push	rbx
 	sub	rsp, 0xd8
 	mov	r13, rsi
-	mov	qword ptr [rbp - 0x90], r13
-	mov	rbx, rdi
+	mov	qword ptr [rbp - 0xb8], r13
+	mov	r12, rdi
+	mov	qword ptr [rbp - 0xd8], r12
 	mov	edi, 0x3800
 	call	malloc
-	mov	r12, rax
-	mov	qword ptr [rbp - 0x98], r12
-	test	r12, r12
-	je	.label_2364
+	mov	rsi, rax
+	mov	qword ptr [rbp - 0xc0], rsi
+	test	rsi, rsi
+	je	.label_2052
 	lea	rax, [r13 + 0x58]
 	mov	qword ptr [rbp - 0xe8], rax
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [r13 + 0x58], xmm0
 	movdqa	xmmword ptr [rbp - 0x40], xmm0
 	movdqa	xmmword ptr [rbp - 0x50], xmm0
-	xor	r15d, r15d
+	xor	r14d, r14d
 	cmp	qword ptr [r13 + 0x10], 0
-	jle	.label_2296
-	lea	rax, [r12 + 0x1800]
-	mov	qword ptr [rbp - 0xc0], rax
-	lea	rax, [r12 + 0x1818]
-	mov	qword ptr [rbp - 0xf0], rax
-	xor	edi, edi
-	xor	r11d, r11d
-	mov	r15, rbx
-	mov	qword ptr [rbp - 0xe0], r15
-	nop	dword ptr [rax + rax]
-.label_2360:
+	jle	.label_2084
+	lea	rax, [rsi + 0x1800]
+	mov	qword ptr [rbp - 0xc8], rax
+	xor	ebx, ebx
+	xor	r14d, r14d
+	nop	word ptr cs:[rax + rax]
+.label_2079:
+	mov	qword ptr [rbp - 0x98], rbx
 	mov	rax, qword ptr [r13 + 0x18]
-	mov	rsi, qword ptr [rax + rdi*8]
-	mov	rax, qword ptr [r15]
-	shl	rsi, 4
-	lea	r8, [rax + rsi]
-	mov	qword ptr [rbp - 0xa0], r8
-	mov	edx, dword ptr [rax + rsi + 8]
-	movzx	r9d, dl
-	cmp	r9d, 1
-	jne	.label_2276
-	mov	cl, byte ptr [r8]
-	mov	ebx, 1
-	shl	rbx, cl
+	mov	rax, qword ptr [rax + rbx*8]
+	mov	rcx, qword ptr [r12]
+	shl	rax, 4
+	lea	rdx, [rcx + rax]
+	mov	qword ptr [rbp - 0xa0], rdx
+	mov	eax, dword ptr [rcx + rax + 8]
+	movzx	r10d, al
+	cmp	r10d, 1
+	jne	.label_2044
+	mov	rcx, qword ptr [rbp - 0xa0]
+	mov	cl, byte ptr [rcx]
+	mov	edx, 1
+	shl	rdx, cl
 	shr	cl, 6
 	movzx	ecx, cl
-	or	qword ptr [rbp + rcx*8 - 0x50], rbx
-	jmp	.label_2288
+	or	qword ptr [rbp + rcx*8 - 0x50], rdx
+	jmp	.label_2056
 	nop	word ptr cs:[rax + rax]
-.label_2276:
-	cmp	r9d, 7
-	je	.label_2298
-	cmp	r9d, 5
-	je	.label_2299
-	cmp	r9d, 3
-	jne	.label_2300
-	mov	rcx, qword ptr [r8]
-	mov	rbx, qword ptr [rcx]
-	or	qword ptr [rbp - 0x50], rbx
-	mov	rbx, qword ptr [rcx + 8]
-	or	qword ptr [rbp - 0x48], rbx
-	mov	rbx, qword ptr [rcx + 0x10]
-	or	qword ptr [rbp - 0x40], rbx
-	mov	rcx, qword ptr [rcx + 0x18]
-	or	qword ptr [rbp - 0x38], rcx
-	jmp	.label_2288
-.label_2298:
+.label_2044:
+	cmp	r10d, 7
+	je	.label_2067
+	cmp	r10d, 5
+	je	.label_2069
+	cmp	r10d, 3
+	jne	.label_2046
+	mov	rcx, qword ptr [rbp - 0xa0]
+	mov	rcx, qword ptr [rcx]
+	movups	xmm0, xmmword ptr [rcx]
+	orps	xmm0, xmmword ptr [rbp - 0x50]
+	movaps	xmmword ptr [rbp - 0x50], xmm0
+	movdqu	xmm0, xmmword ptr [rcx + 0x10]
+	por	xmm0, xmmword ptr [rbp - 0x40]
+	movdqa	xmmword ptr [rbp - 0x40], xmm0
+	jmp	.label_2056
+.label_2067:
 	mov	qword ptr [rbp - 0x48], -1
 	mov	qword ptr [rbp - 0x50], -1
-	mov	rcx, qword ptr [r15 + 0xd8]
-	mov	rbx, -2
+	mov	rcx, qword ptr [r12 + 0xd8]
+	mov	rdx, -2
 	test	cl, 0x40
-	jne	.label_2313
+	jne	.label_2049
 	mov	qword ptr [rbp - 0x50], -0x401
-	mov	rbx, -0x402
-.label_2313:
+	mov	rdx, -0x402
+.label_2049:
 	test	cl, cl
-	jns	.label_2288
-	mov	qword ptr [rbp - 0x50], rbx
-	jmp	.label_2288
-.label_2299:
-	cmp	dword ptr [r15 + 0xb4], 2
-	jl	.label_2329
-	mov	r14, r8
-	mov	r8, qword ptr [r15 + 0x78]
-	mov	rcx, qword ptr [rbp - 0x50]
-	or	rcx, qword ptr [r8]
-	mov	qword ptr [rbp - 0x50], rcx
-	mov	rbx, qword ptr [r8 + 8]
-	or	qword ptr [rbp - 0x48], rbx
-	mov	rbx, qword ptr [r8 + 0x10]
-	or	qword ptr [rbp - 0x40], rbx
-	mov	rbx, qword ptr [r8 + 0x18]
-	mov	r8, r14
-	or	qword ptr [rbp - 0x38], rbx
-	jmp	.label_2328
-.label_2329:
+	jns	.label_2056
+	mov	qword ptr [rbp - 0x50], rdx
+	jmp	.label_2056
+.label_2069:
+	cmp	dword ptr [r12 + 0xb4], 2
+	jl	.label_2105
+	mov	rcx, qword ptr [r12 + 0x78]
+	movdqu	xmm0, xmmword ptr [rcx]
+	por	xmm0, xmmword ptr [rbp - 0x50]
+	movdqa	xmmword ptr [rbp - 0x50], xmm0
+	movdqu	xmm1, xmmword ptr [rcx + 0x10]
+	por	xmm1, xmmword ptr [rbp - 0x40]
+	movdqa	xmmword ptr [rbp - 0x40], xmm1
+	movq	rcx, xmm0
+	jmp	.label_2096
+.label_2105:
 	mov	qword ptr [rbp - 0x38], -1
 	mov	qword ptr [rbp - 0x40], -1
 	mov	qword ptr [rbp - 0x48], -1
 	mov	qword ptr [rbp - 0x50], -1
 	mov	rcx, -1
-.label_2328:
-	mov	rbx, qword ptr [r15 + 0xd8]
-	test	bl, 0x40
-	jne	.label_2343
+.label_2096:
+	mov	rdx, qword ptr [r12 + 0xd8]
+	test	dl, 0x40
+	jne	.label_2110
 	and	rcx, 0xfffffffffffffbff
 	mov	qword ptr [rbp - 0x50], rcx
-.label_2343:
-	test	bl, bl
-	jns	.label_2288
+.label_2110:
+	test	dl, dl
+	jns	.label_2056
 	and	rcx, 0xfffffffffffffffe
 	mov	qword ptr [rbp - 0x50], rcx
 	nop	word ptr cs:[rax + rax]
-.label_2288:
-	shr	edx, 8
-	mov	ecx, edx
-	and	ecx, 0x3ff
-	je	.label_2334
-	test	dl, 0x20
-	je	.label_2358
-	mov	rcx, qword ptr [rbp - 0x50]
-	test	ch, 4
+.label_2056:
+	mov	ecx, eax
+	shr	ecx, 8
+	mov	edx, ecx
+	and	edx, 0x3ff
+	je	.label_2078
+	test	cl, 0x20
+	je	.label_2116
+	mov	rdx, qword ptr [rbp - 0x50]
+	test	dh, 4
 	pxor	xmm0, xmm0
 	movdqa	xmmword ptr [rbp - 0x40], xmm0
 	movdqa	xmmword ptr [rbp - 0x50], xmm0
-	je	.label_2300
+	je	.label_2046
 	mov	qword ptr [rbp - 0x50], 0x400
-.label_2358:
-	test	dl, dl
-	js	.label_2314
-	lea	rcx, [rax + rsi + 8]
-	test	dl, 4
-	je	.label_2368
-	cmp	r9d, 1
-	jne	.label_2372
-	test	byte ptr [rcx + 2], 0x40
-	je	.label_2314
-.label_2372:
-	cmp	dword ptr [r15 + 0xb4], 1
-	jle	.label_2374
-	mov	rsi, qword ptr [r15 + 0x78]
-	mov	rax, qword ptr [rsi]
-	not	rax
-	or	rax, qword ptr [r15 + 0xb8]
-	and	rax, qword ptr [rbp - 0x50]
-	mov	qword ptr [rbp - 0x50], rax
-	mov	rbx, qword ptr [rsi + 8]
-	not	rbx
-	or	rbx, qword ptr [r15 + 0xc0]
-	and	rbx, qword ptr [rbp - 0x48]
-	mov	qword ptr [rbp - 0x48], rbx
-	or	rbx, rax
-	mov	rax, qword ptr [rsi + 0x10]
-	not	rax
-	or	rax, qword ptr [r15 + 0xc8]
-	and	rax, qword ptr [rbp - 0x40]
-	mov	qword ptr [rbp - 0x40], rax
-	mov	rsi, qword ptr [rsi + 0x18]
-	not	rsi
-	or	rsi, qword ptr [r15 + 0xd0]
-	and	rsi, qword ptr [rbp - 0x38]
-	mov	qword ptr [rbp - 0x38], rsi
-	or	rsi, rax
-	jmp	.label_2377
-.label_2374:
-	movdqu	xmm0, xmmword ptr [r15 + 0xb8]
+.label_2116:
+	test	cl, cl
+	js	.label_2123
+	test	cl, 4
+	je	.label_2127
+	mov	edx, eax
+	and	edx, 0x4000ff
+	cmp	edx, 1
+	je	.label_2123
+	cmp	dword ptr [r12 + 0xb4], 1
+	jle	.label_2132
+	mov	rdx, qword ptr [r12 + 0x78]
+	movdqu	xmm0, xmmword ptr [r12 + 0xb8]
+	movdqu	xmm1, xmmword ptr [rdx]
+	pcmpeqd	xmm2, xmm2
+	pxor	xmm1, xmm2
+	por	xmm1, xmm0
+	pand	xmm1, xmmword ptr [rbp - 0x50]
+	movdqa	xmmword ptr [rbp - 0x50], xmm1
+	movq	r8, xmm1
+	pshufd	xmm0, xmm1, 0x4e
+	movq	r9, xmm0
+	movdqu	xmm0, xmmword ptr [r12 + 0xc8]
+	movdqu	xmm1, xmmword ptr [rdx + 0x10]
+	pxor	xmm1, xmm2
+	por	xmm1, xmm0
+	pand	xmm1, xmmword ptr [rbp - 0x40]
+	mov	rdi, rbx
+	movq	rbx, xmm1
+	or	rbx, r8
+	or	rbx, r9
+	movdqa	xmmword ptr [rbp - 0x40], xmm1
+	pshufd	xmm0, xmm1, 0x4e
+	movq	rdx, xmm0
+	or	rdx, rbx
+	mov	rbx, rdi
+	jmp	.label_2135
+.label_2132:
+	movdqu	xmm0, xmmword ptr [r12 + 0xb8]
 	pand	xmm0, xmmword ptr [rbp - 0x50]
 	movdqa	xmmword ptr [rbp - 0x50], xmm0
-	movq	rsi, xmm0
+	movq	rdx, xmm0
 	pshufd	xmm0, xmm0, 0x4e
-	movq	rax, xmm0
-	movdqu	xmm0, xmmword ptr [r15 + 0xc8]
+	movq	r8, xmm0
+	movdqu	xmm0, xmmword ptr [r12 + 0xc8]
 	pand	xmm0, xmmword ptr [rbp - 0x40]
-	movq	rbx, xmm0
-	or	rbx, rsi
-	or	rbx, rax
+	movq	rdi, xmm0
+	or	rdi, rdx
+	or	rdi, r8
 	movdqa	xmmword ptr [rbp - 0x40], xmm0
 	pshufd	xmm0, xmm0, 0x4e
-	movq	rsi, xmm0
-.label_2377:
-	or	rsi, rbx
-	test	rsi, rsi
-	je	.label_2300
-.label_2368:
-	test	dl, 8
-	je	.label_2334
-	cmp	r9d, 1
-	jne	.label_2312
-	test	byte ptr [rcx + 2], 0x40
-	jne	.label_2314
-.label_2312:
-	cmp	dword ptr [r15 + 0xb4], 1
-	jle	.label_2315
-	mov	rcx, qword ptr [r15 + 0x78]
-	mov	rdx, qword ptr [rcx]
-	and	rdx, qword ptr [r15 + 0xb8]
-	not	rdx
-	and	rdx, qword ptr [rbp - 0x50]
-	mov	qword ptr [rbp - 0x50], rdx
-	mov	rsi, qword ptr [rcx + 8]
-	and	rsi, qword ptr [r15 + 0xc0]
-	not	rsi
-	and	rsi, qword ptr [rbp - 0x48]
-	mov	qword ptr [rbp - 0x48], rsi
-	or	rsi, rdx
-	mov	rdx, qword ptr [rcx + 0x10]
-	and	rdx, qword ptr [r15 + 0xc8]
-	not	rdx
-	and	rdx, qword ptr [rbp - 0x40]
-	mov	qword ptr [rbp - 0x40], rdx
-	mov	rcx, qword ptr [rcx + 0x18]
-	and	rcx, qword ptr [r15 + 0xd0]
-	not	rcx
-	and	rcx, qword ptr [rbp - 0x38]
-	mov	qword ptr [rbp - 0x38], rcx
-	or	rcx, rdx
-	jmp	.label_2318
-	nop	dword ptr [rax + rax]
-.label_2314:
+	movq	rdx, xmm0
+	or	rdx, rdi
+.label_2135:
+	test	rdx, rdx
+	je	.label_2046
+.label_2127:
+	test	cl, 8
+	je	.label_2078
+	cmp	r10d, 1
+	setne	cl
+	test	eax, 0x400000
+	je	.label_2080
+	test	cl, cl
+	jne	.label_2080
+	nop	word ptr cs:[rax + rax]
+.label_2123:
 	pxor	xmm0, xmm0
 	movdqa	xmmword ptr [rbp - 0x40], xmm0
 	movdqa	xmmword ptr [rbp - 0x50], xmm0
-	jmp	.label_2300
-.label_2315:
-	movdqu	xmm0, xmmword ptr [r15 + 0xb8]
+	jmp	.label_2046
+.label_2080:
+	cmp	dword ptr [r12 + 0xb4], 1
+	jle	.label_2092
+	mov	rax, qword ptr [r12 + 0x78]
+	movdqu	xmm0, xmmword ptr [r12 + 0xb8]
+	movdqu	xmm1, xmmword ptr [rax]
+	pand	xmm1, xmm0
+	pandn	xmm1, xmmword ptr [rbp - 0x50]
+	movdqa	xmmword ptr [rbp - 0x50], xmm1
+	movq	rcx, xmm1
+	pshufd	xmm0, xmm1, 0x4e
+	movq	rdx, xmm0
+	movdqu	xmm0, xmmword ptr [r12 + 0xc8]
+	movdqu	xmm1, xmmword ptr [rax + 0x10]
+	pand	xmm1, xmm0
+	pandn	xmm1, xmmword ptr [rbp - 0x40]
+	movq	rdi, xmm1
+	or	rdi, rcx
+	or	rdi, rdx
+	movdqa	xmmword ptr [rbp - 0x40], xmm1
+	pshufd	xmm0, xmm1, 0x4e
+	movq	rax, xmm0
+	or	rax, rdi
+	jmp	.label_2138
+.label_2092:
+	movdqu	xmm0, xmmword ptr [r12 + 0xb8]
 	pandn	xmm0, xmmword ptr [rbp - 0x50]
 	movdqa	xmmword ptr [rbp - 0x50], xmm0
-	movq	rcx, xmm0
+	movq	rax, xmm0
 	pshufd	xmm0, xmm0, 0x4e
-	movq	rdx, xmm0
-	movdqu	xmm0, xmmword ptr [r15 + 0xc8]
+	movq	rcx, xmm0
+	movdqu	xmm0, xmmword ptr [r12 + 0xc8]
 	pandn	xmm0, xmmword ptr [rbp - 0x40]
-	movq	rsi, xmm0
-	or	rsi, rcx
-	or	rsi, rdx
+	movq	rdx, xmm0
+	or	rdx, rax
+	or	rdx, rcx
 	movdqa	xmmword ptr [rbp - 0x40], xmm0
 	pshufd	xmm0, xmm0, 0x4e
-	movq	rcx, xmm0
-.label_2318:
-	or	rcx, rsi
-	test	rcx, rcx
-	je	.label_2300
+	movq	rax, xmm0
+	or	rax, rdx
+.label_2138:
+	test	rax, rax
+	je	.label_2046
 	nop	dword ptr [rax]
-.label_2334:
-	mov	qword ptr [rbp - 0x80], rdi
-	test	r11, r11
-	jle	.label_2336
-	cmp	r9d, 1
-	jne	.label_2365
-	mov	r15, qword ptr [rbp - 0xc0]
-	mov	rbx, r12
-	xor	r14d, r14d
-	nop	word ptr cs:[rax + rax]
-.label_2287:
-	movzx	eax, byte ptr [r8]
+.label_2078:
+	test	r14, r14
+	jle	.label_2126
+	mov	qword ptr [rbp - 0x80], rsi
+	mov	r13, qword ptr [rbp - 0xc8]
+	xor	edi, edi
+	mov	edx, r10d
+	mov	dword ptr [rbp - 0xb0], edx
+	nop	
+.label_2140:
+	cmp	edx, 1
+	jne	.label_2133
+	mov	rax, qword ptr [rbp - 0xa0]
+	movzx	eax, byte ptr [rax]
 	mov	cl, al
 	shr	cl, 6
 	movzx	ecx, cl
-	mov	rcx, qword ptr [r15 + rcx*8]
+	mov	rcx, qword ptr [r13 + rcx*8]
 	bt	rcx, rax
-	jae	.label_2366
-	mov	qword ptr [rbp - 0x88], rbx
-	mov	r9, qword ptr [rbp - 0x50]
-	mov	rax, qword ptr [rbp - 0x48]
-	mov	qword ptr [rbp - 0xb0], rax
-	mov	r8, qword ptr [r15]
-	mov	r13, qword ptr [r15 + 8]
-	mov	rsi, r8
-	and	rsi, r9
-	mov	rdi, r13
-	and	rdi, rax
-	mov	rdx, rdi
-	or	rdx, rsi
-	mov	rax, qword ptr [rbp - 0x40]
-	mov	qword ptr [rbp - 0xa8], rax
-	mov	r12, qword ptr [r15 + 0x10]
-	mov	rcx, r12
-	and	rcx, rax
-	or	rdx, rcx
-	mov	r10, qword ptr [rbp - 0x38]
-	mov	rbx, qword ptr [r15 + 0x18]
-	mov	rax, rbx
-	and	rax, r10
-	or	rdx, rax
-	je	.label_2378
-	mov	qword ptr [rbp - 0xd8], rax
-	mov	qword ptr [rbp - 0xd0], rcx
-	mov	qword ptr [rbp - 0xc8], rsi
-	mov	qword ptr [rbp - 0x78], r11
-	mov	rsi, r10
-	mov	r10, rbx
-	mov	r11, r9
-	not	r11
-	and	r11, r8
-	not	r8
-	and	r8, r9
-	mov	qword ptr [rbp - 0x50], r8
-	mov	rax, qword ptr [rbp - 0xb0]
-	mov	r9, rax
-	not	r9
-	and	r9, r13
-	mov	rcx, r9
-	or	rcx, r11
-	not	r13
-	and	r13, rax
-	mov	qword ptr [rbp - 0x48], r13
-	mov	rdx, qword ptr [rbp - 0xa8]
-	mov	rax, rdx
-	not	rax
-	and	rax, r12
-	or	rcx, rax
-	not	r12
-	and	r12, rdx
-	mov	qword ptr [rbp - 0x40], r12
-	mov	rdx, rsi
-	not	rdx
-	and	rdx, r10
-	not	r10
-	and	r10, rsi
-	mov	qword ptr [rbp - 0xa8], r10
-	mov	qword ptr [rbp - 0x38], r10
-	or	rcx, rdx
-	je	.label_2333
-	mov	qword ptr [rbp - 0xb8], r13
-	mov	qword ptr [rbp - 0xb0], r8
-	mov	rsi, qword ptr [rbp - 0x78]
-	mov	rcx, rsi
-	shl	rcx, 5
-	mov	r10, qword ptr [rbp - 0xc0]
-	mov	qword ptr [r10 + rcx], r11
-	mov	qword ptr [r10 + rcx + 8], r9
-	mov	r9, rsi
-	mov	qword ptr [r10 + rcx + 0x10], rax
-	mov	qword ptr [r10 + rcx + 0x18], rdx
-	mov	rax, qword ptr [rbp - 0xc8]
-	mov	qword ptr [r15], rax
-	mov	qword ptr [r15 + 8], rdi
-	mov	rax, qword ptr [rbp - 0xd0]
-	mov	qword ptr [r15 + 0x10], rax
-	mov	rax, qword ptr [rbp - 0xd8]
-	mov	qword ptr [r15 + 0x18], rax
-	lea	rcx, [r9 + r9*2]
-	mov	rdx, qword ptr [rbp - 0x98]
-	lea	rax, [rdx + rcx*8]
-	mov	rbx, qword ptr [rbp - 0x88]
-	mov	rdi, qword ptr [rbx + 8]
-	mov	qword ptr [rdx + rcx*8 + 8], rdi
-	mov	r13, qword ptr [rbx + 8]
-	test	r13, r13
-	jle	.label_2323
-	mov	qword ptr [rax], rdi
-	shl	rdi, 3
-	mov	qword ptr [rbp - 0xd0], rax
-	mov	qword ptr [rbp - 0xc8], rcx
-	call	malloc
-	mov	rcx, qword ptr [rbp - 0xc8]
-	mov	rdx, qword ptr [rbp - 0x98]
-	mov	qword ptr [rdx + rcx*8 + 0x10], rax
-	test	rax, rax
-	je	.label_2352
-	mov	rsi, qword ptr [rbx + 0x10]
-	shl	r13, 3
-	mov	rdi, rax
-	mov	rdx, r13
-	call	memcpy
-	mov	r9, qword ptr [rbp - 0x78]
-	jmp	.label_2362
-	nop	
-.label_2378:
-	mov	r8, qword ptr [rbp - 0xa0]
-	mov	rbx, qword ptr [rbp - 0x88]
-	jmp	.label_2366
-.label_2333:
-	mov	qword ptr [rbp - 0xb8], r13
-	mov	qword ptr [rbp - 0xb0], r8
-	mov	rcx, qword ptr [rbp - 0x80]
-	mov	rbx, qword ptr [rbp - 0x88]
-	jmp	.label_2369
-.label_2323:
-	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [rax], xmm0
-	mov	qword ptr [rax + 0x10], 0
-.label_2362:
-	inc	r9
-	mov	qword ptr [rbp - 0x78], r9
-	mov	rcx, qword ptr [rbp - 0x80]
-.label_2369:
-	mov	qword ptr [rbp - 0x80], rcx
-	mov	rax, qword ptr [rbp - 0x90]
-	mov	rax, qword ptr [rax + 0x18]
-	mov	rsi, qword ptr [rax + rcx*8]
-	mov	rdi, rbx
-	call	re_node_set_insert
-	test	al, al
-	je	.label_2307
-	mov	rax, qword ptr [rbp - 0xb8]
-	or	rax, qword ptr [rbp - 0xb0]
-	or	r12, qword ptr [rbp - 0xa8]
-	or	r12, rax
-	mov	r11, qword ptr [rbp - 0x78]
-	mov	r8, qword ptr [rbp - 0xa0]
-	je	.label_2291
-.label_2366:
-	inc	r14
-	add	rbx, 0x18
-	add	r15, 0x20
-	cmp	r14, r11
-	jl	.label_2287
-	jmp	.label_2291
-.label_2336:
-	xor	r14d, r14d
-	jmp	.label_2291
-.label_2365:
-	mov	rsi, qword ptr [rbp - 0x50]
-	mov	rdx, qword ptr [rbp - 0x48]
-	mov	r10, qword ptr [rbp - 0x40]
-	mov	rcx, qword ptr [rbp - 0x38]
-	mov	r15, qword ptr [rbp - 0xf0]
-	mov	rbx, r12
-	xor	r14d, r14d
-	nop	word ptr cs:[rax + rax]
-.label_2381:
-	mov	qword ptr [rbp - 0x78], r11
-	mov	r12, qword ptr [r15 - 0x18]
-	mov	r13, qword ptr [r15 - 0x10]
-	mov	rdi, r12
-	and	rdi, rsi
+	jae	.label_2099
+.label_2133:
 	mov	qword ptr [rbp - 0x88], rdi
-	mov	rax, r13
-	and	rax, rdx
-	mov	qword ptr [rbp - 0xa0], rax
-	or	rax, rdi
-	mov	r11, qword ptr [r15 - 8]
-	mov	rdi, r11
-	and	rdi, r10
-	or	rax, rdi
-	mov	r9, qword ptr [r15]
-	mov	r8, r9
-	and	r8, rcx
-	or	rax, r8
-	je	.label_2317
-	mov	qword ptr [rbp - 0xc8], rdi
-	mov	qword ptr [rbp - 0xa8], rbx
-	mov	rax, rsi
-	not	rax
-	and	rax, r12
-	not	r12
-	and	r12, rsi
-	mov	qword ptr [rbp - 0x50], r12
-	mov	rbx, rdx
+	mov	qword ptr [rbp - 0x78], r14
+	mov	rax, qword ptr [rbp - 0x50]
+	mov	rcx, qword ptr [rbp - 0x48]
+	mov	r12, qword ptr [r13]
+	mov	r14, qword ptr [r13 + 8]
+	mov	r9, r12
+	and	r9, rax
+	mov	r10, r14
+	and	r10, rcx
+	mov	rbx, r10
+	or	rbx, r9
+	mov	rdi, qword ptr [rbp - 0x40]
+	mov	r15, qword ptr [r13 + 0x10]
+	mov	r11, r15
+	and	r11, rdi
+	or	rbx, r11
+	mov	rdx, qword ptr [rbp - 0x38]
+	mov	qword ptr [rbp - 0x90], rdx
+	mov	rsi, qword ptr [r13 + 0x18]
+	mov	r8, rsi
+	and	r8, rdx
+	or	rbx, r8
+	je	.label_2041
+	mov	rbx, rax
 	not	rbx
-	and	rbx, r13
-	mov	rsi, rbx
-	or	rsi, rax
-	not	r13
-	and	r13, rdx
-	mov	qword ptr [rbp - 0xb0], r13
-	mov	qword ptr [rbp - 0x48], r13
-	mov	rdx, r10
+	and	rbx, r12
+	not	r12
+	and	r12, rax
+	mov	qword ptr [rbp - 0xa8], r12
+	mov	qword ptr [rbp - 0x50], r12
+	mov	rdx, rcx
 	not	rdx
-	and	rdx, r11
-	or	rsi, rdx
-	not	r11
-	and	r11, r10
-	mov	qword ptr [rbp - 0x40], r11
-	mov	rdi, rcx
+	and	rdx, r14
+	mov	rax, rdx
+	or	rax, rbx
+	not	r14
+	and	r14, rcx
+	mov	qword ptr [rbp - 0x48], r14
+	mov	rcx, rdi
 	not	rcx
-	and	rcx, r9
-	not	r9
-	and	r9, rdi
-	mov	qword ptr [rbp - 0xb8], r9
-	mov	qword ptr [rbp - 0x38], r9
-	or	rsi, rcx
-	mov	r13, r11
-	je	.label_2322
-	mov	qword ptr [rbp - 0xd0], r12
-	mov	r10, qword ptr [rbp - 0x78]
-	mov	rsi, r10
-	shl	rsi, 5
-	mov	r12, qword ptr [rbp - 0xc0]
-	mov	qword ptr [r12 + rsi], rax
-	mov	qword ptr [r12 + rsi + 8], rbx
-	mov	qword ptr [r12 + rsi + 0x10], rdx
-	mov	qword ptr [r12 + rsi + 0x18], rcx
-	mov	rax, qword ptr [rbp - 0x88]
-	mov	qword ptr [r15 - 0x18], rax
-	mov	rax, qword ptr [rbp - 0xa0]
-	mov	qword ptr [r15 - 0x10], rax
-	mov	rax, r10
-	mov	rcx, qword ptr [rbp - 0xc8]
-	mov	qword ptr [r15 - 8], rcx
-	mov	qword ptr [r15], r8
-	lea	rsi, [rax + rax*2]
-	mov	r12, qword ptr [rbp - 0x98]
-	lea	rcx, [r12 + rsi*8]
-	mov	rbx, qword ptr [rbp - 0xa8]
-	mov	rdi, qword ptr [rbx + 8]
-	mov	qword ptr [r12 + rsi*8 + 8], rdi
-	mov	rdx, qword ptr [rbx + 8]
-	test	rdx, rdx
-	jle	.label_2346
-	mov	qword ptr [rbp - 0xc8], rdx
-	mov	qword ptr [rbp - 0xa0], r13
-	mov	qword ptr [rcx], rdi
-	shl	rdi, 3
-	mov	r13, rcx
-	mov	qword ptr [rbp - 0x88], rsi
-	call	malloc
-	mov	rcx, qword ptr [rbp - 0x88]
-	mov	qword ptr [r12 + rcx*8 + 0x10], rax
+	and	rcx, r15
+	or	rax, rcx
+	not	r15
+	and	r15, rdi
+	mov	qword ptr [rbp - 0x40], r15
+	mov	r12, qword ptr [rbp - 0x90]
+	mov	rdi, r12
+	not	rdi
+	and	rdi, rsi
+	not	rsi
+	and	rsi, r12
+	mov	qword ptr [rbp - 0x38], rsi
+	or	rax, rdi
+	mov	r12, rsi
+	je	.label_2065
+	mov	qword ptr [rbp - 0x90], r12
+	mov	rsi, qword ptr [rbp - 0x78]
+	mov	rax, rsi
+	shl	rax, 5
+	mov	r12, qword ptr [rbp - 0xc8]
+	mov	qword ptr [r12 + rax], rbx
+	mov	qword ptr [r12 + rax + 8], rdx
+	mov	qword ptr [r12 + rax + 0x10], rcx
+	mov	qword ptr [r12 + rax + 0x18], rdi
+	mov	qword ptr [r13], r9
+	mov	qword ptr [r13 + 8], r10
+	mov	qword ptr [r13 + 0x10], r11
+	mov	qword ptr [r13 + 0x18], r8
+	lea	r12, [rsi + rsi*2]
+	mov	rbx, qword ptr [rbp - 0xc0]
+	lea	rcx, [rbx + r12*8]
+	mov	rax, qword ptr [rbp - 0x80]
+	mov	rdi, qword ptr [rax + 8]
+	mov	qword ptr [rbx + r12*8 + 8], rdi
+	mov	rax, qword ptr [rax + 8]
 	test	rax, rax
-	je	.label_2379
-	mov	rsi, qword ptr [rbx + 0x10]
-	mov	rdx, qword ptr [rbp - 0xc8]
+	jle	.label_2085
+	mov	qword ptr [rbp - 0xd0], rax
+	mov	qword ptr [rcx], rdi
+	mov	qword ptr [rbp - 0xe0], rcx
+	shl	rdi, 3
+	call	malloc
+	mov	qword ptr [rbx + r12*8 + 0x10], rax
+	test	rax, rax
+	mov	r12, qword ptr [rbp - 0x90]
+	je	.label_2129
+	mov	rcx, qword ptr [rbp - 0x80]
+	mov	rsi, qword ptr [rcx + 0x10]
+	mov	rdx, qword ptr [rbp - 0xd0]
 	shl	rdx, 3
 	mov	rdi, rax
 	call	memcpy
-	mov	rax, qword ptr [rbp - 0x78]
-	mov	r12, qword ptr [rbp - 0xd0]
-	mov	r13, qword ptr [rbp - 0xa0]
-	jmp	.label_2278
-	nop	dword ptr [rax + rax]
-.label_2317:
-	mov	rdi, rcx
-	mov	r13, r10
-	mov	r12, rsi
-	mov	r11, qword ptr [rbp - 0x78]
-	jmp	.label_2286
+	jmp	.label_2119
 	nop	
-.label_2322:
-	mov	rcx, qword ptr [rbp - 0x80]
-	mov	rbx, qword ptr [rbp - 0xa8]
-	jmp	.label_2289
-.label_2346:
+.label_2041:
+	mov	r14, qword ptr [rbp - 0x78]
+	mov	rbx, qword ptr [rbp - 0x98]
+	mov	rdi, qword ptr [rbp - 0x88]
+	mov	edx, dword ptr [rbp - 0xb0]
+	jmp	.label_2099
+.label_2085:
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [rcx], xmm0
 	mov	qword ptr [rcx + 0x10], 0
-	mov	r12, qword ptr [rbp - 0xd0]
-.label_2278:
-	inc	rax
-	mov	qword ptr [rbp - 0x78], rax
-	mov	rcx, qword ptr [rbp - 0x80]
-.label_2289:
-	mov	qword ptr [rbp - 0x80], rcx
-	mov	rax, qword ptr [rbp - 0x90]
+	mov	r12, qword ptr [rbp - 0x90]
+.label_2119:
+	inc	qword ptr [rbp - 0x78]
+.label_2065:
+	mov	rbx, qword ptr [rbp - 0x98]
+	mov	rax, qword ptr [rbp - 0xb8]
 	mov	rax, qword ptr [rax + 0x18]
-	mov	rsi, qword ptr [rax + rcx*8]
-	mov	rdi, rbx
+	mov	rsi, qword ptr [rax + rbx*8]
+	mov	rdi, qword ptr [rbp - 0x80]
 	call	re_node_set_insert
 	test	al, al
-	je	.label_2307
-	mov	rdx, qword ptr [rbp - 0xb0]
-	mov	rax, rdx
-	or	rax, r12
-	mov	rcx, r13
-	mov	rdi, qword ptr [rbp - 0xb8]
-	or	rcx, rdi
-	or	rcx, rax
-	mov	r11, qword ptr [rbp - 0x78]
-	je	.label_2291
-.label_2286:
-	inc	r14
-	add	rbx, 0x18
-	add	r15, 0x20
-	cmp	r14, r11
-	mov	rcx, rdi
-	mov	r10, r13
-	mov	rsi, r12
-	jl	.label_2381
-	nop	word ptr cs:[rax + rax]
-.label_2291:
-	cmp	r14, r11
-	mov	r12, qword ptr [rbp - 0x98]
-	mov	r15, qword ptr [rbp - 0xe0]
-	mov	r13, qword ptr [rbp - 0x90]
-	mov	rdi, qword ptr [rbp - 0x80]
-	jne	.label_2300
-	mov	rax, r14
+	je	.label_2130
+	or	r14, qword ptr [rbp - 0xa8]
+	or	r15, r12
+	or	r15, r14
+	mov	r14, qword ptr [rbp - 0x78]
+	mov	edx, dword ptr [rbp - 0xb0]
+	mov	rdi, qword ptr [rbp - 0x88]
+	je	.label_2045
+.label_2099:
+	inc	rdi
+	add	r13, 0x20
+	add	qword ptr [rbp - 0x80], 0x18
+	cmp	rdi, r14
+	jl	.label_2140
+	jmp	.label_2045
+.label_2126:
+	xor	edi, edi
+.label_2045:
+	cmp	rdi, r14
+	mov	rsi, qword ptr [rbp - 0xc0]
+	mov	r12, qword ptr [rbp - 0xd8]
+	mov	r13, qword ptr [rbp - 0xb8]
+	jne	.label_2046
+	mov	rax, rdi
 	shl	rax, 5
 	movaps	xmm0, xmmword ptr [rbp - 0x50]
-	movaps	xmm1, xmmword ptr [rbp - 0x40]
-	mov	rdx, qword ptr [rbp - 0xc0]
-	movups	xmmword ptr [rdx + rax + 0x10], xmm1
-	movups	xmmword ptr [rdx + rax], xmm0
-	lea	rbx, [r14 + r14*2]
+	movdqa	xmm1, xmmword ptr [rbp - 0x40]
+	mov	rcx, qword ptr [rbp - 0xc8]
+	movdqu	xmmword ptr [rcx + rax + 0x10], xmm1
+	movups	xmmword ptr [rcx + rax], xmm0
+	mov	r15, rbx
+	lea	rbx, [rdi + rdi*2]
 	mov	rax, qword ptr [r13 + 0x18]
-	mov	r15, qword ptr [rax + rdi*8]
-	mov	r13, r12
+	mov	r14, qword ptr [rax + r15*8]
+	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
+	movdqu	xmmword ptr [rsi + rbx*8], xmm0
 	mov	r12, rdi
-	movdqa	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
-	movdqu	xmmword ptr [r13 + rbx*8], xmm0
 	mov	edi, 8
 	call	malloc
-	mov	qword ptr [r13 + rbx*8 + 0x10], rax
-	mov	rcx, r13
+	mov	rsi, qword ptr [rbp - 0xc0]
+	mov	qword ptr [rsi + rbx*8 + 0x10], rax
 	test	rax, rax
-	je	.label_2357
-	mov	qword ptr [rax], r15
-	inc	r14
+	je	.label_2091
+	mov	qword ptr [rax], r14
+	inc	r12
 	pxor	xmm0, xmm0
 	movdqa	xmmword ptr [rbp - 0x40], xmm0
 	movdqa	xmmword ptr [rbp - 0x50], xmm0
-	mov	r11, r14
-	mov	r15, qword ptr [rbp - 0xe0]
-	mov	r13, qword ptr [rbp - 0x90]
-	mov	rdi, r12
-	mov	r12, rcx
-	nop	dword ptr [rax + rax]
-.label_2300:
-	inc	rdi
-	cmp	rdi, qword ptr [r13 + 0x10]
-	jl	.label_2360
-	test	r11, r11
-	jle	.label_2349
-	lea	rax, [r11 + 1]
+	mov	r14, r12
+	mov	rbx, r15
+	mov	r12, qword ptr [rbp - 0xd8]
+	nop	word ptr cs:[rax + rax]
+.label_2046:
+	inc	rbx
+	cmp	rbx, qword ptr [r13 + 0x10]
+	jl	.label_2079
+	test	r14, r14
+	jle	.label_2084
+	mov	r15, rsi
+	lea	rax, [r14 + 1]
 	mov	qword ptr [rbp - 0x70], rax
 	mov	qword ptr [rbp - 0x68], 0
-	lea	rdi, [r11*8 + 8]
-	mov	rbx, r11
-	mov	qword ptr [rbp - 0x78], rbx
+	lea	rdi, [r14*8 + 8]
 	call	malloc
 	mov	qword ptr [rbp - 0x60], rax
 	xor	ecx, ecx
@@ -25253,51 +22941,53 @@ build_trtable:
 	cmovne	edx, ecx
 	mov	dword ptr [rbp - 0x54], edx
 	movabs	rcx, 0xaaaaaaaaaaaa855
-	cmp	rbx, rcx
-	ja	.label_2321
+	cmp	r14, rcx
+	ja	.label_2095
 	test	rax, rax
-	je	.label_2321
-	lea	rax, [rbx*8]
+	je	.label_2095
+	lea	rax, [r14*8]
 	lea	rdi, [rax + rax*2]
 	lea	rax, [rax + rax*2 + 0x3800]
 	cmp	rax, 0xfbf
-	ja	.label_2383
-	mov	qword ptr [rbp - 0x90], r13
+	ja	.label_2102
+	mov	qword ptr [rbp - 0xb8], r13
 	mov	rax, rsp
 	add	rdi, 0xf
 	and	rdi, 0xfffffffffffffff0
 	sub	rax, rdi
 	mov	rsp, rax
 	mov	dword ptr [rbp - 0xd0], 0
-	jmp	.label_2279
-.label_2352:
-	mov	r13, qword ptr [rbp - 0xd0]
-.label_2379:
+	jmp	.label_2108
+.label_2129:
 	pxor	xmm0, xmm0
-	movdqu	xmmword ptr [r13], xmm0
-.label_2307:
-	mov	r14, qword ptr [rbp - 0x78]
-	mov	r12, qword ptr [rbp - 0x98]
-.label_2339:
-	mov	r15, -1
-	test	r14, r14
-	jle	.label_2296
-	mov	rbx, r12
+	mov	rax, qword ptr [rbp - 0xe0]
+	movdqu	xmmword ptr [rax], xmm0
+.label_2130:
+	mov	rsi, qword ptr [rbp - 0xc0]
+	mov	r12, qword ptr [rbp - 0x78]
+.label_2057:
+	mov	r14, -1
+	test	r12, r12
+	jle	.label_2084
+	mov	rbx, rsi
+	mov	r15, rsi
 	add	rbx, 0x10
-.label_2302:
+	nop	dword ptr [rax]
+.label_2122:
 	mov	rdi, qword ptr [rbx]
 	call	free
 	add	rbx, 0x18
-	dec	r14
-	jne	.label_2302
-.label_2296:
-	mov	rdi, r12
+	dec	r12
+	jne	.label_2122
+	mov	rsi, r15
+.label_2084:
+	mov	rdi, rsi
 	call	free
-	test	r15, r15
-	je	.label_2306
+	test	r14, r14
+	je	.label_2124
 	xor	eax, eax
-	jmp	.label_2309
-.label_2306:
+	jmp	.label_2062
+.label_2124:
 	mov	edi, 8
 	mov	esi, 0x100
 	call	rpl_calloc
@@ -25305,411 +22995,396 @@ build_trtable:
 	mov	qword ptr [rcx], rax
 	test	rax, rax
 	setne	al
-	jmp	.label_2309
-.label_2364:
+	jmp	.label_2062
+.label_2052:
 	xor	eax, eax
-	jmp	.label_2309
-.label_2383:
+	jmp	.label_2062
+.label_2102:
 	call	malloc
 	test	rax, rax
-	je	.label_2321
-	mov	qword ptr [rbp - 0x90], r13
+	je	.label_2095
+	mov	qword ptr [rbp - 0xb8], r13
 	mov	cl, 1
 	mov	dword ptr [rbp - 0xd0], ecx
-.label_2279:
+.label_2108:
 	mov	qword ptr [rbp - 0x80], rax
-	lea	rax, [rax + rbx*8]
-	mov	qword ptr [rbp - 0xb8], rax
-	lea	rax, [rax + rbx*8]
-	mov	qword ptr [rbp - 0xc8], rax
+	lea	rax, [rax + r14*8]
+	mov	qword ptr [rbp - 0xa8], rax
+	lea	rax, [rax + r14*8]
+	mov	qword ptr [rbp - 0xb0], rax
+	mov	qword ptr [rbp - 0x78], r14
 	xor	edx, edx
 	xor	eax, eax
-	mov	qword ptr [rbp - 0xa0], rax
-	xor	eax, eax
-	mov	qword ptr [rbp - 0xa8], rax
+	mov	qword ptr [rbp - 0x90], rax
+	xor	esi, esi
 	xor	eax, eax
 	mov	qword ptr [rbp - 0x88], rax
-	xor	ebx, ebx
-	xor	eax, eax
-	mov	qword ptr [rbp - 0xd8], rax
-.label_2303:
-	mov	qword ptr [rbp - 0xb0], rdx
-	mov	qword ptr [rbp - 0x98], r12
-	mov	qword ptr [rbp - 0x68], 0
-	lea	rcx, [rbx + rbx*2]
-	mov	rax, qword ptr [r12 + rcx*8 + 8]
-	test	rax, rax
-	jle	.label_2338
-	mov	rdx, qword ptr [rbp - 0x98]
-	lea	r13, [rdx + rcx*8 + 8]
-	lea	r12, [rdx + rcx*8 + 0x10]
 	xor	r14d, r14d
-	nop	word ptr [rax + rax]
-.label_2363:
-	mov	rcx, qword ptr [r12]
-	mov	rcx, qword ptr [rcx + r14*8]
-	mov	rdx, qword ptr [r15 + 0x18]
+	xor	eax, eax
+	mov	qword ptr [rbp - 0xe0], rax
+.label_2137:
+	mov	qword ptr [rbp - 0xa0], rsi
+	mov	qword ptr [rbp - 0x98], rdx
+	mov	qword ptr [rbp - 0x68], 0
+	lea	rcx, [r14 + r14*2]
+	mov	rax, qword ptr [r15 + rcx*8 + 8]
+	mov	qword ptr [rbp - 0xc0], r15
+	test	rax, rax
+	jle	.label_2061
+	mov	rdx, qword ptr [rbp - 0xc0]
+	lea	rbx, [rdx + rcx*8 + 8]
+	mov	r13, qword ptr [rdx + rcx*8 + 0x10]
+	xor	r15d, r15d
+	nop	
+.label_2082:
+	mov	rcx, qword ptr [r13 + r15*8]
+	mov	rdx, qword ptr [r12 + 0x18]
 	mov	rcx, qword ptr [rdx + rcx*8]
 	cmp	rcx, -1
-	je	.label_2350
-	mov	rax, qword ptr [r15 + 0x30]
+	je	.label_2073
+	mov	rax, qword ptr [r12 + 0x30]
 	lea	rcx, [rcx + rcx*2]
 	lea	rsi, [rax + rcx*8]
 	lea	rdi, [rbp - 0x70]
 	call	re_node_set_merge
 	mov	dword ptr [rbp - 0x54], eax
 	test	eax, eax
-	jne	.label_2292
-	mov	rax, qword ptr [r13]
-.label_2350:
-	inc	r14
-	cmp	r14, rax
-	jl	.label_2363
-.label_2338:
+	jne	.label_2054
+	mov	rax, qword ptr [rbx]
+.label_2073:
+	inc	r15
+	cmp	r15, rax
+	jl	.label_2082
+.label_2061:
 	xor	ecx, ecx
 	lea	rdi, [rbp - 0x54]
-	mov	rsi, r15
+	mov	rsi, r12
 	lea	rdx, [rbp - 0x70]
 	call	re_acquire_state_context
 	mov	rcx, qword ptr [rbp - 0x80]
-	mov	qword ptr [rcx + rbx*8], rax
+	mov	qword ptr [rcx + r14*8], rax
 	test	rax, rax
-	jne	.label_2370
+	jne	.label_2088
 	mov	ecx, dword ptr [rbp - 0x54]
 	test	ecx, ecx
-	jne	.label_2292
-.label_2370:
+	jne	.label_2054
+.label_2088:
 	cmp	byte ptr [rax + 0x68], 0
-	js	.label_2373
-	mov	rcx, qword ptr [rbp - 0xb8]
-	mov	qword ptr [rcx + rbx*8], rax
+	js	.label_2059
+	mov	rcx, qword ptr [rbp - 0xa8]
+	mov	qword ptr [rcx + r14*8], rax
 	mov	rax, qword ptr [rbp - 0x80]
-	mov	rax, qword ptr [rax + rbx*8]
-	mov	rcx, qword ptr [rbp - 0xc8]
-	mov	qword ptr [rcx + rbx*8], rax
-	jmp	.label_2297
-.label_2373:
+	mov	rax, qword ptr [rax + r14*8]
+	mov	rcx, qword ptr [rbp - 0xb0]
+	mov	qword ptr [rcx + r14*8], rax
+	jmp	.label_2098
+.label_2059:
 	mov	ecx, 1
 	lea	rdi, [rbp - 0x54]
-	mov	rsi, r15
+	mov	rsi, r12
 	lea	rdx, [rbp - 0x70]
 	call	re_acquire_state_context
-	mov	rcx, qword ptr [rbp - 0xb8]
-	mov	qword ptr [rcx + rbx*8], rax
+	mov	rcx, qword ptr [rbp - 0xa8]
+	mov	qword ptr [rcx + r14*8], rax
 	test	rax, rax
-	jne	.label_2385
+	jne	.label_2106
 	mov	ecx, dword ptr [rbp - 0x54]
 	test	ecx, ecx
-	jne	.label_2292
-.label_2385:
+	jne	.label_2054
+.label_2106:
 	mov	rcx, qword ptr [rbp - 0x80]
-	cmp	qword ptr [rcx + rbx*8], rax
-	je	.label_2282
+	cmp	qword ptr [rcx + r14*8], rax
+	je	.label_2111
+	cmp	dword ptr [r12 + 0xb4], 1
 	mov	al, 1
-	cmp	dword ptr [r15 + 0xb4], 1
-	jg	.label_2324
-	mov	rax, qword ptr [rbp - 0xd8]
-.label_2324:
-	mov	qword ptr [rbp - 0xd8], rax
-.label_2282:
+	jg	.label_2113
+	mov	rax, qword ptr [rbp - 0xe0]
+.label_2113:
+	mov	qword ptr [rbp - 0xe0], rax
+.label_2111:
 	mov	ecx, 2
 	lea	rdi, [rbp - 0x54]
-	mov	rsi, r15
+	mov	rsi, r12
 	lea	rdx, [rbp - 0x70]
 	call	re_acquire_state_context
-	mov	rcx, qword ptr [rbp - 0xc8]
-	mov	qword ptr [rcx + rbx*8], rax
+	mov	rcx, qword ptr [rbp - 0xb0]
+	mov	qword ptr [rcx + r14*8], rax
 	test	rax, rax
-	jne	.label_2297
+	jne	.label_2098
 	mov	eax, dword ptr [rbp - 0x54]
 	test	eax, eax
-	jne	.label_2292
-.label_2297:
-	mov	rax, rbx
+	jne	.label_2054
+.label_2098:
+	mov	rax, r14
 	shl	rax, 5
-	mov	rcx, qword ptr [rbp - 0xc0]
+	mov	rcx, qword ptr [rbp - 0xc8]
 	mov	rdx, qword ptr [rbp - 0x88]
 	or	rdx, qword ptr [rcx + rax]
 	mov	qword ptr [rbp - 0x88], rdx
-	mov	rdx, qword ptr [rbp - 0xa8]
-	or	rdx, qword ptr [rcx + rax + 8]
-	mov	qword ptr [rbp - 0xa8], rdx
-	mov	rdx, qword ptr [rbp - 0xa0]
+	mov	rsi, qword ptr [rbp - 0xa0]
+	or	rsi, qword ptr [rcx + rax + 8]
+	mov	rdx, qword ptr [rbp - 0x90]
 	or	rdx, qword ptr [rcx + rax + 0x10]
-	mov	qword ptr [rbp - 0xa0], rdx
-	mov	rdx, qword ptr [rbp - 0xb0]
+	mov	qword ptr [rbp - 0x90], rdx
+	mov	rdx, qword ptr [rbp - 0x98]
 	or	rdx, qword ptr [rcx + rax + 0x18]
-	inc	rbx
-	mov	rax, qword ptr [rbp - 0x78]
-	cmp	rbx, rax
-	mov	r12, qword ptr [rbp - 0x98]
-	jl	.label_2303
+	inc	r14
+	cmp	r14, qword ptr [rbp - 0x78]
+	mov	r15, qword ptr [rbp - 0xc0]
+	jl	.label_2137
+	mov	r15, rsi
 	mov	r13, rdx
-	mov	rax, qword ptr [rbp - 0xd8]
+	mov	rax, qword ptr [rbp - 0xe0]
 	and	al, 1
-	jne	.label_2326
-	mov	qword ptr [rbp - 0xd8], rax
+	mov	qword ptr [rbp - 0xe0], rax
 	mov	edi, 8
+	jne	.label_2042
 	mov	esi, 0x100
 	call	rpl_calloc
 	mov	rcx, qword ptr [rbp - 0xe8]
 	mov	qword ptr [rcx], rax
 	test	rax, rax
-	je	.label_2292
+	je	.label_2054
 	mov	rcx, qword ptr [rbp - 0x88]
 	test	rcx, rcx
-	mov	r14, qword ptr [rbp - 0x98]
-	mov	r10, r15
-	mov	r11, qword ptr [rbp - 0x80]
-	mov	r12, qword ptr [rbp - 0xa8]
-	je	.label_2337
+	mov	r14, qword ptr [rbp - 0xc0]
+	mov	r10, qword ptr [rbp - 0x80]
+	je	.label_2058
 	lea	r8, [r14 + 0x1800]
 	mov	edx, 1
 	xor	r9d, r9d
 	mov	rdi, qword ptr [rbp - 0x88]
-	jmp	.label_2341
-.label_2347:
+	jmp	.label_2063
+.label_2068:
 	mov	rsi, rbx
 	lea	rbx, [rsi + 1]
 	test	qword ptr [rcx], rdx
 	lea	rcx, [rcx + 0x20]
-	je	.label_2347
-	test	qword ptr [r10 + 0xb8], rdx
-	je	.label_2351
-	mov	rcx, qword ptr [rbp - 0xb8]
+	je	.label_2068
+	test	qword ptr [r12 + 0xb8], rdx
+	je	.label_2071
+	mov	rcx, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rcx + rsi*8 + 8]
-	jmp	.label_2354
-.label_2351:
-	mov	rcx, qword ptr [r11 + rsi*8 + 8]
-.label_2354:
+	jmp	.label_2072
+.label_2071:
+	mov	rcx, qword ptr [r10 + rsi*8 + 8]
+.label_2072:
 	mov	qword ptr [rax + r9*8], rcx
-	jmp	.label_2359
-.label_2341:
+	jmp	.label_2074
+.label_2063:
 	mov	rbx, -1
 	test	dil, 1
 	mov	rcx, r8
-	jne	.label_2347
-.label_2359:
+	jne	.label_2068
+.label_2074:
 	add	rdx, rdx
 	shr	rdi, 1
 	inc	r9
 	test	rdi, rdi
-	jne	.label_2341
-.label_2337:
-	test	r12, r12
-	je	.label_2361
+	jne	.label_2063
+.label_2058:
+	mov	rsi, r15
+	test	rsi, rsi
+	mov	r15, qword ptr [rbp - 0x78]
+	je	.label_2081
 	lea	r8, [r14 + 0x1808]
 	mov	edx, 1
-	mov	esi, 0x40
-	jmp	.label_2367
-.label_2371:
+	mov	r9d, 0x40
+	jmp	.label_2090
+.label_2089:
 	mov	rbx, rdi
 	lea	rdi, [rbx + 1]
 	test	qword ptr [rcx], rdx
 	lea	rcx, [rcx + 0x20]
-	je	.label_2371
-	test	qword ptr [r10 + 0xc0], rdx
-	je	.label_2305
-	mov	rcx, qword ptr [rbp - 0xb8]
+	je	.label_2089
+	test	qword ptr [r12 + 0xc0], rdx
+	je	.label_2094
+	mov	rcx, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rcx + rbx*8 + 8]
-	jmp	.label_2376
-.label_2305:
-	mov	rcx, qword ptr [r11 + rbx*8 + 8]
-.label_2376:
-	mov	qword ptr [rax + rsi*8], rcx
-	jmp	.label_2380
-.label_2367:
+	jmp	.label_2097
+.label_2094:
+	mov	rcx, qword ptr [r10 + rbx*8 + 8]
+.label_2097:
+	mov	qword ptr [rax + r9*8], rcx
+	jmp	.label_2101
+.label_2090:
 	mov	rdi, -1
-	test	r12b, 1
+	test	sil, 1
 	mov	rcx, r8
-	jne	.label_2371
-.label_2380:
+	jne	.label_2089
+.label_2101:
 	add	rdx, rdx
-	shr	r12, 1
-	inc	rsi
-	test	r12, r12
-	jne	.label_2367
-.label_2361:
-	mov	r12, r11
-	mov	r11, qword ptr [rbp - 0xa0]
-	test	r11, r11
-	mov	r9, qword ptr [rbp - 0x78]
-	mov	r15d, dword ptr [rbp - 0xd0]
-	je	.label_2386
+	shr	rsi, 1
+	inc	r9
+	test	rsi, rsi
+	jne	.label_2090
+.label_2081:
+	mov	r9, r10
+	mov	r10, qword ptr [rbp - 0x90]
+	test	r10, r10
+	mov	r11d, dword ptr [rbp - 0xd0]
+	je	.label_2104
 	lea	r8, [r14 + 0x1810]
 	mov	edx, 1
 	mov	esi, 0x80
-	jmp	.label_2283
-.label_2301:
+	jmp	.label_2109
+.label_2114:
 	mov	rbx, rdi
 	lea	rdi, [rbx + 1]
 	test	qword ptr [rcx], rdx
 	lea	rcx, [rcx + 0x20]
-	je	.label_2301
-	test	qword ptr [r10 + 0xc8], rdx
-	je	.label_2356
-	mov	rcx, qword ptr [rbp - 0xb8]
+	je	.label_2114
+	test	qword ptr [r12 + 0xc8], rdx
+	je	.label_2115
+	mov	rcx, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rcx + rbx*8 + 8]
-	jmp	.label_2293
-.label_2356:
-	mov	rcx, qword ptr [r12 + rbx*8 + 8]
-.label_2293:
+	jmp	.label_2117
+.label_2115:
+	mov	rcx, qword ptr [r9 + rbx*8 + 8]
+.label_2117:
 	mov	qword ptr [rax + rsi*8], rcx
-	jmp	.label_2294
-.label_2283:
+	jmp	.label_2121
+.label_2109:
 	mov	rdi, -1
-	test	r11b, 1
+	test	r10b, 1
 	mov	rcx, r8
-	jne	.label_2301
-.label_2294:
+	jne	.label_2114
+.label_2121:
 	add	rdx, rdx
-	shr	r11, 1
+	shr	r10, 1
 	inc	rsi
-	test	r11, r11
-	jne	.label_2283
-.label_2386:
+	test	r10, r10
+	jne	.label_2109
+.label_2104:
 	test	r13, r13
-	mov	r11, r12
-	mov	r12d, r15d
-	je	.label_2308
+	je	.label_2075
 	lea	r8, [r14 + 0x1818]
 	mov	edx, 1
 	mov	esi, 0xc0
-	jmp	.label_2311
-.label_2316:
+	jmp	.label_2043
+.label_2076:
 	mov	rbx, rdi
 	lea	rdi, [rbx + 1]
 	test	qword ptr [rcx], rdx
 	lea	rcx, [rcx + 0x20]
-	je	.label_2316
-	test	qword ptr [r10 + 0xd0], rdx
-	je	.label_2384
-	mov	rcx, qword ptr [rbp - 0xb8]
+	je	.label_2076
+	test	qword ptr [r12 + 0xd0], rdx
+	je	.label_2131
+	mov	rcx, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rcx + rbx*8 + 8]
-	jmp	.label_2320
-.label_2384:
-	mov	rcx, qword ptr [r11 + rbx*8 + 8]
-.label_2320:
+	jmp	.label_2134
+.label_2131:
+	mov	rcx, qword ptr [r9 + rbx*8 + 8]
+.label_2134:
 	mov	qword ptr [rax + rsi*8], rcx
-	jmp	.label_2345
-.label_2311:
+	jmp	.label_2125
+.label_2043:
 	mov	rdi, -1
 	test	r13b, 1
 	mov	rcx, r8
-	jne	.label_2316
-.label_2345:
+	jne	.label_2076
+.label_2125:
 	add	rdx, rdx
 	shr	r13, 1
 	inc	rsi
 	test	r13, r13
-	jne	.label_2311
-.label_2308:
+	jne	.label_2043
+.label_2075:
 	mov	rcx, qword ptr [rbp - 0x88]
 	test	ch, 4
-	je	.label_2290
+	je	.label_2048
 	lea	rdx, [r14 + 0x1800]
 	xor	ecx, ecx
-.label_2284:
+.label_2107:
 	test	byte ptr [rdx + 1], 4
-	jne	.label_2335
+	jne	.label_2053
 	inc	rcx
 	add	rdx, 0x20
-	cmp	rcx, r9
-	jl	.label_2284
-	jmp	.label_2290
-.label_2357:
-	mov	r12, rcx
-	lea	rax, [r12 + rbx*8]
+	cmp	rcx, r15
+	jl	.label_2107
+	jmp	.label_2048
+.label_2091:
+	lea	rax, [rsi + rbx*8]
 	pxor	xmm0, xmm0
 	movdqu	xmmword ptr [rax], xmm0
-	jmp	.label_2339
-.label_2321:
+	jmp	.label_2057
+.label_2095:
 	mov	rdi, qword ptr [rbp - 0x60]
 	call	free
-	mov	rax, rbx
-	jmp	.label_2342
-.label_2349:
-	mov	r15, r11
-	jmp	.label_2296
-.label_2335:
-	mov	rdx, qword ptr [rbp - 0xd8]
+	jmp	.label_2051
+.label_2053:
+	mov	rdx, qword ptr [rbp - 0xe0]
 	test	dl, dl
-	mov	rdx, qword ptr [rbp - 0xc8]
+	mov	rdx, qword ptr [rbp - 0xb0]
 	mov	rcx, qword ptr [rdx + rcx*8]
 	mov	qword ptr [rax + 0x50], rcx
-	je	.label_2290
+	je	.label_2048
 	mov	qword ptr [rax + 0x850], rcx
-.label_2290:
-	mov	r15, r9
-	test	r12b, r12b
-	je	.label_2355
-	mov	rdi, r11
+.label_2048:
+	test	r11b, r11b
+	je	.label_2070
+	mov	rdi, r9
 	call	free
-.label_2355:
+.label_2070:
 	mov	rdi, qword ptr [rbp - 0x60]
 	call	free
 	mov	rbx, r14
 	add	rbx, 0x10
-.label_2344:
+.label_2136:
 	mov	rdi, qword ptr [rbx]
 	call	free
 	add	rbx, 0x18
 	dec	r15
-	jne	.label_2344
+	jne	.label_2136
 	mov	rdi, r14
 	call	free
 	mov	al, 1
-	jmp	.label_2309
-.label_2326:
-	mov	qword ptr [rbp - 0xd8], rax
-	mov	edi, 8
+	jmp	.label_2062
+.label_2042:
 	mov	esi, 0x200
 	call	rpl_calloc
-	mov	rcx, qword ptr [rbp - 0x90]
+	mov	rcx, qword ptr [rbp - 0xb8]
 	mov	qword ptr [rcx + 0x60], rax
 	test	rax, rax
-	je	.label_2292
+	je	.label_2054
 	mov	rcx, qword ptr [rbp - 0x88]
 	test	rcx, rcx
-	mov	r14, qword ptr [rbp - 0x98]
-	mov	r11, qword ptr [rbp - 0x80]
-	mov	r10, qword ptr [rbp - 0xa8]
-	je	.label_2375
+	mov	r14, qword ptr [rbp - 0xc0]
+	mov	r10, qword ptr [rbp - 0x80]
+	je	.label_2086
 	lea	r8, [r14 + 0x1800]
 	mov	edx, 1
 	xor	r9d, r9d
 	mov	rdi, qword ptr [rbp - 0x88]
-	jmp	.label_2319
-.label_2292:
+	jmp	.label_2093
+.label_2054:
 	mov	eax, dword ptr [rbp - 0xd0]
 	test	al, al
-	je	.label_2277
+	je	.label_2100
 	mov	rdi, qword ptr [rbp - 0x80]
 	call	free
-.label_2277:
+.label_2100:
 	mov	rdi, qword ptr [rbp - 0x60]
 	call	free
-	mov	rax, qword ptr [rbp - 0x78]
-	test	rax, rax
-	mov	r12, qword ptr [rbp - 0x98]
-	jle	.label_2285
-.label_2342:
-	mov	rbx, r12
+	mov	r14, qword ptr [rbp - 0x78]
+	test	r14, r14
+	mov	r15, qword ptr [rbp - 0xc0]
+	jle	.label_2103
+.label_2051:
+	mov	rbx, r15
 	add	rbx, 0x10
 	nop	word ptr cs:[rax + rax]
-.label_2295:
+.label_2112:
 	mov	rdi, qword ptr [rbx]
-	mov	r14, rax
 	call	free
-	mov	rax, r14
 	add	rbx, 0x18
-	dec	rax
-	jne	.label_2295
-.label_2285:
-	mov	rdi, r12
+	dec	r14
+	jne	.label_2112
+.label_2103:
+	mov	rdi, r15
 	call	free
 	xor	eax, eax
-.label_2309:
+.label_2062:
 	lea	rsp, [rbp - 0x28]
 	pop	rbx
 	pop	r12
@@ -25718,129 +23393,131 @@ build_trtable:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2304:
+.label_2118:
 	mov	rsi, rbx
 	lea	rbx, [rsi + 1]
 	test	qword ptr [rcx], rdx
 	lea	rcx, [rcx + 0x20]
-	je	.label_2304
-	mov	rcx, qword ptr [r11 + rsi*8 + 8]
+	je	.label_2118
+	mov	rcx, qword ptr [r10 + rsi*8 + 8]
 	mov	qword ptr [rax + r9*8], rcx
-	mov	rcx, qword ptr [rbp - 0xb8]
+	mov	rcx, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rcx + rsi*8 + 8]
 	mov	qword ptr [rax + r9*8 + 0x800], rcx
-	jmp	.label_2310
-.label_2319:
+	jmp	.label_2120
+.label_2093:
 	mov	rbx, -1
 	test	dil, 1
 	mov	rcx, r8
-	jne	.label_2304
-.label_2310:
+	jne	.label_2118
+.label_2120:
 	add	rdx, rdx
 	shr	rdi, 1
 	inc	r9
 	test	rdi, rdi
-	jne	.label_2319
-.label_2375:
-	test	r10, r10
-	je	.label_2325
+	jne	.label_2093
+.label_2086:
+	mov	rsi, r15
+	test	rsi, rsi
+	mov	r15, qword ptr [rbp - 0x78]
+	je	.label_2128
 	lea	r8, [r14 + 0x1808]
 	mov	edx, 1
-	mov	esi, 0x40
-	jmp	.label_2332
-.label_2327:
+	mov	r9d, 0x40
+	jmp	.label_2050
+.label_2047:
 	mov	rcx, rbx
 	lea	rbx, [rcx + 1]
 	test	qword ptr [rdi], rdx
 	lea	rdi, [rdi + 0x20]
-	je	.label_2327
-	mov	rdi, qword ptr [r11 + rcx*8 + 8]
-	mov	qword ptr [rax + rsi*8], rdi
-	mov	rdi, qword ptr [rbp - 0xb8]
+	je	.label_2047
+	mov	rdi, qword ptr [r10 + rcx*8 + 8]
+	mov	qword ptr [rax + r9*8], rdi
+	mov	rdi, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rdi + rcx*8 + 8]
-	mov	qword ptr [rax + rsi*8 + 0x800], rcx
-	jmp	.label_2331
-.label_2332:
+	mov	qword ptr [rax + r9*8 + 0x800], rcx
+	jmp	.label_2139
+.label_2050:
 	mov	rbx, -1
-	test	r10b, 1
+	test	sil, 1
 	mov	rdi, r8
-	jne	.label_2327
-.label_2331:
+	jne	.label_2047
+.label_2139:
 	add	rdx, rdx
-	shr	r10, 1
-	inc	rsi
-	test	r10, r10
-	jne	.label_2332
-.label_2325:
-	mov	rcx, qword ptr [rbp - 0xa0]
+	shr	rsi, 1
+	inc	r9
+	test	rsi, rsi
+	jne	.label_2050
+.label_2128:
+	mov	r9, r10
+	mov	rcx, qword ptr [rbp - 0x90]
 	test	rcx, rcx
-	mov	r9, qword ptr [rbp - 0x78]
-	mov	r12d, dword ptr [rbp - 0xd0]
-	je	.label_2340
+	mov	r11d, dword ptr [rbp - 0xd0]
+	je	.label_2055
 	lea	r8, [r14 + 0x1810]
 	mov	edx, 1
 	mov	esi, 0x80
-	jmp	.label_2281
-.label_2330:
+	jmp	.label_2060
+.label_2064:
 	mov	rcx, rbx
 	lea	rbx, [rcx + 1]
 	test	qword ptr [rdi], rdx
 	lea	rdi, [rdi + 0x20]
-	je	.label_2330
-	mov	rdi, qword ptr [r11 + rcx*8 + 8]
+	je	.label_2064
+	mov	rdi, qword ptr [r9 + rcx*8 + 8]
 	mov	qword ptr [rax + rsi*8], rdi
-	mov	rdi, qword ptr [rbp - 0xb8]
+	mov	rdi, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rdi + rcx*8 + 8]
 	mov	qword ptr [rax + rsi*8 + 0x800], rcx
-	jmp	.label_2353
-.label_2281:
+	jmp	.label_2066
+.label_2060:
 	mov	rbx, -1
 	test	cl, 1
 	mov	r10, rcx
 	mov	rdi, r8
-	jne	.label_2330
-.label_2353:
+	jne	.label_2064
+.label_2066:
 	add	rdx, rdx
 	mov	rcx, r10
 	shr	rcx, 1
 	inc	rsi
 	test	rcx, rcx
-	jne	.label_2281
-.label_2340:
+	jne	.label_2060
+.label_2055:
 	test	r13, r13
-	je	.label_2308
+	je	.label_2075
 	lea	r8, [r14 + 0x1818]
 	mov	edx, 1
 	mov	esi, 0xc0
-	jmp	.label_2280
-.label_2382:
+	jmp	.label_2077
+.label_2083:
 	mov	rcx, rbx
 	lea	rbx, [rcx + 1]
 	test	qword ptr [rdi], rdx
 	lea	rdi, [rdi + 0x20]
-	je	.label_2382
-	mov	rdi, qword ptr [r11 + rcx*8 + 8]
+	je	.label_2083
+	mov	rdi, qword ptr [r9 + rcx*8 + 8]
 	mov	qword ptr [rax + rsi*8], rdi
-	mov	rdi, qword ptr [rbp - 0xb8]
+	mov	rdi, qword ptr [rbp - 0xa8]
 	mov	rcx, qword ptr [rdi + rcx*8 + 8]
 	mov	qword ptr [rax + rsi*8 + 0x800], rcx
-	jmp	.label_2348
-.label_2280:
+	jmp	.label_2087
+.label_2077:
 	mov	rbx, -1
 	test	r13b, 1
 	mov	rdi, r8
-	jne	.label_2382
-.label_2348:
+	jne	.label_2083
+.label_2087:
 	add	rdx, rdx
 	shr	r13, 1
 	inc	rsi
 	test	r13, r13
-	je	.label_2308
-	jmp	.label_2280
-	nop	dword ptr [rax]
+	je	.label_2075
+	jmp	.label_2077
+	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x418610
+	#Procedure 0x416520
 
 	.globl sift_states_backward
 	.type sift_states_backward, @function
@@ -25856,13 +23533,13 @@ sift_states_backward:
 	mov	r14, rdi
 	mov	r13, qword ptr [r15 + 0x18]
 	mov	rbx, qword ptr [r15 + 0x10]
-	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1584]]
+	movaps	xmm0,  xmmword ptr [word ptr [rip + label_1506]]
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	edi, 8
 	call	malloc
 	mov	qword ptr [rsp + 0x50], rax
 	test	rax, rax
-	je	.label_2398
+	je	.label_2153
 	mov	qword ptr [rax], rbx
 	lea	rcx, [rsp + 0x40]
 	mov	rdi, r14
@@ -25871,27 +23548,27 @@ sift_states_backward:
 	call	update_cur_sifted_state
 	mov	ebp, eax
 	test	ebp, ebp
-	jne	.label_2391
+	jne	.label_2145
 	lea	rax, [r15 + 0x20]
 	mov	qword ptr [rsp + 0x10], rax
 	mov	dword ptr [rsp + 0xc], 0
 	nop	word ptr cs:[rax + rax]
-.label_2395:
+.label_2160:
 	mov	rdx, r13
 	test	rdx, rdx
-	jle	.label_2404
+	jle	.label_2156
 	mov	rdi, qword ptr [r15]
 	cmp	qword ptr [rdi + rdx*8], 0
-	je	.label_2390
+	je	.label_2148
 	xor	eax, eax
-	jmp	.label_2394
+	jmp	.label_2144
 	nop	word ptr [rax + rax]
-.label_2390:
+.label_2148:
 	mov	eax, dword ptr [rsp + 0xc]
 	inc	eax
-.label_2394:
+.label_2144:
 	cmp	eax, dword ptr [r14 + 0xe0]
-	jg	.label_2396
+	jg	.label_2151
 	mov	dword ptr [rsp + 0xc], eax
 	mov	qword ptr [rsp + 0x48], 0
 	lea	r13, [rdx - 1]
@@ -25900,14 +23577,14 @@ sift_states_backward:
 	mov	qword ptr [rsp + 0x28], rax
 	mov	qword ptr [rsp + 0x18], rdx
 	test	rax, rax
-	je	.label_2399
+	je	.label_2142
 	cmp	qword ptr [rax + 0x28], 0
-	jle	.label_2399
+	jle	.label_2142
 	mov	rcx, qword ptr [r14 + 0x98]
 	mov	qword ptr [rsp + 0x30], rcx
 	xor	ebx, ebx
 	nop	dword ptr [rax]
-.label_2406:
+.label_2159:
 	mov	rax, qword ptr [rax + 0x30]
 	mov	r12, qword ptr [rax + rbx*8]
 	mov	qword ptr [rsp + 0x38], r12
@@ -25915,7 +23592,7 @@ sift_states_backward:
 	mov	rax, qword ptr [rax]
 	shl	r12, 4
 	test	byte ptr [rax + r12 + 0xa], 0x10
-	je	.label_2387
+	je	.label_2146
 	mov	rax, r15
 	mov	rcx, qword ptr [rax + 0x18]
 	mov	qword ptr [rsp + 0x20], rcx
@@ -25929,24 +23606,24 @@ sift_states_backward:
 	mov	rcx, r15
 	call	check_node_accept_bytes
 	test	eax, eax
-	jle	.label_2402
+	jle	.label_2157
 	movsxd	rcx, eax
 	add	rcx, r15
 	cmp	rcx, qword ptr [rsp + 0x20]
-	jle	.label_2405
+	jle	.label_2158
 	mov	rcx, r14
 	mov	r14, r13
 	mov	r13, r15
 	mov	r15, rcx
-	jmp	.label_2388
-.label_2402:
+	jmp	.label_2143
+.label_2157:
 	mov	rcx, r14
 	mov	r14, r13
 	mov	r13, r15
 	mov	r15, rcx
-	jne	.label_2388
-	jmp	.label_2387
-.label_2405:
+	jne	.label_2143
+	jmp	.label_2146
+.label_2158:
 	mov	rsi, r14
 	mov	rdx, qword ptr [rsi]
 	mov	rdx, qword ptr [rdx + rcx*8]
@@ -25954,19 +23631,19 @@ sift_states_backward:
 	mov	r14, r13
 	mov	r13, r15
 	mov	r15, rsi
-	je	.label_2387
+	je	.label_2146
 	mov	rsi, qword ptr [rdx + 0x10]
 	test	rsi, rsi
-	jle	.label_2387
+	jle	.label_2146
 	mov	rcx, qword ptr [rbp + 0x18]
 	mov	rdi, qword ptr [rsp + 0x38]
 	mov	r8, qword ptr [rcx + rdi*8]
 	dec	rsi
 	mov	rdx, qword ptr [rdx + 0x18]
 	mov	edi, 0
-	je	.label_2397
+	je	.label_2152
 	nop	word ptr cs:[rax + rax]
-.label_2403:
+.label_2155:
 	lea	rbp, [rdi + rsi]
 	shr	rbp, 1
 	cmp	qword ptr [rdx + rbp*8], r8
@@ -25974,15 +23651,15 @@ sift_states_backward:
 	cmovl	rdi, rcx
 	cmovge	rsi, rbp
 	cmp	rdi, rsi
-	jb	.label_2403
-.label_2397:
+	jb	.label_2155
+.label_2152:
 	test	eax, eax
-	je	.label_2387
+	je	.label_2146
 	cmp	rdi, -1
-	je	.label_2387
+	je	.label_2146
 	cmp	qword ptr [rdx + rdi*8], r8
-	je	.label_2388
-.label_2387:
+	je	.label_2143
+.label_2146:
 	mov	rax, qword ptr [rsp + 0x30]
 	add	r12, qword ptr [rax]
 	mov	rdi, r14
@@ -25990,15 +23667,15 @@ sift_states_backward:
 	mov	rdx, r13
 	call	check_node_accept
 	test	al, al
-	je	.label_2389
+	je	.label_2147
 	mov	rax, qword ptr [r15]
 	mov	rcx, qword ptr [rsp + 0x18]
 	mov	rdx, qword ptr [rax + rcx*8]
 	test	rdx, rdx
-	je	.label_2389
+	je	.label_2147
 	mov	rax, qword ptr [rdx + 0x10]
 	test	rax, rax
-	jle	.label_2389
+	jle	.label_2147
 	mov	rcx, qword ptr [rsp + 0x30]
 	mov	rcx, qword ptr [rcx + 0x18]
 	mov	rsi, qword ptr [rsp + 0x38]
@@ -26006,8 +23683,8 @@ sift_states_backward:
 	dec	rax
 	mov	rdx, qword ptr [rdx + 0x18]
 	mov	esi, 0
-	je	.label_2401
-.label_2393:
+	je	.label_2150
+.label_2141:
 	lea	rdi, [rsi + rax]
 	shr	rdi, 1
 	cmp	qword ptr [rdx + rdi*8], rcx
@@ -26015,17 +23692,17 @@ sift_states_backward:
 	cmovl	rsi, rbp
 	cmovge	rax, rdi
 	cmp	rsi, rax
-	jb	.label_2393
-.label_2401:
+	jb	.label_2141
+.label_2150:
 	cmp	rsi, -1
-	je	.label_2389
+	je	.label_2147
 	mov	eax, 1
 	cmp	qword ptr [rdx + rsi*8], rcx
-	jne	.label_2389
+	jne	.label_2147
 	nop	dword ptr [rax]
-.label_2388:
+.label_2143:
 	cmp	qword ptr [r15 + 0x28], 0
-	je	.label_2392
+	je	.label_2149
 	movsxd	rcx, eax
 	add	rcx, r13
 	mov	rax, qword ptr [rsp + 0x30]
@@ -26037,20 +23714,20 @@ sift_states_backward:
 	mov	r9, r13
 	call	check_dst_limits
 	test	al, al
-	jne	.label_2389
-.label_2392:
+	jne	.label_2147
+.label_2149:
 	lea	rdi, [rsp + 0x40]
 	mov	rsi, qword ptr [rsp + 0x38]
 	call	re_node_set_insert
 	mov	ebp, 0xc
 	test	al, al
-	je	.label_2391
-.label_2389:
+	je	.label_2145
+.label_2147:
 	inc	rbx
 	mov	rax, qword ptr [rsp + 0x28]
 	cmp	rbx, qword ptr [rax + 0x28]
-	jl	.label_2406
-.label_2399:
+	jl	.label_2159
+.label_2142:
 	mov	rdi, r14
 	mov	rsi, r15
 	mov	rdx, r13
@@ -26058,20 +23735,20 @@ sift_states_backward:
 	call	update_cur_sifted_state
 	mov	ebp, eax
 	test	ebp, ebp
-	je	.label_2395
-	jmp	.label_2391
-.label_2404:
+	je	.label_2160
+	jmp	.label_2145
+.label_2156:
 	xor	ebp, ebp
-	jmp	.label_2391
-.label_2396:
+	jmp	.label_2145
+.label_2151:
 	shl	rdx, 3
 	xor	ebp, ebp
 	xor	esi, esi
 	call	memset
-.label_2391:
+.label_2145:
 	mov	rdi, qword ptr [rsp + 0x50]
 	call	free
-.label_2400:
+.label_2154:
 	mov	eax, ebp
 	add	rsp, 0x58
 	pop	rbx
@@ -26081,15 +23758,15 @@ sift_states_backward:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2398:
+.label_2153:
 	xorps	xmm0, xmm0
 	movaps	xmmword ptr [rsp + 0x40], xmm0
 	mov	ebp, 0xc
-	jmp	.label_2400
+	jmp	.label_2154
 	nop	word ptr [rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x418960
+	#Procedure 0x416870
 
 	.globl update_cur_sifted_state
 	.type update_cur_sifted_state, @function
@@ -26114,10 +23791,10 @@ update_cur_sifted_state:
 	cmove	rax, rbx
 	mov	qword ptr [rsp + 0x60], rax
 	cmp	qword ptr [r11 + 8], 0
-	je	.label_2438
+	je	.label_2193
 	mov	qword ptr [rsp + 0x50], rdx
 	test	rbx, rbx
-	je	.label_2457
+	je	.label_2215
 	mov	qword ptr [rsp + 0x38], rbx
 	mov	dword ptr [rsp + 0x70], 0
 	lea	rdi, [rsp + 0x70]
@@ -26129,11 +23806,11 @@ update_cur_sifted_state:
 	mov	r14, rax
 	mov	r12d, dword ptr [rsp + 0x70]
 	test	r12d, r12d
-	jne	.label_2463
+	jne	.label_2184
 	mov	r15, r14
 	add	r15, 0x38
 	cmp	qword ptr [r14 + 0x38], 0
-	jne	.label_2440
+	jne	.label_2164
 	mov	rdi, qword ptr [rbx + 8]
 	mov	qword ptr [r14 + 0x38], rdi
 	mov	qword ptr [r14 + 0x40], 0
@@ -26145,13 +23822,13 @@ update_cur_sifted_state:
 	mov	r12d, 0xc
 	cmove	ecx, r12d
 	mov	dword ptr [rsp + 0x70], ecx
-	je	.label_2463
+	je	.label_2184
 	cmp	qword ptr [rbx + 8], 0
-	jle	.label_2440
+	jle	.label_2164
 	mov	r14, rbp
 	xor	ebp, ebp
 	nop	dword ptr [rax]
-.label_2464:
+.label_2198:
 	mov	rax, qword ptr [rsp + 0x48]
 	mov	rax, qword ptr [rax + 0x38]
 	mov	rcx, qword ptr [rbx + 0x10]
@@ -26161,13 +23838,13 @@ update_cur_sifted_state:
 	mov	rdi, r15
 	call	re_node_set_merge
 	test	eax, eax
-	jne	.label_2443
+	jne	.label_2197
 	inc	rbp
 	cmp	rbp, qword ptr [rbx + 8]
-	jl	.label_2464
+	jl	.label_2198
 	mov	dword ptr [rsp + 0x70], 0
 	mov	rbp, r14
-.label_2440:
+.label_2164:
 	mov	rdi, rbx
 	mov	r14, rbx
 	mov	rsi, qword ptr [rsp + 0x60]
@@ -26177,27 +23854,27 @@ update_cur_sifted_state:
 	mov	dword ptr [rsp + 0x6c], r12d
 	test	r12d, r12d
 	mov	rbx, qword ptr [rsp + 0x38]
-	jne	.label_2419
+	jne	.label_2180
 	mov	rax, qword ptr [rbp + 0x28]
 	test	rax, rax
 	mov	r11, r14
 	mov	r12, qword ptr [rsp + 0x48]
-	je	.label_2457
+	je	.label_2215
 	mov	qword ptr [rsp + 0x30], r13
 	mov	r10, qword ptr [rsp + 0x50]
-	jle	.label_2462
+	jle	.label_2220
 	mov	rax, qword ptr [rsp + 0x30]
 	mov	r13, qword ptr [rax + 0xd8]
 	xor	r15d, r15d
 	nop	word ptr [rax + rax]
-.label_2449:
+.label_2204:
 	mov	rax, qword ptr [rbp + 0x30]
 	mov	rax, qword ptr [rax + r15*8]
 	lea	rax, [rax + rax*4]
 	cmp	qword ptr [r13 + rax*8 + 0x10], r10
-	jge	.label_2410
+	jge	.label_2161
 	cmp	qword ptr [r13 + rax*8 + 8], r10
-	jl	.label_2410
+	jl	.label_2161
 	mov	rdx, qword ptr [r13 + rax*8]
 	mov	rcx, qword ptr [r12]
 	shl	rdx, 4
@@ -26205,43 +23882,43 @@ update_cur_sifted_state:
 	mov	qword ptr [rsp + 0x40], r8
 	cmp	qword ptr [r13 + rax*8 + 0x18], r10
 	mov	rax, qword ptr [r11 + 8]
-	jne	.label_2415
+	jne	.label_2176
 	test	rax, rax
-	jle	.label_2410
+	jle	.label_2161
 	mov	qword ptr [rsp + 0x48], r12
 	mov	rdx, qword ptr [r11 + 0x10]
 	mov	r14, -1
 	mov	rsi, -1
 	nop	word ptr [rax + rax]
-.label_2451:
+.label_2208:
 	mov	rbp, qword ptr [rdx]
 	mov	rdi, rbp
 	shl	rdi, 4
 	movzx	ebx, byte ptr [rcx + rdi + 8]
 	cmp	ebx, 9
-	je	.label_2452
+	je	.label_2194
 	cmp	ebx, 8
-	jne	.label_2412
+	jne	.label_2173
 	cmp	r8, qword ptr [rcx + rdi]
-	je	.label_2446
+	je	.label_2185
 	mov	rbp, rsi
-.label_2446:
+.label_2185:
 	mov	rsi, rbp
-	jmp	.label_2412
+	jmp	.label_2173
 	nop	word ptr [rax + rax]
-.label_2452:
+.label_2194:
 	cmp	r8, qword ptr [rcx + rdi]
-	je	.label_2439
+	je	.label_2214
 	mov	rbp, r14
-.label_2439:
+.label_2214:
 	mov	r14, rbp
-.label_2412:
+.label_2173:
 	add	rdx, 8
 	dec	rax
-	jne	.label_2451
+	jne	.label_2208
 	test	rsi, rsi
 	mov	rbp, r11
-	js	.label_2454
+	js	.label_2212
 	mov	rdi, qword ptr [rsp + 0x48]
 	mov	rdx, rbp
 	mov	rcx, qword ptr [rsp + 0x60]
@@ -26250,31 +23927,31 @@ update_cur_sifted_state:
 	mov	r10, rbx
 	mov	r12d, eax
 	test	r12d, r12d
-	jne	.label_2422
-.label_2454:
+	jne	.label_2191
+.label_2212:
 	test	r14, r14
 	mov	r11, rbp
 	mov	r12, qword ptr [rsp + 0x48]
-	js	.label_2410
+	js	.label_2161
 	mov	r8, qword ptr [r11 + 8]
 	test	r8, r8
 	mov	ebp, 0
-	jle	.label_2410
+	jle	.label_2161
 	nop	word ptr cs:[rax + rax]
-.label_2468:
+.label_2226:
 	mov	rax, qword ptr [r11 + 0x10]
 	mov	rsi, qword ptr [rax + rbp*8]
 	mov	rax, qword ptr [r12 + 0x38]
 	lea	r9, [rsi + rsi*2]
 	mov	rdx, qword ptr [rax + r9*8 + 8]
 	test	rdx, rdx
-	jle	.label_2407
+	jle	.label_2170
 	dec	rdx
 	mov	rdi, qword ptr [rax + r9*8 + 0x10]
 	mov	eax, 0
-	je	.label_2420
+	je	.label_2181
 	nop	word ptr [rax + rax]
-.label_2425:
+.label_2187:
 	lea	rbx, [rax + rdx]
 	shr	rbx, 1
 	cmp	qword ptr [rdi + rbx*8], r14
@@ -26282,23 +23959,23 @@ update_cur_sifted_state:
 	cmovl	rax, rcx
 	cmovge	rdx, rbx
 	cmp	rax, rdx
-	jb	.label_2425
-.label_2420:
+	jb	.label_2187
+.label_2181:
 	cmp	rax, -1
-	je	.label_2407
+	je	.label_2170
 	cmp	qword ptr [rdi + rax*8], r14
-	je	.label_2435
-.label_2407:
+	je	.label_2182
+.label_2170:
 	mov	rax, qword ptr [r12 + 0x30]
 	mov	rdx, qword ptr [rax + r9*8 + 8]
 	test	rdx, rdx
-	jle	.label_2436
+	jle	.label_2165
 	dec	rdx
 	mov	rcx, qword ptr [rax + r9*8 + 0x10]
 	mov	eax, 0
-	je	.label_2448
+	je	.label_2222
 	nop	word ptr [rax + rax]
-.label_2447:
+.label_2201:
 	lea	rdi, [rax + rdx]
 	shr	rdi, 1
 	cmp	qword ptr [rcx + rdi*8], r14
@@ -26306,13 +23983,13 @@ update_cur_sifted_state:
 	cmovl	rax, rbx
 	cmovge	rdx, rdi
 	cmp	rax, rdx
-	jb	.label_2447
-.label_2448:
+	jb	.label_2201
+.label_2222:
 	cmp	rax, -1
-	je	.label_2436
+	je	.label_2165
 	cmp	qword ptr [rcx + rax*8], r14
-	je	.label_2435
-.label_2436:
+	je	.label_2182
+.label_2165:
 	mov	qword ptr [rsp + 0x48], r15
 	mov	r15, r13
 	mov	rdi, r12
@@ -26325,27 +24002,27 @@ update_cur_sifted_state:
 	mov	r10, r12
 	mov	r12d, eax
 	test	r12d, r12d
-	jne	.label_2422
+	jne	.label_2191
 	dec	rbp
 	mov	r8, qword ptr [rbx + 8]
 	mov	r11, rbx
 	mov	r12, r13
 	mov	r13, r15
 	mov	r15, qword ptr [rsp + 0x48]
-.label_2435:
+.label_2182:
 	inc	rbp
 	cmp	rbp, r8
-	jl	.label_2468
-	jmp	.label_2410
-.label_2415:
+	jl	.label_2226
+	jmp	.label_2161
+.label_2176:
 	test	rax, rax
 	mov	ebp, 0
-	jg	.label_2472
-	jmp	.label_2410
+	jg	.label_2168
+	jmp	.label_2161
 	nop	dword ptr [rax]
-.label_2470:
+.label_2200:
 	mov	rcx, qword ptr [r12]
-.label_2472:
+.label_2168:
 	mov	rdx, qword ptr [r11 + 0x10]
 	mov	rsi, qword ptr [rdx + rbp*8]
 	mov	rdx, rsi
@@ -26355,9 +24032,9 @@ update_cur_sifted_state:
 	and	edi, ebx
 	or	edi, 1
 	cmp	edi, 9
-	jne	.label_2416
+	jne	.label_2177
 	cmp	r8, qword ptr [rcx + rdx]
-	jne	.label_2416
+	jne	.label_2177
 	mov	r14, r15
 	mov	r15, r13
 	mov	rdi, r12
@@ -26370,29 +24047,29 @@ update_cur_sifted_state:
 	mov	r10, r12
 	mov	r12d, eax
 	test	r12d, r12d
-	jne	.label_2422
+	jne	.label_2191
 	mov	rax, qword ptr [rbx + 8]
 	mov	r11, rbx
 	mov	r12, r13
 	mov	r13, r15
 	mov	r15, r14
 	mov	r8, qword ptr [rsp + 0x40]
-.label_2416:
+.label_2177:
 	inc	rbp
 	cmp	rbp, rax
-	jl	.label_2470
+	jl	.label_2200
 	nop	word ptr [rax + rax]
-.label_2410:
+.label_2161:
 	inc	r15
 	mov	rbp, qword ptr [rsp + 0x58]
 	cmp	r15, qword ptr [rbp + 0x28]
-	jl	.label_2449
-.label_2462:
+	jl	.label_2204
+.label_2220:
 	mov	qword ptr [rsp + 0x50], r10
 	mov	dword ptr [rsp + 0x6c], 0
 	mov	r13, qword ptr [rsp + 0x30]
 	mov	rbx, qword ptr [rsp + 0x38]
-.label_2457:
+.label_2215:
 	lea	rdi, [rsp + 0x6c]
 	mov	rsi, r12
 	mov	rdx, r11
@@ -26402,29 +24079,29 @@ update_cur_sifted_state:
 	mov	qword ptr [rcx + rdx*8], rax
 	mov	r12d, dword ptr [rsp + 0x6c]
 	test	r12d, r12d
-	je	.label_2461
-	jmp	.label_2419
-.label_2438:
+	je	.label_2219
+	jmp	.label_2180
+.label_2193:
 	mov	rax, qword ptr [rbp]
 	mov	qword ptr [rax + rdx*8], 0
-.label_2461:
+.label_2219:
 	test	rbx, rbx
-	je	.label_2424
+	je	.label_2162
 	mov	rax, qword ptr [r13 + 0xb8]
 	mov	rax, qword ptr [rax + rdx*8]
 	test	byte ptr [rax + 0x68], 0x40
-	je	.label_2424
+	je	.label_2162
 	mov	rbx, rbp
 	mov	r11, qword ptr [r13 + 0x98]
 	mov	rbp, qword ptr [r13 + 0xc8]
 	xor	r15d, r15d
 	test	rbp, rbp
-	jle	.label_2413
+	jle	.label_2175
 	mov	rcx, qword ptr [r13 + 0xd8]
 	xor	r15d, r15d
 	mov	rax, rbp
 	nop	word ptr cs:[rax + rax]
-.label_2469:
+.label_2217:
 	lea	rsi, [rax + r15]
 	mov	rdi, rsi
 	shr	rdi, 0x3f
@@ -26436,21 +24113,21 @@ update_cur_sifted_state:
 	lea	rsi, [rdi + 1]
 	cmovl	r15, rsi
 	cmp	r15, rax
-	jl	.label_2469
-.label_2413:
+	jl	.label_2217
+.label_2175:
 	cmp	r15, rbp
-	jge	.label_2414
+	jge	.label_2195
 	cmp	r15, -1
-	je	.label_2414
+	je	.label_2195
 	mov	rax, qword ptr [r13 + 0xd8]
 	lea	rcx, [r15 + r15*4]
 	mov	qword ptr [rsp + 0x20], rcx
 	cmp	qword ptr [rax + rcx*8 + 8], rdx
-	jne	.label_2414
+	jne	.label_2195
 	mov	qword ptr [rsp + 0x70], 0
 	mov	rax, qword ptr [rsp + 0x60]
 	cmp	qword ptr [rax + 8], 0
-	jle	.label_2450
+	jle	.label_2206
 	mov	rdi, r13
 	mov	qword ptr [rsp + 0x30], rdi
 	mov	qword ptr [rsp + 0x50], rdx
@@ -26462,7 +24139,7 @@ update_cur_sifted_state:
 	mov	qword ptr [rsp + 0x38], rax
 	shl	qword ptr [rsp + 0x20], 3
 	xor	r13d, r13d
-.label_2459:
+.label_2218:
 	mov	qword ptr [rsp + 0x28], r13
 	mov	rax, qword ptr [rsp + 0x60]
 	mov	rax, qword ptr [rax + 0x10]
@@ -26473,58 +24150,58 @@ update_cur_sifted_state:
 	shl	rcx, 4
 	movzx	eax, byte ptr [rax + rcx + 8]
 	cmp	rbp, qword ptr [r10 + 0x10]
-	jne	.label_2466
+	jne	.label_2205
 	cmp	eax, 4
 	mov	rcx, rdx
-	jne	.label_2411
+	jne	.label_2174
 	cmp	qword ptr [r10 + 0x18], rcx
-	jne	.label_2417
-	jmp	.label_2411
-.label_2466:
+	jne	.label_2178
+	jmp	.label_2174
+.label_2205:
 	cmp	eax, 4
 	mov	rcx, rdx
-	jne	.label_2411
-.label_2417:
+	jne	.label_2174
+.label_2178:
 	mov	rbx, qword ptr [rdi + 0xd8]
 	add	rbx, qword ptr [rsp + 0x20]
 	mov	r14, r15
 	nop	
-.label_2455:
+.label_2213:
 	cmp	qword ptr [rbx], rbp
-	jne	.label_2430
+	jne	.label_2199
 	mov	rax, qword ptr [rbx + 0x10]
 	mov	rdx, qword ptr [rbx + 0x18]
 	mov	r9, rdx
 	sub	r9, rax
 	add	r9, rcx
 	cmp	rdx, rax
-	jne	.label_2432
+	jne	.label_2190
 	mov	rax, qword ptr [r11 + 0x28]
 	lea	rdx, [rbp + rbp*2]
 	mov	rsi, qword ptr [rax + rdx*8 + 0x10]
-	jmp	.label_2437
+	jmp	.label_2192
 	nop	
-.label_2432:
+.label_2190:
 	lea	rsi, [rbp*8]
 	add	rsi, qword ptr [r11 + 0x18]
-.label_2437:
+.label_2192:
 	cmp	r9, qword ptr [r10 + 0x18]
-	jg	.label_2430
+	jg	.label_2199
 	mov	rax, qword ptr [r10]
 	mov	rdx, qword ptr [rax + r9*8]
 	test	rdx, rdx
-	je	.label_2430
+	je	.label_2199
 	mov	rax, qword ptr [rdx + 0x10]
 	test	rax, rax
-	jle	.label_2430
+	jle	.label_2199
 	mov	r12, r10
 	mov	r8, qword ptr [rsi]
 	dec	rax
 	mov	r10, qword ptr [rdx + 0x18]
 	mov	edx, 0
-	je	.label_2453
+	je	.label_2211
 	nop	word ptr [rax + rax]
-.label_2458:
+.label_2221:
 	lea	rsi, [rdx + rax]
 	shr	rsi, 1
 	cmp	qword ptr [r10 + rsi*8], r8
@@ -26532,29 +24209,29 @@ update_cur_sifted_state:
 	cmovl	rdx, rbp
 	cmovge	rax, rsi
 	cmp	rdx, rax
-	jb	.label_2458
-.label_2453:
+	jb	.label_2221
+.label_2211:
 	cmp	rdx, -1
-	je	.label_2408
+	je	.label_2209
 	cmp	qword ptr [r10 + rdx*8], r8
-	jne	.label_2408
+	jne	.label_2209
 	mov	qword ptr [rsp + 0x40], r11
 	mov	rsi, qword ptr [rsp + 0x18]
 	mov	rdx, qword ptr [rsp + 0x48]
 	call	check_dst_limits
 	test	al, al
 	mov	r10, r12
-	je	.label_2471
+	je	.label_2167
 	mov	rcx, qword ptr [rsp + 0x50]
 	mov	rdi, qword ptr [rsp + 0x30]
 	mov	r11, qword ptr [rsp + 0x40]
-	jmp	.label_2409
-.label_2408:
+	jmp	.label_2171
+.label_2209:
 	mov	r10, r12
-	jmp	.label_2409
-.label_2471:
+	jmp	.label_2171
+.label_2167:
 	cmp	qword ptr [rsp + 0x38], 0
-	jne	.label_2421
+	jne	.label_2183
 	mov	rax, qword ptr [r10 + 0x30]
 	mov	qword ptr [rsp + 0xa0], rax
 	movups	xmm0, xmmword ptr [r10]
@@ -26566,7 +24243,7 @@ update_cur_sifted_state:
 	mov	rbx, qword ptr [r10 + 0x28]
 	mov	qword ptr [rsp + 0x98], rbx
 	test	rbx, rbx
-	jle	.label_2423
+	jle	.label_2186
 	mov	rbp, r10
 	mov	qword ptr [rsp + 0x90], rbx
 	shl	rbx, 3
@@ -26574,19 +24251,19 @@ update_cur_sifted_state:
 	call	malloc
 	mov	qword ptr [rsp + 0xa0], rax
 	test	rax, rax
-	je	.label_2460
+	je	.label_2203
 	mov	rsi, qword ptr [rbp + 0x30]
 	mov	rdi, rax
 	mov	rdx, rbx
 	call	memcpy
 	mov	r10, rbp
-	jmp	.label_2421
-.label_2423:
+	jmp	.label_2183
+.label_2186:
 	lea	rax, [rsp + 0x90]
 	xorps	xmm0, xmm0
 	movups	xmmword ptr [rax], xmm0
 	mov	qword ptr [rax + 0x10], 0
-.label_2421:
+.label_2183:
 	mov	rax, qword ptr [rsp + 0x48]
 	mov	qword ptr [rsp + 0x80], rax
 	mov	rax, qword ptr [rsp + 0x50]
@@ -26599,7 +24276,7 @@ update_cur_sifted_state:
 	mov	r12d, 0xc
 	test	al, al
 	mov	rax, qword ptr [rsp + 0x40]
-	je	.label_2429
+	je	.label_2163
 	mov	rbx, qword ptr [rsp + 0x70]
 	mov	rcx, qword ptr [rsp + 0x50]
 	mov	rcx, qword ptr [rbx + rcx*8]
@@ -26613,24 +24290,24 @@ update_cur_sifted_state:
 	mov	r11, r12
 	mov	r12d, eax
 	test	r12d, r12d
-	jne	.label_2429
+	jne	.label_2163
 	mov	rdi, qword ptr [r10 + 8]
 	test	rdi, rdi
 	mov	rcx, qword ptr [rsp + 0x50]
 	mov	qword ptr [rsp + 0x38], rbx
-	je	.label_2426
+	je	.label_2189
 	mov	r13, -1
 	test	rcx, rcx
 	lea	rbp, [rsp + 0xa8]
-	js	.label_2434
+	js	.label_2224
 	nop	dword ptr [rax]
-.label_2467:
+.label_2166:
 	mov	rsi, qword ptr [rdi + r13*8 + 8]
 	mov	rdx, qword ptr [rbx + r13*8 + 8]
 	test	rsi, rsi
-	je	.label_2456
+	je	.label_2169
 	test	rdx, rdx
-	je	.label_2444
+	je	.label_2216
 	mov	rbx, rdi
 	add	rsi, 8
 	add	rdx, 8
@@ -26639,7 +24316,7 @@ update_cur_sifted_state:
 	mov	r12d, eax
 	mov	dword ptr [rsp + 0xc4], r12d
 	test	r12d, r12d
-	jne	.label_2429
+	jne	.label_2163
 	lea	rdi, [rsp + 0xc4]
 	mov	rsi, qword ptr [rsp + 0x40]
 	mov	rdx, rbp
@@ -26653,32 +24330,32 @@ update_cur_sifted_state:
 	mov	rcx, qword ptr [rsp + 0x50]
 	mov	r10, qword ptr [rsp + 0x58]
 	mov	rbx, qword ptr [rsp + 0x38]
-	je	.label_2444
-	jmp	.label_2429
-.label_2456:
+	je	.label_2216
+	jmp	.label_2163
+.label_2169:
 	mov	qword ptr [rdi + r13*8 + 8], rdx
-.label_2444:
+.label_2216:
 	inc	r13
 	cmp	r13, rcx
-	jl	.label_2467
-.label_2434:
+	jl	.label_2166
+.label_2224:
 	mov	r11, qword ptr [rsp + 0x40]
 	mov	r13, qword ptr [rsp + 0x28]
-.label_2426:
+.label_2189:
 	mov	qword ptr [rsp + 0x38], rbx
 	mov	rdx, qword ptr [rsp + 0x10]
 	mov	qword ptr [rbx + rcx*8], rdx
 	mov	r12, qword ptr [rsp + 0x98]
 	test	r12, r12
-	jle	.label_2428
+	jle	.label_2172
 	mov	rbp, r12
 	dec	rbp
 	mov	rax, qword ptr [rsp + 0xa0]
 	mov	rdi, rbp
 	mov	edx, 0
-	je	.label_2445
+	je	.label_2223
 	nop	dword ptr [rax + rax]
-.label_2427:
+.label_2188:
 	lea	rbx, [rdx + rdi]
 	shr	rbx, 1
 	cmp	qword ptr [rax + rbx*8], r14
@@ -26686,20 +24363,20 @@ update_cur_sifted_state:
 	cmovl	rdx, rsi
 	cmovge	rdi, rbx
 	cmp	rdx, rdi
-	jb	.label_2427
-.label_2445:
+	jb	.label_2188
+.label_2223:
 	cmp	qword ptr [rax + rdx*8], r14
 	mov	rdi, rdx
-	je	.label_2441
+	je	.label_2196
 	mov	rdi, -1
-.label_2441:
+.label_2196:
 	test	rdi, rdi
-	js	.label_2428
+	js	.label_2172
 	cmp	r12, rdi
-	jle	.label_2428
+	jle	.label_2172
 	mov	qword ptr [rsp + 0x98], rbp
 	cmp	rbp, rdi
-	jle	.label_2428
+	jle	.label_2172
 	dec	r12
 	lea	rdi, [rdx + 1]
 	cmp	r12, rdi
@@ -26707,12 +24384,12 @@ update_cur_sifted_state:
 	cmovge	rbx, r12
 	sub	rbx, rdx
 	cmp	rbx, 4
-	jb	.label_2442
+	jb	.label_2210
 	mov	r8, rbx
 	and	r8, 0xfffffffffffffffc
 	mov	r9, rbx
 	and	r9, 0xfffffffffffffffc
-	je	.label_2442
+	je	.label_2210
 	mov	qword ptr [rsp + 0x58], r10
 	mov	qword ptr [rsp + 0x40], r11
 	cmp	r12, rdi
@@ -26724,15 +24401,15 @@ update_cur_sifted_state:
 	shr	r11, 2
 	bt	rsi, 2
 	mov	r10d, 0
-	jb	.label_2431
+	jb	.label_2202
 	movups	xmm0, xmmword ptr [rax + rdx*8 + 8]
 	movups	xmm1, xmmword ptr [rax + rdx*8 + 0x18]
 	movups	xmmword ptr [rax + rdx*8], xmm0
 	movups	xmmword ptr [rax + rdx*8 + 0x10], xmm1
 	mov	r10d, 4
-.label_2431:
+.label_2202:
 	test	r11, r11
-	je	.label_2418
+	je	.label_2179
 	cmp	r12, rdi
 	cmovge	rdi, r12
 	sub	rdi, rdx
@@ -26740,7 +24417,7 @@ update_cur_sifted_state:
 	sub	rdi, r10
 	add	r10, rdx
 	lea	rsi, [rax + r10*8 + 0x38]
-.label_2433:
+.label_2207:
 	movups	xmm0, xmmword ptr [rsi - 0x30]
 	movups	xmm1, xmmword ptr [rsi - 0x20]
 	movups	xmmword ptr [rsi - 0x38], xmm0
@@ -26751,55 +24428,55 @@ update_cur_sifted_state:
 	movups	xmmword ptr [rsi - 8], xmm1
 	add	rsi, 0x40
 	add	rdi, -8
-	jne	.label_2433
-.label_2418:
+	jne	.label_2207
+.label_2179:
 	cmp	rbx, r9
 	mov	r11, qword ptr [rsp + 0x40]
 	mov	r10, qword ptr [rsp + 0x58]
-	je	.label_2428
+	je	.label_2172
 	add	rdx, r8
 	nop	word ptr cs:[rax + rax]
-.label_2442:
+.label_2210:
 	mov	rsi, qword ptr [rax + rdx*8 + 8]
 	mov	qword ptr [rax + rdx*8], rsi
 	inc	rdx
 	cmp	rdx, rbp
-	jl	.label_2442
-.label_2428:
+	jl	.label_2210
+.label_2172:
 	lea	rbx, [r14 + r14*4]
 	shl	rbx, 3
 	mov	rdi, qword ptr [rsp + 0x30]
 	add	rbx, qword ptr [rdi + 0xd8]
-.label_2409:
+.label_2171:
 	mov	rbp, qword ptr [rsp + 0x48]
 	nop	word ptr [rax + rax]
-.label_2430:
+.label_2199:
 	inc	r14
 	cmp	byte ptr [rbx + 0x20], 0
 	lea	rbx, [rbx + 0x28]
-	jne	.label_2455
-.label_2411:
+	jne	.label_2213
+.label_2174:
 	mov	rdx, rcx
 	inc	r13
 	xor	r12d, r12d
 	mov	rax, qword ptr [rsp + 0x60]
 	cmp	r13, qword ptr [rax + 8]
-	jl	.label_2459
-.label_2429:
+	jl	.label_2218
+.label_2163:
 	cmp	qword ptr [rsp + 0x70], 0
-	je	.label_2465
+	je	.label_2225
 	mov	rdi, qword ptr [rsp + 0xa0]
 	call	free
-.label_2465:
+.label_2225:
 	mov	dword ptr [rsp + 0x6c], r12d
 	test	r12d, r12d
-	je	.label_2424
-	jmp	.label_2419
-.label_2414:
+	je	.label_2162
+	jmp	.label_2180
+.label_2195:
 	mov	dword ptr [rsp + 0x6c], 0
-.label_2424:
+.label_2162:
 	xor	r12d, r12d
-.label_2419:
+.label_2180:
 	mov	eax, r12d
 	add	rsp, 0xc8
 	pop	rbx
@@ -26809,27 +24486,27 @@ update_cur_sifted_state:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2422:
+.label_2191:
 	mov	dword ptr [rsp + 0x6c], r12d
-	jmp	.label_2419
-.label_2443:
+	jmp	.label_2180
+.label_2197:
 	mov	dword ptr [rsp + 0x70], eax
-.label_2463:
+.label_2184:
 	mov	dword ptr [rsp + 0x6c], r12d
-	jmp	.label_2419
-.label_2450:
+	jmp	.label_2180
+.label_2206:
 	mov	dword ptr [rsp + 0x6c], 0
-	jmp	.label_2424
-.label_2460:
+	jmp	.label_2162
+.label_2203:
 	xorps	xmm0, xmm0
 	lea	rax, [rsp + 0x90]
 	movups	xmmword ptr [rax], xmm0
 	mov	r12d, 0xc
-	jmp	.label_2429
+	jmp	.label_2163
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x419450
+	#Procedure 0x417360
 
 	.globl re_node_set_add_intersect
 	.type re_node_set_add_intersect, @function
@@ -26845,16 +24522,16 @@ re_node_set_add_intersect:
 	mov	rdx, qword ptr [r15 + 8]
 	xor	eax, eax
 	test	rdx, rdx
-	je	.label_2478
+	je	.label_2227
 	mov	r10, qword ptr [r14 + 8]
 	test	r10, r10
-	je	.label_2478
+	je	.label_2227
 	lea	rax, [r10 + rdx]
 	mov	rbx, qword ptr [r12]
 	mov	rsi, qword ptr [r12 + 8]
 	lea	rcx, [rsi + rax]
 	cmp	rcx, rbx
-	jle	.label_2491
+	jle	.label_2232
 	add	rbx, rax
 	mov	rdi, qword ptr [r12 + 0x10]
 	lea	rsi, [rbx*8]
@@ -26862,72 +24539,72 @@ re_node_set_add_intersect:
 	mov	rcx, rax
 	mov	eax, 0xc
 	test	rcx, rcx
-	je	.label_2478
+	je	.label_2227
 	lea	r8, [r12 + 0x10]
 	mov	qword ptr [r12 + 0x10], rcx
 	mov	qword ptr [r12], rbx
 	mov	rsi, qword ptr [r12 + 8]
 	mov	rdx, qword ptr [r15 + 8]
 	mov	r10, qword ptr [r14 + 8]
-	jmp	.label_2489
-.label_2491:
+	jmp	.label_2231
+.label_2232:
 	lea	r8, [r12 + 0x10]
-.label_2489:
+.label_2231:
 	lea	r9, [rdx + rsi]
 	add	r9, r10
 	dec	rsi
-.label_2487:
+.label_2245:
 	dec	rdx
 	mov	rbx, qword ptr [r15 + 0x10]
 	mov	rcx, qword ptr [r14 + 0x10]
 	mov	rdi, r10
-.label_2486:
+.label_2239:
 	lea	r10, [rdi - 1]
 	mov	rax, qword ptr [rcx + rdi*8 - 8]
 	nop	dword ptr [rax]
-.label_2475:
+.label_2235:
 	cmp	qword ptr [rbx + rdx*8], rax
-	je	.label_2473
-	jl	.label_2474
+	je	.label_2229
+	jl	.label_2234
 	test	rdx, rdx
 	lea	rdx, [rdx - 1]
-	jg	.label_2475
-	jmp	.label_2479
+	jg	.label_2235
+	jmp	.label_2230
 	nop	word ptr cs:[rax + rax]
-.label_2474:
+.label_2234:
 	cmp	rdi, 2
 	mov	rdi, r10
-	jge	.label_2486
-	jmp	.label_2479
+	jge	.label_2239
+	jmp	.label_2230
 	nop	dword ptr [rax + rax]
-.label_2473:
+.label_2229:
 	mov	rbx, qword ptr [r8]
 	test	rsi, rsi
-	js	.label_2480
+	js	.label_2228
 	nop	dword ptr [rax + rax]
-.label_2476:
+.label_2236:
 	mov	rcx, qword ptr [rbx + rsi*8]
 	cmp	rcx, rax
-	jle	.label_2481
+	jle	.label_2233
 	test	rsi, rsi
 	lea	rsi, [rsi - 1]
-	jg	.label_2476
-	jmp	.label_2480
-.label_2481:
+	jg	.label_2236
+	jmp	.label_2228
+.label_2233:
 	test	rsi, rsi
-	js	.label_2480
+	js	.label_2228
 	cmp	rcx, rax
-	je	.label_2482
+	je	.label_2240
 	nop	
-.label_2480:
+.label_2228:
 	mov	qword ptr [rbx + r9*8 - 8], rax
 	dec	r9
-.label_2482:
+.label_2240:
 	test	rdx, rdx
-	jle	.label_2479
+	jle	.label_2230
 	cmp	rdi, 2
-	jge	.label_2487
-.label_2479:
+	jge	.label_2245
+.label_2230:
 	mov	rcx, qword ptr [r12 + 8]
 	mov	r11, qword ptr [r15 + 8]
 	mov	rdx, qword ptr [r14 + 8]
@@ -26939,46 +24616,46 @@ re_node_set_add_intersect:
 	lea	rsi, [rax + rcx + 1]
 	mov	qword ptr [r12 + 8], rsi
 	test	rcx, rcx
-	jle	.label_2485
+	jle	.label_2244
 	test	rax, rax
-	js	.label_2485
+	js	.label_2244
 	add	r11, rdx
 	add	r11, rcx
 	dec	rcx
 	sub	r11, r9
 	xor	edx, edx
-.label_2490:
+.label_2242:
 	mov	rdi, qword ptr [r8]
 	lea	rax, [rdi + r11*8]
 	nop	
-.label_2477:
+.label_2238:
 	mov	rsi, qword ptr [rdi + r14*8]
 	mov	rbx, qword ptr [rdi + rcx*8]
 	cmp	rsi, rbx
-	jg	.label_2484
+	jg	.label_2237
 	mov	qword ptr [rax + rcx*8], rbx
 	test	rcx, rcx
 	lea	rcx, [rcx - 1]
-	jg	.label_2477
-	jmp	.label_2483
-.label_2484:
+	jg	.label_2238
+	jmp	.label_2241
+.label_2237:
 	dec	r14
 	dec	r11
 	lea	rax, [r10 + rcx]
 	dec	r10
 	mov	qword ptr [rdi + rax*8], rsi
-	jne	.label_2490
-	jmp	.label_2488
-.label_2485:
+	jne	.label_2242
+	jmp	.label_2243
+.label_2244:
 	mov	rdi, qword ptr [r8]
-.label_2483:
+.label_2241:
 	mov	rdx, r10
-.label_2488:
+.label_2243:
 	lea	rsi, [rdi + r9*8]
 	shl	rdx, 3
 	call	memcpy
 	xor	eax, eax
-.label_2478:
+.label_2227:
 	add	rsp, 8
 	pop	rbx
 	pop	r12
@@ -26988,7 +24665,7 @@ re_node_set_add_intersect:
 	nop	word ptr cs:[rax + rax]
 	.section	.text
 	.align	16
-	#Procedure 0x419620
+	#Procedure 0x417530
 
 	.globl sub_epsilon_src_nodes
 	.type sub_epsilon_src_nodes, @function
@@ -27010,7 +24687,7 @@ sub_epsilon_src_nodes:
 	lea	rdx, [r15 + r15*2]
 	mov	r9, qword ptr [rcx + rdx*8 + 8]
 	test	r9, r9
-	jle	.label_2500
+	jle	.label_2259
 	lea	rax, [rcx + rdx*8 + 8]
 	mov	qword ptr [rsp + 0x18], rax
 	lea	r14, [rcx + rdx*8 + 0x10]
@@ -27018,33 +24695,33 @@ sub_epsilon_src_nodes:
 	mov	qword ptr [rsp + 8], rcx
 	xor	r13d, r13d
 	nop	dword ptr [rax + rax]
-.label_2501:
+.label_2261:
 	mov	r11, qword ptr [r14]
 	mov	rcx, qword ptr [r11 + r13*8]
 	cmp	rcx, r15
-	je	.label_2492
+	je	.label_2248
 	mov	rdx, qword ptr [rdi]
 	mov	rax, rcx
 	shl	rax, 4
 	test	byte ptr [rdx + rax + 8], 8
-	je	.label_2492
+	je	.label_2248
 	mov	rbp, qword ptr [rdi + 0x28]
 	lea	r8, [rcx + rcx*2]
 	mov	rcx, qword ptr [rbp + r8*8 + 0x10]
 	mov	rsi, qword ptr [rcx]
 	mov	r10, -1
 	cmp	qword ptr [rbp + r8*8 + 8], 2
-	jl	.label_2502
+	jl	.label_2260
 	mov	r10, qword ptr [rcx + 8]
-.label_2502:
+.label_2260:
 	test	r9, r9
-	jle	.label_2509
+	jle	.label_2251
 	mov	rcx, r9
 	dec	rcx
 	mov	ebp, 0
-	je	.label_2510
+	je	.label_2266
 	nop	word ptr [rax + rax]
-.label_2519:
+.label_2272:
 	lea	rbx, [rbp + rcx]
 	shr	rbx, 1
 	cmp	qword ptr [r11 + rbx*8], rsi
@@ -27052,22 +24729,22 @@ sub_epsilon_src_nodes:
 	cmovl	rbp, rax
 	cmovge	rcx, rbx
 	cmp	rbp, rcx
-	jb	.label_2519
-.label_2510:
+	jb	.label_2272
+.label_2266:
 	cmp	rbp, -1
-	je	.label_2509
+	je	.label_2251
 	cmp	qword ptr [r11 + rbp*8], rsi
-	je	.label_2494
-.label_2509:
+	je	.label_2252
+.label_2251:
 	mov	rbp, qword ptr [r12 + 8]
 	test	rbp, rbp
-	jle	.label_2494
+	jle	.label_2252
 	dec	rbp
 	mov	rbx, qword ptr [r12 + 0x10]
 	mov	ecx, 0
-	je	.label_2497
+	je	.label_2256
 	nop	word ptr cs:[rax + rax]
-.label_2503:
+.label_2247:
 	lea	rax, [rcx + rbp]
 	shr	rax, 1
 	cmp	qword ptr [rbx + rax*8], rsi
@@ -27075,23 +24752,23 @@ sub_epsilon_src_nodes:
 	cmovl	rcx, rdx
 	cmovge	rbp, rax
 	cmp	rcx, rbp
-	jb	.label_2503
-.label_2497:
+	jb	.label_2247
+.label_2256:
 	cmp	rcx, -1
-	je	.label_2494
+	je	.label_2252
 	cmp	qword ptr [rbx + rcx*8], rsi
-	je	.label_2513
-.label_2494:
+	je	.label_2269
+.label_2252:
 	test	r10, r10
-	jle	.label_2492
+	jle	.label_2248
 	test	r9, r9
-	jle	.label_2499
+	jle	.label_2258
 	mov	rbp, r9
 	dec	rbp
 	mov	ecx, 0
-	je	.label_2515
+	je	.label_2273
 	nop	word ptr [rax + rax]
-.label_2493:
+.label_2253:
 	lea	rax, [rcx + rbp]
 	shr	rax, 1
 	cmp	qword ptr [r11 + rax*8], r10
@@ -27099,22 +24776,22 @@ sub_epsilon_src_nodes:
 	cmovl	rcx, rdx
 	cmovge	rbp, rax
 	cmp	rcx, rbp
-	jb	.label_2493
-.label_2515:
+	jb	.label_2253
+.label_2273:
 	cmp	rcx, -1
-	je	.label_2499
+	je	.label_2258
 	cmp	qword ptr [r11 + rcx*8], r10
-	je	.label_2492
-.label_2499:
+	je	.label_2248
+.label_2258:
 	mov	rsi, qword ptr [r12 + 8]
 	test	rsi, rsi
-	jle	.label_2492
+	jle	.label_2248
 	dec	rsi
 	mov	rbp, qword ptr [r12 + 0x10]
 	mov	ecx, 0
-	je	.label_2504
+	je	.label_2262
 	nop	word ptr cs:[rax + rax]
-.label_2511:
+.label_2267:
 	lea	rax, [rcx + rsi]
 	shr	rax, 1
 	cmp	qword ptr [rbp + rax*8], r10
@@ -27122,13 +24799,13 @@ sub_epsilon_src_nodes:
 	cmovl	rcx, rdx
 	cmovge	rsi, rax
 	cmp	rcx, rsi
-	jb	.label_2511
-.label_2504:
+	jb	.label_2267
+.label_2262:
 	cmp	rcx, -1
-	je	.label_2492
+	je	.label_2248
 	cmp	qword ptr [rbp + rcx*8], r10
-	jne	.label_2492
-.label_2513:
+	jne	.label_2248
+.label_2269:
 	mov	rax, qword ptr [rdi + 0x38]
 	mov	rbx, rdi
 	lea	rdx, [rax + r8*8]
@@ -27137,19 +24814,19 @@ sub_epsilon_src_nodes:
 	call	re_node_set_add_intersect
 	mov	ebp, eax
 	test	ebp, ebp
-	jne	.label_2498
+	jne	.label_2257
 	mov	rax, qword ptr [rsp + 0x18]
 	mov	r9, qword ptr [rax]
 	mov	rdi, rbx
 	nop	dword ptr [rax]
-.label_2492:
+.label_2248:
 	inc	r13
 	cmp	r13, r9
-	jl	.label_2501
+	jl	.label_2261
 	test	r9, r9
 	mov	rax, qword ptr [rsp + 8]
 	mov	rcx, qword ptr [rsp]
-	jle	.label_2500
+	jle	.label_2259
 	lea	r8, [rsp + 0x30]
 	mov	r9, qword ptr [rax + rcx*8 + 0x10]
 	mov	r10, qword ptr [rsp + 0x28]
@@ -27157,16 +24834,16 @@ sub_epsilon_src_nodes:
 	lea	r11, [r10 - 1]
 	xor	r13d, r13d
 	nop	dword ptr [rax]
-.label_2506:
+.label_2264:
 	test	r10, r10
 	mov	rax, qword ptr [r9 + r13*8]
-	jle	.label_2516
+	jle	.label_2246
 	test	r11, r11
 	mov	rdx, r11
 	mov	ecx, 0
-	je	.label_2517
+	je	.label_2249
 	nop	word ptr cs:[rax + rax]
-.label_2514:
+.label_2255:
 	lea	rdi, [rcx + rdx]
 	shr	rdi, 1
 	cmp	qword ptr [rsi + rdi*8], rax
@@ -27174,24 +24851,24 @@ sub_epsilon_src_nodes:
 	cmovl	rcx, rbx
 	cmovge	rdx, rdi
 	cmp	rcx, rdx
-	jb	.label_2514
-.label_2517:
+	jb	.label_2255
+.label_2249:
 	cmp	rcx, -1
-	je	.label_2516
+	je	.label_2246
 	cmp	qword ptr [rsi + rcx*8], rax
-	je	.label_2495
-.label_2516:
+	je	.label_2254
+.label_2246:
 	mov	r14, qword ptr [r12 + 8]
 	test	r14, r14
-	jle	.label_2495
+	jle	.label_2254
 	mov	r15, r14
 	dec	r15
 	mov	rcx, qword ptr [r12 + 0x10]
 	mov	rdi, r15
 	mov	edx, 0
-	je	.label_2508
+	je	.label_2265
 	nop	dword ptr [rax + rax]
-.label_2507:
+.label_2270:
 	lea	rbx, [rdx + rdi]
 	shr	rbx, 1
 	cmp	qword ptr [rcx + rbx*8], rax
@@ -27199,40 +24876,40 @@ sub_epsilon_src_nodes:
 	cmovl	rdx, rbp
 	cmovge	rdi, rbx
 	cmp	rdx, rdi
-	jb	.label_2507
-.label_2508:
+	jb	.label_2270
+.label_2265:
 	cmp	qword ptr [rcx + rdx*8], rax
 	mov	rax, rdx
-	je	.label_2518
+	je	.label_2250
 	mov	rax, -1
-.label_2518:
+.label_2250:
 	test	rax, rax
-	js	.label_2495
+	js	.label_2254
 	cmp	r14, rax
-	jle	.label_2495
+	jle	.label_2254
 	mov	qword ptr [r12 + 8], r15
 	cmp	r15, rax
-	jle	.label_2495
-.label_2496:
+	jle	.label_2254
+.label_2271:
 	mov	rax, qword ptr [rcx + rdx*8 + 8]
 	mov	qword ptr [rcx + rdx*8], rax
 	inc	rdx
 	cmp	rdx, qword ptr [r12 + 8]
-	jl	.label_2496
+	jl	.label_2271
 	nop	word ptr cs:[rax + rax]
-.label_2495:
+.label_2254:
 	inc	r13
 	mov	rax, qword ptr [rsp + 0x18]
 	cmp	r13, qword ptr [rax]
-	jl	.label_2506
-	jmp	.label_2512
-.label_2500:
+	jl	.label_2264
+	jmp	.label_2268
+.label_2259:
 	lea	r8, [rsp + 0x30]
-.label_2512:
+.label_2268:
 	mov	rdi, qword ptr [r8]
 	call	free
 	xor	ebp, ebp
-.label_2505:
+.label_2263:
 	mov	eax, ebp
 	add	rsp, 0x38
 	pop	rbx
@@ -27242,14 +24919,14 @@ sub_epsilon_src_nodes:
 	pop	r15
 	pop	rbp
 	ret	
-.label_2498:
+.label_2257:
 	mov	rdi, qword ptr [rsp + 0x30]
 	call	free
-	jmp	.label_2505
+	jmp	.label_2263
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x419980
+	#Procedure 0x417890
 
 	.globl check_dst_limits
 	.type check_dst_limits, @function
@@ -27261,60 +24938,171 @@ check_dst_limits:
 	push	r12
 	push	rbx
 	sub	rsp, 0x38
-	mov	r14, r9
-	mov	qword ptr [rsp + 0x30], r14
-	mov	qword ptr [rsp + 0x28], r8
-	mov	qword ptr [rsp + 0x20], rcx
-	mov	qword ptr [rsp + 0x18], rdx
-	mov	rbx, rsi
-	mov	rbp, rdi
-	mov	rsi, rcx
-	call	search_cur_bkref_entry
-	mov	qword ptr [rsp + 0x10], rax
-	mov	rdi, rbp
-	mov	rsi, r14
-	call	search_cur_bkref_entry
-	mov	qword ptr [rsp + 8], rax
-	cmp	qword ptr [rbx + 8], 0
-	jle	.label_2522
-	mov	r14, qword ptr [rbp + 0x98]
-	xor	r12d, r12d
+	mov	qword ptr [rsp + 0x10], r8
+	mov	qword ptr [rsp + 0x28], rcx
+	mov	qword ptr [rsp + 8], rdx
+	mov	r10, rsi
+	mov	qword ptr [rsp + 0x20], rdi
+	mov	rax, qword ptr [rdi + 0x98]
+	mov	qword ptr [rsp + 0x30], rax
+	mov	rax, qword ptr [rdi + 0xc8]
+	xor	r14d, r14d
+	test	rax, rax
+	jle	.label_2287
+	mov	rbp, qword ptr [rdi + 0xd8]
+	xor	r14d, r14d
+	mov	rdx, rax
 	nop	dword ptr [rax]
-.label_2521:
-	mov	rax, qword ptr [rbp + 0xd8]
-	mov	rcx, qword ptr [rbx + 0x10]
-	mov	rsi, qword ptr [rcx + r12*8]
-	lea	rcx, [rsi + rsi*4]
-	mov	rax, qword ptr [rax + rcx*8]
-	mov	rcx, qword ptr [r14]
-	shl	rax, 4
-	mov	r15, qword ptr [rcx + rax]
-	mov	rdi, rbp
-	mov	rdx, r15
-	mov	rcx, qword ptr [rsp + 0x18]
-	mov	r8, qword ptr [rsp + 0x20]
-	mov	r9, qword ptr [rsp + 0x10]
-	call	check_dst_limits_calc_pos
-	mov	r13d, eax
-	mov	rax, qword ptr [rbx + 0x10]
-	mov	rsi, qword ptr [rax + r12*8]
-	mov	rdi, rbp
-	mov	rdx, r15
+.label_2281:
+	lea	rsi, [rdx + r14]
+	mov	rbx, rsi
+	shr	rbx, 0x3f
+	add	rbx, rsi
+	sar	rbx, 1
+	lea	rsi, [rbx + rbx*4]
+	cmp	qword ptr [rbp + rsi*8 + 8], rcx
+	cmovge	rdx, rbx
+	lea	rsi, [rbx + 1]
+	cmovl	r14, rsi
+	cmp	r14, rdx
+	jl	.label_2281
+.label_2287:
+	cmp	r14, rax
+	jge	.label_2278
+	mov	rsi, qword ptr [rdi + 0xd8]
+	lea	rdx, [r14 + r14*4]
+	cmp	qword ptr [rsi + rdx*8 + 8], rcx
+	je	.label_2282
+.label_2278:
+	mov	r14, -1
+.label_2282:
+	xor	r12d, r12d
+	test	rax, rax
+	jle	.label_2284
+	mov	rbp, qword ptr [rdi + 0xd8]
+	xor	r12d, r12d
+	mov	rdx, rax
+	nop	
+.label_2274:
+	lea	rsi, [rdx + r12]
+	mov	rbx, rsi
+	shr	rbx, 0x3f
+	add	rbx, rsi
+	sar	rbx, 1
+	lea	rsi, [rbx + rbx*4]
+	cmp	qword ptr [rbp + rsi*8 + 8], r9
+	cmovge	rdx, rbx
+	lea	rsi, [rbx + 1]
+	cmovl	r12, rsi
+	cmp	r12, rdx
+	jl	.label_2274
+.label_2284:
+	cmp	r12, rax
+	jge	.label_2285
+	mov	rax, qword ptr [rdi + 0xd8]
+	lea	rdx, [r12 + r12*4]
+	cmp	qword ptr [rax + rdx*8 + 8], r9
+	je	.label_2286
+.label_2285:
+	mov	r12, -1
+.label_2286:
+	cmp	qword ptr [r10 + 8], 0
+	jle	.label_2276
+	xor	r15d, r15d
+	nop	word ptr [rax + rax]
+.label_2279:
+	mov	rax, qword ptr [rdi + 0xd8]
+	mov	rdx, qword ptr [r10 + 0x10]
+	mov	rbp, qword ptr [rdx + r15*8]
+	lea	rsi, [rbp + rbp*4]
+	mov	rdx, qword ptr [rax + rsi*8]
+	mov	rbx, qword ptr [rsp + 0x30]
+	mov	rbx, qword ptr [rbx]
+	shl	rdx, 4
+	mov	rdx, qword ptr [rbx + rdx]
+	mov	r11, qword ptr [rax + rsi*8 + 0x10]
+	mov	r13d, 0xffffffff
+	cmp	r11, rcx
+	jle	.label_2275
+	mov	ebx, 0xffffffff
+	jmp	.label_2280
+	nop	word ptr cs:[rax + rax]
+.label_2275:
+	mov	rsi, qword ptr [rax + rsi*8 + 0x18]
+	mov	ebx, 1
+	cmp	rsi, rcx
+	jl	.label_2280
+	cmp	r11, rcx
+	sete	bl
+	movzx	r8d, bl
+	cmp	rsi, rcx
+	sete	bl
+	movzx	esi, bl
+	add	esi, esi
+	xor	ebx, ebx
+	or	esi, r8d
+	je	.label_2280
+	mov	rcx, qword ptr [rsp + 8]
+	mov	qword ptr [rsp + 0x18], rdx
+	mov	r8, r14
+	mov	rbx, r9
+	mov	rbp, r10
+	call	check_dst_limits_calc_pos_1
+	mov	rdx, qword ptr [rsp + 0x18]
+	mov	rdi, qword ptr [rsp + 0x20]
+	mov	r10, rbp
 	mov	rcx, qword ptr [rsp + 0x28]
-	mov	r8, qword ptr [rsp + 0x30]
-	mov	r9, qword ptr [rsp + 8]
-	call	check_dst_limits_calc_pos
-	cmp	eax, r13d
+	mov	r9, rbx
+	mov	ebx, eax
+	mov	rax, qword ptr [r10 + 0x10]
+	mov	rbp, qword ptr [rax + r15*8]
+	mov	rax, qword ptr [rdi + 0xd8]
+	lea	rsi, [rbp + rbp*4]
+	mov	r11, qword ptr [rax + rsi*8 + 0x10]
+	nop	word ptr cs:[rax + rax]
+.label_2280:
+	cmp	r11, r9
+	jg	.label_2277
+	lea	rsi, [rbp + rbp*4]
+	mov	rax, qword ptr [rax + rsi*8 + 0x18]
+	mov	r13d, 1
+	cmp	rax, r9
+	jl	.label_2277
+	cmp	r11, r9
+	mov	esi, ebx
+	sete	bl
+	movzx	ebp, bl
+	mov	ebx, esi
+	cmp	rax, r9
+	sete	al
+	movzx	esi, al
+	add	esi, esi
+	xor	r13d, r13d
+	or	esi, ebp
+	je	.label_2277
+	mov	rcx, qword ptr [rsp + 0x10]
+	mov	r8, r12
+	mov	rbp, r9
+	mov	r13, r10
+	call	check_dst_limits_calc_pos_1
+	mov	rdi, qword ptr [rsp + 0x20]
+	mov	r10, r13
+	mov	rcx, qword ptr [rsp + 0x28]
+	mov	r9, rbp
+	mov	r13d, eax
+	nop	
+.label_2277:
+	cmp	r13d, ebx
 	mov	al, 1
-	jne	.label_2520
-	inc	r12
-	cmp	r12, qword ptr [rbx + 8]
-	jl	.label_2521
+	jne	.label_2283
+	inc	r15
+	cmp	r15, qword ptr [r10 + 8]
+	jl	.label_2279
 	xor	eax, eax
-	jmp	.label_2520
-.label_2522:
+	jmp	.label_2283
+.label_2276:
 	xor	eax, eax
-.label_2520:
+.label_2283:
 	add	rsp, 0x38
 	pop	rbx
 	pop	r12
@@ -27323,42 +25111,10 @@ check_dst_limits:
 	pop	r15
 	pop	rbp
 	ret	
-	nop	word ptr cs:[rax + rax]
+	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x419a70
-
-	.globl check_dst_limits_calc_pos
-	.type check_dst_limits_calc_pos, @function
-check_dst_limits_calc_pos:
-	mov	r10, qword ptr [rdi + 0xd8]
-	lea	rsi, [rsi + rsi*4]
-	mov	r11, qword ptr [r10 + rsi*8 + 0x10]
-	mov	eax, 0xffffffff
-	cmp	r11, r8
-	jg	.label_2523
-	mov	r10, qword ptr [r10 + rsi*8 + 0x18]
-	mov	eax, 1
-	cmp	r10, r8
-	jl	.label_2523
-	cmp	r11, r8
-	sete	al
-	movzx	r11d, al
-	cmp	r10, r8
-	sete	al
-	movzx	esi, al
-	add	esi, esi
-	xor	eax, eax
-	or	esi, r11d
-	je	.label_2523
-	mov	r8, r9
-	jmp	check_dst_limits_calc_pos_1
-.label_2523:
-	ret	
-	nop	dword ptr [rax + rax]
-	.section	.text
-	.align	16
-	#Procedure 0x419ac0
+	#Procedure 0x417b00
 
 	.globl check_dst_limits_calc_pos_1
 	.type check_dst_limits_calc_pos_1, @function
@@ -27372,202 +25128,135 @@ check_dst_limits_calc_pos_1:
 	sub	rsp, 0x48
 	mov	qword ptr [rsp + 0x40], r8
 	mov	qword ptr [rsp + 0x30], rcx
-	mov	r12, rdx
-	mov	ebx, esi
+	mov	rbx, rdx
+	mov	r13d, esi
 	mov	qword ptr [rsp + 0x38], rdi
 	mov	rbp, qword ptr [rdi + 0x98]
 	mov	rax, qword ptr [rbp + 0x30]
 	lea	rcx, [rcx + rcx*2]
 	cmp	qword ptr [rax + rcx*8 + 8], 0
-	jle	.label_2537
+	jle	.label_2288
 	lea	rdx, [rax + rcx*8 + 8]
 	mov	qword ptr [rsp + 0x20], rdx
 	lea	rax, [rax + rcx*8 + 0x10]
 	mov	qword ptr [rsp + 0x28], rax
 	mov	eax, 1
-	mov	cl, r12b
+	mov	cl, bl
 	shl	rax, cl
 	mov	qword ptr [rsp + 0x18], rax
 	xor	rax, 0xffff
-	mov	qword ptr [rsp + 8], rax
-	mov	eax, ebx
+	mov	qword ptr [rsp + 0x10], rax
+	mov	eax, r13d
 	and	eax, 2
-	mov	dword ptr [rsp + 0x14], eax
+	mov	dword ptr [rsp + 8], eax
 	shr	eax, 1
-	cmp	r12, 0x3f
+	cmp	rbx, 0x3f
 	setg	cl
 	or	cl, al
-	mov	byte ptr [rsp + 7], cl
-	mov	eax, ebx
+	mov	byte ptr [rsp + 0xf], cl
+	mov	eax, r13d
 	and	eax, 1
-	mov	dword ptr [rsp], eax
+	mov	dword ptr [rsp + 4], eax
 	xor	r15d, r15d
-	jmp	.label_2542
-.label_2532:
-	cmp	byte ptr [rsp + 7], 0
-	je	.label_2535
-	nop	dword ptr [rax + rax]
-.label_2536:
-	cmp	qword ptr [r14], r13
-	jne	.label_2533
-	mov	rax, qword ptr [rbp + 0x28]
-	lea	rcx, [r13 + r13*2]
-	mov	rax, qword ptr [rax + rcx*8 + 0x10]
-	mov	rcx, qword ptr [rax]
-	cmp	rcx, qword ptr [rsp + 0x30]
-	je	.label_2539
-	mov	rdi, qword ptr [rsp + 0x38]
-	mov	esi, ebx
-	mov	rdx, r12
-	mov	r8, qword ptr [rsp + 0x40]
-	call	check_dst_limits_calc_pos_1
-	mov	ecx, eax
-	test	ecx, ecx
-	je	.label_2531
-	mov	eax, 0xffffffff
-	cmp	ecx, -1
-	jne	.label_2533
-	jmp	.label_2534
-	nop	word ptr [rax + rax]
-.label_2531:
-	xor	eax, eax
-	cmp	dword ptr [rsp + 0x14], 0
-	jne	.label_2534
-.label_2533:
-	cmp	byte ptr [r14 + 0x20], 0
-	lea	r14, [r14 + 0x28]
-	jne	.label_2536
-	jmp	.label_2525
-	nop	dword ptr [rax]
-.label_2535:
-	cmp	qword ptr [r14], r13
-	jne	.label_2528
-	mov	rax, qword ptr [rbp + 0x28]
-	lea	rcx, [r13 + r13*2]
-	mov	rax, qword ptr [rax + rcx*8 + 0x10]
-	mov	rcx, qword ptr [rax]
-	cmp	rcx, qword ptr [rsp + 0x30]
-	je	.label_2539
-	mov	rdi, qword ptr [rsp + 0x38]
-	mov	esi, ebx
-	mov	rdx, r12
-	mov	r8, qword ptr [rsp + 0x40]
-	call	check_dst_limits_calc_pos_1
-	mov	ecx, eax
-	test	ecx, ecx
-	je	.label_2526
-	mov	eax, 0xffffffff
-	cmp	ecx, -1
-	jne	.label_2528
-	jmp	.label_2534
-	nop	word ptr [rax + rax]
-.label_2526:
-	movzx	eax, word ptr [r14 + 0x22]
-	mov	rcx, qword ptr [rsp + 8]
-	and	ecx, eax
-	mov	word ptr [r14 + 0x22], cx
-.label_2528:
-	cmp	byte ptr [r14 + 0x20], 0
-	lea	r14, [r14 + 0x28]
-	jne	.label_2535
-	jmp	.label_2525
 	nop	word ptr cs:[rax + rax]
-.label_2542:
+.label_2295:
 	mov	rax, qword ptr [rsp + 0x28]
 	mov	rax, qword ptr [rax]
-	mov	r13, qword ptr [rax + r15*8]
+	mov	r12, qword ptr [rax + r15*8]
 	mov	rax, qword ptr [rbp]
-	mov	rdx, r13
+	mov	rdx, r12
 	shl	rdx, 4
 	lea	rcx, [rax + rdx]
 	movzx	eax, byte ptr [rax + rdx + 8]
 	cmp	eax, 9
-	je	.label_2540
+	je	.label_2298
 	cmp	eax, 8
-	je	.label_2543
+	je	.label_2301
 	cmp	eax, 4
-	jne	.label_2525
+	jne	.label_2296
 	cmp	qword ptr [rsp + 0x40], -1
-	je	.label_2525
+	je	.label_2296
 	mov	rax, qword ptr [rsp + 0x40]
 	lea	r14, [rax + rax*4]
 	shl	r14, 3
 	mov	rax, qword ptr [rsp + 0x38]
 	add	r14, qword ptr [rax + 0xd8]
-	cmp	r12, 0x3f
-	jg	.label_2532
-	nop	word ptr [rax + rax]
-.label_2538:
-	cmp	qword ptr [r14], r13
-	jne	.label_2524
+.label_2294:
+	cmp	qword ptr [r14], r12
+	jne	.label_2289
+	cmp	rbx, 0x3f
+	jg	.label_2292
 	movzx	eax, word ptr [r14 + 0x22]
 	test	qword ptr [rsp + 0x18], rax
-	je	.label_2524
+	je	.label_2289
+.label_2292:
 	mov	rax, qword ptr [rbp + 0x28]
-	lea	rcx, [r13 + r13*2]
+	lea	rcx, [r12 + r12*2]
 	mov	rax, qword ptr [rax + rcx*8 + 0x10]
 	mov	rcx, qword ptr [rax]
 	cmp	rcx, qword ptr [rsp + 0x30]
-	je	.label_2539
+	je	.label_2297
 	mov	rdi, qword ptr [rsp + 0x38]
-	mov	esi, ebx
-	mov	rdx, r12
+	mov	esi, r13d
+	mov	rdx, rbx
 	mov	r8, qword ptr [rsp + 0x40]
 	call	check_dst_limits_calc_pos_1
 	mov	ecx, eax
 	test	ecx, ecx
-	je	.label_2529
+	je	.label_2290
 	mov	eax, 0xffffffff
 	cmp	ecx, -1
-	jne	.label_2527
-	jmp	.label_2534
-.label_2529:
-	cmp	byte ptr [rsp + 7], 0
-	je	.label_2527
+	je	.label_2291
+	cmp	rbx, 0x3f
+	jg	.label_2289
+	jmp	.label_2300
+.label_2290:
+	cmp	byte ptr [rsp + 0xf], 0
+	je	.label_2300
 	xor	eax, eax
-	cmp	dword ptr [rsp + 0x14], 0
-	je	.label_2524
-	jmp	.label_2534
-	nop	dword ptr [rax + rax]
-.label_2527:
+	cmp	dword ptr [rsp + 8], 0
+	je	.label_2289
+	jmp	.label_2291
+.label_2300:
 	movzx	eax, word ptr [r14 + 0x22]
-	mov	rcx, qword ptr [rsp + 8]
-	and	ecx, eax
-	mov	word ptr [r14 + 0x22], cx
-.label_2524:
+	mov	rcx, qword ptr [rsp + 0x10]
+	and	eax, ecx
+	mov	word ptr [r14 + 0x22], ax
+	nop	dword ptr [rax]
+.label_2289:
 	cmp	byte ptr [r14 + 0x20], 0
 	lea	r14, [r14 + 0x28]
-	jne	.label_2538
-	jmp	.label_2525
+	jne	.label_2294
+	jmp	.label_2296
 	nop	word ptr cs:[rax + rax]
-.label_2540:
-	cmp	dword ptr [rsp + 0x14], 0
-	je	.label_2525
+.label_2298:
+	cmp	dword ptr [rsp + 8], 0
+	je	.label_2296
 	xor	eax, eax
-	jmp	.label_2541
+	jmp	.label_2293
 	nop	dword ptr [rax + rax]
-.label_2543:
-	cmp	dword ptr [rsp], 0
-	je	.label_2525
+.label_2301:
+	cmp	dword ptr [rsp + 4], 0
+	je	.label_2296
 	mov	eax, 0xffffffff
-.label_2541:
-	cmp	qword ptr [rcx], r12
-	je	.label_2534
-.label_2525:
+.label_2293:
+	cmp	qword ptr [rcx], rbx
+	je	.label_2291
+.label_2296:
 	inc	r15
 	mov	rax, qword ptr [rsp + 0x20]
 	cmp	r15, qword ptr [rax]
-	jl	.label_2542
-.label_2537:
-	shr	ebx, 1
-	and	ebx, 1
-	jmp	.label_2530
-.label_2539:
-	shl	ebx, 0x1f
-	sar	ebx, 0x1f
-.label_2530:
-	mov	eax, ebx
-.label_2534:
+	jl	.label_2295
+.label_2288:
+	shr	r13d, 1
+	and	r13d, 1
+	jmp	.label_2299
+.label_2297:
+	shl	r13d, 0x1f
+	sar	r13d, 0x1f
+.label_2299:
+	mov	eax, r13d
+.label_2291:
 	add	rsp, 0x48
 	pop	rbx
 	pop	r12
@@ -27576,10 +25265,11 @@ check_dst_limits_calc_pos_1:
 	pop	r15
 	pop	rbp
 	ret	
+	nop	word ptr cs:[rax + rax]
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x419db0
+	#Procedure 0x417d10
 
 	.globl close_stream
 	.type close_stream, @function
@@ -27594,28 +25284,28 @@ close_stream:
 	mov	rdi, rbx
 	call	rpl_fclose
 	test	bpl, 0x20
-	jne	.label_2545
+	jne	.label_2303
 	test	eax, eax
 	sete	cl
 	neg	eax
 	sbb	ebx, ebx
 	test	r14, r14
-	jne	.label_2544
+	jne	.label_2302
 	test	cl, cl
-	jne	.label_2544
+	jne	.label_2302
 	call	__errno_location
 	xor	ecx, ecx
 	cmp	dword ptr [rax], 9
 	mov	ebx, 0xffffffff
 	cmove	ebx, ecx
-	jmp	.label_2544
-.label_2545:
+	jmp	.label_2302
+.label_2303:
 	mov	ebx, 0xffffffff
 	test	eax, eax
-	jne	.label_2544
+	jne	.label_2302
 	call	__errno_location
 	mov	dword ptr [rax], 0
-.label_2544:
+.label_2302:
 	mov	eax, ebx
 	pop	rbx
 	pop	r14
@@ -27623,7 +25313,7 @@ close_stream:
 	ret	
 	.section	.text
 	.align	16
-	#Procedure 0x419e10
+	#Procedure 0x417d70
 
 	.globl hard_locale
 	.type hard_locale, @function
@@ -27633,21 +25323,21 @@ hard_locale:
 	call	setlocale
 	mov	bl, 1
 	test	rax, rax
-	je	.label_2547
+	je	.label_2305
 	movzx	ecx, byte ptr [rax]
 	cmp	ecx, 0x43
-	jne	.label_2548
+	jne	.label_2306
 	cmp	byte ptr [rax + 1], 0
-	je	.label_2546
-.label_2548:
+	je	.label_2304
+.label_2306:
 	mov	esi, OFFSET FLAT:.str.1_6
 	mov	rdi, rax
 	call	strcmp
 	test	eax, eax
-	jne	.label_2547
-.label_2546:
+	jne	.label_2305
+.label_2304:
 	xor	ebx, ebx
-.label_2547:
+.label_2305:
 	mov	al, bl
 	pop	rbx
 	ret	
@@ -27655,7 +25345,7 @@ hard_locale:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x419e50
+	#Procedure 0x417db0
 
 	.globl locale_charset
 	.type locale_charset, @function
@@ -27668,15 +25358,15 @@ locale_charset:
 	cmovne	rcx, rax
 	mov	eax, OFFSET FLAT:.str.1_7
 	cmp	byte ptr [rcx], 0
-	je	.label_2549
+	je	.label_2307
 	mov	rax, rcx
-.label_2549:
-	pop	rcx
+.label_2307:
+	add	rsp, 8
 	ret	
-	nop	word ptr cs:[rax + rax]
+	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x419e80
+	#Procedure 0x417de0
 	.globl mb_width_aux
 	.type mb_width_aux, @function
 mb_width_aux:
@@ -27685,19 +25375,19 @@ mb_width_aux:
 	mov	ebx, edi
 	call	wcwidth
 	test	eax, eax
-	jns	.label_2550
+	jns	.label_2308
 	mov	edi, ebx
 	call	iswcntrl
 	test	eax, eax
 	sete	al
 	movzx	eax, al
-.label_2550:
+.label_2308:
 	pop	rbx
 	ret	
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x419ea0
+	#Procedure 0x417e00
 	.globl mb_copy
 	.type mb_copy, @function
 mb_copy:
@@ -27710,23 +25400,23 @@ mb_copy:
 	mov	rsi, qword ptr [rbx]
 	lea	rax, [rbx + 0x18]
 	cmp	rsi, rax
-	jne	.label_2551
+	jne	.label_2309
 	lea	r15, [r14 + 0x18]
 	mov	rdx, qword ptr [rbx + 8]
 	mov	rdi, r15
 	call	memcpy
 	mov	rsi, r15
-.label_2551:
+.label_2309:
 	mov	qword ptr [r14], rsi
 	mov	rax, qword ptr [rbx + 8]
 	mov	qword ptr [r14 + 8], rax
 	mov	rax, qword ptr [rbx + 0x10]
 	test	al, al
 	mov	byte ptr [r14 + 0x10], al
-	je	.label_2552
+	je	.label_2310
 	shr	rax, 0x20
 	mov	dword ptr [r14 + 0x14], eax
-.label_2552:
+.label_2310:
 	pop	rbx
 	pop	r14
 	pop	r15
@@ -27734,7 +25424,7 @@ mb_copy:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x419ef0
+	#Procedure 0x417e50
 	.globl is_basic
 	.type is_basic, @function
 is_basic:
@@ -27750,7 +25440,7 @@ is_basic:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x419f10
+	#Procedure 0x417e70
 
 	.globl rpl_fclose
 	.type rpl_fclose, @function
@@ -27761,11 +25451,11 @@ rpl_fclose:
 	mov	rbx, rdi
 	call	fileno
 	test	eax, eax
-	js	.label_2553
+	js	.label_2311
 	mov	rdi, rbx
 	call	__freading
 	test	eax, eax
-	je	.label_2555
+	je	.label_2313
 	mov	rdi, rbx
 	call	fileno
 	xor	esi, esi
@@ -27773,27 +25463,27 @@ rpl_fclose:
 	mov	edi, eax
 	call	lseek
 	cmp	rax, -1
-	je	.label_2553
-.label_2555:
+	je	.label_2311
+.label_2313:
 	mov	rdi, rbx
 	call	rpl_fflush
 	test	eax, eax
-	je	.label_2553
+	je	.label_2311
 	call	__errno_location
 	mov	r14, rax
 	mov	ebp, dword ptr [r14]
 	mov	rdi, rbx
 	call	fclose
 	test	ebp, ebp
-	je	.label_2554
+	je	.label_2312
 	mov	dword ptr [r14], ebp
 	mov	eax, 0xffffffff
-.label_2554:
+.label_2312:
 	pop	rbx
 	pop	r14
 	pop	rbp
 	ret	
-.label_2553:
+.label_2311:
 	mov	rdi, rbx
 	pop	rbx
 	pop	r14
@@ -27803,7 +25493,7 @@ rpl_fclose:
 	nop	
 	.section	.text
 	.align	16
-	#Procedure 0x419f90
+	#Procedure 0x417ef0
 
 	.globl rpl_fflush
 	.type rpl_fflush, @function
@@ -27811,18 +25501,18 @@ rpl_fflush:
 	push	rbx
 	mov	rbx, rdi
 	test	rbx, rbx
-	je	.label_2556
+	je	.label_2314
 	mov	rdi, rbx
 	call	__freading
 	test	eax, eax
-	je	.label_2556
+	je	.label_2314
 	test	byte ptr [rbx + 1], 1
-	je	.label_2556
+	je	.label_2314
 	xor	esi, esi
 	mov	edx, 1
 	mov	rdi, rbx
 	call	rpl_fseeko
-.label_2556:
+.label_2314:
 	mov	rdi, rbx
 	pop	rbx
 	jmp	fflush
@@ -27830,7 +25520,7 @@ rpl_fflush:
 	nop	dword ptr [rax]
 	.section	.text
 	.align	16
-	#Procedure 0x419fd0
+	#Procedure 0x417f30
 
 	.globl rpl_fseeko
 	.type rpl_fseeko, @function
@@ -27843,13 +25533,13 @@ rpl_fseeko:
 	mov	rbx, rdi
 	mov	rax, qword ptr [rbx + 0x10]
 	cmp	rax, qword ptr [rbx + 8]
-	jne	.label_2557
+	jne	.label_2315
 	mov	rax, qword ptr [rbx + 0x28]
 	cmp	rax, qword ptr [rbx + 0x20]
-	jne	.label_2557
+	jne	.label_2315
 	cmp	qword ptr [rbx + 0x48], 0
-	je	.label_2558
-.label_2557:
+	je	.label_2316
+.label_2315:
 	mov	rdi, rbx
 	mov	rsi, rbp
 	mov	edx, r14d
@@ -27857,7 +25547,7 @@ rpl_fseeko:
 	pop	r14
 	pop	rbp
 	jmp	fseeko
-.label_2558:
+.label_2316:
 	mov	rdi, rbx
 	call	fileno
 	mov	edi, eax
@@ -27867,11 +25557,11 @@ rpl_fseeko:
 	mov	rcx, rax
 	mov	eax, 0xffffffff
 	cmp	rcx, -1
-	je	.label_2559
+	je	.label_2317
 	and	byte ptr [rbx], 0xef
 	mov	qword ptr [rbx + 0x90], rcx
 	xor	eax, eax
-.label_2559:
+.label_2317:
 	pop	rbx
 	pop	r14
 	pop	rbp
@@ -27879,7 +25569,7 @@ rpl_fseeko:
 	nop	
 	.section .text
 	.align	16
-	#Procedure 0x41a040
+	#Procedure 0x417fa0
 
 	.globl rpl_nl_langinfo
 	.type rpl_nl_langinfo, @function

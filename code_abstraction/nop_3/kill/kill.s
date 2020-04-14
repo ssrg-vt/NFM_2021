@@ -1,4 +1,13 @@
 	.section	.text
+	hlt	
+	nop	word ptr [rax + rax]
+	nop	dword ptr [rax]
+	nop	word ptr cs:[rax + rax]
+	nop	word ptr [rax + rax]
+	nop	dword ptr [rax]
+	nop	dword ptr [rax]
+	nop	word ptr cs:[rax + rax]
+	.section	.text
 	.align	16
 	#Procedure 0x4015f0
 
