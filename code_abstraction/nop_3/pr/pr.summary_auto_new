@@ -1,0 +1,3 @@
+"pr/pr_nop.s" (line 3280, column 9):
+unexpected "p"
+expecting white space, "#" or ".section"

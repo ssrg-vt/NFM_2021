@@ -70,7 +70,13 @@ do
     find ./$line -type f -name "*.config" -exec sed -i '/\<group_number\>/d' {} +
     find ./$line -type f -name "*.config" -exec sed -i '/\<gobble_file\>/d' {} +
     find ./$line -type f -name "*.config" -exec sed -i '/\<print_long_format\>/d' {} +
-
+    find ./$line -type f -name "*.config" -exec sed -i '/\<sarse_copy\>/d' {} +
+    find ./$line -type f -name "*.config" -exec sed -i '/\<stat\>/d' {} +
+    find ./$line -type f -name "*.config" -exec sed -i '/\<out_epoch_sec\>/d' {} +
+    find ./$line -type f -name "*.config" -exec sed -i '/\<md5_process_block\>/d' {} +
+    find ./$line -type f -name "*.config" -exec sed -i '/\<utimecmp\>/d' {} +
+    find ./$line -type f -name "*.config" -exec sed -i '/\<extent_scan_read\>/d' {} +
+    find ./$line -type f -name "*.config" -exec sed -i '/\<heap_remove_top\>/d' {} +
 
     echo "done"
     
