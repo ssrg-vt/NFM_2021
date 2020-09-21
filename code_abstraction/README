@@ -1,0 +1,8 @@
+Compile with:
+
+ghc -Wno-partial-type-signatures -i../ BB_Comp.hs
+
+stack ghc -- -Wno-partial-type-signatures main.hs
+
+for CCR:
+*.config should have all sub_functions BEFORE main text sections

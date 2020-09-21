@@ -3,12 +3,12 @@ version:             0.5.0.0
 stability:           research
 -- synopsis:
 -- description:
-homepage:            https://github.com/ssrg-vt/reassembly_verification/tree/code_abstraction/code_abstraction
+homepage:           
 license:             Apache-2.0
 license-file:        LICENSE
-author:              Freek Verbeek, Joshua A. Bockenek, Ian Roessle, Abhijith Bharadwaj, and Jae-Won Jang
-maintainer:          jabocken@vt.edu
-copyright:           2018-2019 Author Freek Verbeek, Joshua A. Bockenek, Ian Roessle, Abhijith Bharadwaj, and Jae-Won Jang
+author:             
+maintainer:         
+copyright:          
 category:            Formal Verification
 build-type:          Simple
 cabal-version:       >=1.10
