@@ -1,6 +1,6 @@
-# Verify Trustworthiness of Diversified Software (VTDS)
+# VVerification of Functional Correctness of Code Diversification Techniques
 
-VTDS is a tool that can be used to verify the functional equivalence between the vanilla and the diversified binaries
+This is a tool that can be used to verify the functional equivalence between the vanilla and the diversified binaries
 
 ## Requirements
 The tool is tested on Ubuntu 16.04
