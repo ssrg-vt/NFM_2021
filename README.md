@@ -1,4 +1,4 @@
-# VVerification of Functional Correctness of Code Diversification Techniques
+# Verification of Functional Correctness of Code Diversification Techniques
 
 This is a tool that can be used to verify the functional equivalence between the vanilla and the diversified binaries
 
