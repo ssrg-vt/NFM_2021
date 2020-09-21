@@ -34,14 +34,21 @@ Upon script is successfully finished (if it states "while building package code-
 
 - ```stack ghc -- -Wno-warn-partial-type-signatures main.hs```
 
-Which will generate the ```main``` executable
+Which will generate the ```main``` executable.
+
+It should look something like this:
+![](images/setup.png)
 ## Usage
 
 - ```cd code_abstraction```
 - ```bash exec.bash```
 
-This will execute the bash script which will provide the user with a menu to proceed further.
+This will execute the bash script which will provide the user with a menu to proceed further as shown below:
+![](images/ex.png)
 
+If you are interested in counterexample test cases, please type in "micro" from the exec.bash menu. 
+
+Each microbenchmark has README.md file which contains more detail of the application.
 
 # Angr
 
