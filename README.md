@@ -49,7 +49,7 @@ It should look something like this:
 
 This will execute the bash script which will provide the user with a menu to proceed further as shown below:
 
-![](images/ex.png)
+![](images/ex_ano.png)
 
 ### If you cannot see this picture due to anonymization, please refer to the images/ex.png file
 
