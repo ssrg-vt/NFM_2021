@@ -51,7 +51,7 @@ This will execute the bash script which will provide the user with a menu to pro
 
 ![](images/ex_ano.png)
 
-### If you cannot see this picture due to anonymization, please refer to the images/ex.png file
+### If you cannot see this picture due to anonymization, please refer to the images/ex_ano.png file
 
 If you are interested in counterexample test cases, please type in "micro" from the exec.bash menu. 
 
