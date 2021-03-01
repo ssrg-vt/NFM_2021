@@ -9,7 +9,6 @@ The tool is tested on Ubuntu 16.04
 ## Installation
 Pre-requisites:
 - ```sudo apt-get install build-essential, python```
-- ```git checkout usenix_artifacts```
 
 1) Haskell
 
